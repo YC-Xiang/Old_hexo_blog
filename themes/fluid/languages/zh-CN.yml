@@ -34,9 +34,9 @@ links:
   subtitle: '友情链接'
 
 page404:
-  menu: '页面不存在'
-  title: '页面不存在'
-  subtitle: '页面不存在'
+  menu: '你来到了没有知识的荒原:)'
+  title: '你来到了没有知识的荒原:)'
+  subtitle: '你来到了没有知识的荒原:)'
 
 post:
   toc: '目录'
@@ -44,9 +44,9 @@ post:
   next_post: '下一篇'
   updated: '本文最后更新于：%s'
   meta:
-    wordcount: '%s 字'
-    min2read: '%s 分钟'
-    views: '{} 次'
+    wordcount: '%s words'
+    min2read: '%s mins'
+    views: '{} times'
   copyright:
     author: '作者'
     posted: '发布于'
