@@ -3,7 +3,7 @@ title: Markdown and theme Fluid syntax
 date: 2023-01-05 16:22:15
 tags:
 - Markdown
-categorirs:
+categories:
 - Notes
 math: true
 mermaid: true

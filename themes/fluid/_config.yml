@@ -946,15 +946,15 @@ about:
   banner_img: /img/homepage.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
-  avatar: /img/avatar.png
-  name: "Yucheng Xiang"
-  intro: "A common software engineer"
+  avatar: /img/avatar1.jpg
+  name: "项宇承"
+  intro: "也无风雨也无晴"
   # 更多图标可从 https://hexo.fluid-dev.com/docs/icon/ 查找，`class` 代表图标的 css class，添加 `qrcode` 后，图标不再是链接而是悬浮二维码
   # More icons can be found from https://hexo.fluid-dev.com/docs/en/icon/  `class` is the css class of the icon. If adding `qrcode`, The icon is no longer a link, but a hovering QR code
   icons:
     - { class: "iconfont icon-github-fill", link: "https://github.com/YC-Xiang", tip: "GitHub" }
     - { class: "iconfont icon-zhihu-fill", link: "https://www.zhihu.com/people/xiang-yu-cheng-23", tip: "知乎" }
-    - { class: "iconfont icon-douban-fill", link: "https://douban.com", tip: "豆瓣" }
+    - { class: "iconfont icon-douban-fill", link: "https://www.douban.com/people/157178258/?_i=2927598stVXx6E,2927631stVXx6E", tip: "豆瓣" }
     - { class: "iconfont icon-wechat-fill", qrcode: "/img/favicon.jpg" }
 
 
