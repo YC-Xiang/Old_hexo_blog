@@ -16,27 +16,28 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="2.2 RV32I 指令格式用于寄存器-寄存器操作的R类型指令，用于短立即数和访存load 操作的I型指令，用于访存store 操作的S型指令，用于条件跳转操作的B类型指令，用于长立即数的U 型指令和用于无条件跳转的J型指令。  2.3 RV32I 寄存器RV32I有31寄存器加上一个值恒为0的x0寄存器。  2.4 RV32I 整数计算ReferencesRISC-V Green Card RI">
+    <meta name="description" content="第二章 RV32I：RISC-V 基础整数指令集1.2 模块化与增量型 ISA​	和几乎所有以往的 ISA不同，RISC-V是模块化的。它的核心是一个名为RV32I的基础 ISA，运行一个完整的软件栈。RV32I是固定的，永远不会改变。模块化来源于可选的标准扩展，根据应用程序的需要，硬件可以包含或不包含这些扩展。可以生成当前硬件条件下的最佳代码。惯例是把代表扩展的字母附加到指令集名称之后作为指示。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RISC-V 第二章：基础整数指令集">
+<meta property="og:title" content="Yucheng&#39;s Blog">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/01/06/RISC-V%E7%AC%AC%E4%BA%8C%E7%AB%A0/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="2.2 RV32I 指令格式用于寄存器-寄存器操作的R类型指令，用于短立即数和访存load 操作的I型指令，用于访存store 操作的S型指令，用于条件跳转操作的B类型指令，用于长立即数的U 型指令和用于无条件跳转的J型指令。  2.3 RV32I 寄存器RV32I有31寄存器加上一个值恒为0的x0寄存器。  2.4 RV32I 整数计算ReferencesRISC-V Green Card RI">
+<meta property="og:description" content="第二章 RV32I：RISC-V 基础整数指令集1.2 模块化与增量型 ISA​	和几乎所有以往的 ISA不同，RISC-V是模块化的。它的核心是一个名为RV32I的基础 ISA，运行一个完整的软件栈。RV32I是固定的，永远不会改变。模块化来源于可选的标准扩展，根据应用程序的需要，硬件可以包含或不包含这些扩展。可以生成当前硬件条件下的最佳代码。惯例是把代表扩展的字母附加到指令集名称之后作为指示。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/RV32I%E6%8C%87%E4%BB%A4%E5%9B%BE%E7%A4%BA.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/RISC%E6%8C%87%E4%BB%A4%E6%A0%BC%E5%BC%8F.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/RV32I%20%E5%B8%A6%E6%9C%89%E6%8C%87%E4%BB%A4%E5%B8%83%E5%B1%80.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/RV32I%E5%AF%84%E5%AD%98%E5%99%A8.png">
-<meta property="article:published_time" content="2023-01-06T06:57:15.000Z">
-<meta property="article:modified_time" content="2023-01-06T06:57:35.667Z">
+<meta property="article:published_time" content="2023-01-06T06:55:47.946Z">
+<meta property="article:modified_time" content="2023-01-06T08:37:49.576Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="RISC-V">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/RISC%E6%8C%87%E4%BB%A4%E6%A0%BC%E5%BC%8F.png">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/RV32I%E6%8C%87%E4%BB%A4%E5%9B%BE%E7%A4%BA.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>RISC-V 第二章：基础整数指令集 - Yucheng&#39;s Blog</title>
+  <title>Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -230,7 +231,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">RISC-V 第二章：基础整数指令集</span>
+            <span id="subtitle"></span>
           
         </div>
 
@@ -241,7 +242,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-01-06 14:57" pubdate>
+        <time datetime="2023-01-06 14:55" pubdate>
           2023年1月6日 下午
         </time>
       </span>
@@ -253,7 +254,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          212 words
+          2.1k words
         
       </span>
     
@@ -264,7 +265,7 @@
         
         
         
-          2 mins
+          18 mins
         
       </span>
     
@@ -310,7 +311,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">RISC-V 第二章：基础整数指令集</h1>
+            <h1 style="display: none"></h1>
             
               <p class="note note-info">
                 
@@ -323,11 +324,48 @@
             
               <div class="markdown-body">
                 
-                <h2 id="2-2-RV32I-指令格式"><a href="#2-2-RV32I-指令格式" class="headerlink" title="2.2 RV32I 指令格式"></a>2.2 RV32I 指令格式</h2><p>用于寄存器-寄存器操作的R类型指令，用于短立即数和访存load 操作的I型指令，用于访存store 操作的S型指令，用于条件跳转操作的B类型指令，用于长立即数的U 型指令和用于无条件跳转的J型指令。</p>
-<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/RISC%E6%8C%87%E4%BB%A4%E6%A0%BC%E5%BC%8F.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="2-3-RV32I-寄存器"><a href="#2-3-RV32I-寄存器" class="headerlink" title="2.3 RV32I 寄存器"></a>2.3 RV32I 寄存器</h2><p>RV32I有31寄存器加上一个值恒为0的x0寄存器。</p>
-<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/RV32I%E5%AF%84%E5%AD%98%E5%99%A8.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="2-4-RV32I-整数计算"><a href="#2-4-RV32I-整数计算" class="headerlink" title="2.4 RV32I 整数计算"></a>2.4 RV32I 整数计算</h2><h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p><a target="_blank" rel="noopener" href="http://www.riscvbook.com/greencard-20181213.pdf">RISC-V Green Card</a></p>
+                <h1 id="第二章-RV32I：RISC-V-基础整数指令集"><a href="#第二章-RV32I：RISC-V-基础整数指令集" class="headerlink" title="第二章 RV32I：RISC-V 基础整数指令集"></a>第二章 RV32I：RISC-V 基础整数指令集</h1><h2 id="1-2-模块化与增量型-ISA"><a href="#1-2-模块化与增量型-ISA" class="headerlink" title="1.2 模块化与增量型 ISA"></a>1.2 模块化与增量型 ISA</h2><p>​	和几乎所有以往的 ISA不同，RISC-V是模块化的。它的核心是一个名为RV32I的基础 ISA，运行一个完整的软件栈。RV32I是固定的，永远不会改变。模块化来源于可选的标准扩展，根据应用程序的需要，硬件可以包含或不包含这些扩展。可以生成当前硬件条件下的最佳代码。惯例是把代表扩展的字母附加到指令集名称之后作为指示。例如，RV32IMFD将乘法（ RV32M），单精度浮点（RV32F）和双精度浮点（RV32D）的扩展添加到了基础指令集 RV32I）中。</p>
+<h2 id="2-2-RV32I-指令格式"><a href="#2-2-RV32I-指令格式" class="headerlink" title="2.2 RV32I 指令格式"></a>2.2 RV32I 指令格式</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/RV32I%E6%8C%87%E4%BB%A4%E5%9B%BE%E7%A4%BA.png" srcset="/img/loading.gif" lazyload alt="图2.1: RV32指令图示"></p>
+<p>​	用于寄存器-寄存器操作的R类型指令，用于短立即数和访存load操作的I型指令，用于访存store操作的S型指令，用于条件跳转操作的B类型指令，用于长立即数的U型指令和用于无条件跳转的J型指令。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/RISC%E6%8C%87%E4%BB%A4%E6%A0%BC%E5%BC%8F.png" srcset="/img/loading.gif" lazyload alt="图2.2"></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/RV32I%20%E5%B8%A6%E6%9C%89%E6%8C%87%E4%BB%A4%E5%B8%83%E5%B1%80.png" srcset="/img/loading.gif" lazyload alt="图2.3"></p>
+<h2 id="2-3-RV32I-寄存器"><a href="#2-3-RV32I-寄存器" class="headerlink" title="2.3 RV32I 寄存器"></a>2.3 RV32I 寄存器</h2><p>​	RV32I有31寄存器加上一个值恒为0的x0寄存器。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/RV32I%E5%AF%84%E5%AD%98%E5%99%A8.png" srcset="/img/loading.gif" lazyload alt="图2.4"></p>
+<h2 id="2-4-RV32I-整数计算"><a href="#2-4-RV32I-整数计算" class="headerlink" title="2.4 RV32I 整数计算"></a>2.4 RV32I 整数计算</h2><p>​	简单的算术指令（add, sub）、逻辑指令（and, or, xor），以及图2.1中的移位指令（sll, srl, sra）和其他ISA差不多。他们从寄存器读取两个32位的值，并将32位结果写入目标寄存器。</p>
+<p>​	程序可以根据比较结果生成布尔值。为应对这种使用场景下，RV32I提供一个当小于时置位的指令（slt）。</p>
+<p>​	图2.1剩下的两条整数计算指令主要用于构造大的常量数值和链接。加载立即数到高位（lui）将20位常量加载到寄存器的高20位。接着便可以使用标准的立即指令来创建32位常量。</p>
+<p><strong>有什么不同之处？</strong></p>
+<ul>
+<li>RISC-V中没有字节或半字宽度的整数计算操作。操作始终是以完整的寄存器宽度。</li>
+<li>RV32I也不包含乘法和除法，它们包含在可选的RV32M扩展中。</li>
+</ul>
+<h2 id="2-5-RV32I-的Load-和-Store"><a href="#2-5-RV32I-的Load-和-Store" class="headerlink" title="2.5 RV32I 的Load 和 Store"></a>2.5 RV32I 的Load 和 Store</h2><p>​	除了提供32位字（lw，sw）的加载和存储外，图2.1中说明，RV32I 支持加载有符号和无符号字节和半字（lb，lbu，lh，lhu）和存储字节和半字（sb，sh）。有符号字节和半字符号扩展为32位再写入目的寄存器。即使是自然数据类型更窄，低位宽数据也是被扩展后再处理，这使得后续的整数计算指令能正确处理所有的32位。在文本和无符号整数中常用的无符号字节和半字，在写入目标寄存器之前都被无符号扩展到32位。</p>
+<h2 id="RV32I-条件分支"><a href="#RV32I-条件分支" class="headerlink" title="RV32I 条件分支"></a>RV32I 条件分支</h2><p>​	相等（beq），不相等 （bne），大于等于（bge），或小于（blt）。最后两种比较有符号比较，RV32I也提供相应的无符号版本比较的：bgeu和bltu。<strong>分支指令的寻址方式是12位的立即数乘以2，符号扩展它，然后将得到值加到PC上作为分支的跳转地址。</strong><span class="label label-danger">这句话没理解</span></p>
+<div class="note note-info">
+            <p>补充说明：获取PC</p><p>当前的PC可以通过将 auipc的 U立即数字段设置为 0来获得。</p>
+          </div>
+
+<h2 id="2-7-RV32I无条件跳转"><a href="#2-7-RV32I无条件跳转" class="headerlink" title="2.7 RV32I无条件跳转"></a>2.7 RV32I无条件跳转</h2><p>​	图2.1中的跳转并链接指令（jal）具有双重功能。若将下一条指令PC + 4的地址保存到目标寄存器中，通常是返回地址寄存器ra（见图2.4），便可以用它来实现过程调用。如果<strong>使用零寄存器（x0）替换ra作为目标寄存器</strong>，则可以实现无条件跳转，因为x0不能更改。像分支一样，jal将其20位分支地址乘以2，进行符号扩展后再添加到PC上，便得到了跳转地址。</p>
+<div class="note note-info">
+            <p><code>jal x1, X</code> means jump to X, and save the return address which is normally PC+4 to the x1.</p><p><code>jal x0 0(x1)</code>  use indirect address (<code>x1</code>) plus a constant of 12bits (0 in your example). set <code>x0</code> as return address register because you «don’t care».</p>
+          </div>
+
+<h2 id="2-8-RV32I-杂项"><a href="#2-8-RV32I-杂项" class="headerlink" title="2.8 RV32I 杂项"></a>2.8 RV32I 杂项</h2><p>​	图2.1中的控制状态寄存器指令 (csrrc、csrrs、csrrw、csrrci、csrrsi、csrrwi)，使我们可以轻松地访问一些程序性能计数器。对于这些64位计数器, 我们一次可以读取32位。这些计数器包括了系统时间, 时钟周期以及执行的指令数目。 </p>
+<p>​	在RISC-V指令集中，<strong>ecall</strong>指令用于向运行时环境发出请求，例如系统调用。调试器使用<strong>ebreak</strong>指令将控制转移到调试环境。</p>
+<p>​	<strong>fence</strong>指令对外部可见的访存请求，如设备I &#x2F; O和内存访问等进行串行化。外部可见指对处理器的其他核心、线程，外部设备或协处理器可见。fence.i指令同步指令和数据流。在执行fence.i指令之前，对于同一个硬件线程，RISC-V不保证用存储指令写到内存指令区的数据可以被取指令取到。</p>
+<h2 id="2-10-结束语"><a href="#2-10-结束语" class="headerlink" title="2.10 结束语"></a>2.10 结束语</h2><ul>
+<li>32位字节可寻址的地址空间</li>
+<li>所有指令均为 32位长</li>
+<li>31个寄存器，全部 32位宽，寄存器0硬连线为零</li>
+<li>所有操作都在寄存器之间（没有寄存器到内存的操作</li>
+<li>加载&#x2F;存储字加上有符号和无符号加载&#x2F;存储字节和半字</li>
+<li>所有算术，逻辑和移位指令都有立即数版本的指令</li>
+<li>立即数总是符号扩展</li>
+<li>仅提供一种 数据寻址模式（寄存器 +立即数）和 PC相对分支</li>
+<li>无乘法或除法指令</li>
+<li>一个指令，用于将 大 立即数加载到寄存器的 高位，这样加载 32位常量到寄存器只需要两条指令</li>
+</ul>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p><a target="_blank" rel="noopener" href="http://www.riscvbook.com/greencard-20181213.pdf">RISC-V Green Card</a></p>
 <p><a target="_blank" rel="noopener" href="http://www.riscvbook.com/chinese/RISC-V-Reader-Chinese-v2p1.pdf">RISC-V-Reader-Chinese-v2p1.pdf</a></p>
 
                 
@@ -337,34 +375,6 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/RISC-V/">#RISC-V</a>
-      
-    </div>
   
 </div>
 
