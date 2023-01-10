@@ -13,30 +13,27 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="YC-Xiang">
+  <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="GITGit push123456789101112131415# git push [远程主机名][本地分支名]:[远程分支名]$ git push origin HEAD:master# HEAD是当前指向的分支,可以用git show HEAD 查看$ git show HEAD$ git branch -a# 需要code view 时要加&#x2F;refs&#x2F;for$ git push origi">
+    <meta name="description" content="1234567891011121314151617# nemu&#x2F;scripts&#x2F;native.mkcompile_git:  $(call git_commit, &quot;compile NEMU&quot;)$(BINARY): compile_gitoverride ARGS ?&#x3D; --log&#x3D;$(BUILD_DIR)&#x2F;nemu-log.txtoverride ARGS +&#x3D; $(ARGS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git 常用指令">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/01/04/2023-1-4-git/index.html">
+<meta property="og:title" content="ICS_2022 PA1">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/01/10/ICS2022%20PA1/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="GITGit push123456789101112131415# git push [远程主机名][本地分支名]:[远程分支名]$ git push origin HEAD:master# HEAD是当前指向的分支,可以用git show HEAD 查看$ git show HEAD$ git branch -a# 需要code view 时要加&#x2F;refs&#x2F;for$ git push origi">
+<meta property="og:description" content="1234567891011121314151617# nemu&#x2F;scripts&#x2F;native.mkcompile_git:  $(call git_commit, &quot;compile NEMU&quot;)$(BINARY): compile_gitoverride ARGS ?&#x3D; --log&#x3D;$(BUILD_DIR)&#x2F;nemu-log.txtoverride ARGS +&#x3D; $(ARGS">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git1.png">
-<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git2.png">
-<meta property="article:published_time" content="2023-01-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-01-10T08:45:51.923Z">
+<meta property="article:published_time" content="2023-01-10T08:47:28.000Z">
+<meta property="article:modified_time" content="2023-01-10T08:47:17.521Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="git">
+<meta property="article:tag" content="ICS">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git1.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Git 常用指令 - Yucheng&#39;s Blog</title>
+  <title>ICS_2022 PA1 - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -230,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Git 常用指令</span>
+            <span id="subtitle">ICS_2022 PA1</span>
           
         </div>
 
@@ -241,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-01-04 00:00" pubdate>
-          2023年1月4日 凌晨
+        <time datetime="2023-01-10 16:47" pubdate>
+          2023年1月10日 下午
         </time>
       </span>
     
@@ -253,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.1k words
+          897 words
         
       </span>
     
@@ -264,7 +261,7 @@
         
         
         
-          26 mins
+          8 mins
         
       </span>
     
@@ -310,7 +307,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Git 常用指令</h1>
+            <h1 style="display: none">ICS_2022 PA1</h1>
             
               <p class="note note-info">
                 
@@ -323,90 +320,10 @@
             
               <div class="markdown-body">
                 
-                <h1 id="GIT"><a href="#GIT" class="headerlink" title="GIT"></a>GIT</h1><h2 id="Git-push"><a href="#Git-push" class="headerlink" title="Git push"></a>Git push</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># git push [远程主机名][本地分支名]:[远程分支名]</span><br>$ git push origin HEAD:master<br><span class="hljs-comment"># HEAD是当前指向的分支,可以用git show HEAD 查看</span><br>$ git show HEAD<br>$ git branch -a<br><span class="hljs-comment"># 需要code view 时要加/refs/for</span><br>$ git push origin HEAD:refs/for/master<br><br><span class="hljs-comment"># 不加远程分支名</span><br>$ git push origin dev<br><span class="hljs-comment"># 相当于,如果远程分支不存在则会自动创建, 并创建联系</span><br>$ git push origin dev:dev<br>$ git branch --set-upstream-to=origin/dev<br><span class="hljs-comment"># 删除远程分支，直接推送空分支到远程分支</span><br>$ git push origin :dev<br></code></pre></td></tr></table></figure>
+                <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># nemu/scripts/native.mk</span><br><br><span class="hljs-section">compile_git:</span><br>  <span class="hljs-variable">$(<span class="hljs-built_in">call</span> git_commit, &quot;compile NEMU&quot;)</span><br><span class="hljs-variable">$(BINARY)</span>: compile_git<br><br><span class="hljs-keyword">override</span> ARGS ?= --log=<span class="hljs-variable">$(BUILD_DIR)</span>/nemu-log.txt<br><span class="hljs-keyword">override</span> ARGS += <span class="hljs-variable">$(ARGS_DIFF)</span> <span class="hljs-comment"># nemu/tools/difftest.mk中CONFIG_DIFFTEST未定义，所以ARGS_DIFF不存在</span><br><br>IMG ?=<br><br>NEMU_EXEC := <span class="hljs-variable">$(BINARY)</span> <span class="hljs-variable">$(ARGS)</span> <span class="hljs-variable">$(IMG)</span><br><br><span class="hljs-section">run: run-env</span><br>  <span class="hljs-variable">$(<span class="hljs-built_in">call</span> git_commit, &quot;run NEMU&quot;)</span><br>  <span class="hljs-variable">$(NEMU_EXEC)</span><br><br></code></pre></td></tr></table></figure>
 
-<h2 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a>git diff</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 显示出branch1和branch2中差异的部分</span><br>$ git diff branch1 branch2 --<span class="hljs-built_in">stat</span><br><span class="hljs-comment"># 显示指定文件的详细差异</span><br>$ git diff branch1 branch2 具体文件路径<br><span class="hljs-comment"># 显示出所有有差异的文件的详细差异</span><br>$ git diff branch1 branch2<br><span class="hljs-comment"># 显示本地master分支与远程master分支的区别</span><br>$ git diff master origin/master<br><br><span class="hljs-comment"># 比较两个commit</span><br>git diff commit id1 commit id2<br></code></pre></td></tr></table></figure>
-
-<hr>
-<p>撤回当前commit，并且保留修改的代码：</p>
-<p>git reset –soft HEAD^ &#x2F; commit ID</p>
-<p>不保留修改的代码：</p>
-<p>git reset –hard HEAD^ &#x2F; commit ID</p>
-<h2 id="git-rebase-git-merge"><a href="#git-rebase-git-merge" class="headerlink" title="git rebase, git merge"></a>git rebase, git merge</h2><p>git merge：在dev分支git merge main，&#x2F;&#x2F; 将main最新的commit拉到dev，有合并记录</p>
-<p>git rebase：在dev分支git rebase main &#x2F;&#x2F;修改dev分支，将main最新的commit拉到dev，将dev最新的commit 接到main后面</p>
-<p>e.g 在本地一个分支上有了C5，C6两个自己的commit，但此时远程master分支上别人又合并了两个C3,C4分支。如果用git pull（git fetch + git merge）会有一个新的merge commit。此时需要git rebase 将c5,c6接到最新的master代码(c4)上。</p>
-<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git1.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git2.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="git-revert"><a href="#git-revert" class="headerlink" title="git revert"></a>git revert</h2><p>git branch -f dev HEAD^  &#x2F;&#x2F;让dev分支指向HEAD^</p>
-<p>本地撤销当前提交：git reset HEAD^</p>
-<p>远程撤销当前提交：git revert HEAD</p>
-<p>git remote show origin：查看远程信息</p>
-<p>git branch –set-upstream-to&#x3D;origin&#x2F;develop（远程分支） develop：关联远程分支</p>
-<p>那么如何查看已经配置分支关联信息呢，通过下述三条命令均可：</p>
-<ol>
-<li>git branch -vv</li>
-<li>git remote show origin</li>
-<li>cat .git&#x2F;config</li>
-</ol>
-<p>在一个分支上修改，突然要切到另一个分支：</p>
-<ol>
-<li>把现在的修改 git commit</li>
-<li>git stash 暂存起来，注意这个stash 也会带到另一个分支。注意git stash pop和apply的区别，apply不会将栈弹出</li>
-</ol>
-<h2 id="git-stash"><a href="#git-stash" class="headerlink" title="git stash"></a>git stash</h2><p>git stash save “add style to our site” 添加stash信息</p>
-<p>git stash clear :注意这是清空你所有的内容</p>
-<p>git stash drop stash@{0} 这是删除第一个队列</p>
-<p>git stash apply 不会删除内容</p>
-<p>git stash pop 删除内容</p>
-<p>git stash 不能stash untracked的文件，需要先git add，或者git stash -u</p>
-<p>查看某个stash的具体内容：git stash show -p stash@{1}</p>
-<h2 id="git-放弃修改-放弃增加文件操作"><a href="#git-放弃修改-放弃增加文件操作" class="headerlink" title="git 放弃修改, 放弃增加文件操作"></a>git 放弃修改, 放弃增加文件操作</h2><p>1.本地修改了一些文件 (并没有使用 git add 到暂存区)，想放弃修改:</p>
-<ul>
-<li>单个文件: <code>git checkout -- filename</code></li>
-<li>所有文件&#x2F;文件夹: <code>git checkout .</code></li>
-</ul>
-<p>2.本地新增了一些文件 (并没有 git add 到暂存区)，想放弃修改:</p>
-<ul>
-<li>单个文件&#x2F;文件夹: <code>rm  -rf filename</code></li>
-<li>所有文件: <code>git clean -nxfd</code></li>
-</ul>
-<blockquote>
-<p>-f 删除untracked files <br/><br>-d 连untracked 的目录一起删掉 <br/><br>-x 连 gitignore 的untrack 文件&#x2F;目录也一起删掉（慎用,一般这个是用来删掉编译出来的.o之类的文件用的）<br/><br>-n 先看看会删掉哪些文件，防止重要文件被误删</p>
-</blockquote>
-<p>3.本地修改&#x2F;新增了一些文件，已经 git add 到暂存区，想放弃修改:</p>
-<ul>
-<li>单个文件&#x2F;文件夹: <code>git reset HEAD filename</code></li>
-<li>所有文件&#x2F;文件夹: <code>git reset HEAD .</code></li>
-</ul>
-<p>4.本地通过 git add 和 git commit 后，想要撤销此次 commit：</p>
-<ul>
-<li><p>撤销 commit, 同时保留该 commit 修改：<code>git reset commit_id</code> (撤销之后，你所做的已经 commit 的修改还在工作区)</p>
-</li>
-<li><p>撤销 commit, 同时本地删除该 commit 修改：<code>git reset --hard commit_id</code> (撤销之后，你所做的已经 commit 的修改将会清除，仍在工作区&#x2F;暂存区的代码也将会清除)</p>
-</li>
-</ul>
-<blockquote>
-<p>这里的commit id可以通过git log查看选取前6位，commit_id是想要回到的节点</p>
-</blockquote>
-<h2 id="git-rebase"><a href="#git-rebase" class="headerlink" title="git rebase"></a>git rebase</h2><blockquote>
-<p>不要通过rebase对任何已经提交到公共仓库中的commit进行修改（你自己一个人玩的分支除外）</p>
-</blockquote>
-<h3 id="合并多个commit为一个完整commit"><a href="#合并多个commit为一个完整commit" class="headerlink" title="合并多个commit为一个完整commit"></a>合并多个commit为一个完整commit</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4a8f4af4e803">https://www.jianshu.com/p/4a8f4af4e803</a></p>
-<p><code>git rebase -i HEAD~3</code> 修改HEAD往后三个分支（包括HEAD)</p>
-<p>或者<code>git rebase -i 某个commit</code> 修改某个commit前的所有提交</p>
-<h3 id="将某一段commit粘贴到另一个分支上"><a href="#将某一段commit粘贴到另一个分支上" class="headerlink" title="将某一段commit粘贴到另一个分支上"></a>将某一段commit粘贴到另一个分支上</h3><h2 id="生成-x2F-打patch"><a href="#生成-x2F-打patch" class="headerlink" title="生成&#x2F;打patch"></a>生成&#x2F;打patch</h2><p>生成patch：git diff &gt; patch.diff</p>
-<p>检查patch：git apply –stat patch.diff</p>
-<p>查看能否打入：git apply –check patch.diff</p>
-<p><a target="_blank" rel="noopener" href="https://adtxl.com/index.php/archives/471.html">https://adtxl.com/index.php/archives/471.html</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013318019/article/details/114860407">https://blog.csdn.net/u013318019/article/details/114860407</a></p>
-<h2 id="git-tag"><a href="#git-tag" class="headerlink" title="git tag"></a>git tag</h2><p><a target="_blank" rel="noopener" href="https://www.runoob.com/git/git-tag.html">https://www.runoob.com/git/git-tag.html</a></p>
-<p>git tag 查看所有标签</p>
-<p>创建：git tag -a v1.0</p>
-<p>删除：git tag -d v1.0</p>
-<p>查看：git show v1.0</p>
-<h2 id="创建分支并与远程某分支关联："><a href="#创建分支并与远程某分支关联：" class="headerlink" title="创建分支并与远程某分支关联："></a>创建分支并与远程某分支关联：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 可以先更新远程分支信息</span><br>git remote update origin --prune<br><br><span class="hljs-comment"># git checkout -b 本地新分支 远程分支。远程分支可以git branch -a查看</span><br>git checkout -b <span class="hljs-built_in">test</span> origin/test<br><br><span class="hljs-comment"># 用下面的操作两个分支会对不上，无法git push，因为test分支可能是从master分支新建过来的，git log都不对应，需要一个干净的分支</span><br>git chekcout -b <span class="hljs-built_in">test</span><br>git branch --set-upstream-to=origin/develop<br></code></pre></td></tr></table></figure>
-
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a target="_blank" rel="noopener" href="https://learngitbranching.js.org/">https://learngitbranching.js.org/</a></p>
+<p>由makefile可知，输入<code>make run</code>启动nemu时，传递给<code>monitor.c parse_args(argc, argv)</code>的参数为<code>--log=$(BUILD_DIR)/nemu-log.txt</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span> &#123;<br>    init_monitor(argc, argv);<br>    parse_args(argc, argv);<br>      init_rand();<br>      init_log(log_file);<br>      init_mem(); <span class="hljs-comment">// 随机初始化内存</span><br>    init_isa();<br>      <span class="hljs-built_in">memcpy</span>(guest_to_host(RESET_VECTOR), img, <span class="hljs-keyword">sizeof</span>(img)); <span class="hljs-comment">//加载内置客户程序</span><br>      restart(); <span class="hljs-comment">// 初始化pc和0寄存器</span><br>      <span class="hljs-type">long</span> img_size = load_img();<br>    init_sdb();<br>    welcome();<br>    engine_start();<br>     sdb_mainloop();<br>        str = rl_gets()); <span class="hljs-comment">// 获取在(nemu)中输入的字符串</span><br>        <span class="hljs-type">char</span> *cmd = strtok(str, <span class="hljs-string">&quot; &quot;</span>); <span class="hljs-comment">//取字符串第一个空格前的为command</span><br>        <span class="hljs-type">char</span> *args = cmd + <span class="hljs-built_in">strlen</span>(cmd) + <span class="hljs-number">1</span>; <span class="hljs-comment">//</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -415,11 +332,32 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/git/">#git</a>
+        <a href="/tags/ICS/">#ICS</a>
       
     </div>
   
@@ -433,18 +371,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/01/05/Markdown%E8%AF%AD%E6%B3%95/" title="Markdown and theme Fluid syntax">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Markdown and theme Fluid syntax</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/01/27/2022-1-27-%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB/" title="程序员的自我修养学习笔记">
-                        <span class="hidden-mobile">程序员的自我修养学习笔记</span>
+                      <a href="/2023/01/09/RISC-V%E7%AC%AC%E5%8D%81%E7%AB%A0/" title="RISC-V手册 第十章 RISC-V特权架构">
+                        <span class="hidden-mobile">RISC-V手册 第十章 RISC-V特权架构</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
