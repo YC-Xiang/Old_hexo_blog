@@ -16,26 +16,24 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="ReferencesRegexOne github正则表达式  TutorialsLesson 1 The 123s\d	any single digit character \D	any single non-digit character Lesson 2: The Dot.	any single character \.	period Lesson 3: Matching specific">
+    <meta name="description" content="Modal editing Normal: for moving around a file and making edits Insert: i for inserting text Replace: R for replacing text Visual: (plainv, lineV, or blockCtrl+v): for selecting blocks of text(use mov">
 <meta property="og:type" content="article">
-<meta property="og:title" content="正则表达式">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
+<meta property="og:title" content="Vim">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/01/13/Vim/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="ReferencesRegexOne github正则表达式  TutorialsLesson 1 The 123s\d	any single digit character \D	any single non-digit character Lesson 2: The Dot.	any single character \.	period Lesson 3: Matching specific">
+<meta property="og:description" content="Modal editing Normal: for moving around a file and making edits Insert: i for inserting text Replace: R for replacing text Visual: (plainv, lineV, or blockCtrl+v): for selecting blocks of text(use mov">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230112170412.png">
-<meta property="article:published_time" content="2023-01-12T09:39:28.000Z">
-<meta property="article:modified_time" content="2023-01-12T09:39:49.779Z">
+<meta property="article:published_time" content="2023-01-13T09:31:28.000Z">
+<meta property="article:modified_time" content="2023-01-13T09:33:46.202Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="正则表示式">
+<meta property="article:tag" content="Vim">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230112170412.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>正则表达式 - Yucheng&#39;s Blog</title>
+  <title>Vim - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">正则表达式</span>
+            <span id="subtitle">Vim</span>
           
         </div>
 
@@ -240,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-01-12 17:39" pubdate>
-          2023年1月12日 下午
+        <time datetime="2023-01-13 17:31" pubdate>
+          2023年1月13日 下午
         </time>
       </span>
     
@@ -252,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k words
+          2.7k words
         
       </span>
     
@@ -263,7 +261,7 @@
         
         
         
-          11 mins
+          23 mins
         
       </span>
     
@@ -309,12 +307,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">正则表达式</h1>
+            <h1 style="display: none">Vim</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年1月12日 下午
+                    本文最后更新于：2023年1月13日 下午
                   
                 
               </p>
@@ -322,75 +320,99 @@
             
               <div class="markdown-body">
                 
-                <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p><a target="_blank" rel="noopener" href="https://regexone.com/">RegexOne</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/ziishaned/learn-regex/blob/master/translations/README-cn.md">github正则表达式</a></p>
-<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230112170412.png" srcset="/img/loading.gif" lazyload></p>
-<h1 id="Tutorials"><a href="#Tutorials" class="headerlink" title="Tutorials"></a>Tutorials</h1><h2 id="Lesson-1-The-123s"><a href="#Lesson-1-The-123s" class="headerlink" title="Lesson 1 The 123s"></a>Lesson 1 The 123s</h2><p><code>\d</code>	any single digit character</p>
-<p><code>\D</code>	any single non-digit character</p>
-<h2 id="Lesson-2-The-Dot"><a href="#Lesson-2-The-Dot" class="headerlink" title="Lesson 2: The Dot"></a>Lesson 2: The Dot</h2><p><code>.</code>	any single character</p>
-<p><code>\.</code>	period</p>
-<h2 id="Lesson-3-Matching-specific-characters"><a href="#Lesson-3-Matching-specific-characters" class="headerlink" title="Lesson 3: Matching specific characters"></a>Lesson 3: Matching specific characters</h2><p><code>[abc]</code>	only a, b, c single character</p>
-<h2 id="Lesson-4-Excluding-specific-characters"><a href="#Lesson-4-Excluding-specific-characters" class="headerlink" title="Lesson 4: Excluding specific characters"></a>Lesson 4: Excluding specific characters</h2><p><code>[^abc]</code>	not a, b or c</p>
-<h2 id="Lesson-5-Character-ranges"><a href="#Lesson-5-Character-ranges" class="headerlink" title="Lesson 5: Character ranges"></a>Lesson 5: Character ranges</h2><p><code>[a-z]</code>	characters a to z</p>
-<p><code>[0-9]</code>	number 0 to 9</p>
-<p><code>\w</code>	字母，数字，下划线。等价于<code>[A-Za-z0-9_]</code></p>
-<p><code>\W</code>	等价于<code>\[^A-Za-z0-9_]</code></p>
-<h2 id="Lesson-6-Catching-some-zzz’s"><a href="#Lesson-6-Catching-some-zzz’s" class="headerlink" title="Lesson 6: Catching some zzz’s"></a>Lesson 6: Catching some zzz’s</h2><p><code>&#123;m&#125;</code>		m repetitions</p>
-<p><code>&#123;m, n&#125;</code>	m to n repetitions</p>
-<p>Examples:</p>
-<p><code>w&#123;3&#125;</code> (three w)</p>
-<p><code>[wxy]&#123;5&#125;</code> (five characters, each of which can be a w, x, or y)</p>
-<h2 id="Lesson-7-Mr-Kleene-Mr-Kleene"><a href="#Lesson-7-Mr-Kleene-Mr-Kleene" class="headerlink" title="Lesson 7: Mr. Kleene, Mr. Kleene"></a>Lesson 7: Mr. Kleene, Mr. Kleene</h2><p><code>*</code> 	<strong>zero</strong> or more repetitions *前的字符可以重复0次或者更多次</p>
-<p><code>+</code>	<strong>one</strong> or more repetitions +前的字符可以重复0次或者更多次</p>
-<p>Match	<code>aaaabcc</code></p>
-<p>Match	<code>aabbbbc</code></p>
-<p>Match	<code>aacc</code></p>
-<p>Skip		<code>a</code></p>
-<p>answer: <code>aa+b*c+</code></p>
-<h2 id="Lesson-8-Characters-optional"><a href="#Lesson-8-Characters-optional" class="headerlink" title="Lesson 8: Characters optional"></a>Lesson 8: Characters optional</h2><p><code>?</code>	optional character ?前的字符可以出现0次或者1次</p>
-<p><code>ab?c</code> will match either the strings “<code>abc</code>“ or “<code>ac</code>“</p>
-<h2 id="Lesson-9-All-this-whitespace"><a href="#Lesson-9-All-this-whitespace" class="headerlink" title="Lesson 9: All this whitespace"></a>Lesson 9: All this whitespace</h2><p><code>\s</code>	代替any whitespace 包括space, tab(\t), new line(\n), return(\r)</p>
-<p><code>\S</code>	相反</p>
-<h2 id="Lesson-10-Starting-and-ending"><a href="#Lesson-10-Starting-and-ending" class="headerlink" title="Lesson 10: Starting and ending"></a>Lesson 10: Starting and ending</h2><p><code>^...$</code>	starts and ends</p>
-<p><code>^Mission: successful$</code>	文本必须以Mission: 开头, successful结尾</p>
-<h2 id="Lesson-11-Match-groups"><a href="#Lesson-11-Match-groups" class="headerlink" title="Lesson 11: Match groups"></a>Lesson 11: Match groups</h2><p><code>(...)</code>	capture group</p>
-<p><code>(a(bc))</code>	capture sub-group</p>
-<p><code>(.*)</code>	capture all</p>
-<h2 id="Lesson-14-It’s-all-conditional"><a href="#Lesson-14-It’s-all-conditional" class="headerlink" title="Lesson 14: It’s all conditional"></a>Lesson 14: It’s all conditional</h2><p><code>(abc|def)</code>	matches abc or def</p>
-<h1 id="Problems"><a href="#Problems" class="headerlink" title="Problems"></a>Problems</h1><h2 id="Problem-1-Matching-a-decimal-numbers"><a href="#Problem-1-Matching-a-decimal-numbers" class="headerlink" title="Problem 1: Matching a decimal numbers"></a>Problem 1: Matching a decimal numbers</h2><table>
-<thead>
-<tr>
-<th>Task</th>
-<th>Text</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Match</td>
-<td>3.14529</td>
-</tr>
-<tr>
-<td>Match</td>
-<td>-255.34</td>
-</tr>
-<tr>
-<td>Match</td>
-<td>128</td>
-</tr>
-<tr>
-<td>Match</td>
-<td>1.9e10</td>
-</tr>
-<tr>
-<td>Match</td>
-<td>123,340.00</td>
-</tr>
-<tr>
-<td>Skip</td>
-<td>720p</td>
-</tr>
-</tbody></table>
-<p>answer:<code>^-?\d+(,\d+)*(\.\d+(e\d+)?)?$</code></p>
-<h2 id="Problem-2-Matching-phone-numbers"><a href="#Problem-2-Matching-phone-numbers" class="headerlink" title="Problem 2: Matching phone numbers"></a>Problem 2: Matching phone numbers</h2><p>后面还有很多problems</p>
+                <h1 id="Modal-editing"><a href="#Modal-editing" class="headerlink" title="Modal editing"></a>Modal editing</h1><ul>
+<li><strong>Normal</strong>: for moving around a file and making edits</li>
+<li><strong>Insert</strong>: <code>i</code> for inserting text</li>
+<li><strong>Replace</strong>: <code>R</code> for replacing text</li>
+<li><strong>Visual</strong>: (plain<code>v</code>, line<code>V</code>, or block<code>Ctrl+v</code>): for selecting blocks of text(use movement keys).</li>
+<li><strong>Command-line</strong>: <code>:</code> for running a command</li>
+</ul>
+<p><code>&lt;ESC&gt;</code>  switch from any mode back to <strong>Normal mode</strong>.</p>
+<h1 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h1><h2 id="Command-line"><a href="#Command-line" class="headerlink" title="Command-line"></a>Command-line</h2><ul>
+<li><code>:q</code> quit (close window)</li>
+<li><code>:w</code> save (“write”)</li>
+<li><code>:wq</code> save and quit</li>
+<li><code>:e &#123;name of file&#125;</code> open file for editing</li>
+<li><code>:ls</code> show open buffers</li>
+<li><code>:help &#123;topic&#125;</code> open help<ul>
+<li><code>:help :w</code> opens help for the <code>:w</code> command</li>
+<li><code>:help w</code> opens help for the <code>w</code> movement</li>
+</ul>
+</li>
+</ul>
+<h1 id="Vim’s-interface-is-a-programming-language"><a href="#Vim’s-interface-is-a-programming-language" class="headerlink" title="Vim’s interface is a programming language"></a>Vim’s interface is a programming language</h1><h2 id="Movement"><a href="#Movement" class="headerlink" title="Movement"></a>Movement</h2><p><strong>Movements in Vim are also called “nouns”.</strong></p>
+<ul>
+<li>Basic movement: <code>hjkl</code> (left, down, up, right)</li>
+<li>Words: <code>w</code> (next word), <code>b</code> (beginning of word), <code>e</code> (end of word)</li>
+<li>Lines: <code>0</code> (beginning of line), <code>^</code> (first non-blank character), <code>$</code> (end of line)</li>
+<li>Screen: <code>H</code> (top of screen), <code>M</code> (middle of screen), <code>L</code> (bottom of screen)</li>
+<li>Scroll: <code>Ctrl-u</code> (up), <code>Ctrl-d</code> (down)</li>
+<li>File: <code>gg</code> (beginning of file), <code>G</code> (end of file)</li>
+<li>Line numbers: <code>:&#123;number&#125;&lt;CR&gt;</code> or <code>&#123;number&#125;G</code> (line {number})</li>
+<li>Misc: <code>%</code> (corresponding item)</li>
+<li>Find: <code>f&#123;character&#125;</code>, <code>t&#123;character&#125;</code>, <code>F&#123;character&#125;</code>, <code>T&#123;character&#125;</code><ul>
+<li>find&#x2F;to forward&#x2F;backward {character} on the current line</li>
+<li><code>,</code> &#x2F; <code>;</code> for navigating matches</li>
+</ul>
+</li>
+<li>Search: <code>/&#123;regex&#125;</code>, <code>n</code> &#x2F; <code>N</code> for navigating matches</li>
+</ul>
+<h2 id="Edits"><a href="#Edits" class="headerlink" title="Edits"></a>Edits</h2><p><strong>Vim’s editing commands are also called “verbs”</strong></p>
+<ul>
+<li><code>i</code> enter Insert mode</li>
+<li><code>o</code> &#x2F; <code>O</code> insert line below &#x2F; above</li>
+<li><code>d&#123;motion&#125;</code> delete {motion}<ul>
+<li>e.g. <code>dw</code> is delete word, <code>d$</code> is delete to end of line, <code>d0</code> is delete to beginning of line</li>
+</ul>
+</li>
+<li><code>c&#123;motion&#125;</code> change {motion}<ul>
+<li>e.g. <code>cw</code> is change word. like <code>d&#123;motion&#125;</code> followed by <code>i</code></li>
+</ul>
+</li>
+<li><code>x</code> delete character (equal do <code>dl</code>)</li>
+<li><code>s</code> substitute character (equal to <code>cl</code>)</li>
+<li>Visual mode + manipulation<ul>
+<li>select text, <code>d</code> to delete it or <code>c</code> to change it</li>
+</ul>
+</li>
+<li><code>u</code> to undo, <code>&lt;Ctrl+r&gt;</code> to redo</li>
+<li><code>y</code> to copy &#x2F; “yank” (some other commands like <code>d</code> also copy)</li>
+<li><code>p</code> to paste</li>
+<li>Lots more to learn: e.g. <code>~</code> flips the case of a character</li>
+</ul>
+<h2 id="Counts"><a href="#Counts" class="headerlink" title="Counts"></a>Counts</h2><p>You can combine <strong>nouns</strong> and <strong>verbs</strong> with a <strong>count</strong>, which will perform a given action a number of times.</p>
+<ul>
+<li><code>3w</code> move 3 words forward</li>
+<li><code>5j</code> move 5 lines down</li>
+<li><code>7dw</code> delete 7 words</li>
+</ul>
+<h2 id="Modifiers"><a href="#Modifiers" class="headerlink" title="Modifiers"></a>Modifiers</h2><p>You can use modifiers to change the meaning of a noun. Some modifiers are <code>i</code>, which means “inner” or “inside”, and <code>a</code>, which means “around”.</p>
+<blockquote>
+<p>光标在括号中，<code>ci(</code>可以把括号内的内容替换并进入insert，类似<code>di(</code>也一样，相当于删除。<code>da(</code>连带括号一起删除。</p>
+<p>这里的<code>i</code>和<code>a</code>不是edit中的含义，而是<strong>inner</strong>和<strong>around</strong>的意思。</p>
+</blockquote>
+<ul>
+<li><code>ci(</code> change the contents inside the current pair of parentheses</li>
+<li><code>ci[</code> change the contents inside the current pair of square brackets</li>
+<li><code>da&#39;</code> delete a single-quoted string, including the surrounding single quotes</li>
+</ul>
+<h1 id="Customizing-Vim"><a href="#Customizing-Vim" class="headerlink" title="Customizing Vim"></a>Customizing Vim</h1><p><a target="_blank" rel="noopener" href="https://github.com/YC-Xiang/dotfiles/blob/main/vim/.vimrc">my vim config</a></p>
+<h1 id="Extending-Vim"><a href="#Extending-Vim" class="headerlink" title="Extending Vim"></a>Extending Vim</h1><p>Vim 8.0 之后自带插件管理工具，只要create the directory <code>~/.vim/pack/vendor/start/</code>, and put plugins in there (e.g. via <code>git clone</code>). <code>vendor</code>目录名好像可以替换。</p>
+<h1 id="Advanced-Vim"><a href="#Advanced-Vim" class="headerlink" title="Advanced Vim"></a>Advanced Vim</h1><h2 id="Search-and-replace"><a href="#Search-and-replace" class="headerlink" title="Search and replace"></a>Search and replace</h2><p><code>:s</code> (substitute) command</p>
+<ul>
+<li><code>%s/foo/bar/g</code><ul>
+<li>replace foo with bar globally in file</li>
+<li><code>%s/\[.*\](\(.*\))/\1/g</code></li>
+<li>replace named Markdown links with plain URL</li>
+</ul>
+</li>
+</ul>
+<h2 id="Multiple-windows"><a href="#Multiple-windows" class="headerlink" title="Multiple windows"></a>Multiple windows</h2><ul>
+<li><code>:sp</code> &#x2F; <code>:vsp</code> to split windows</li>
+<li>Can have multiple views of the same buffer.</li>
+</ul>
+<h2 id="Macros"><a href="#Macros" class="headerlink" title="Macros"></a>Macros</h2><p>to do</p>
+<h1 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h1><p><a target="_blank" rel="noopener" href="https://vim-adventures.com/">Vim Adventures</a> is a game to learn Vim</p>
 
                 
               </div>
@@ -424,7 +446,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E7%A4%BA%E5%BC%8F/">#正则表示式</a>
+        <a href="/tags/Vim/">#Vim</a>
       
     </div>
   
@@ -438,18 +460,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/01/13/Vim/" title="Vim">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Vim</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/01/11/reading/%E6%80%9D%E7%BB%B4%E7%9A%84%E4%B9%90%E8%B6%A3/" title="沉默的大多数">
-                        <span class="hidden-mobile">沉默的大多数</span>
+                      <a href="/2023/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="正则表达式">
+                        <span class="hidden-mobile">正则表达式</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
