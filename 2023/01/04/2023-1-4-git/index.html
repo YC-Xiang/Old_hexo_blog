@@ -23,14 +23,15 @@
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
 <meta property="og:description" content="GITGit push123456789101112131415# git push [远程主机名][本地分支名]:[远程分支名]$ git push origin HEAD:master# HEAD是当前指向的分支,可以用git show HEAD 查看$ git show HEAD$ git branch -a# 需要code view 时要加&#x2F;refs&#x2F;for$ git push origi">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230116143526.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git1.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git2.png">
 <meta property="article:published_time" content="2023-01-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-01-16T06:08:23.103Z">
+<meta property="article:modified_time" content="2023-01-16T07:09:09.455Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git1.png">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230116143526.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -253,7 +254,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.7k words
+          4.2k words
         
       </span>
     
@@ -264,7 +265,7 @@
         
         
         
-          31 mins
+          35 mins
         
       </span>
     
@@ -326,12 +327,8 @@
                 <h1 id="GIT"><a href="#GIT" class="headerlink" title="GIT"></a>GIT</h1><h2 id="Git-push"><a href="#Git-push" class="headerlink" title="Git push"></a>Git push</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># git push [远程主机名][本地分支名]:[远程分支名]</span><br>$ git push origin HEAD:master<br><span class="hljs-comment"># HEAD是当前指向的分支,可以用git show HEAD 查看</span><br>$ git show HEAD<br>$ git branch -a<br><span class="hljs-comment"># 需要code view 时要加/refs/for</span><br>$ git push origin HEAD:refs/for/master<br><br><span class="hljs-comment"># 不加远程分支名</span><br>$ git push origin dev<br><span class="hljs-comment"># 相当于,如果远程分支不存在则会自动创建, 并创建联系</span><br>$ git push origin dev:dev<br>$ git branch --set-upstream-to=origin/dev<br><span class="hljs-comment"># 删除远程分支，直接推送空分支到远程分支</span><br>$ git push origin :dev<br></code></pre></td></tr></table></figure>
 
 <h2 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a>git diff</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看unstaged的改动(还没git add)</span><br>$ git diff<br><span class="hljs-comment"># 查看staged的改动(git add过的)</span><br>$ git diff --staged<br><span class="hljs-comment"># 显示出branch1和branch2中差异的部分</span><br>$ git diff branch1 branch2 --<span class="hljs-built_in">stat</span><br><span class="hljs-comment"># 显示指定文件的详细差异</span><br>$ git diff branch1 branch2 具体文件路径<br><span class="hljs-comment"># 显示出所有有差异的文件的详细差异</span><br>$ git diff branch1 branch2<br><span class="hljs-comment"># 显示本地master分支与远程master分支的区别</span><br>$ git diff master origin/master<br><span class="hljs-comment"># 比较两个commit</span><br>git diff commit id1 commit id2<br></code></pre></td></tr></table></figure>
-<h2 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a>git log</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看前两个commit的修改</span><br>$ git <span class="hljs-built_in">log</span> -p -2<br><span class="hljs-comment"># 查看改动了哪些文件</span><br>$ git <span class="hljs-built_in">log</span> --<span class="hljs-built_in">stat</span><br><span class="hljs-comment"># 每个commit一行展示</span><br>$ git <span class="hljs-built_in">log</span> --pretty=oneline<br></code></pre></td></tr></table></figure>
-
-<p>撤回当前commit，并且保留修改的代码：</p>
-<p>git reset –soft HEAD^ &#x2F; commit ID</p>
-<p>不保留修改的代码：</p>
-<p>git reset –hard HEAD^ &#x2F; commit ID</p>
+<h2 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a>git log</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看前两个commit的修改</span><br>$ git <span class="hljs-built_in">log</span> -p -2<br><span class="hljs-comment"># 查看改动了哪些文件</span><br>$ git <span class="hljs-built_in">log</span> --<span class="hljs-built_in">stat</span><br><span class="hljs-comment"># 每个commit一行展示</span><br>$ git <span class="hljs-built_in">log</span> --pretty=oneline<br><span class="hljs-comment"># 展示合并历史</span><br>$ git <span class="hljs-built_in">log</span> --graph<br><span class="hljs-comment"># 从一定时间开始的commit</span><br>$ git <span class="hljs-built_in">log</span> --since=2.weeks<br>$ git <span class="hljs-built_in">log</span> --since=2008-01-15<br>$ git <span class="hljs-built_in">log</span> --since=2 years 1 day 3 minutes ago<br><span class="hljs-comment"># 查看哪些commit修改了function_name</span><br>$ git <span class="hljs-built_in">log</span> -S function_name<br><span class="hljs-comment"># 查看某个文件的commit</span><br>$ git <span class="hljs-built_in">log</span> -- path/to/file<br></code></pre></td></tr></table></figure>
+<p>You can also filter the list to commits that match some search criteria. The <code>--author</code> option allows<br>you to filter on a specific author, and the <code>--grep</code> option lets you search for keywords in the commit<br>messages.<br><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230116143526.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="git-rebase-git-merge"><a href="#git-rebase-git-merge" class="headerlink" title="git rebase, git merge"></a>git rebase, git merge</h2><p>git merge：在dev分支git merge main，&#x2F;&#x2F; 将main最新的commit拉到dev，有合并记录</p>
 <p>git rebase：在dev分支git rebase main &#x2F;&#x2F;修改dev分支，将main最新的commit拉到dev，将dev最新的commit 接到main后面</p>
 <p>e.g 在本地一个分支上有了C5，C6两个自己的commit，但此时远程master分支上别人又合并了两个C3,C4分支。如果用git pull（git fetch + git merge）会有一个新的merge commit。此时需要git rebase 将c5,c6接到最新的master代码(c4)上。</p>
@@ -416,7 +413,8 @@
 
 <h3 id="Your-Identity"><a href="#Your-Identity" class="headerlink" title="Your Identity"></a>Your Identity</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git config --global user.name <span class="hljs-string">&quot;John Doe&quot;</span><br>$ git config --global user.email johndoe@example.com<br></code></pre></td></tr></table></figure>
 <h3 id="Your-Editor"><a href="#Your-Editor" class="headerlink" title="Your Editor"></a>Your Editor</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global core.editor vim<br></code></pre></td></tr></table></figure>
-
+<h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><p>在repository中不小心上传了大文件或者隐私数据：<br><a target="_blank" rel="noopener" href="https://help.github.com/articles/removing-sensitive-data-from-a-repository/">https://help.github.com/articles/removing-sensitive-data-from-a-repository/</a></p>
+<p><strong>git alias</strong>: <a target="_blank" rel="noopener" href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-alias">https://git-scm.com/docs/git-config#Documentation/git-config.txt-alias</a></p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a target="_blank" rel="noopener" href="https://learngitbranching.js.org/">An online game to learn Git</a><br><a target="_blank" rel="noopener" href="https://git-scm.com/book/en/v2">Pro Git</a></p>
 
                 
