@@ -1,4 +1,4 @@
-if [ $# != 2 ]; then
+if [ $# != 1 ]; then
 echo "USAGE: $0 [commit message]"
 exit 1;
 fi
