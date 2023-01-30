@@ -16,24 +16,24 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Modal editing Normal: for moving around a file and making edits Insert: i for inserting text Replace: R for replacing text Visual: (plainv, lineV, or blockCtrl+v): for selecting blocks of text(use mov">
+    <meta name="description" content="foo&#x3D;bar 变量定义&#x3D;左右不能加空格。 用&#39;分隔的字符串是字面值字符串，不会替换变量值，而用&quot;分隔的字符串会。 12345foo&#x3D;barecho &quot;$foo&quot;# prints barecho &amp;#x27;$foo&amp;#x27;# prints $foo  $0- Name of the script$1- to $9 - Arguments to the s">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vim">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/01/13/Vim/index.html">
+<meta property="og:title" content="Shell scripts">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/01/30/shell-scrpts/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Modal editing Normal: for moving around a file and making edits Insert: i for inserting text Replace: R for replacing text Visual: (plainv, lineV, or blockCtrl+v): for selecting blocks of text(use mov">
+<meta property="og:description" content="foo&#x3D;bar 变量定义&#x3D;左右不能加空格。 用&#39;分隔的字符串是字面值字符串，不会替换变量值，而用&quot;分隔的字符串会。 12345foo&#x3D;barecho &quot;$foo&quot;# prints barecho &amp;#x27;$foo&amp;#x27;# prints $foo  $0- Name of the script$1- to $9 - Arguments to the s">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-01-13T09:31:28.000Z">
-<meta property="article:modified_time" content="2023-01-13T09:33:46.202Z">
+<meta property="article:published_time" content="2023-01-30T02:02:05.000Z">
+<meta property="article:modified_time" content="2023-01-30T03:05:50.653Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="Vim">
+<meta property="article:tag" content="Shell">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Vim - Yucheng&#39;s Blog</title>
+  <title>Shell scripts - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Vim</span>
+            <span id="subtitle">Shell scripts</span>
           
         </div>
 
@@ -238,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-01-13 17:31" pubdate>
-          2023年1月13日 下午
+        <time datetime="2023-01-30 10:02" pubdate>
+          2023年1月30日 上午
         </time>
       </span>
     
@@ -250,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k words
+          2.4k words
         
       </span>
     
@@ -261,7 +261,7 @@
         
         
         
-          23 mins
+          21 mins
         
       </span>
     
@@ -307,12 +307,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Vim</h1>
+            <h1 style="display: none">Shell scripts</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年1月13日 下午
+                    本文最后更新于：2023年1月30日 上午
                   
                 
               </p>
@@ -320,99 +320,24 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Modal-editing"><a href="#Modal-editing" class="headerlink" title="Modal editing"></a>Modal editing</h1><ul>
-<li><strong>Normal</strong>: for moving around a file and making edits</li>
-<li><strong>Insert</strong>: <code>i</code> for inserting text</li>
-<li><strong>Replace</strong>: <code>R</code> for replacing text</li>
-<li><strong>Visual</strong>: (plain<code>v</code>, line<code>V</code>, or block<code>Ctrl+v</code>): for selecting blocks of text(use movement keys).</li>
-<li><strong>Command-line</strong>: <code>:</code> for running a command</li>
-</ul>
-<p><code>&lt;ESC&gt;</code>  switch from any mode back to <strong>Normal mode</strong>.</p>
-<h1 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h1><h2 id="Command-line"><a href="#Command-line" class="headerlink" title="Command-line"></a>Command-line</h2><ul>
-<li><code>:q</code> quit (close window)</li>
-<li><code>:w</code> save (“write”)</li>
-<li><code>:wq</code> save and quit</li>
-<li><code>:e &#123;name of file&#125;</code> open file for editing</li>
-<li><code>:ls</code> show open buffers</li>
-<li><code>:help &#123;topic&#125;</code> open help<ul>
-<li><code>:help :w</code> opens help for the <code>:w</code> command</li>
-<li><code>:help w</code> opens help for the <code>w</code> movement</li>
-</ul>
-</li>
-</ul>
-<h1 id="Vim’s-interface-is-a-programming-language"><a href="#Vim’s-interface-is-a-programming-language" class="headerlink" title="Vim’s interface is a programming language"></a>Vim’s interface is a programming language</h1><h2 id="Movement"><a href="#Movement" class="headerlink" title="Movement"></a>Movement</h2><p><strong>Movements in Vim are also called “nouns”.</strong></p>
-<ul>
-<li>Basic movement: <code>hjkl</code> (left, down, up, right)</li>
-<li>Words: <code>w</code> (next word), <code>b</code> (beginning of word), <code>e</code> (end of word)</li>
-<li>Lines: <code>0</code> (beginning of line), <code>^</code> (first non-blank character), <code>$</code> (end of line)</li>
-<li>Screen: <code>H</code> (top of screen), <code>M</code> (middle of screen), <code>L</code> (bottom of screen)</li>
-<li>Scroll: <code>Ctrl-u</code> (up), <code>Ctrl-d</code> (down)</li>
-<li>File: <code>gg</code> (beginning of file), <code>G</code> (end of file)</li>
-<li>Line numbers: <code>:&#123;number&#125;&lt;CR&gt;</code> or <code>&#123;number&#125;G</code> (line {number})</li>
-<li>Misc: <code>%</code> (corresponding item)</li>
-<li>Find: <code>f&#123;character&#125;</code>, <code>t&#123;character&#125;</code>, <code>F&#123;character&#125;</code>, <code>T&#123;character&#125;</code><ul>
-<li>find&#x2F;to forward&#x2F;backward {character} on the current line</li>
-<li><code>,</code> &#x2F; <code>;</code> for navigating matches</li>
-</ul>
-</li>
-<li>Search: <code>/&#123;regex&#125;</code>, <code>n</code> &#x2F; <code>N</code> for navigating matches</li>
-</ul>
-<h2 id="Edits"><a href="#Edits" class="headerlink" title="Edits"></a>Edits</h2><p><strong>Vim’s editing commands are also called “verbs”</strong></p>
-<ul>
-<li><code>i</code> enter Insert mode</li>
-<li><code>o</code> &#x2F; <code>O</code> insert line below &#x2F; above</li>
-<li><code>d&#123;motion&#125;</code> delete {motion}<ul>
-<li>e.g. <code>dw</code> is delete word, <code>d$</code> is delete to end of line, <code>d0</code> is delete to beginning of line</li>
-</ul>
-</li>
-<li><code>c&#123;motion&#125;</code> change {motion}<ul>
-<li>e.g. <code>cw</code> is change word. like <code>d&#123;motion&#125;</code> followed by <code>i</code></li>
-</ul>
-</li>
-<li><code>x</code> delete character (equal do <code>dl</code>)</li>
-<li><code>s</code> substitute character (equal to <code>cl</code>)</li>
-<li>Visual mode + manipulation<ul>
-<li>select text, <code>d</code> to delete it or <code>c</code> to change it</li>
-</ul>
-</li>
-<li><code>u</code> to undo, <code>&lt;Ctrl+r&gt;</code> to redo</li>
-<li><code>y</code> to copy &#x2F; “yank” (some other commands like <code>d</code> also copy)</li>
-<li><code>p</code> to paste</li>
-<li>Lots more to learn: e.g. <code>~</code> flips the case of a character</li>
-</ul>
-<h2 id="Counts"><a href="#Counts" class="headerlink" title="Counts"></a>Counts</h2><p>You can combine <strong>nouns</strong> and <strong>verbs</strong> with a <strong>count</strong>, which will perform a given action a number of times.</p>
-<ul>
-<li><code>3w</code> move 3 words forward</li>
-<li><code>5j</code> move 5 lines down</li>
-<li><code>7dw</code> delete 7 words</li>
-</ul>
-<h2 id="Modifiers"><a href="#Modifiers" class="headerlink" title="Modifiers"></a>Modifiers</h2><p>You can use modifiers to change the meaning of a noun. Some modifiers are <code>i</code>, which means “inner” or “inside”, and <code>a</code>, which means “around”.</p>
-<blockquote>
-<p>光标在括号中，<code>ci(</code>可以把括号内的内容替换并进入insert，类似<code>di(</code>也一样，相当于删除。<code>da(</code>连带括号一起删除。</p>
-<p>这里的<code>i</code>和<code>a</code>不是edit中的含义，而是<strong>inner</strong>和<strong>around</strong>的意思。</p>
-</blockquote>
-<ul>
-<li><code>ci(</code> change the contents inside the current pair of parentheses</li>
-<li><code>ci[</code> change the contents inside the current pair of square brackets</li>
-<li><code>da&#39;</code> delete a single-quoted string, including the surrounding single quotes</li>
-</ul>
-<h1 id="Customizing-Vim"><a href="#Customizing-Vim" class="headerlink" title="Customizing Vim"></a>Customizing Vim</h1><p><a target="_blank" rel="noopener" href="https://github.com/YC-Xiang/dotfiles/blob/main/vim/.vimrc">my vim config</a></p>
-<h1 id="Extending-Vim"><a href="#Extending-Vim" class="headerlink" title="Extending Vim"></a>Extending Vim</h1><p>Vim 8.0 之后自带插件管理工具，只要create the directory <code>~/.vim/pack/vendor/start/</code>, and put plugins in there (e.g. via <code>git clone</code>). <code>vendor</code>目录名好像可以替换。</p>
-<h1 id="Advanced-Vim"><a href="#Advanced-Vim" class="headerlink" title="Advanced Vim"></a>Advanced Vim</h1><h2 id="Search-and-replace"><a href="#Search-and-replace" class="headerlink" title="Search and replace"></a>Search and replace</h2><p><code>:s</code> (substitute) command</p>
-<ul>
-<li><code>%s/foo/bar/g</code><ul>
-<li>replace foo with bar globally in file</li>
-<li><code>%s/\[.*\](\(.*\))/\1/g</code></li>
-<li>replace named Markdown links with plain URL</li>
-</ul>
-</li>
-</ul>
-<h2 id="Multiple-windows"><a href="#Multiple-windows" class="headerlink" title="Multiple windows"></a>Multiple windows</h2><ul>
-<li><code>:sp</code> &#x2F; <code>:vsp</code> to split windows</li>
-<li>Can have multiple views of the same buffer.</li>
-</ul>
-<h2 id="Macros"><a href="#Macros" class="headerlink" title="Macros"></a>Macros</h2><p>to do</p>
-<h1 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h1><p><a target="_blank" rel="noopener" href="https://vim-adventures.com/">Vim Adventures</a> is a game to learn Vim</p>
+                <p><code>foo=bar</code> 变量定义<code>=</code>左右不能加空格。</p>
+<p>用<code>&#39;</code>分隔的字符串是字面值字符串，不会替换变量值，而用<code>&quot;</code>分隔的字符串会。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">foo=bar<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$foo</span>&quot;</span><br><span class="hljs-comment"># prints bar</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;$foo&#x27;</span><br><span class="hljs-comment"># prints $foo</span><br></code></pre></td></tr></table></figure>
+
+<p><code>$0</code>- Name of the script<br><code>$1</code>- to $9 - Arguments to the script. $1 is the first argument and so on.<br><code>$@</code>- All the arguments<br><code>$#</code>- Number of arguments<br><code>$?</code>- Return code of the previous command<br><code>$$</code>- Process identification number (PID) for the current script<br><code>!!</code>- Entire last command, including arguments. A common pattern is to execute a command only for it to fail due to missing permissions; you can quickly re-execute the command with sudo by doing <code>sudo !!</code><br><code>$_</code>- Last argument from the last command. If you are in an interactive shell, you can also quickly get this value by typing Esc followed by <code>.</code> or <code>Alt+.</code></p>
+<p>The <code>true</code> program will always have a 0 return code and the <code>false</code> command will always have a 1 return code.</p>
+<p><code>Command1 &amp;&amp; Command2</code> 如果Command1命令运行成功，则继续运行Command2命令。<br><code>Command1 || Command2</code> 如果Command1命令运行失败，则继续运行Command2命令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-literal">false</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Oops, fail&quot;</span><br><span class="hljs-comment"># Oops, fail</span><br><br><span class="hljs-literal">true</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Will not be printed&quot;</span><br><span class="hljs-comment">#</span><br><br><span class="hljs-literal">true</span> &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Things went well&quot;</span><br><span class="hljs-comment"># Things went well</span><br><br><span class="hljs-literal">false</span> &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Will not be printed&quot;</span><br><span class="hljs-comment">#</span><br><br><span class="hljs-literal">true</span> ; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;This will always run&quot;</span><br><span class="hljs-comment"># This will always run</span><br><br><span class="hljs-literal">false</span> ; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;This will always run&quot;</span><br><span class="hljs-comment"># This will always run</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>command substitution</strong><br><code>$(CMD)</code> will execute CMD, get the output of the command and substitute it in place.<br><code>for file in $(ls)</code> will first call ls and then iterate over those values.</p>
+<p><strong>process substitution</strong><br><code>&lt;(CMD)</code> will execute CMD and place the output in a temporary file and substitute the &lt;() with that file’s name.<br><code>diff &lt;(ls foo) &lt;(ls bar)</code> will show differences between files in dirs foo and bar.</p>
+<p>Example:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Starting program at <span class="hljs-subst">$(date)</span>&quot;</span> <span class="hljs-comment"># Date will be substituted</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Running program <span class="hljs-variable">$0</span> with <span class="hljs-variable">$#</span> arguments with pid $$&quot;</span><br><br><span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> <span class="hljs-string">&quot;<span class="hljs-variable">$@</span>&quot;</span>; <span class="hljs-keyword">do</span><br>    grep foobar <span class="hljs-string">&quot;<span class="hljs-variable">$file</span>&quot;</span> &gt; /dev/null 2&gt; /dev/null <span class="hljs-comment"># 标准输出和标准错误都重定向到/dev/null</span><br>    <span class="hljs-comment"># When pattern is not found, grep has exit status 1</span><br>    <span class="hljs-comment"># We redirect STDOUT and STDERR to a null register since we do not care about them</span><br>    <span class="hljs-keyword">if</span> [[ $? -ne 0 ]]; <span class="hljs-keyword">then</span><br>        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;File <span class="hljs-variable">$file</span> does not have any foobar, adding one&quot;</span><br>        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;# foobar&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$file</span>&quot;</span><br>    <span class="hljs-keyword">fi</span><br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
+<div class="note note-info">
+            <p>try to use double brackets [[ ]] in favor of simple brackets [ ]</p>
+          </div>
+
+<h2 id="shell-globbing-Wildcards-替换单个字符-替换后面所有字符-Curly-braces"><a href="#shell-globbing-Wildcards-替换单个字符-替换后面所有字符-Curly-braces" class="headerlink" title="shell globbing- Wildcards  - ?替换单个字符  - *替换后面所有字符- Curly braces {}"></a><strong>shell globbing</strong><br>- Wildcards<br>  - <code>?</code>替换单个字符<br>  - <code>*</code>替换后面所有字符<br>- Curly braces <code>&#123;&#125;</code></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">convert image.&#123;png,jpg&#125;<br><span class="hljs-comment"># Will expand to</span><br>convert image.png image.jpg<br><br><span class="hljs-built_in">cp</span> /path/to/project/&#123;foo,bar,baz&#125;.sh /newpath<br><span class="hljs-comment"># Will expand to</span><br><span class="hljs-built_in">cp</span> /path/to/project/foo.sh /path/to/project/bar.sh /path/to/project/baz.sh /newpath<br><br><span class="hljs-comment"># Globbing techniques can also be combined</span><br><span class="hljs-built_in">mv</span> *&#123;.py,.sh&#125; folder<br><span class="hljs-comment"># Will move all *.py and *.sh files</span><br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -446,7 +371,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Vim/">#Vim</a>
+        <a href="/tags/Shell/">#Shell</a>
       
     </div>
   
@@ -460,18 +385,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/01/30/shell-scrpts/" title="Shell scripts">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Shell scripts</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="正则表达式">
-                        <span class="hidden-mobile">正则表达式</span>
+                      <a href="/2023/01/13/Vim/" title="Vim">
+                        <span class="hidden-mobile">Vim</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
