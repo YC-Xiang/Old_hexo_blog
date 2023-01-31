@@ -27,7 +27,7 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git1.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git2.png">
 <meta property="article:published_time" content="2023-01-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-01-30T03:24:57.949Z">
+<meta property="article:modified_time" content="2023-01-31T06:12:45.011Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary_large_image">
@@ -316,7 +316,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年1月30日 上午
+                    本文最后更新于：2023年1月31日 下午
                   
                 
               </p>
@@ -391,6 +391,7 @@
 <h3 id="合并多个commit为一个完整commit"><a href="#合并多个commit为一个完整commit" class="headerlink" title="合并多个commit为一个完整commit"></a>合并多个commit为一个完整commit</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4a8f4af4e803">https://www.jianshu.com/p/4a8f4af4e803</a></p>
 <p><code>git rebase -i HEAD~3</code> 修改HEAD往后三个分支（包括HEAD)</p>
 <p>或者<code>git rebase -i 某个commit</code> 修改某个commit前的所有提交</p>
+<p>然后<code>git push -f</code>可以修改远程的commit记录</p>
 <h3 id="将某一段commit粘贴到另一个分支上"><a href="#将某一段commit粘贴到另一个分支上" class="headerlink" title="将某一段commit粘贴到另一个分支上"></a>将某一段commit粘贴到另一个分支上</h3><h2 id="生成-x2F-打patch"><a href="#生成-x2F-打patch" class="headerlink" title="生成&#x2F;打patch"></a>生成&#x2F;打patch</h2><p>生成patch：git diff &gt; patch.diff</p>
 <p>检查patch：git apply –stat patch.diff</p>
 <p>查看能否打入：git apply –check patch.diff</p>
