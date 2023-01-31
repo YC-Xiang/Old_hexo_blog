@@ -21,7 +21,7 @@ categories:
 
 ![图2.2](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/RISC%E6%8C%87%E4%BB%A4%E6%A0%BC%E5%BC%8F.png)
 
-![图2.3](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/RV32I%20%E5%B8%A6%E6%9C%89%E6%8C%87%E4%BB%A4%E5%B8%83%E5%B1%80.png)
+![图2.3](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230131113244.png)
 
 ## 2.3 RV32I 寄存器
 
