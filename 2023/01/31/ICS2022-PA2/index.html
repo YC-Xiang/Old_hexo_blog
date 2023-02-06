@@ -16,17 +16,17 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="mul-longlong.c中check 0xaeb1c2aa * 0xaeb1c2aa &#x3D; 0x19d29ab9db1a18e4LL 实现mulh指令遇到的一个问题： 由于src1和src2都是unsigned int，强制类型转换为long（零扩展），得到的是无符号相乘结果0x7736200d。 1234  &#x2F;&#x2F; 直接u32*u32会溢出，乘出来还是u32u32 src1 &#x3D; 0xaeb1c2">
+    <meta name="description" content="Phase_1mul-longlong.c中check 0xaeb1c2aa * 0xaeb1c2aa &#x3D; 0x19d29ab9db1a18e4LL 实现mulh指令遇到的一个问题： 由于src1和src2都是unsigned int，强制类型转换为long（零扩展），得到的是无符号相乘结果0x7736200d。 1234  &#x2F;&#x2F; 直接u32*u32会溢出，乘出来还是u32u32 src1 &#x3D; 0">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ICS2022 PA2">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/01/31/ICS2022-PA2/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="mul-longlong.c中check 0xaeb1c2aa * 0xaeb1c2aa &#x3D; 0x19d29ab9db1a18e4LL 实现mulh指令遇到的一个问题： 由于src1和src2都是unsigned int，强制类型转换为long（零扩展），得到的是无符号相乘结果0x7736200d。 1234  &#x2F;&#x2F; 直接u32*u32会溢出，乘出来还是u32u32 src1 &#x3D; 0xaeb1c2">
+<meta property="og:description" content="Phase_1mul-longlong.c中check 0xaeb1c2aa * 0xaeb1c2aa &#x3D; 0x19d29ab9db1a18e4LL 实现mulh指令遇到的一个问题： 由于src1和src2都是unsigned int，强制类型转换为long（零扩展），得到的是无符号相乘结果0x7736200d。 1234  &#x2F;&#x2F; 直接u32*u32会溢出，乘出来还是u32u32 src1 &#x3D; 0">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230201173605.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230201173534.png">
 <meta property="article:published_time" content="2023-01-31T06:24:23.000Z">
-<meta property="article:modified_time" content="2023-02-01T09:36:08.183Z">
+<meta property="article:modified_time" content="2023-02-02T03:56:10.474Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="ICS">
 <meta name="twitter:card" content="summary_large_image">
@@ -253,7 +253,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          410 words
+          516 words
         
       </span>
     
@@ -264,7 +264,7 @@
         
         
         
-          4 mins
+          5 mins
         
       </span>
     
@@ -315,7 +315,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年2月1日 下午
+                    本文最后更新于：2023年2月2日 中午
                   
                 
               </p>
@@ -323,15 +323,16 @@
             
               <div class="markdown-body">
                 
-                <p>mul-longlong.c中check <code>0xaeb1c2aa * 0xaeb1c2aa = 0x19d29ab9db1a18e4LL</code></p>
+                <h2 id="Phase-1"><a href="#Phase-1" class="headerlink" title="Phase_1"></a>Phase_1</h2><p>mul-longlong.c中check <code>0xaeb1c2aa * 0xaeb1c2aa = 0x19d29ab9db1a18e4LL</code></p>
 <p>实现mulh指令遇到的一个问题：</p>
 <p>由于<code>src1</code>和<code>src2</code>都是<code>unsigned int</code>，强制类型转换为<code>long</code>（零扩展），得到的是无符号相乘结果<code>0x7736200d</code>。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">  <span class="hljs-comment">// 直接u32*u32会溢出，乘出来还是u32</span><br>u32 src1 = <span class="hljs-number">0xaeb1c2aa</span>;<br>u32 src2 = <span class="hljs-number">0xaeb1c2aa</span><br>INSTPAT(<span class="hljs-string">&quot;...&quot;</span>, mulh, R, R(dest) = (((<span class="hljs-type">long</span>)src1 * (<span class="hljs-type">long</span>)src2) &gt;&gt; <span class="hljs-number">32</span>));<br></code></pre></td></tr></table></figure>
 
 <p>先修改为<code>int</code>型，再改为<code>long</code>型（符号扩展）则可以顺利得到<code>0x19d29ab9</code>。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">INSTPAT(<span class="hljs-string">&quot;...&quot;</span>, mulh, R, R(dest) = (((<span class="hljs-type">long</span>)(<span class="hljs-type">int</span>)src1 * (<span class="hljs-type">long</span>)(<span class="hljs-type">int</span>)src2) &gt;&gt; <span class="hljs-number">32</span>));<br></code></pre></td></tr></table></figure>
+<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230201173605.png" srcset="/img/loading.gif" lazyload></div><div class="group-image-wrap"><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230201173534.png" srcset="/img/loading.gif" lazyload></div></div></div>
 
-<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230201173605.png" srcset="/img/loading.gif" lazyload><br><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230201173534.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="Phase-2"><a href="#Phase-2" class="headerlink" title="Phase_2"></a>Phase_2</h2><h3 id="通过批处理模式运行NEMU"><a href="#通过批处理模式运行NEMU" class="headerlink" title="通过批处理模式运行NEMU"></a>通过批处理模式运行NEMU</h3><p><code>abstract-machine/scripts/platform/nemu.mk</code>中<code>NEMUFLAGS</code>加上<code>-b</code>，选择批处理模式，不用每次进入nemu都输入<code>c</code>。</p>
 
                 
               </div>
