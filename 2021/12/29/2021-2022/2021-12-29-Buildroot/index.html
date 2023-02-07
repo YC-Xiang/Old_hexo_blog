@@ -1,0 +1,739 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="YC-Xiang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Buildroot是一个高度可定制的嵌入式Linux镜像构建工具。  Buildroot 目录结构 arch: CPU架构相关的配置脚本 board: 在构建系统时，board默认的boot和Linux kernel配置文件，以及一些板级相关脚本 boot: uboot配置脚本目录 configs: 板级配置文件，该目录下的配置文件记录着该机器平台或者方案使用的工具链，boot， kernel，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Buildroot学习记录">
+<meta property="og:url" content="https://yc-xiang.github.io/2021/12/29/2021-2022/2021-12-29-Buildroot/index.html">
+<meta property="og:site_name" content="Yucheng&#39;s Blog">
+<meta property="og:description" content="Buildroot是一个高度可定制的嵌入式Linux镜像构建工具。  Buildroot 目录结构 arch: CPU架构相关的配置脚本 board: 在构建系统时，board默认的boot和Linux kernel配置文件，以及一些板级相关脚本 boot: uboot配置脚本目录 configs: 板级配置文件，该目录下的配置文件记录着该机器平台或者方案使用的工具链，boot， kernel，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gxwbwcmsauj30i303zt8t.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gxwbwv9a45j30gq03ydg1.jpg">
+<meta property="article:published_time" content="2021-12-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-10T08:35:39.460Z">
+<meta property="article:author" content="Yucheng Xiang">
+<meta property="article:tag" content="Buildroot">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gxwbwcmsauj30i303zt8t.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Buildroot学习记录 - Yucheng&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yc-xiang.github.io","root":"/","version":"1.9.4","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"C"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"ed5b2440a3a7651272e4681ae4ac17e2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?ed5b2440a3a7651272e4681ae4ac17e2";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>YC&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/homepage.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Buildroot学习记录</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-12-29 00:00" pubdate>
+          2021年12月29日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.8k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          33 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> times
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Buildroot学习记录</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年1月10日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>Buildroot是一个高度可定制的嵌入式Linux镜像构建工具。</p>
+</blockquote>
+<h2 id="Buildroot-目录结构"><a href="#Buildroot-目录结构" class="headerlink" title="Buildroot 目录结构"></a>Buildroot 目录结构</h2><ul>
+<li>arch: CPU架构相关的配置脚本</li>
+<li>board: 在构建系统时，board默认的boot和Linux kernel配置文件，以及一些板级相关脚本</li>
+<li>boot: uboot配置脚本目录</li>
+<li>configs: 板级配置文件，该目录下的配置文件记录着该机器平台或者方案使用的工具链，boot， kernel，各种应用软件包的配置</li>
+<li>dl: download的简写，下载一些开源包。第一次下载后，下次就不会再去从官网下载了，而是从dl&#x2F;目录下拿开源包，以节约时间</li>
+<li>docs:</li>
+<li>fs: 各种文件系统的自动构建脚本</li>
+<li>linux: 存放Linux kernel的自动构建脚本</li>
+<li>package: 第三方开源包的自动编译构建脚本，用来配置编译dl目录下载的开源包</li>
+<li>support:</li>
+<li>system: 存放文件系统目录的和设备节点的模板，这些模板会被拷贝到output&#x2F;目录下，用于制作根文件系统rootfs</li>
+<li>toolchain&#x2F; 目录中存放着各种制作工具链的脚本</li>
+</ul>
+<h2 id="编译出的output输出目录"><a href="#编译出的output输出目录" class="headerlink" title="编译出的output输出目录"></a>编译出的output输出目录</h2><ul>
+<li>images: 存储所有映像（内核映像，引导加载程序和根文件系统映像）的位置。这些是您需要放在目标系统上的文件。</li>
+<li>build&#x2F;: 构建所有组件的位置（包括主机上Buildroot所需的工具和针对目标编译的软件包）。该目录为每个组件包含一个子目录。</li>
+<li>host&#x2F;: 包含为主机构建的工具和目标工具链。</li>
+<li>staging&#x2F;: 是到内部目标工具链host&#x2F;的符号链接</li>
+<li>target&#x2F;: 它几乎包含了目标的完整根文件系统。除了设备文件&#x2F;dev&#x2F;（Buildroot无法创建它们，因为Buildroot不能以root身份运行并且不想以root身份运行）之外，所需的一切都存在。</li>
+</ul>
+<h2 id="Buildroot-常用make命令"><a href="#Buildroot-常用make命令" class="headerlink" title="Buildroot 常用make命令"></a>Buildroot 常用make命令</h2><ul>
+<li>make help</li>
+<li>make menuconfig: 图形化配置</li>
+<li>make uboot-menuconfig</li>
+<li>make linux-menuconfig</li>
+<li>make savedefconfig: 保存配置到xxx_defconfig中<br/><br/></li>
+<li>make clean: 删除编译文件</li>
+<li>make distclean: 等于make clean + 删除配置, 可以针对某一软件包make &lt;pkg&gt; disclean(这里要用disclean)</li>
+<li>make show-targets: 显示本次配置编译的目标</li>
+<li>make &lt;pkg&gt;-target: 单独编译某个pkg</li>
+<li>make &lt;pkg&gt;-rebuild: 重新编译pkg</li>
+<li>make &lt;pkg&gt;-extract: 只下载解压pkg,不编译，pkg解压后放在output&#x2F;build&#x2F;对应的pkg目录下</li>
+<li>make &lt;pkg&gt;-source: 只下载某pkg，然后不做任何事情</li>
+</ul>
+<h2 id="添加自己的软件包"><a href="#添加自己的软件包" class="headerlink" title="添加自己的软件包"></a>添加自己的软件包</h2><h3 id="添加package-x2F-Config-in入口"><a href="#添加package-x2F-Config-in入口" class="headerlink" title="添加package&#x2F;Config.in入口"></a>添加package&#x2F;Config.in入口</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kufds">config BR2_PACKAGE_HELLOWORLD<br>bool &quot;helloworld&quot;<br>help<br>  This is a demo to add myown(fuzidage) package.<br></code></pre></td></tr></table></figure>
+
+<h3 id="配置APP对应的Config-in和mk文件"><a href="#配置APP对应的Config-in和mk文件" class="headerlink" title="配置APP对应的Config.in和mk文件"></a>配置APP对应的Config.in和mk文件</h3><p>在package中新增目录helloworld，并在里面添加Config.in和helloworld.mk<br><strong>Config.in</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs fdsf">config BR2_PACKAGE_HELLOWORLD<br>bool &quot;helloworld&quot;<br>help<br>  This is a demo to add myown(fuzidage) package.<br></code></pre></td></tr></table></figure>
+
+<p><strong>helloworld.mk</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dfsdf">HELLOWORLD_VERSION:= 1.0.0<br>HELLOWORLD_SITE:= $(BR2_EXTERNAL)/source/ipcam/helloworld<br>HELLOWORLD_SITE_METHOD:=local<br>HELLOWORLD_INSTALL_TARGET:=YES<br><br>$(eval $(cmake-package))<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="编写APP源码和Makefile"><a href="#编写APP源码和Makefile" class="headerlink" title="编写APP源码和Makefile"></a>编写APP源码和Makefile</h3><h3 id="通过make-menuconfig选中APP"><a href="#通过make-menuconfig选中APP" class="headerlink" title="通过make menuconfig选中APP"></a>通过make menuconfig选中APP</h3><h3 id="编译使用APP"><a href="#编译使用APP" class="headerlink" title="编译使用APP"></a>编译使用APP</h3><p>可以和整个平台一起编译，或者<code>make helloworld</code>单独编译。</p>
+<p>这两个文件在选中此APP之后，都会被拷贝到<code>output/build/helloworld-1.0.0</code>文件夹中。</p>
+<p>生成的bin文件被拷贝到<code>output/target/bin/helloworld</code></p>
+<h2 id="如何重新编译软件包"><a href="#如何重新编译软件包" class="headerlink" title="如何重新编译软件包"></a>如何重新编译软件包</h2><p>经过第一次完整编译后，如果我们需要对源码包重新配置，我们不能直接在buildroot上的根目录下直接make，buildroot是不知道你已经对源码进行重新配置，它只会将第一次编译出来的文件，再次打包成根文件系统镜像文件。</p>
+<p>那么可以通过以下2种方式重新编译：</p>
+<p><strong>1. 直接删除源码包,然后make all</strong></p>
+<p>例如我们要重新编译helloworld，那么可以直接删除output&#x2F;build&#x2F;helloworld目录，那么当你make的时候，就会自动从dl文件夹下，解压缩源码包，并重新安装。这种效率偏低</p>
+<p><strong>2. 进行xxx-rebuild,然后make all</strong></p>
+<p>也是以helloworld为例子，我们直接输入make helloworld-rebuild，即可对build&#x2F;helloworld&#x2F;目录进行重新编译，然后还要进行make all(或者make helloworld)</p>
+<h2 id="Config-in-语法"><a href="#Config-in-语法" class="headerlink" title="Config.in 语法"></a>Config.in 语法</h2><p>用Kconfig语言编写，用来配置packages</p>
+<p>必须以<code>BR2_PACKAGE_&lt;PACKAGE&gt;</code>开头</p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gxwbwcmsauj30i303zt8t.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>Config.in 是层级结构<code>package/&lt;pkg&gt;/Config.in</code>都被包含在<code>package/Config.in</code></p>
+<h3 id="menu-x2F-endmenu"><a href="#menu-x2F-endmenu" class="headerlink" title="menu&#x2F;endmenu"></a>menu&#x2F;endmenu</h3><p>menuconfig中层级目录由<code>menu</code>来嵌套定义</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs kbuild">menu &quot;Base System&quot;<br>source &quot;$BR2_EXTERNAL_platform_PATH/package/example/Config.in&quot;<br>source &quot;$BR2_EXTERNAL_platform_PATH/package/fstools/Config.in&quot;<br>endmenu<br><br>menu &quot;Test Package&quot;<br>source &quot;$BR2_EXTERNAL_platform_PATH/package/foobar/Config.in&quot;<br>endmenu<br><br>// Test Package在Base System下一级目录<br>menu &quot;Base System&quot;<br>menu &quot;Test Package&quot;<br>endmenu<br>endmenu<br></code></pre></td></tr></table></figure>
+<h3 id="if-x2F-endif"><a href="#if-x2F-endif" class="headerlink" title="if&#x2F;endif"></a>if&#x2F;endif</h3><h3 id="choice-x2F-endchoice"><a href="#choice-x2F-endchoice" class="headerlink" title="choice&#x2F;endchoice"></a>choice&#x2F;endchoice</h3><h3 id="select、depends-on"><a href="#select、depends-on" class="headerlink" title="select、depends on"></a>select、depends on</h3><p>select是一种自动依赖，如果A select B，只要A被enable，B就会被enable，而且不可unselected</p>
+<p>depends on是一种用户定义的依赖，如果A depends on B, A只有在B被enable后才可见</p>
+<ul>
+<li><code>make \&lt;pkg\&gt;-show-depend</code>: 查看pkg依赖的包</li>
+<li><code>make \&lt;pkg\&gt;-show-rdepend</code>: 查看依赖pkg的包</li>
+</ul>
+<h2 id="mk文件"><a href="#mk文件" class="headerlink" title=".mk文件"></a>.mk文件</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">xxx_SITE_METHOD</span> = local<br><span class="hljs-attr">xxx_SITE</span> = 本地源码库地址<br><br><span class="hljs-attr">xxx_SITE_METHOD</span> = remote<br><span class="hljs-attr">xxx_SITE</span> = 远程URL<br></code></pre></td></tr></table></figure>
+
+<p>Packages可以被安装到不同目录：</p>
+<ul>
+<li>target目录：<code>$(TARGET_DIR)</code></li>
+<li>staging目录：<code>$(STAGING_DIR)</code></li>
+<li>images目录：<code>$(BINARIES_DIR)</code></li>
+</ul>
+<p>分别由三个变量决定：</p>
+<ul>
+<li><p><code>&lt;pkg&gt;_INSTALL_TARGET</code> , defaults to <code>YES</code>. If <code>YES</code>, then <code>&lt;pkg&gt;_INSTALL_TARGET_CMDS</code> will be called </p>
+</li>
+<li><p><code>&lt;pkg&gt;_INSTALL_STAGING</code> , defaults to <code>NO</code>. If <code>YES</code>, then <code>&lt;pkg&gt;_INSTALL_STAGING_CMDS</code> will be called </p>
+</li>
+<li><p><code>&lt;pkg&gt;_INSTALL_IMAGES</code> , defaults to <code>NO</code>. If <code>YES</code>, then <code>&lt;pkg&gt;_INSTALL_IMAGES_CMDS</code> will be called <br/><br/></p>
+</li>
+<li><p>Application Package一般只要安装到target</p>
+</li>
+<li><p>Shared library动态库必须安装到target与staging</p>
+</li>
+<li><p>header-based library和static-only library静态库只安装到staging</p>
+</li>
+<li><p>bootloader和linux要安装到images</p>
+</li>
+</ul>
+<p>Config.in文件不规定编译顺序，.mk文件中的&lt;pkg&gt;_DEPENDENCIES可以规定编译顺序，&lt;pkg&gt;_DEPENDENCIES后面的软件包先编译。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gxwbwv9a45j30gq03ydg1.jpg" srcset="/img/loading.gif" lazyload></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/fuzidage/p/12049442.html">https://www.cnblogs.com/fuzidage/p/12049442.html</a><br><a href="1.png" download>图片1</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Buildroot/">#Buildroot</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/12/31/2021-2022/2021-12-31-linux%E9%87%8D%E5%AE%9A%E5%90%91/" title="Linux输入输出重定向">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Linux输入输出重定向</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/12/25/2021-2022/2021-12-25-gitclone/" title="Git clone慢解决方法">
+                        <span class="hidden-mobile">Git clone慢解决方法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
