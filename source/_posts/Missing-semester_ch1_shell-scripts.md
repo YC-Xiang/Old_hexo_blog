@@ -3,6 +3,7 @@ title: Shell scripts
 date: 2023-01-30 10:02:05
 tags:
 - Shell
+- Missing semester
 categories:
 - Notes
 ---

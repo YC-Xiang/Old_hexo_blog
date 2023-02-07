@@ -94,16 +94,16 @@ Inline math:
 $\lim_{x \to \infty} \exp(-x) = 0$
 
 ## Table
-| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
+| First Header | Second Header |
+| ------------ | ------------- |
+| Content Cell | Content Cell  |
+| Content Cell | Content Cell  |
 
 | Left-Aligned  | Center Aligned  | Right Aligned |
-| :------------ |:---------------:| -----:|
-| col 3 is      | some wordy text | $1600 |
-| col 2 is      | centered        |   $12 |
-| zebra stripes | are neat        |    $1 |
+| :------------ | :-------------: | ------------: |
+| col 3 is      | some wordy text |         $1600 |
+| col 2 is      |    centered     |           $12 |
+| zebra stripes |    are neat     |            $1 |
 
 ## Footnotes
 这是一句话[^1]
@@ -192,6 +192,13 @@ This is [Baidu][id] reference-style link.
 
 空行：`<br />`
 
+## typora快捷键
+- 表格：`ctrl+t`
+- 选中一整行：`ctrl+l`
+- 选中单词：`ctrl+d`
+- 插入图片：`ctrl+shift+i`
+- 插入链接：`ctrl + k`
+- 代码行: ctrl + shift + \`
 ## Reference
 [Hexo Fluid 用户手册](https://hexo.fluid-dev.com/docs/guide/)
 
