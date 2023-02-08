@@ -50,4 +50,14 @@ tags:
 
 `<C-b> [` Start scrollback. You can then press `<space>` to start a selection and `<enter>` to copy that selection.
 
+## my configs
+
+`C-b` -> `C-a`
+
+`C-b %` -> `C-a |`
+
+`C-b "` -> `C-a -`
+
+`C-b <arrow key>` -> `alt <arrow key>`
+
 [more commands click this](https://missing.csail.mit.edu/2020/command-line/)

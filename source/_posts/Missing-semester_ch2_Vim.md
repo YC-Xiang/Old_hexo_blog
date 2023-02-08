@@ -117,6 +117,86 @@ Vim 8.0 之后自带插件管理工具，只要create the directory `~/.vim/pack
 
 to do
 
+# Vimtutor
+
+## Lesson 1
+
+`hjkl` 移动
+
+`x` 删除一个字符
+
+`i` 输入
+
+`a` append输入
+
+## Lesson 2
+
+`dw` 删除一个单词
+
+`d$` 输出到行尾
+
+`2w` `3b` `2e` 移动单词
+
+`d2w` 删除两个单词
+
+`dd` `2dd` 删除两行
+
+`u` 撤销 `U` 返回一行的原始状态 `Ctrl r` 复原
+
+## Lesson 3
+
+`dd` 之后的一行可以 `p` 粘贴
+
+`rx` 替换某个字符为`x`
+
+`ce` 删除光标后单词部分，并进入insert mode `c$` 输出光标到行尾，并进入insert mode
+
+
+## Lesson 4
+
+`Ctrl g` 显示当前行状态 `G` 文件末尾 `gg` 文件开头
+
+`/` 向后搜索 `?`向前搜索 `ctrl o` 返回 `ctrl i` 前进
+
+`%` 跳转到对应匹配的`) ] }`
+
+`s/thee/the/g` 替换一个`thee`成`the`
+
+`s/thee/the/g` 一行中`thee`替换成`the`
+
+`:%s/thee/the/g` 整个文件的`thee`替换成`the`
+
+`:%s/thee/the/gc` 整个文件的`thee`替换成`the`，每个替换会有命令提示
+
+`:#,#s/thee/the/g` `#` 是替换的行范围
+
+## Lesson 5
+
+`! + command` 执行外部命令
+
+`:w FILENAME` 文件另存为
+
+`v` 进入visual模式选中再 `:w FILENAME` 保存部分内容
+
+`:r FILENAME` 将文件内容追加到光标下
+
+`:r !ls` 将ls内容加到光标下
+
+## Lesson 6
+
+`o` 光标下插入新行 `O`光标上插入新行
+
+`R` replace mode
+
+`2y` 复制两行
+
+`:set ic` 接下来搜索大小写都会包括
+
+## Lesson 7
+
+`:`接`ctrl d`可以自动显示命令
+
+``
 # Resources
 
 [Vim Adventures](https://vim-adventures.com/) is a game to learn Vim
