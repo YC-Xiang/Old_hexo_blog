@@ -171,11 +171,29 @@ git stash 不能stash untracked的文件，需要先git add，或者git stash -u
 
 ## 生成/打patch
 
-生成patch：git diff > patch.diff
+1.生成某个提交的补丁
 
-检查patch：git apply --stat patch.diff
+git format-patch 350489b43967248c71080bb17bfb2e368c5766e0 -1
 
-查看能否打入：git apply --check patch.diff
+2.检查补丁是否有冲突
+
+git apply --check xxx.patch
+
+3.无冲突打补丁
+
+git apply xxx.patch
+
+3.有冲突打补丁
+
+git am --reject xxx.patch
+
+此时会在有冲突的文件相同文件夹生产一个以原来文件名加后缀为.rej的新文件，里面会告知哪些地方冲突了，
+
+参考这些冲突的地方修改原文件即可
+
+修改完成后添加到缓冲区 git add xxx1.java xxx2.java ....
+
+最后 git am --continue 即可完成打补丁
 
 [https://adtxl.com/index.php/archives/471.html](https://adtxl.com/index.php/archives/471.html)
 
