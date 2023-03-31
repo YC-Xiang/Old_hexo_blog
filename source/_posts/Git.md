@@ -229,6 +229,9 @@ git remote update origin --prune
 # git checkout -b 本地新分支 远程分支。远程分支可以git branch -a查看
 git checkout -b test origin/test
 
+# 查看本地分支与远程分支匹配
+git branch -vv
+
 # 用下面的操作两个分支会对不上，无法git push，因为test分支可能是从master分支新建过来的，git log都不对应，需要一个干净的分支
 git chekcout -b test
 git branch --set-upstream-to=origin/develop
