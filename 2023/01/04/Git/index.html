@@ -27,7 +27,7 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git1.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git2.png">
 <meta property="article:published_time" content="2023-01-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-03-16T09:06:26.252Z">
+<meta property="article:modified_time" content="2023-03-31T03:30:30.123Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary_large_image">
@@ -316,7 +316,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年3月16日 下午
+                    本文最后更新于：2023年3月31日 中午
                   
                 
               </p>
@@ -409,7 +409,7 @@
 <h2 id="git-tag"><a href="#git-tag" class="headerlink" title="git tag"></a>git tag</h2><p><a target="_blank" rel="noopener" href="https://www.runoob.com/git/git-tag.html">https://www.runoob.com/git/git-tag.html</a></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看所有标签</span><br>$ git tag<br><br><span class="hljs-comment"># 创建</span><br>$ git tag -a v1.0<br><br><span class="hljs-comment"># 删除</span><br>$ git tag -d v1.0<br><br><span class="hljs-comment">#查看</span><br>$ git show v1.0<br><br><span class="hljs-comment"># 切换</span><br>git checkout v1.0<br></code></pre></td></tr></table></figure>
 <p>tag 需要单独上传<code>git push origin &lt;tagname&gt;</code> 和删除&#96;&#96;git push origin –delete <tagname>&#96;</p>
-<h2 id="创建分支并与远程某分支关联："><a href="#创建分支并与远程某分支关联：" class="headerlink" title="创建分支并与远程某分支关联："></a>创建分支并与远程某分支关联：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 可以先更新远程分支信息</span><br>git remote update origin --prune<br><br><span class="hljs-comment"># git checkout -b 本地新分支 远程分支。远程分支可以git branch -a查看</span><br>git checkout -b <span class="hljs-built_in">test</span> origin/test<br><br><span class="hljs-comment"># 用下面的操作两个分支会对不上，无法git push，因为test分支可能是从master分支新建过来的，git log都不对应，需要一个干净的分支</span><br>git chekcout -b <span class="hljs-built_in">test</span><br>git branch --set-upstream-to=origin/develop<br></code></pre></td></tr></table></figure>
+<h2 id="创建分支并与远程某分支关联："><a href="#创建分支并与远程某分支关联：" class="headerlink" title="创建分支并与远程某分支关联："></a>创建分支并与远程某分支关联：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 可以先更新远程分支信息</span><br>git remote update origin --prune<br><br><span class="hljs-comment"># git checkout -b 本地新分支 远程分支。远程分支可以git branch -a查看</span><br>git checkout -b <span class="hljs-built_in">test</span> origin/test<br><br><span class="hljs-comment"># 查看本地分支与远程分支匹配</span><br>git branch -vv<br><br><span class="hljs-comment"># 用下面的操作两个分支会对不上，无法git push，因为test分支可能是从master分支新建过来的，git log都不对应，需要一个干净的分支</span><br>git chekcout -b <span class="hljs-built_in">test</span><br>git branch --set-upstream-to=origin/develop<br></code></pre></td></tr></table></figure>
 
 <h1 id="Pro-Git"><a href="#Pro-Git" class="headerlink" title="Pro Git"></a>Pro Git</h1><h2 id="First-Time-Git-Setup"><a href="#First-Time-Git-Setup" class="headerlink" title="First-Time Git Setup"></a>First-Time Git Setup</h2><ol>
 <li><code>[path]/etc/gitconfig</code> system全局配置。pass the option <code>--system</code> to <code>git config</code>。</li>
