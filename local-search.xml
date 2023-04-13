@@ -4,6 +4,58 @@
   
   
   <entry>
+    <title>I2C</title>
+    <link href="/2023/04/13/I2C/"/>
+    <url>/2023/04/13/I2C/</url>
+    
+    <content type="html"><![CDATA[<p><code>i2c_adapter</code>抽象I2C控制器</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_adapter</span> &#123;</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">module</span> *<span class="hljs-title">owner</span>;</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> <span class="hljs-class"><span class="hljs-keyword">class</span>;</span>  <span class="hljs-comment">/* classes to allow probing for */</span><br>  <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_algorithm</span> *<span class="hljs-title">algo</span>;</span> <span class="hljs-comment">/* the algorithm to access the bus */</span><br>  <span class="hljs-type">void</span> *algo_data;<br><br>  <span class="hljs-comment">/* data fields that are valid for all devices*/</span><br>  <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_lock_operations</span> *<span class="hljs-title">lock_ops</span>;</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">rt_mutex</span> <span class="hljs-title">bus_lock</span>;</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">rt_mutex</span> <span class="hljs-title">mux_lock</span>;</span><br><br>  <span class="hljs-type">int</span> timeout;<span class="hljs-comment">/* in jiffies */</span><br>  <span class="hljs-type">int</span> retries;<br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">device</span> <span class="hljs-title">dev</span>;</span><span class="hljs-comment">/* the adapter device */</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> locked_flags;<span class="hljs-comment">/* owned by the I2C core */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_ALF_IS_SUSPENDED    0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_ALF_SUSPEND_REPORTED  1</span><br><br>  <span class="hljs-type">int</span> nr;<br>  <span class="hljs-type">char</span> name[<span class="hljs-number">48</span>];<br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">completion</span> <span class="hljs-title">dev_released</span>;</span><br><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">mutex</span> <span class="hljs-title">userspace_clients_lock</span>;</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">list_head</span> <span class="hljs-title">userspace_clients</span>;</span><br><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_bus_recovery_info</span> *<span class="hljs-title">bus_recovery_info</span>;</span><br>  <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_adapter_quirks</span> *<span class="hljs-title">quirks</span>;</span><br><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">irq_domain</span> *<span class="hljs-title">host_notify_domain</span>;</span><br>&#125;;<br></code></pre></td></tr></table></figure><p><code>i2c_algorithm</code>抽象了通过I2C总线发送和接收数据的方法</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Notes</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>PWM</tag>
+      
+      <tag>Linux driver</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Buildroot</title>
+    <link href="/2023/04/13/Buildroot/"/>
+    <url>/2023/04/13/Buildroot/</url>
+    
+    <content type="html"><![CDATA[<p><code>./lanuch</code> 最终的操作是</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd sdk_3921/buildroot-dist # 进入buildroot目录<br>make BR2_EXTERNAL=sdk_3921/platform/ O=sdk3921/out/rts3923_fpga/ rts3923_fpga_defconfig<br></code></pre></td></tr></table></figure><h2 id="Managing-the-build-andthe-configuration"><a href="#Managing-the-build-andthe-configuration" class="headerlink" title="Managing the build andthe configuration"></a>Managing the build andthe configuration</h2><h3 id="Out-of-tree-build"><a href="#Out-of-tree-build" class="headerlink" title="Out of tree build"></a>Out of tree build</h3><p>在<code>buildroot Makefile</code>中有</p><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-keyword">ifeq</span> (<span class="hljs-variable">$(O)</span>,<span class="hljs-variable">$(CURDIR)</span>/output)<br>CONFIG_DIR := <span class="hljs-variable">$(CURDIR)</span><br>NEED_WRAPPER =<br><span class="hljs-keyword">else</span><br>CONFIG_DIR := <span class="hljs-variable">$(O)</span><br>NEED_WRAPPER = y<br><span class="hljs-keyword">endif</span><br></code></pre></td></tr></table></figure><p>可以看出，如果<code>O != buildroot_dist/output</code>, <code>CONFIG_DIR = sdk3921/out/rts3923_fpga/ </code></p><p>在<code>CONFIG_DIR</code>目录下，保存着<code>.config</code>配置文件。</p><h3 id="Other-building-tips"><a href="#Other-building-tips" class="headerlink" title="Other building tips"></a>Other building tips</h3><p>Cleaning all the build output, but keeping the configuration file(删除build&#x2F;):</p><p><code>make clean</code></p><p>Cleaning everything, including the configuration file, and downloaded file if at the<br>default location (相当于删除了build&#x2F;和.config一系列配置文件，需要重新make menuconfig):</p><p><code>make distclean</code></p><h2 id="Buildroot-source-and-build-trees"><a href="#Buildroot-source-and-build-trees" class="headerlink" title="Buildroot source and build trees"></a>Buildroot source and build trees</h2><h3 id="Build-tree"><a href="#Build-tree" class="headerlink" title="Build tree"></a>Build tree</h3><ul><li><code>output/</code>对应<code>BASE_DIR</code></li><li><code>output/build/</code>对应<code>BUILD_DIR</code></li><li><code>output/host/</code>对应<code>HOST_DIR</code><ul><li>Contains both the tools built for the host (cross-compiler, etc.) and the sysroot of<br>the toolchain</li><li>Host tools are directly in <code>host/</code></li><li>The sysroot is in <code>host/&lt;tuple&gt;/sysroot/usr</code>E.g: <code>arm-unknown-linux-gnueabihf</code></li><li>Variable for the sysroot: <code>STAGING_DIR</code>. <code>ouput</code>目录下的<code>staging</code>目录也是软连接到这的</li></ul></li><li><code>output/target/</code>对应<code>TARGET_DIR</code><ul><li>Used to generate the final root filesystem images in<code> images/</code></li></ul></li><li><code>output/image/</code>对应<code>BINARIES_DIR</code></li></ul><h2 id="Managing-the-Linux-kernel-configuration"><a href="#Managing-the-Linux-kernel-configuration" class="headerlink" title="Managing the Linux kernel configuration"></a>Managing the Linux kernel configuration</h2><ul><li><code>make linux-update-config</code>, to save a full config file</li><li><code>make linux-update-defconfig</code>, to save a minimal defconfig</li></ul><h2 id="Root-filesystem-in-Buildroot"><a href="#Root-filesystem-in-Buildroot" class="headerlink" title="Root filesystem in Buildroot"></a>Root filesystem in Buildroot</h2><p>copy rootfs overlays-&gt;execute post-build scripts-&gt;execute post-image scripts</p><p><code>platform/board/rts3923/rootfs_overlay</code></p><p><code>platform/board/rts3923/post_build.sh</code></p><p><code>platform/board/rts3923/post_image.sh</code></p><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230412162924.png"></p><h2 id="Advanced-topics"><a href="#Advanced-topics" class="headerlink" title="Advanced topics"></a>Advanced topics</h2><h3 id="BR2-EXTERNAL"><a href="#BR2-EXTERNAL" class="headerlink" title="BR2_EXTERNAL"></a>BR2_EXTERNAL</h3><p>Ipcam sdk在make的时候指定</p><p><code>make BR2_EXTERNAL=sdk_3921/platform/ O=sdk3921/out/rts3923_fpga/ rts3923_fpga_defconfig</code></p><p>Each external directory must contain:</p><ul><li><code>external.desc</code>, which provides a name and description. The <code>$BR2_EXTERNAL_&lt;NAME&gt;_PATH</code> variable is available, where NAME is defined in <code>external.desc</code>.</li><li><code>Config.in</code>, configuration options that will be included in menuconfig（在menuconfig external options里）</li><li><code>external.mk</code>, will be included in the make logic</li></ul><p><code>make &lt;pkg&gt;-dirclean</code>, completely remove the package source code directory. The next make invocation will fully rebuild this package. 相当于直接删除<code>build/&lt;pkg&gt;</code></p><p><code>make &lt;pkg&gt;-rebuild</code>, force to re-execute the build and installation steps of the package.</p><p><code>make &lt;pkg&gt;-reconfigure</code>, force to re-execute the configure, build and installation steps of the package.</p><p>If you remove a package from the configuration, and run make:<br>Nothing happens. The files installed by this package are not removed from the target filesystem. 需要重新rebuild all</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Notes</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Buildroot</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>PWM子系统</title>
     <link href="/2023/03/21/PWM%E5%AD%90%E7%B3%BB%E7%BB%9F/"/>
     <url>/2023/03/21/PWM%E5%AD%90%E7%B3%BB%E7%BB%9F/</url>
@@ -13,7 +65,7 @@
     
     <categories>
       
-      <category>Linux内核分析</category>
+      <category>Notes</category>
       
     </categories>
     
@@ -21,6 +73,8 @@
     <tags>
       
       <tag>PWM</tag>
+      
+      <tag>Linux driver</tag>
       
     </tags>
     
@@ -39,9 +93,9 @@
     
     <tags>
       
-      <tag>tmux</tag>
-      
       <tag>Missing semester</tag>
+      
+      <tag>tmux</tag>
       
     </tags>
     
@@ -118,9 +172,9 @@
     
     <tags>
       
-      <tag>Missing semester</tag>
-      
       <tag>Vim</tag>
+      
+      <tag>Missing semester</tag>
       
     </tags>
     

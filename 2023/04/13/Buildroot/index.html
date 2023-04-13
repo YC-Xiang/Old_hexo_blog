@@ -16,25 +16,26 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Job controljobs: lists the unfinished jobs associated with the current terminal session. fg + %num : num是jobs命令显示进程对应的序号。 bg+ %num: 让进程在后台从stopped-&gt;running。 ctrl + z: 让当前进程进入后台并suspend。 Tmuxtmux: o">
+    <meta name="description" content=".&#x2F;lanuch 最终的操作是 12cd sdk_3921&#x2F;buildroot-dist # 进入buildroot目录make BR2_EXTERNAL&#x3D;sdk_3921&#x2F;platform&#x2F; O&#x3D;sdk3921&#x2F;out&#x2F;rts3923_fpga&#x2F; rts3923_fpga_defconfig  Managing the build andthe configurationOut of tree">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Missing-semester_ch4_commandline_environment">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/02/07/Missing-semester-ch4-commandline-environment/index.html">
+<meta property="og:title" content="Buildroot">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/04/13/Buildroot/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Job controljobs: lists the unfinished jobs associated with the current terminal session. fg + %num : num是jobs命令显示进程对应的序号。 bg+ %num: 让进程在后台从stopped-&gt;running。 ctrl + z: 让当前进程进入后台并suspend。 Tmuxtmux: o">
+<meta property="og:description" content=".&#x2F;lanuch 最终的操作是 12cd sdk_3921&#x2F;buildroot-dist # 进入buildroot目录make BR2_EXTERNAL&#x3D;sdk_3921&#x2F;platform&#x2F; O&#x3D;sdk3921&#x2F;out&#x2F;rts3923_fpga&#x2F; rts3923_fpga_defconfig  Managing the build andthe configurationOut of tree">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-02-07T07:02:48.000Z">
-<meta property="article:modified_time" content="2023-02-08T07:48:22.515Z">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230412162924.png">
+<meta property="article:published_time" content="2023-04-13T09:39:28.000Z">
+<meta property="article:modified_time" content="2023-04-13T09:40:34.875Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="Missing semester">
-<meta property="article:tag" content="tmux">
+<meta property="article:tag" content="Buildroot">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230412162924.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Missing-semester_ch4_commandline_environment - Yucheng&#39;s Blog</title>
+  <title>Buildroot - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -228,7 +229,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Missing-semester_ch4_commandline_environment</span>
+            <span id="subtitle">Buildroot</span>
           
         </div>
 
@@ -239,8 +240,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-07 15:02" pubdate>
-          2023年2月7日 下午
+        <time datetime="2023-04-13 17:39" pubdate>
+          2023年4月13日 下午
         </time>
       </span>
     
@@ -251,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          787 words
+          2.3k words
         
       </span>
     
@@ -262,7 +263,7 @@
         
         
         
-          7 mins
+          20 mins
         
       </span>
     
@@ -308,12 +309,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Missing-semester_ch4_commandline_environment</h1>
+            <h1 style="display: none">Buildroot</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年2月8日 下午
+                    本文最后更新于：2023年4月13日 下午
                   
                 
               </p>
@@ -321,31 +322,55 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Job-control"><a href="#Job-control" class="headerlink" title="Job control"></a>Job control</h1><p><code>jobs</code>: lists the unfinished jobs associated with the current terminal session.</p>
-<p><code>fg + %num </code>: <code>num</code>是<code>jobs</code>命令显示进程对应的序号。</p>
-<p><code>bg+ %num</code>: 让进程在后台从stopped-&gt;running。</p>
-<p><code>ctrl + z</code>: 让当前进程进入后台并suspend。</p>
-<h1 id="Tmux"><a href="#Tmux" class="headerlink" title="Tmux"></a>Tmux</h1><p><code>tmux</code>: open a new session.</p>
-<p><code>C-b %</code>: 左右分屏。</p>
-<p><code>C-b &quot;</code>: 上下分屏。</p>
-<p><code>C-b &lt;arrow key&gt;</code>:在panes间移动。</p>
-<p><code>exit</code> or hit <code>Ctrl-d</code>：退出当前pane。</p>
-<p><code>C-b c</code>: new window.</p>
-<p><code>C-b p</code>: previous window.</p>
-<p><code>C-b n</code>: next window.</p>
-<p><code>C-b &lt;number&gt;</code> : move to window n.</p>
-<p><code>tmux ls</code>: list sessions.</p>
-<p><code>tmux attach -t 0</code>: attach to 0 session.</p>
-<p><code>C-b ?</code>: help message.</p>
-<p><code>C-b z</code>: make a pane go full screen. Hit <code>C-b z</code> again to shrink it back to its previous size</p>
-<p><code>C-b C-&lt;arrow key&gt;</code>: Resize pane in direction of <arrow key></p>
-<p><code>C-b ,</code>: Rename the current window</p>
-<p><code>&lt;C-b&gt; [</code> Start scrollback. You can then press <code>&lt;space&gt;</code> to start a selection and <code>&lt;enter&gt;</code> to copy that selection.</p>
-<h2 id="my-configs"><a href="#my-configs" class="headerlink" title="my configs"></a>my configs</h2><p><code>C-b</code> -&gt; <code>C-a</code></p>
-<p><code>C-b %</code> -&gt; <code>C-a |</code></p>
-<p><code>C-b &quot;</code> -&gt; <code>C-a -</code></p>
-<p><code>C-b &lt;arrow key&gt;</code> -&gt; <code>alt &lt;arrow key&gt;</code></p>
-<p><a target="_blank" rel="noopener" href="https://missing.csail.mit.edu/2020/command-line/">more commands click this</a></p>
+                <p><code>./lanuch</code> 最终的操作是</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd sdk_3921/buildroot-dist # 进入buildroot目录<br>make BR2_EXTERNAL=sdk_3921/platform/ O=sdk3921/out/rts3923_fpga/ rts3923_fpga_defconfig<br></code></pre></td></tr></table></figure>
+
+<h2 id="Managing-the-build-andthe-configuration"><a href="#Managing-the-build-andthe-configuration" class="headerlink" title="Managing the build andthe configuration"></a>Managing the build andthe configuration</h2><h3 id="Out-of-tree-build"><a href="#Out-of-tree-build" class="headerlink" title="Out of tree build"></a>Out of tree build</h3><p>在<code>buildroot Makefile</code>中有</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-keyword">ifeq</span> (<span class="hljs-variable">$(O)</span>,<span class="hljs-variable">$(CURDIR)</span>/output)<br>CONFIG_DIR := <span class="hljs-variable">$(CURDIR)</span><br>NEED_WRAPPER =<br><span class="hljs-keyword">else</span><br>CONFIG_DIR := <span class="hljs-variable">$(O)</span><br>NEED_WRAPPER = y<br><span class="hljs-keyword">endif</span><br></code></pre></td></tr></table></figure>
+
+<p>可以看出，如果<code>O != buildroot_dist/output</code>, <code>CONFIG_DIR = sdk3921/out/rts3923_fpga/ </code></p>
+<p>在<code>CONFIG_DIR</code>目录下，保存着<code>.config</code>配置文件。</p>
+<h3 id="Other-building-tips"><a href="#Other-building-tips" class="headerlink" title="Other building tips"></a>Other building tips</h3><p>Cleaning all the build output, but keeping the configuration file(删除build&#x2F;):</p>
+<p><code>make clean</code></p>
+<p>Cleaning everything, including the configuration file, and downloaded file if at the<br>default location (相当于删除了build&#x2F;和.config一系列配置文件，需要重新make menuconfig):</p>
+<p><code>make distclean</code></p>
+<h2 id="Buildroot-source-and-build-trees"><a href="#Buildroot-source-and-build-trees" class="headerlink" title="Buildroot source and build trees"></a>Buildroot source and build trees</h2><h3 id="Build-tree"><a href="#Build-tree" class="headerlink" title="Build tree"></a>Build tree</h3><ul>
+<li><code>output/</code>对应<code>BASE_DIR</code></li>
+<li><code>output/build/</code>对应<code>BUILD_DIR</code></li>
+<li><code>output/host/</code>对应<code>HOST_DIR</code><ul>
+<li>Contains both the tools built for the host (cross-compiler, etc.) and the sysroot of<br>the toolchain</li>
+<li>Host tools are directly in <code>host/</code></li>
+<li>The sysroot is in <code>host/&lt;tuple&gt;/sysroot/usr</code>E.g: <code>arm-unknown-linux-gnueabihf</code></li>
+<li>Variable for the sysroot: <code>STAGING_DIR</code>. <code>ouput</code>目录下的<code>staging</code>目录也是软连接到这的</li>
+</ul>
+</li>
+<li><code>output/target/</code>对应<code>TARGET_DIR</code><ul>
+<li>Used to generate the final root filesystem images in<code> images/</code></li>
+</ul>
+</li>
+<li><code>output/image/</code>对应<code>BINARIES_DIR</code></li>
+</ul>
+<h2 id="Managing-the-Linux-kernel-configuration"><a href="#Managing-the-Linux-kernel-configuration" class="headerlink" title="Managing the Linux kernel configuration"></a>Managing the Linux kernel configuration</h2><ul>
+<li><code>make linux-update-config</code>, to save a full config file</li>
+<li><code>make linux-update-defconfig</code>, to save a minimal defconfig</li>
+</ul>
+<h2 id="Root-filesystem-in-Buildroot"><a href="#Root-filesystem-in-Buildroot" class="headerlink" title="Root filesystem in Buildroot"></a>Root filesystem in Buildroot</h2><p>copy rootfs overlays-&gt;execute post-build scripts-&gt;execute post-image scripts</p>
+<p><code>platform/board/rts3923/rootfs_overlay</code></p>
+<p><code>platform/board/rts3923/post_build.sh</code></p>
+<p><code>platform/board/rts3923/post_image.sh</code></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230412162924.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="Advanced-topics"><a href="#Advanced-topics" class="headerlink" title="Advanced topics"></a>Advanced topics</h2><h3 id="BR2-EXTERNAL"><a href="#BR2-EXTERNAL" class="headerlink" title="BR2_EXTERNAL"></a>BR2_EXTERNAL</h3><p>Ipcam sdk在make的时候指定</p>
+<p><code>make BR2_EXTERNAL=sdk_3921/platform/ O=sdk3921/out/rts3923_fpga/ rts3923_fpga_defconfig</code></p>
+<p>Each external directory must contain:</p>
+<ul>
+<li><code>external.desc</code>, which provides a name and description. The <code>$BR2_EXTERNAL_&lt;NAME&gt;_PATH</code> variable is available, where NAME is defined in <code>external.desc</code>.</li>
+<li><code>Config.in</code>, configuration options that will be included in menuconfig（在menuconfig external options里）</li>
+<li><code>external.mk</code>, will be included in the make logic</li>
+</ul>
+<p><code>make &lt;pkg&gt;-dirclean</code>, completely remove the package source code directory. The next make invocation will fully rebuild this package. 相当于直接删除<code>build/&lt;pkg&gt;</code></p>
+<p><code>make &lt;pkg&gt;-rebuild</code>, force to re-execute the build and installation steps of the package.</p>
+<p><code>make &lt;pkg&gt;-reconfigure</code>, force to re-execute the configure, build and installation steps of the package.</p>
+<p>If you remove a package from the configuration, and run make:<br>Nothing happens. The files installed by this package are not removed from the target filesystem. 需要重新rebuild all</p>
 
                 
               </div>
@@ -354,13 +379,32 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Missing-semester/">#Missing semester</a>
-      
-        <a href="/tags/tmux/">#tmux</a>
+        <a href="/tags/Buildroot/">#Buildroot</a>
       
     </div>
   
@@ -374,9 +418,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/21/PWM%E5%AD%90%E7%B3%BB%E7%BB%9F/" title="PWM子系统">
+                      <a href="/2023/04/13/I2C/" title="I2C">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">PWM子系统</span>
+                        <span class="hidden-mobile">I2C</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -384,8 +428,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/01/31/ICS2022-PA2/" title="ICS2022 PA2">
-                        <span class="hidden-mobile">ICS2022 PA2</span>
+                      <a href="/2023/03/21/PWM%E5%AD%90%E7%B3%BB%E7%BB%9F/" title="PWM子系统">
+                        <span class="hidden-mobile">PWM子系统</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
