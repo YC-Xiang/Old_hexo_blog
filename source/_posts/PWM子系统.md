@@ -3,8 +3,9 @@ title: PWM子系统
 date: 2023-03-21 16:00:00
 tags:
 - PWM
+- Linux driver
 categories:
-- Linux内核分析
+- Notes
 ---
 
 # PWM 子系统
