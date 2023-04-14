@@ -16,19 +16,24 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="i2c_adapter抽象I2C控制器 123456789101112131415161718192021222324252627282930struct i2c_adapter &amp;#123;  struct module *owner;  unsigned int class;		  &#x2F;* classes to allow probing for *&#x2F;  const struct i2c_alg">
+    <meta name="description" content="I2C 基础知识写操作 主芯片要发出一个start信号 然后发出一个设备地址(用来确定是往哪一个芯片写数据)，方向(读&#x2F;写，0表示写，1表示读) 从设备回应(用来确定这个设备是否存在)，然后就可以传输数据 主设备发送一个字节数据给从设备，并等待回应 每传输一字节数据，接收方要有一个回应信号（确定数据是否接受完成)，然后再传输下一个数据。 数据发送完之后，主芯片就会发送一个停止信号。  下">
 <meta property="og:type" content="article">
 <meta property="og:title" content="I2C">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/04/13/I2C/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="i2c_adapter抽象I2C控制器 123456789101112131415161718192021222324252627282930struct i2c_adapter &amp;#123;  struct module *owner;  unsigned int class;		  &#x2F;* classes to allow probing for *&#x2F;  const struct i2c_alg">
+<meta property="og:description" content="I2C 基础知识写操作 主芯片要发出一个start信号 然后发出一个设备地址(用来确定是往哪一个芯片写数据)，方向(读&#x2F;写，0表示写，1表示读) 从设备回应(用来确定这个设备是否存在)，然后就可以传输数据 主设备发送一个字节数据给从设备，并等待回应 每传输一字节数据，接收方要有一个回应信号（确定数据是否接受完成)，然后再传输下一个数据。 数据发送完之后，主芯片就会发送一个停止信号。  下">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230414143312.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230414143336.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230414143408.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230414143735.png">
 <meta property="article:published_time" content="2023-04-13T09:40:28.000Z">
-<meta property="article:modified_time" content="2023-04-13T09:51:27.614Z">
+<meta property="article:modified_time" content="2023-04-14T07:21:35.157Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="PWM">
 <meta property="article:tag" content="Linux driver">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230414143312.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -251,7 +256,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          808 words
+          6.8k words
         
       </span>
     
@@ -262,7 +267,7 @@
         
         
         
-          7 mins
+          57 mins
         
       </span>
     
@@ -313,7 +318,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年4月13日 下午
+                    本文最后更新于：2023年4月14日 下午
                   
                 
               </p>
@@ -321,10 +326,111 @@
             
               <div class="markdown-body">
                 
-                <p><code>i2c_adapter</code>抽象I2C控制器</p>
+                <h1 id="I2C-基础知识"><a href="#I2C-基础知识" class="headerlink" title="I2C 基础知识"></a>I2C 基础知识</h1><h2 id="写操作"><a href="#写操作" class="headerlink" title="写操作"></a>写操作</h2><ul>
+<li>主芯片要发出一个start信号</li>
+<li>然后发出一个设备地址(用来确定是往哪一个芯片写数据)，方向(读&#x2F;写，0表示写，1表示读)</li>
+<li>从设备回应(用来确定这个设备是否存在)，然后就可以传输数据</li>
+<li>主设备发送一个字节数据给从设备，并等待回应</li>
+<li>每传输一字节数据，接收方要有一个回应信号（确定数据是否接受完成)，然后再传输下一个数据。</li>
+<li>数据发送完之后，主芯片就会发送一个停止信号。</li>
+</ul>
+<p>下图：白色背景表示”主→从”，灰色背景表示”从→主”</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230414143312.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="读操作"><a href="#读操作" class="headerlink" title="读操作"></a>读操作</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230414143336.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="I2C信号"><a href="#I2C信号" class="headerlink" title="I2C信号"></a>I2C信号</h2><p>I2C协议中数据传输的单位是字节，也就是8位。但是要用到9个时钟：前面8个时钟用来传输8数据，第9个时钟用来传输回应信号。传输时，先传输最高位(MSB)。</p>
+<ul>
+<li>开始信号（S）：SCL为高电平时，SDA山高电平向低电平跳变，开始传送数据。</li>
+<li>结束信号（P）：SCL为高电平时，SDA由低电平向高电平跳变，结束传送数据。</li>
+<li>响应信号(ACK)：接收器在接收到8位数据后，在第9个时钟周期，拉低SDA</li>
+<li>SDA上传输的数据必须在SCL为高电平期间保持稳定，SDA上的数据只能在SCL为低电平期间变化</li>
+</ul>
+<p>I2C协议信号如下：</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230414143408.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="SMBus协议"><a href="#SMBus协议" class="headerlink" title="SMBus协议"></a>SMBus协议</h2><p>System Management Bus，系统管理总线。<strong>是I2C协议的一个子集</strong></p>
+<ul>
+<li><p>VDD的极限值不一样</p>
+<ul>
+<li>I2C协议：范围很广，甚至讨论了高达12V的情况</li>
+<li>SMBus：1.8V~5V</li>
+</ul>
+</li>
+<li><p>最小时钟频率、最大的Clock Stretching</p>
+<ul>
+<li>Clock Stretching含义：某个设备需要更多时间进行内部的处理时，它可以把SCL拉低占住I2C总线</li>
+<li>I2C协议：时钟频率最小值无限制，Clock Stretching时长也没有限制</li>
+<li>SMBus：时钟频率最小值是10KHz，Clock Stretching的最大时间值也有限制</li>
+</ul>
+</li>
+<li><p>地址回应(Address Acknowledge)</p>
+<ul>
+<li>一个I2C设备接收到它的设备地址后，是否必须发出回应信号？</li>
+<li>I2C协议：没有强制要求必须发出回应信号</li>
+<li>SMBus：强制要求必须发出回应信号，这样对方才知道该设备的状态：busy，failed，或是被移除了</li>
+</ul>
+</li>
+<li><p>SMBus协议明确了数据的传输格式</p>
+<ul>
+<li>I2C协议：它只定义了怎么传输数据，但是并没有定义数据的格式，这完全由设备来定义</li>
+<li>SMBus：定义了几种数据格式(后面分析)</li>
+</ul>
+</li>
+<li><p>REPEATED START Condition(重复发出S信号)</p>
+<ul>
+<li><p>比如读EEPROM时，涉及2个操作：</p>
+<ul>
+<li>把存储地址发给设备</li>
+<li>读数据</li>
+</ul>
+</li>
+<li><p>在写、读之间，可以不发出P信号，而是直接发出S信号：这个S信号就是<code>REPEATED START</code></p>
+</li>
+<li><p>如下图所示</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230414143735.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+<li><p>SMBus Low Power Version</p>
+<ul>
+<li>SMBus也有低功耗的版本</li>
+</ul>
+</li>
+</ul>
+<h1 id="I2C-provider"><a href="#I2C-provider" class="headerlink" title="I2C provider"></a>I2C provider</h1><p><a target="_blank" rel="noopener" href="http://www.wowotech.net/comm/i2c_provider.html">http://www.wowotech.net/comm/i2c_provider.html</a></p>
+<p><code>i2c_adapter</code>抽象I2C控制器</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_adapter</span> &#123;</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">module</span> *<span class="hljs-title">owner</span>;</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> <span class="hljs-class"><span class="hljs-keyword">class</span>;</span>		  <span class="hljs-comment">/* classes to allow probing for */</span><br>  <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_algorithm</span> *<span class="hljs-title">algo</span>;</span> <span class="hljs-comment">/* the algorithm to access the bus */</span><br>  <span class="hljs-type">void</span> *algo_data;<br><br>  <span class="hljs-comment">/* data fields that are valid for all devices	*/</span><br>  <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_lock_operations</span> *<span class="hljs-title">lock_ops</span>;</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">rt_mutex</span> <span class="hljs-title">bus_lock</span>;</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">rt_mutex</span> <span class="hljs-title">mux_lock</span>;</span><br><br>  <span class="hljs-type">int</span> timeout;			<span class="hljs-comment">/* in jiffies */</span><br>  <span class="hljs-type">int</span> retries;<br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">device</span> <span class="hljs-title">dev</span>;</span>		<span class="hljs-comment">/* the adapter device */</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> locked_flags;	<span class="hljs-comment">/* owned by the I2C core */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_ALF_IS_SUSPENDED    0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_ALF_SUSPEND_REPORTED  1</span><br><br>  <span class="hljs-type">int</span> nr;<br>  <span class="hljs-type">char</span> name[<span class="hljs-number">48</span>];<br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">completion</span> <span class="hljs-title">dev_released</span>;</span><br><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">mutex</span> <span class="hljs-title">userspace_clients_lock</span>;</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">list_head</span> <span class="hljs-title">userspace_clients</span>;</span><br><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_bus_recovery_info</span> *<span class="hljs-title">bus_recovery_info</span>;</span><br>  <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_adapter_quirks</span> *<span class="hljs-title">quirks</span>;</span><br><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">irq_domain</span> *<span class="hljs-title">host_notify_domain</span>;</span><br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p><code>i2c_algorithm</code>抽象了通过I2C总线发送和接收数据的方法</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_algorithm</span> &#123;</span><br>  <span class="hljs-type">int</span> (*master_xfer)(<span class="hljs-keyword">struct</span> i2c_adapter *adap, <span class="hljs-keyword">struct</span> i2c_msg *msgs,<br>         <span class="hljs-type">int</span> num);<br>    <span class="hljs-comment">// 功能跟master_xfer一样，在atomic context环境下使用</span><br>  <span class="hljs-type">int</span> (*master_xfer_atomic)(<span class="hljs-keyword">struct</span> i2c_adapter *adap,<br>           <span class="hljs-keyword">struct</span> i2c_msg *msgs, <span class="hljs-type">int</span> num);<br>    <span class="hljs-comment">// 实现SMBus传输，如果不提供这个函数，SMBus传输会使用master_xfer来模拟</span><br>  <span class="hljs-type">int</span> (*smbus_xfer)(<span class="hljs-keyword">struct</span> i2c_adapter *adap, u16 addr,<br>        <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> flags, <span class="hljs-type">char</span> read_write,<br>        u8 command, <span class="hljs-type">int</span> size, <span class="hljs-keyword">union</span> i2c_smbus_data *data);<br>  <span class="hljs-type">int</span> (*smbus_xfer_atomic)(<span class="hljs-keyword">struct</span> i2c_adapter *adap, u16 addr,<br>         <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> flags, <span class="hljs-type">char</span> read_write,<br>         u8 command, <span class="hljs-type">int</span> size, <span class="hljs-keyword">union</span> i2c_smbus_data *data);<br><br>  <span class="hljs-comment">/* To determine what the adapter supports */</span><br>  u32 (*functionality)(<span class="hljs-keyword">struct</span> i2c_adapter *adap);<br><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> IS_ENABLED(CONFIG_I2C_SLAVE)</span><br>    <span class="hljs-comment">// reg_slave就是把一个i2c_client注册到I2C Adapter，就是让这个I2C Adapter模拟该i2c_client</span><br>  <span class="hljs-type">int</span> (*reg_slave)(<span class="hljs-keyword">struct</span> i2c_client *client);<br>  <span class="hljs-type">int</span> (*unreg_slave)(<span class="hljs-keyword">struct</span> i2c_client *client);<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>I2C传输以<code>i2c_msg</code>为单位</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_msg</span> &#123;</span><br>  __u16 addr;	<span class="hljs-comment">/* slave address*/</span><br>  __u16 flags;<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_M_RD    0x0001	<span class="hljs-comment">/* read data, from slave to master */</span></span><br>          <span class="hljs-comment">/* I2C_M_RD is guaranteed to be 0x0001! */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_M_TEN    0x0010	<span class="hljs-comment">/* this is a ten bit chip address */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_M_DMA_SAFE    0x0200	<span class="hljs-comment">/* the buffer of this message is DMA safe */</span></span><br>          <span class="hljs-comment">/* makes only sense in kernelspace */</span><br>          <span class="hljs-comment">/* userspace buffers are copied anyway */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_M_RECV_LEN    0x0400	<span class="hljs-comment">/* length will be first received byte */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_M_NO_RD_ACK    0x0800	<span class="hljs-comment">/* if I2C_FUNC_PROTOCOL_MANGLING */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_M_IGNORE_NAK  0x1000	<span class="hljs-comment">/* if I2C_FUNC_PROTOCOL_MANGLING */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_M_REV_DIR_ADDR  0x2000	<span class="hljs-comment">/* if I2C_FUNC_PROTOCOL_MANGLING */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_M_NOSTART    0x4000	<span class="hljs-comment">/* if I2C_FUNC_NOSTART */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_M_STOP    0x8000	<span class="hljs-comment">/* if I2C_FUNC_PROTOCOL_MANGLING */</span></span><br>  __u16 len;		<span class="hljs-comment">/* msg length				*/</span><br>  __u8 *buf;		<span class="hljs-comment">/* pointer to msg data			*/</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h1 id="I2C-consumer"><a href="#I2C-consumer" class="headerlink" title="I2C consumer"></a>I2C consumer</h1><p><a target="_blank" rel="noopener" href="http://www.wowotech.net/comm/i2c_consumer.html">http://www.wowotech.net/comm/i2c_consumer.html</a></p>
+<p><strong>形态1</strong>：CPU和设备之间的所有数据交互，都是通过I2C总线进行。</p>
+<p><strong>形态2</strong>：I2C只是CPU和设备之间进行数据交互的一种，例如HDMI，图像以及音频数据通过TDMS接口传输，EDID等信息的交互通过I2C总线。</p>
+<p><strong>形态1</strong>：直接在device tree中i2c设备节点下加一个子节点。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c">&amp;i2c1 &#123;<br>        clock-frequency = &lt;<span class="hljs-number">100000</span>&gt;;<br>        pinctrl-names = <span class="hljs-string">&quot;default&quot;</span>;<br>        pinctrl<span class="hljs-number">-0</span> = &lt;&amp;pinctrl_i2c1&gt;;<br>        status = <span class="hljs-string">&quot;okay&quot;</span>;<br>        …<br>        pmic: pf0100@<span class="hljs-number">08</span> &#123;<br>                compatible = <span class="hljs-string">&quot;fsl,pfuze100&quot;</span>;<br>                …<br>        &#125;;<br></code></pre></td></tr></table></figure>
+
+<p><strong>形态2</strong>：在自己的设备节点下引用i2c节点。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">&amp;hdmi &#123;<br>       ddc-i2c-bus = &lt;&amp;i2c2&gt;;<br>        status = <span class="hljs-string">&quot;okay&quot;</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h2 id="驱动编写步骤"><a href="#驱动编写步骤" class="headerlink" title="驱动编写步骤"></a>驱动编写步骤</h2><p><strong>形态1</strong>：需要编写一个<code>i2c driver</code>。定义一个<code>struct i2c_driver</code>类型的变量，并调用<code>module_i2c_driver</code>接口将其注册到<code>I2C core</code>中。</p>
+<p>以<code>struct i2c_client</code>指针为参数，可以调用<code>i2c_master_send/i2c_master_recv</code>接口进行简单的I2C传输，同时，也可以通过该指针获得所属的<code>I2C adapter</code>指针，然后通过<code>i2c_transfer</code>接口，进行更为复杂的read、write操作。</p>
+<p><strong>形态2</strong>：通过设备树API接口获得<code>struct i2c_adapter</code>指针，通过<code>i2c_transfer</code>接口，进行read、write操作。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">adap = of_parse_phandle(dev-&gt;of_node, <span class="hljs-string">&quot;ddc-i2c-bus&quot;</span>, <span class="hljs-number">0</span>);<br><span class="hljs-keyword">if</span> (adap) &#123;<br>        panel-&gt;adap = of_find_i2c_adapter_by_node(adap); <span class="hljs-comment">//获取i2c adapter指针</span><br>        of_node_put(adap);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><code>i2c client</code>抽象i2c设备</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_client</span> &#123;</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> flags;		<span class="hljs-comment">/* flags，指示该I2C slave device一些特性 */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_CLIENT_PEC    0x04	<span class="hljs-comment">/* Use Packet Error Checking */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_CLIENT_TEN    0x10	<span class="hljs-comment">/* we have a ten bit chip address */</span></span><br>          <span class="hljs-comment">/* Must equal I2C_M_TEN below */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_CLIENT_SLAVE  0x20	<span class="hljs-comment">/* we are the slave */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_CLIENT_HOST_NOTIFY  0x40	<span class="hljs-comment">/* We want to use I2C host notify */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_CLIENT_WAKE    0x80	<span class="hljs-comment">/* for board_info; true iff can wake */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> I2C_CLIENT_SCCB    0x9000	<span class="hljs-comment">/* Use Omnivision SCCB protocol */</span></span><br>          <span class="hljs-comment">/* Must match I2C_M_STOP|IGNORE_NAK */</span><br><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> addr;		<span class="hljs-comment">/* 该设备的7-bit的slave地址。	*/</span><br>          <span class="hljs-comment">/* addresses are stored in the	*/</span><br>          <span class="hljs-comment">/* _LOWER_ 7 bits		*/</span><br>  <span class="hljs-type">char</span> name[I2C_NAME_SIZE];<br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_adapter</span> *<span class="hljs-title">adapter</span>;</span>	<span class="hljs-comment">/* 该设备所在的I2C controller	*/</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">device</span> <span class="hljs-title">dev</span>;</span>		<span class="hljs-comment">/* the device structure		*/</span><br>  <span class="hljs-type">int</span> init_irq;			<span class="hljs-comment">/* irq set at initialization	*/</span><br>  <span class="hljs-type">int</span> irq;			<span class="hljs-comment">/* irq issued by device		*/</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">list_head</span> <span class="hljs-title">detected</span>;</span><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> IS_ENABLED(CONFIG_I2C_SLAVE)</span><br>  <span class="hljs-type">i2c_slave_cb_t</span> slave_cb;	<span class="hljs-comment">/* callback for slave mode	*/</span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>通常情况下，<code>struct i2c_client</code>变量是由I2C core在register adapter的时候，解析adapter的child node自行创建的。该数据结构中的有些信息，可通过DTS配置。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">xxx:xxx@<span class="hljs-number">08</span> &#123;<br>        reg = &lt;<span class="hljs-number">0x08</span>&gt;;                               <span class="hljs-comment">/* 对应struct i2c_client中的‘addr’*/</span><br>        interrupts = &lt;<span class="hljs-number">16</span> <span class="hljs-number">8</span>&gt;;                       <span class="hljs-comment">/* 对应struct i2c_client中的‘irq’*/</span><br>        wakeup-source;                             <span class="hljs-comment">/* 对应flags中的I2C_CLIENT_WAKE */</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="Synopsys-DesignWare-I2C-driver"><a href="#Synopsys-DesignWare-I2C-driver" class="headerlink" title="Synopsys DesignWare I2C driver"></a>Synopsys DesignWare I2C driver</h1><p>i2c 传输的频率可以通过设备树<code>&quot;clock-frequency&quot;</code>来设置<code>t-&gt;bus_freq_hz</code>。不设置则为默认的400kHz</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs c">dw_i2c_plat_probe()<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">dw_i2c_dev</span> *<span class="hljs-title">dev</span>;</span><br>    dw_i2c_plat_request_regs(dev);<br>    dev-&gt;base = devm_platform_ioremap_resource(pdev, <span class="hljs-number">0</span>);<br>  i2c_parse_fw_timings(&amp;pdev-&gt;dev, t, <span class="hljs-literal">false</span>);<br>  i2c_dw_configure();<br>          i2c_dw_configure_slave();<br>          i2c_dw_configure_master(); <span class="hljs-comment">// 设置一些dev-&gt;func dev-&gt;master_cfg等属性后续使用</span><br>     i2c_dw_probe()<br>          i2c_dw_probe_slave();<br>     i2c_dw_probe_master();<br><br>i2c_dw_probe_master(<span class="hljs-keyword">struct</span> dw_i2c_dev *dev)<br>    dev-&gt;init = i2c_dw_init_master;<br>  dev-&gt;disable = i2c_dw_disable;<br>  dev-&gt;disable_int = i2c_dw_disable_int;<br>  i2c_dw_init_regmap();<br>    i2c_dw_set_timings_master(); <span class="hljs-comment">//设置standard/fast h/lcnt</span><br>    i2c_dw_set_sda_hold(); <span class="hljs-comment">// 设置sda_hold,不过rts直接在dev-&gt;init中设置为20</span><br>    i2c_dw_set_fifo_size(); <span class="hljs-comment">//设置tx/rx_fifo_depth</span><br>  dev-&gt;init(); <span class="hljs-comment">// 写之前设置好配置的寄存器</span><br>    __i2c_dw_disable(); <span class="hljs-comment">// disable adapter</span><br>      __i2c_dw_disable_nowait();<br>    i2c_dw_configure_fifo_master();	<span class="hljs-comment">//写tx/rx_fifo寄存器,根据dev-&gt;master_cfg写con寄存器</span><br>  i2c_dw_disable_int(); <span class="hljs-comment">// 先把中断mask全部置1，禁止中断</span><br>  devm_request_irq();<br>  i2c_dw_init_recovery_info();<br>  i2c_add_numbered_adapter();<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -373,6 +479,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2023/04/14/u-boot/" title="">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

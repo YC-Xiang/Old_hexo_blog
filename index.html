@@ -256,6 +256,39 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/04/14/u-boot/" target="_self">
+          
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/14/u-boot/" target="_self">
+        <div>
+          Uboot编译流程https://blog.csdn.net/ooonebook/article/details/53000893 编译生成的文件：   具体可以参考Uboot Makefile u-boot Makefile12345678910111213141516171819202122232425262728293031323334353637u-boot.cfg: $(Q)$(MAKE
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-04-14 15:26" pubdate>
+              2023-04-14
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/04/13/I2C/" target="_self">
           I2C
         </a>
@@ -264,7 +297,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/04/13/I2C/" target="_self">
         <div>
-          i2c_adapter抽象I2C控制器 123456789101112131415161718192021222324252627282930struct i2c_adapter &#123;  struct module *owner;  unsigned int class;		  /* classes to allow probing for */  const struct i2c_alg
+          I2C 基础知识写操作 主芯片要发出一个start信号 然后发出一个设备地址(用来确定是往哪一个芯片写数据)，方向(读&#x2F;写，0表示写，1表示读) 从设备回应(用来确定这个设备是否存在)，然后就可以传输数据 主设备发送一个字节数据给从设备，并等待回应 每传输一字节数据，接收方要有一个回应信号（确定数据是否接受完成)，然后再传输下一个数据。 数据发送完之后，主芯片就会发送一个停止信号。  下
         </div>
       </a>
 
@@ -776,67 +809,6 @@
 
           </div>
         
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/01/10/ICS2022%20PA1/" target="_self">
-          ICS_2022 PA1
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/10/ICS2022%20PA1/" target="_self">
-        <div>
-          Notesgetopt_long函数 strtok函数：分割字符串 atoi函数：字符串数字转为int类型。 strtol函数：可以根据字符串数字为十进制&#x2F;十六进制…，并转化为long int。如strtol(0xabc, NULL, 16)。 打印unsigned int使用%u 1234567891011121314151617# nemu/scripts/native.mkcomp
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-01-10 16:47" pubdate>
-              2023-01-10
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/ICS/">#ICS</a>
-            
-          </div>
         
       </div>
     </article>
