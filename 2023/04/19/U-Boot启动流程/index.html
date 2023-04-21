@@ -18,16 +18,20 @@
   
     <meta name="description" content="Uboot编译流程https:&#x2F;&#x2F;blog.csdn.net&#x2F;ooonebook&#x2F;article&#x2F;details&#x2F;53000893 编译生成的文件：   具体可以参考Uboot Makefile u-boot Makefile12345678910111213141516171819202122232425262728293031323334353637u-boot.cfg: $(Q)$(MAKE">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Yucheng&#39;s Blog">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/04/14/u-boot/index.html">
+<meta property="og:title" content="U-Boot启动流程">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/04/19/U-Boot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
 <meta property="og:description" content="Uboot编译流程https:&#x2F;&#x2F;blog.csdn.net&#x2F;ooonebook&#x2F;article&#x2F;details&#x2F;53000893 编译生成的文件：   具体可以参考Uboot Makefile u-boot Makefile12345678910111213141516171819202122232425262728293031323334353637u-boot.cfg: $(Q)$(MAKE">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230414152845.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230414152904.png">
-<meta property="article:published_time" content="2023-04-14T07:26:49.160Z">
-<meta property="article:modified_time" content="2023-04-14T10:08:39.583Z">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230417154543.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230417142657.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230419101548.png">
+<meta property="article:published_time" content="2023-04-19T06:10:28.000Z">
+<meta property="article:modified_time" content="2023-04-21T07:53:58.037Z">
 <meta property="article:author" content="Yucheng Xiang">
+<meta property="article:tag" content="U-Boot">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230414152845.png">
   
@@ -35,7 +39,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Yucheng&#39;s Blog</title>
+  <title>U-Boot启动流程 - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +233,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle"></span>
+            <span id="subtitle">U-Boot启动流程</span>
           
         </div>
 
@@ -240,8 +244,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-14 15:26" pubdate>
-          2023年4月14日 下午
+        <time datetime="2023-04-19 14:10" pubdate>
+          2023年4月19日 下午
         </time>
       </span>
     
@@ -252,7 +256,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.6k words
+          7k words
         
       </span>
     
@@ -263,7 +267,7 @@
         
         
         
-          30 mins
+          59 mins
         
       </span>
     
@@ -309,12 +313,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">U-Boot启动流程</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年4月14日 晚上
+                    本文最后更新于：2023年4月21日 下午
                   
                 
               </p>
@@ -341,17 +345,39 @@
 <h2 id="BL2"><a href="#BL2" class="headerlink" title="BL2"></a>BL2</h2><p>初始化cpu，relocate uboot，初始化串口，flash，网卡等。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// arch/arm/lib/vectors.S</span><br>_start:<br>    ARM_VECTORS<br>.macro ARM_VECTORS<br>    b	reset<br><br><span class="hljs-comment">// arch/arm/cpu/armv7/start.S</span><br>reset:<br>    b	save_boot_params<br><br><span class="hljs-title function_">ENTRY</span><span class="hljs-params">(save_boot_params)</span><br>    b	save_boot_params_ret		@ back to my caller<br><br>save_boot_params_ret:<br>    cpu_init_cp15<br>    cpu_init_crit<br>        lowlevel_init <span class="hljs-comment">// board/realtek/rts3917/low_level.S</span><br>    _main<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># arch/arm/lib/crt0.S<br>ENTRY(_main)<br>  ldr	r0, =(CONFIG_SYS_INIT_SP_ADDR)<br>  bl	board_init_f_alloc_reserve # board_init.c 设置global_data起始地址<br>  bl	board_init_f_init_reserve # board_init.c 初始化global_data，清零<br>  bl	board_init_f<br>  b	relocate_code<br>  bl	relocate_vectors<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs assembly"># arch/arm/lib/crt0.S<br>ENTRY(_main)<br>  ldr	r0, =(CONFIG_SYS_INIT_SP_ADDR)<br>  bl	board_init_f_alloc_reserve # board_init.c 设置global_data起始地址<br>  bl	board_init_f_init_reserve # board_init.c 初始化global_data，清零<br>  # 对gd成员赋值，对relocate进行空间规划；计算relocate后的偏移；relocate旧的gd到新的gd空间上<br>  bl	board_init_f<br>  b	relocate_code # 重定位u-boot<br>  bl	relocate_vectors #重定位异常向量表<br>  SPL_CLEAR_BSS<br>  board_init_r<br>    run_main_loop<br>      main_loop<br>      s = bootdelay_process # s = &quot;bootcmd&quot;<br>      autoboot_command(s) # 自动执行bootcmd<br>      cli_loop # 获取命令<br></code></pre></td></tr></table></figure>
+
+<p>经过<code>board_init_f_init_reserve</code>后</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230417154543.png" srcset="/img/loading.gif" lazyload></p>
+<p>经过<code>board_init_f</code>规划后新的u-boot分布：</p>
+<p>调用<code>bd_info</code>命令可以查看relocate后各gd成员的地址。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230417142657.png" srcset="/img/loading.gif" lazyload></p>
+<p>env初始化</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// nor flash为例</span><br>env_init(); <span class="hljs-comment">// board_f.c</span><br>  drv-&gt;init();<br><br>env_sf_init(); <span class="hljs-comment">// CONFIG_ENV_IS_IN_SPI_FLAH sf.c drv-&gt;init();</span><br>    gd-&gt;env_addr = (ulong)&amp;default_environment[<span class="hljs-number">0</span>]; <span class="hljs-comment">/// 加载默认的环境变量</span><br>    gd-&gt;env_valid = <span class="hljs-number">1</span>;<br><br><br>initr_env(); <span class="hljs-comment">// board_r.c</span><br>  env_relocate();<br>    env_load();<br>      drv-&gt;load();<br><br>env_sf_load(); <span class="hljs-comment">// sf.c drv-&gt;load();</span><br>  get_rst_mode();<br>  setup_flash_device(); <span class="hljs-comment">// 初始化nor flash</span><br>    spi_flash_probe();<br>  spi_flash_read(flash, CONFIG_ENV_OFFSET, CONFIG_ENV_SIZE, buf); <span class="hljs-comment">// 从flash上读环境变量</span><br>  env_import(buf, <span class="hljs-number">1</span>);<br>    crc32(<span class="hljs-number">0</span>, ep-&gt;data, ENV_SIZE)； <span class="hljs-comment">// check crc</span><br>    himport_r(); <span class="hljs-comment">// 将环境变量存入一个hash table</span><br><br><br>env_get()<br>  <span class="hljs-keyword">if</span> (gd-&gt;flags &amp; GD_FLG_ENV_READY) &#123; <span class="hljs-comment">// board_r.c 初始化完环境变量后GD_FLG_ENV_READY</span><br>  ...<br>  &#125;；<br>  env_get_f() <span class="hljs-comment">// 在初始化环境变量前，会从default_environment[]中读取匹配变量，存入gd-&gt;env_buf</span><br>      env_match()<br></code></pre></td></tr></table></figure>
+
+<p>fdt初始化</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">fdtdec_setup();<br>  board_fdt_blob_setup()<br>reserve_fdt();<br>reloc_fdt();<br>initr_get_fdt_offset();<br>  _do_get_offset(<span class="hljs-string">&quot;kernel&quot;</span>);<br>    dma_copy_dtb_to_ddr(<span class="hljs-string">&quot;dtb_offset&quot;</span>); <span class="hljs-comment">/// 拷贝dtb</span><br></code></pre></td></tr></table></figure>
+
+
 
 <h2 id="global-data"><a href="#global-data" class="headerlink" title="global_data"></a>global_data</h2><p>uboot中定义了一个宏<code>DECLARE_GLOBAL_DATA_PTR</code>，使我们可以更加简单地获取global_data。</p>
 <p>global_data的地址存放在r9中，直接从r9寄存器中获取其地址即可。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//arch/arm/include/asm/global_data.h</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> DECLARE_GLOBAL_DATA_PTR    register volatile gd_t *gd asm (<span class="hljs-string">&quot;r9&quot;</span>)</span><br><br><span class="hljs-comment">// DECLARE_GLOBAL_DATA_PTR定义了gd_t *gd，并且其地址是r9中的值。</span><br><span class="hljs-comment">// 一旦使用了DECLARE_GLOBAL_DATA_PTR声明之后，后续就可以直接使用gd变量，也就是global_data了。</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="u-boot-relocate"><a href="#u-boot-relocate" class="headerlink" title="u-boot relocate"></a>u-boot relocate</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// board_f.c</span><br>fdtdec_setup();<br>  gd-&gt;fdt_blob = board_fdt_blob_setup();<br>    fdt_blob = (ulong *)&amp;_end; <span class="hljs-comment">// fdt_blob接在uboot image的末尾</span><br>  gd-&gt;fdt_blob = map_sysmem(env_get_ulong(<span class="hljs-string">&quot;fdtcontroladdr&quot;</span>, <span class="hljs-number">16</span>,<br>             (<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span>)map_to_sysmem(gd-&gt;fdt_blob)), <span class="hljs-number">0</span>);<span class="hljs-comment">//从环境变量设置设备树位置</span><br>  fdtdec_prepare_fdt();<br></code></pre></td></tr></table></figure>
+<h1 id="Uboot启动kernel"><a href="#Uboot启动kernel" class="headerlink" title="Uboot启动kernel"></a>Uboot启动kernel</h1><p>uboot用image_header来表示Legacy-uImage的头部</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">image_header</span> &#123;</span><br>  <span class="hljs-type">uint32_t</span>	ih_magic;	<span class="hljs-comment">/* Image Header Magic Number	*/</span><br>  <span class="hljs-type">uint32_t</span>	ih_hcrc;	<span class="hljs-comment">/* Image Header CRC Checksum	*/</span><br>  <span class="hljs-type">uint32_t</span>	ih_time;	<span class="hljs-comment">/* Image Creation Timestamp	*/</span><br>  <span class="hljs-type">uint32_t</span>	ih_size;	<span class="hljs-comment">/* Image Data Size		*/</span><br>  <span class="hljs-type">uint32_t</span>	ih_load;	<span class="hljs-comment">/* Data	 Load  Address		*/</span><br>  <span class="hljs-type">uint32_t</span>	ih_ep;		<span class="hljs-comment">/* Entry Point Address		*/</span><br>  <span class="hljs-type">uint32_t</span>	ih_dcrc;	<span class="hljs-comment">/* Image Data CRC Checksum	*/</span><br>  <span class="hljs-type">uint8_t</span>		ih_os;		<span class="hljs-comment">/* Operating System		*/</span><br>  <span class="hljs-type">uint8_t</span>		ih_arch;	<span class="hljs-comment">/* CPU architecture		*/</span><br>  <span class="hljs-type">uint8_t</span>		ih_type;	<span class="hljs-comment">/* Image Type			*/</span><br>  <span class="hljs-type">uint8_t</span>		ih_comp;	<span class="hljs-comment">/* Compression Type		*/</span><br>  <span class="hljs-type">uint8_t</span>		ih_name[IH_NMLEN];	<span class="hljs-comment">/* Image Name		*/</span><br>&#125; <span class="hljs-type">image_header_t</span>;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230419101548.png" srcset="/img/loading.gif" lazyload></p>
+<p><code>ih_magic=0x27051956</code>表示是一个<code>Legacy-uImage</code></p>
+<p><code>ih_load=81000000</code></p>
+<p><code>ih_ep=81000000</code></p>
+<p><code>ih_os, ih_arch, ih_type, ih_comp=05, 02, 02, 00</code> 具体定义在uboot<code> image.h</code>中</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// cmd/bootm.c</span><br>bootm();<br>  do_bootm();<br>    do_bootm_states(BOOTM_STATE_START |<br>    BOOTM_STATE_FINDOS | BOOTM_STATE_FINDOTHER |<br>    BOOTM_STATE_LOADOS | BOOTM_STATE_OS_PREP |<br>         BOOTM_STATE_OS_FAKE_GO | BOOTM_STATE_OS_GO);<br><br><span class="hljs-comment">// common/bootm.c</span><br>bootm_start();<br>  images.verify = env_get_yesno(<span class="hljs-string">&quot;verify&quot;</span>); <span class="hljs-comment">/// 不存在verify，return -1，默认为true</span><br>bootm_find_os(); <span class="hljs-comment">// 填充bootm_headers_t images</span><br>  <span class="hljs-comment">// 获取kernel image的data起始地址和长度</span><br>  os_hdr = boot_get_kernel(&amp;images.os.image_start, &amp;images.os.image_len);<br>    img_addr = genimg_get_kernel_addr_fit(); <span class="hljs-comment">// 获取kernel地址</span><br>    genimg_get_image(img_addr);<br>    image_get_kernel(img_addr, images-&gt;verify);<br>           image_print_contents(); <span class="hljs-comment">// 打印信息</span><br>      image_check_dcrc(); <span class="hljs-comment">// check crc</span><br>    images.os.type = image_get_type(os_hdr); <span class="hljs-comment">/// Kernel Image</span><br>    images.os.comp = image_get_comp(os_hdr); <span class="hljs-comment">/// uncompressed</span><br>    images.os.os = image_get_os(os_hdr); <span class="hljs-comment">/// Linux</span><br>    images.os.end = image_get_image_end(os_hdr);<br>    images.os.load = image_get_load(os_hdr); <span class="hljs-comment">/// 0x81000000</span><br>    images.os.arch = image_get_arch(os_hdr); <span class="hljs-comment">/// ARM</span><br>  images.ep = image_get_ep(&amp;images.legacy_hdr_os_copy); <span class="hljs-comment">/// 0x81000000</span><br>  images.os.start = map_to_sysmem(os_hdr); <span class="hljs-comment">// 0xC0000</span><br>bootm_find_other();<br>  bootm_find_images();<br>    boot_get_fdt(&amp;images.ft_addr, &amp;images.ft_len); <span class="hljs-comment">// 获取fdt地址和长度</span><br>bootm_disable_interrupts();<br>bootm_load_os(images, <span class="hljs-number">0</span>);<br>  image_decomp(); <span class="hljs-comment">// 这里会拷贝kernel image从flash到load address</span><br>boot_fn = bootm_os_get_boot_func(images-&gt;os.os);<br>boot_fn(BOOTM_STATE_OS_PREP, argc, argv, images);<br>  do_bootm_linux(); <span class="hljs-comment">//arch/arm/lib/bootm.c</span><br>    boot_prep_linux(); <span class="hljs-comment">//arch/arm/lib/bootm.c</span><br>      image_setup_linux(); <span class="hljs-comment">// common/image.c</span><br>        boot_relocate_fdt();<br>        image_setup_libfdt();<br>      board_prep_linux(); <span class="hljs-comment">// skip</span><br>boot_selected_os(argc, argv, BOOTM_STATE_OS_GO, images, boot_fn);<br>    boot_fn(state, argc, argv, images);<br>      do_bootm_linux();<br>        boot_jump_linux();<br>          kernel_entry = (<span class="hljs-type">void</span> (*)(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>, uint))images-&gt;ep;<br>          kernel_entry(<span class="hljs-number">0</span>, machid, r2); <span class="hljs-comment">// 进入kernel entry point</span><br></code></pre></td></tr></table></figure>
 
 
 
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="%5B%3Chttps://xyc-1316422823.cos.ap-shanghai.myqcloud.com/uboot_introduction.ppt%3E%5D(%3Chttps://xyc-1316422823.cos.ap-shanghai.myqcloud.com/uboot_introduction.ppt%3E)">Uboot PPT</a></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ooonebook/category_6484145.html">U-boot专栏</a></p>
+<p><a href="%5B%3Chttps://xyc-1316422823.cos.ap-shanghai.myqcloud.com/uboot_introduction.ppt%3E%5D(%3Chttps://xyc-1316422823.cos.ap-shanghai.myqcloud.com/uboot_introduction.ppt%3E)">Uboot PPT</a></p>
 
                 
               </div>
@@ -360,6 +386,34 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/U-Boot/">#U-Boot</a>
+      
+    </div>
   
 </div>
 
@@ -370,6 +424,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2023/04/19/Kernel%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" title="Kernel启动流程">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Kernel启动流程</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
