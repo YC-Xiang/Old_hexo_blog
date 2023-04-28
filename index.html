@@ -319,67 +319,6 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/04/19/Kernel%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" target="_self">
-          Kernel启动流程
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/19/Kernel%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" target="_self">
-        <div>
-          System.map：编译内核会生成的内核符号表 arch/arm/kernel/vmlinux.lds.S 生成链接文件，指定了kernel的entry point为ENTRY(stext) 所以kernel代码的入口是head.S 中的ENTRY(stext)
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-04-19 14:10" pubdate>
-              2023-04-19
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Kernel/">#Kernel</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
         <a href="/2023/04/19/U-Boot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" target="_self">
           U-Boot启动流程
         </a>
@@ -441,13 +380,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/04/13/I2C/" target="_self">
+        <a href="/2023/04/13/linux_subsystem/I2C/" target="_self">
           I2C
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/13/I2C/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/13/linux_subsystem/I2C/" target="_self">
         <div>
           I2C 基础知识写操作 主芯片要发出一个start信号 然后发出一个设备地址(用来确定是往哪一个芯片写数据)，方向(读&#x2F;写，0表示写，1表示读) 从设备回应(用来确定这个设备是否存在)，然后就可以传输数据 主设备发送一个字节数据给从设备，并等待回应 每传输一字节数据，接收方要有一个回应信号（确定数据是否接受完成)，然后再传输下一个数据。 数据发送完之后，主芯片就会发送一个停止信号。  下
         </div>
@@ -565,13 +504,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/03/21/PWM%E5%AD%90%E7%B3%BB%E7%BB%9F/" target="_self">
+        <a href="/2023/03/21/linux_subsystem/PWM%E5%AD%90%E7%B3%BB%E7%BB%9F/" target="_self">
           PWM子系统
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/21/PWM%E5%AD%90%E7%B3%BB%E7%BB%9F/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/21/linux_subsystem/PWM%E5%AD%90%E7%B3%BB%E7%BB%9F/" target="_self">
         <div>
           PWM 子系统PWM原理 利用微处理器的数字输出来对模拟电路进行控制的一种非常有效的技术，其本质是一种对模拟信号电平进行数字编码的方法。在嵌入式设备中，PWM多用于控制马达、LED、振动器等模拟器件。  脉冲周期（T），单位是时间，ns, us ,ms。 脉冲频率（f），单位是赫兹（Hz），与脉冲周期成倒数关系，f&#x3D;1&#x2F;T。 脉冲宽度（W），简称“脉宽”，是脉冲高电平持续的时间
         </div>
@@ -654,9 +593,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/tmux/">#tmux</a>
-            
               <a href="/tags/Missing-semester/">#Missing semester</a>
+            
+              <a href="/tags/tmux/">#tmux</a>
             
           </div>
         
@@ -670,13 +609,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/01/31/ICS2022-PA2/" target="_self">
+        <a href="/2023/01/31/ICS/ICS2022-PA2/" target="_self">
           ICS2022 PA2
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/31/ICS2022-PA2/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/31/ICS/ICS2022-PA2/" target="_self">
         <div>
           Phase_1mul-longlong.c中check 0xaeb1c2aa * 0xaeb1c2aa = 0x19d29ab9db1a18e4LL 实现mulh指令遇到的一个问题： 由于src1和src2都是unsigned int，强制类型转换为long（零扩展），得到的是无符号相乘结果0x7736200d。 1234  // 直接u32*u32会溢出，乘出来还是u32u32 src1 = 0
         </div>
@@ -778,9 +717,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Missing-semester/">#Missing semester</a>
-            
               <a href="/tags/Shell/">#Shell</a>
+            
+              <a href="/tags/Missing-semester/">#Missing semester</a>
             
           </div>
         
@@ -844,6 +783,67 @@
               <a href="/tags/Missing-semester/">#Missing semester</a>
             
               <a href="/tags/Vim/">#Vim</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_self">
+          正则表达式
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_self">
+        <div>
+          ReferencesRegexOne github正则表达式  TutorialsLesson 1 The 123s\d	any single digit character \D	any single non-digit character Lesson 2: The Dot.	any single character \.	period Lesson 3: Matching specific
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-01-12 17:39" pubdate>
+              2023-01-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E7%A4%BA%E5%BC%8F/">#正则表示式</a>
             
           </div>
         
