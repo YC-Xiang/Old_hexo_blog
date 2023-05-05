@@ -13,27 +13,26 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="YC-Xiang">
+  <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="&amp;&gt;file  意思是把标准输出 和 标准错误输出 都重定向到文件file中 &#x2F;dev&#x2F;null是一个文件，这个文件比较特殊，所有传给它的东西它都丢弃掉  command &gt; filename 把标准输出重定向到一个新文件中 command &gt;&gt; filename 把标准输出重定向到一个文件中(追加) command 1 &gt; fielnam">
+    <meta name="description" content="CONFIG_GENERIC_CLOCKEVENTS：新的时间子系统 以下选项三选一： CONFIG_HZ_PERIODIC：无论何时，都启用用周期性的tick，即便是在系统idle的时候。 CONFIG_NO_HZ_IDLE：在系统idle的时候，停掉周期性tick。会同时enable NO_HZ_COMMON。 CONFIG_NO_HZ_FULL：即便在非idle的状态下，也就是说cpu上还运">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux输入输出重定向">
-<meta property="og:url" content="https://yc-xiang.github.io/2021/12/31/legacy/2021-12-31-linux%E9%87%8D%E5%AE%9A%E5%90%91/index.html">
+<meta property="og:title" content="Yucheng&#39;s Blog">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/05/05/linux_subsystem/Time/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="&amp;&gt;file  意思是把标准输出 和 标准错误输出 都重定向到文件file中 &#x2F;dev&#x2F;null是一个文件，这个文件比较特殊，所有传给它的东西它都丢弃掉  command &gt; filename 把标准输出重定向到一个新文件中 command &gt;&gt; filename 把标准输出重定向到一个文件中(追加) command 1 &gt; fielnam">
+<meta property="og:description" content="CONFIG_GENERIC_CLOCKEVENTS：新的时间子系统 以下选项三选一： CONFIG_HZ_PERIODIC：无论何时，都启用用周期性的tick，即便是在系统idle的时候。 CONFIG_NO_HZ_IDLE：在系统idle的时候，停掉周期性tick。会同时enable NO_HZ_COMMON。 CONFIG_NO_HZ_FULL：即便在非idle的状态下，也就是说cpu上还运">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-12-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-28T10:04:54.821Z">
+<meta property="article:published_time" content="2023-05-05T06:42:19.571Z">
+<meta property="article:modified_time" content="2023-05-05T09:50:36.171Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Linux输入输出重定向 - Yucheng&#39;s Blog</title>
+  <title>Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +226,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Linux输入输出重定向</span>
+            <span id="subtitle"></span>
           
         </div>
 
@@ -238,8 +237,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2021-12-31 00:00" pubdate>
-          2021年12月31日 凌晨
+        <time datetime="2023-05-05 14:42" pubdate>
+          2023年5月5日 下午
         </time>
       </span>
     
@@ -250,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          657 words
+          680 words
         
       </span>
     
@@ -307,12 +306,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Linux输入输出重定向</h1>
+            <h1 style="display: none"></h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年4月28日 晚上
+                    本文最后更新于：2023年5月5日 下午
                   
                 
               </p>
@@ -320,25 +319,20 @@
             
               <div class="markdown-body">
                 
-                <p>&amp;&gt;file  意思是把标准输出 和 标准错误输出 都重定向到文件file中</p>
-<p>&#x2F;dev&#x2F;null是一个文件，这个文件比较特殊，所有传给它的东西它都丢弃掉</p>
-<ul>
-<li>command &gt; filename 把标准输出重定向到一个新文件中</li>
-<li>command &gt;&gt; filename 把标准输出重定向到一个文件中(追加)</li>
-<li>command 1 &gt; fielname 把标准输出重定向到一个文件中(和 &gt; 一样的)</li>
-<li>command &gt; filename 2&gt;&amp;1 把标准输出和标准错误一起重定向到一个文件中</li>
-<li>command 2 &gt; filename 把标准错误重定向到一个文件中</li>
-<li>command 2 &gt;&gt; filename 把标准输出重定向到一个文件中(追加)</li>
-<li>command &gt;&gt; filename 2&gt;&amp;1 把标准输出和标准错误一起重定向到一个文件中(追加)</li>
-<li>command &lt; filename &gt;filename2 把command命令以filename文件作为标准输入，以filename2文件作为标准输出</li>
-<li>command &lt; filename 把command命令以filename文件作为标准输入</li>
-<li>command &lt;&lt; delimiter 把从标准输入中读入，直至遇到delimiter分界符</li>
-<li>command &lt;&amp;m 把文件描述符m作为标准输入</li>
-<li>command &gt;&amp;m 把标准输出重定向到文件描述符m中</li>
-<li>command &lt;&amp;- 把关闭标准输入</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/alex_xhl/article/details/5719381">原文链接</a></p>
-
+                <p>CONFIG_GENERIC_CLOCKEVENTS：新的时间子系统</p>
+<p>以下选项三选一：</p>
+<p>CONFIG_HZ_PERIODIC：无论何时，都启用用周期性的tick，即便是在系统idle的时候。</p>
+<p>CONFIG_NO_HZ_IDLE：在系统idle的时候，停掉周期性tick。会同时enable NO_HZ_COMMON。</p>
+<p>CONFIG_NO_HZ_FULL：即便在非idle的状态下，也就是说cpu上还运行在task，也可能会停掉tick。会同时enable NO_HZ_COMMON。</p>
+<p>CONFIG_HIGH_RES_TIMERS：高精度timer。</p>
+<p>如果配置了高精度timer，或者配置了NO_HZ_COMMON的选项，那么一定需要配置CONFIG_TICK_ONESHOT，表示系统支持支持one-shot类型的tick device。</p>
+<h1 id="sysfs接口"><a href="#sysfs接口" class="headerlink" title="sysfs接口"></a>sysfs接口</h1><p>cd &#x2F;sys&#x2F;bus&#x2F;clocksource&#x2F;devices&#x2F;clocksource0</p>
+<p>cat current_clocksource: 查看当前的clocksource</p>
+<p>cat available_clocksource: 查看可用的clocksource</p>
+<p>echo xxx &gt; current_clocksource: 设置clocksource</p>
+<p>cd &#x2F;sys&#x2F;bus&#x2F;clockevents&#x2F;devices&#x2F;clockevent0</p>
+<p>cat current_device: 查看当前的clockevent</p>
+<h1 id="Clocksource"><a href="#Clocksource" class="headerlink" title="Clocksource"></a>Clocksource</h1><h1 id="Clockevent"><a href="#Clockevent" class="headerlink" title="Clockevent"></a>Clockevent</h1>
                 
               </div>
             
@@ -346,13 +340,6 @@
             <div>
               <div class="post-metas my-3">
   
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/Linux/">#Linux</a>
-      
-    </div>
   
 </div>
 
@@ -364,18 +351,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/01/06/legacy/2022-1-6-U-boot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90/" title="U-boot启动流程分析">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">U-boot启动流程分析</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/12/29/legacy/2021-12-29-Buildroot/" title="Buildroot学习记录">
-                        <span class="hidden-mobile">Buildroot学习记录</span>
+                      <a href="/2023/05/04/linux_subsystem/Interrupt/" title="">
+                        <span class="hidden-mobile"></span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

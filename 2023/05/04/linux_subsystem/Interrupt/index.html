@@ -13,27 +13,26 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="YC-Xiang">
+  <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="&amp;&gt;file  意思是把标准输出 和 标准错误输出 都重定向到文件file中 &#x2F;dev&#x2F;null是一个文件，这个文件比较特殊，所有传给它的东西它都丢弃掉  command &gt; filename 把标准输出重定向到一个新文件中 command &gt;&gt; filename 把标准输出重定向到一个文件中(追加) command 1 &gt; fielnam">
+    <meta name="description" content="IRQ domain1、向系统注册irq domain interrupt controller初始化的过程中，注册irq domain irq_domain_add_linear 2、为irq domain创建映射 在各个硬件外设的驱动初始化过程中，创建HW interrupt ID和IRQ number的映射关系。 Interrupt controller初始化的时候会mapping hw i">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux输入输出重定向">
-<meta property="og:url" content="https://yc-xiang.github.io/2021/12/31/legacy/2021-12-31-linux%E9%87%8D%E5%AE%9A%E5%90%91/index.html">
+<meta property="og:title" content="Yucheng&#39;s Blog">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/05/04/linux_subsystem/Interrupt/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="&amp;&gt;file  意思是把标准输出 和 标准错误输出 都重定向到文件file中 &#x2F;dev&#x2F;null是一个文件，这个文件比较特殊，所有传给它的东西它都丢弃掉  command &gt; filename 把标准输出重定向到一个新文件中 command &gt;&gt; filename 把标准输出重定向到一个文件中(追加) command 1 &gt; fielnam">
+<meta property="og:description" content="IRQ domain1、向系统注册irq domain interrupt controller初始化的过程中，注册irq domain irq_domain_add_linear 2、为irq domain创建映射 在各个硬件外设的驱动初始化过程中，创建HW interrupt ID和IRQ number的映射关系。 Interrupt controller初始化的时候会mapping hw i">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-12-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-28T10:04:54.821Z">
+<meta property="article:published_time" content="2023-05-04T01:57:03.918Z">
+<meta property="article:modified_time" content="2023-05-05T03:14:27.506Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Linux输入输出重定向 - Yucheng&#39;s Blog</title>
+  <title>Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +226,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Linux输入输出重定向</span>
+            <span id="subtitle"></span>
           
         </div>
 
@@ -238,8 +237,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2021-12-31 00:00" pubdate>
-          2021年12月31日 凌晨
+        <time datetime="2023-05-04 09:57" pubdate>
+          2023年5月4日 上午
         </time>
       </span>
     
@@ -250,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          657 words
+          3.4k words
         
       </span>
     
@@ -261,7 +260,7 @@
         
         
         
-          6 mins
+          28 mins
         
       </span>
     
@@ -307,12 +306,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Linux输入输出重定向</h1>
+            <h1 style="display: none"></h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年4月28日 晚上
+                    本文最后更新于：2023年5月5日 上午
                   
                 
               </p>
@@ -320,24 +319,56 @@
             
               <div class="markdown-body">
                 
-                <p>&amp;&gt;file  意思是把标准输出 和 标准错误输出 都重定向到文件file中</p>
-<p>&#x2F;dev&#x2F;null是一个文件，这个文件比较特殊，所有传给它的东西它都丢弃掉</p>
-<ul>
-<li>command &gt; filename 把标准输出重定向到一个新文件中</li>
-<li>command &gt;&gt; filename 把标准输出重定向到一个文件中(追加)</li>
-<li>command 1 &gt; fielname 把标准输出重定向到一个文件中(和 &gt; 一样的)</li>
-<li>command &gt; filename 2&gt;&amp;1 把标准输出和标准错误一起重定向到一个文件中</li>
-<li>command 2 &gt; filename 把标准错误重定向到一个文件中</li>
-<li>command 2 &gt;&gt; filename 把标准输出重定向到一个文件中(追加)</li>
-<li>command &gt;&gt; filename 2&gt;&amp;1 把标准输出和标准错误一起重定向到一个文件中(追加)</li>
-<li>command &lt; filename &gt;filename2 把command命令以filename文件作为标准输入，以filename2文件作为标准输出</li>
-<li>command &lt; filename 把command命令以filename文件作为标准输入</li>
-<li>command &lt;&lt; delimiter 把从标准输入中读入，直至遇到delimiter分界符</li>
-<li>command &lt;&amp;m 把文件描述符m作为标准输入</li>
-<li>command &gt;&amp;m 把标准输出重定向到文件描述符m中</li>
-<li>command &lt;&amp;- 把关闭标准输入</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/alex_xhl/article/details/5719381">原文链接</a></p>
+                <h1 id="IRQ-domain"><a href="#IRQ-domain" class="headerlink" title="IRQ domain"></a>IRQ domain</h1><p>1、向系统注册irq domain</p>
+<p>interrupt controller初始化的过程中，注册irq domain</p>
+<p><code>irq_domain_add_linear</code></p>
+<p>2、为irq domain创建映射</p>
+<p>在各个硬件外设的驱动初始化过程中，创建HW interrupt ID和IRQ number的映射关系。</p>
+<p><em><strong>Interrupt controller初始化的时候会mapping hw id和irq number吗？</strong></em></p>
+<p>方法1：</p>
+<p><code>irq_create_mapping(struct irq_domain *host, irq_hw_number_t hwirq);</code></p>
+<p>比如<code>drivers/clocksource/timer-riscv.c</code>中<code>irq_create_mapping(domain, RV_IRQ_TIMER);</code>直接将hw id(RV_IRQ_TIMER)传入, 创建hw id和irq number的映射。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">irq_create_mapping(domain, hwirq);<br>  irq_create_mapping_affinity();<br>    irq_domain_alloc_descs(); <span class="hljs-comment">// 创建hw id和irq number的映射</span><br>    irq_domain_associate();<br>      domain-&gt;ops-&gt;<span class="hljs-built_in">map</span>(); <span class="hljs-comment">//调用到interrupt controller的map函数</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>方法2：</p>
+<p><code>irq_of_parse_and_map</code></p>
+<p>比如<code>drivers/irqchip/irq-realtek-plic.c</code>中<code>irq_of_parse_and_map</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">irq_of_parse_and_map(<span class="hljs-keyword">struct</span> device_node *dev, <span class="hljs-type">int</span> index);<br>  of_irq_parse_one(dev, index, &amp;oirq); <span class="hljs-comment">// 解析设备树</span><br>  irq_create_of_mapping(&amp;oirq);<br>    irq_create_fwspec_mapping();<br>      irq_create_mapping(domain, hwirq); <span class="hljs-comment">// 最终还是调用到irq_create_mapping</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>方法3：</p>
+<p>外设driver中直接<code>platform_get_irq</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">platform_get_irq();<br>  platform_get_irq_optional();<br>    of_irq_get();<br>      of_irq_parse_one();<br>      irq_create_of_mapping(); <span class="hljs-comment">// 到这里和上面一样了</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>级联的第二级interrupt controller调用<code>irq_set_chained_handler</code>设置 interrupt handler</p>
+<p>irq初始化</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// init/main.c</span><br>init_IRQ();<br><span class="hljs-comment">//arch/riscv/kernel/irq.c</span><br>init_IRQ();<br>  irqchip_init();<br><span class="hljs-comment">// drivers/irqchip/irqchip.c</span><br>irqchip_init();<br>  of_irq_init();<br>    IRQCHIP_DECLARE(riscv, <span class="hljs-string">&quot;riscv,cpu-intc&quot;</span>, riscv_intc_init); <span class="hljs-comment">// 进入riscv_intc_init</span><br><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p>risc-v 中断处理流程</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><br></code></pre></td></tr></table></figure>
+
+<h1 id="IRQ-desc"><a href="#IRQ-desc" class="headerlink" title="IRQ desc"></a>IRQ desc</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">irq_desc</span> <span class="hljs-title">irq_desc</span>[<span class="hljs-title">NR_IRQS</span>] // 全局<span class="hljs-title">irq_desc</span>数组，每个外设的中断对应一个<span class="hljs-title">irq_desc</span></span><br><span class="hljs-class"></span><br><span class="hljs-class"><span class="hljs-title">early_irq_init</span>();</span><br>  desc_set_defaults(); <span class="hljs-comment">// 对每个irq_desc都初始化赋值</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// irq-riscv-intc.c </span><br><span class="hljs-comment">// 每个cpu int都会调用到cpu interrupt controller的map函数，会填充irq_desc。</span><br>irq_create_mapping();<br>domain-&gt;ops-&gt;<span class="hljs-built_in">map</span>;<br>.<span class="hljs-built_in">map</span> = riscv_intc_domain_map();<br>  irq_domain_set_info();<br>    irq_set_chip_and_handler_name(virq, chip, handler, handler_name);<br>      irq_set_chip();<br>        desc-&gt;irq_data.chip = chip;<br>      __irq_set_handler();<br>        desc-&gt;handle_irq = handle; <span class="hljs-comment">// handle是handle_percpu_devid_irq</span><br>    irq_set_chip_data(virq, chip_data); <span class="hljs-comment">// d-&gt;host_data irq_domain_add_linear最后一个参数</span><br>      desc-&gt;irq_data.chip_data = data; <span class="hljs-comment">// irq chip的私有数据</span><br>    irq_set_handler_data(virq, handler_data);<br>      desc-&gt;irq_common_data.handler_data = data; <span class="hljs-comment">// data=NULL</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c">platform_get_irq();<br>...<br>irq_create_of_mapping<br>  irq_create_fwspec_mapping<br>    irq_domain_alloc_irqs<br>      __irq_domain_alloc_irqs<br>        irq_domain_alloc_irqs_hierarchy<br>          domain-&gt;ops-&gt;alloc<br>            irq_domain_translate_onecell<br>            plic_irqdomain_map<br>              irq_domain_set_info<br>                ...<br>                  desc-&gt;handle_irq = handle; <span class="hljs-comment">// handle: handle_fasteoi_irq</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>irq_to_desc的定义 irq_desc + irq 是什么意思？数组加上irq number？</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">struct</span> irq_desc *<span class="hljs-title function_">irq_to_desc</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> irq)</span><br>&#123;<br>  <span class="hljs-keyword">return</span> (irq &lt; NR_IRQS) ? irq_desc + irq : <span class="hljs-literal">NULL</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="risc-v中断处理流程"><a href="#risc-v中断处理流程" class="headerlink" title="risc-v中断处理流程"></a>risc-v中断处理流程</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// head.S </span><br>setup_trap_vector:     <br>  la a0, handle_exception    <br>  csrw CSR_TVEC, a0     <span class="hljs-comment">// handle_exception地址传入CSR_TVEC</span><br>  csrw CSR_SCRATCH, zero   <span class="hljs-comment">// CSR_SCRATCH清零</span><br><br><span class="hljs-comment">// entry.S</span><br>ENTRY(handle_exception)<br>  handle_arch_irq();<br>    set_handle_irq();<br>      riscv_intc_irq();<br>        handle_domain_irq();<br>          __handle_domain_irq();<br>            generic_handle_irq();<br>              generic_handle_irq_desc();<br>                desc-&gt;handle_irq(desc);<br><span class="hljs-comment">// 这里cpu int会进入handle_percpu_devid_irq, 在irq-riscv-intc.c irq_domain_set_info中设定</span><br>handle_percpu_devid_irq();<br>  action-&gt;handler(); <span class="hljs-comment">// timer-riscv.c 中request_irq会把中断处理函数赋值给action-&gt;handler();</span><br><span class="hljs-comment">// external int 会进入plic_handle_irq, 在irq-realtek-plic.c irq_set_chained_handler中设定</span><br>plic_handle_irq();<br>  generic_handle_irq();<br>    generic_handle_irq_desc();<br>      desc-&gt;handle_irq(desc);<br>        handle_fasteoi_irq();<br>          ...<br>                    <span class="hljs-comment">// request_irq中会把自定义的handler function赋值给action-&gt;handler</span><br>                    action-&gt;handler(); <br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
@@ -346,13 +377,6 @@
             <div>
               <div class="post-metas my-3">
   
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/Linux/">#Linux</a>
-      
-    </div>
   
 </div>
 
@@ -364,9 +388,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/01/06/legacy/2022-1-6-U-boot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90/" title="U-boot启动流程分析">
+                      <a href="/2023/05/05/linux_subsystem/Time/" title="">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">U-boot启动流程分析</span>
+                        <span class="hidden-mobile"></span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -374,8 +398,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/12/29/legacy/2021-12-29-Buildroot/" title="Buildroot学习记录">
-                        <span class="hidden-mobile">Buildroot学习记录</span>
+                      <a href="/2023/04/25/rCore_uCore/uCore/" title="uCore">
+                        <span class="hidden-mobile">uCore</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

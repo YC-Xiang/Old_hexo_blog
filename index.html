@@ -256,6 +256,133 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/05/05/linux_subsystem/Time/" target="_self">
+          
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/05/linux_subsystem/Time/" target="_self">
+        <div>
+          CONFIG_GENERIC_CLOCKEVENTS：新的时间子系统 以下选项三选一： CONFIG_HZ_PERIODIC：无论何时，都启用用周期性的tick，即便是在系统idle的时候。 CONFIG_NO_HZ_IDLE：在系统idle的时候，停掉周期性tick。会同时enable NO_HZ_COMMON。 CONFIG_NO_HZ_FULL：即便在非idle的状态下，也就是说cpu上还运
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-05-05 14:42" pubdate>
+              2023-05-05
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/05/04/linux_subsystem/Interrupt/" target="_self">
+          
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/04/linux_subsystem/Interrupt/" target="_self">
+        <div>
+          IRQ domain1、向系统注册irq domain interrupt controller初始化的过程中，注册irq domain irq_domain_add_linear 2、为irq domain创建映射 在各个硬件外设的驱动初始化过程中，创建HW interrupt ID和IRQ number的映射关系。 Interrupt controller初始化的时候会mapping hw i
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-05-04 09:57" pubdate>
+              2023-05-04
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/04/25/rCore_uCore/uCore/" target="_self">
+          uCore
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/25/rCore_uCore/uCore/" target="_self">
+        <div>
+          Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG=LOG_LEVEL_TRACE # 其他选项可以看Makefilemake clean # rm build/make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 ch1流程1234567
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-04-25 23:11" pubdate>
+              2023-04-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/uCore/">#uCore</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/04/21/sbi/" target="_self">
           RISC-V SBI
         </a>
@@ -504,13 +631,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/03/21/linux_subsystem/PWM%E5%AD%90%E7%B3%BB%E7%BB%9F/" target="_self">
+        <a href="/2023/03/21/linux_subsystem/PWM/" target="_self">
           PWM子系统
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/21/linux_subsystem/PWM%E5%AD%90%E7%B3%BB%E7%BB%9F/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/21/linux_subsystem/PWM/" target="_self">
         <div>
           PWM 子系统PWM原理 利用微处理器的数字输出来对模拟电路进行控制的一种非常有效的技术，其本质是一种对模拟信号电平进行数字编码的方法。在嵌入式设备中，PWM多用于控制马达、LED、振动器等模拟器件。  脉冲周期（T），单位是时间，ns, us ,ms。 脉冲频率（f），单位是赫兹（Hz），与脉冲周期成倒数关系，f&#x3D;1&#x2F;T。 脉冲宽度（W），简称“脉宽”，是脉冲高电平持续的时间
         </div>
@@ -657,193 +784,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/ICS/">#ICS</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/01/30/Missing-semester_ch1_shell-scripts/" target="_self">
-          Shell scripts
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/30/Missing-semester_ch1_shell-scripts/" target="_self">
-        <div>
-          foo=bar 变量定义=左右不能加空格。 用&#39;分隔的字符串是字面值字符串，不会替换变量值，而用&quot;分隔的字符串会。 12345foo=barecho &quot;$foo&quot;# prints barecho &#x27;$foo&#x27;# prints $foo  $0- Name of the script$1- to $9 - Arguments to the s
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-01-30 10:02" pubdate>
-              2023-01-30
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Missing-semester/">#Missing semester</a>
-            
-              <a href="/tags/Shell/">#Shell</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/01/13/Missing-semester_ch2_Vim/" target="_self">
-          Vim
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/13/Missing-semester_ch2_Vim/" target="_self">
-        <div>
-          Modal editing Normal: for moving around a file and making edits Insert: i for inserting text Replace: R for replacing text Visual: (plainv, lineV, or blockCtrl+v): for selecting blocks of text(use mov
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-01-13 17:31" pubdate>
-              2023-01-13
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Missing-semester/">#Missing semester</a>
-            
-              <a href="/tags/Vim/">#Vim</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_self">
-          正则表达式
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_self">
-        <div>
-          ReferencesRegexOne github正则表达式  TutorialsLesson 1 The 123s\d	any single digit character \D	any single non-digit character Lesson 2: The Dot.	any single character \.	period Lesson 3: Matching specific
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-01-12 17:39" pubdate>
-              2023-01-12
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E7%A4%BA%E5%BC%8F/">#正则表示式</a>
             
           </div>
         
