@@ -18,21 +18,22 @@
   
     <meta name="description" content="IRQ domain1、向系统注册irq domain interrupt controller初始化的过程中，注册irq domain irq_domain_add_linear 2、为irq domain创建映射 在各个硬件外设的驱动初始化过程中，创建HW interrupt ID和IRQ number的映射关系。 Interrupt controller初始化的时候会mapping hw i">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Yucheng&#39;s Blog">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/05/04/linux_subsystem/Interrupt/index.html">
+<meta property="og:title" content="Interrupt subsystem">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/05/08/linux_subsystem/Interrupt/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
 <meta property="og:description" content="IRQ domain1、向系统注册irq domain interrupt controller初始化的过程中，注册irq domain irq_domain_add_linear 2、为irq domain创建映射 在各个硬件外设的驱动初始化过程中，创建HW interrupt ID和IRQ number的映射关系。 Interrupt controller初始化的时候会mapping hw i">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-05-04T01:57:03.918Z">
-<meta property="article:modified_time" content="2023-05-05T03:14:27.506Z">
+<meta property="article:published_time" content="2023-05-08T08:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-08T09:13:19.764Z">
 <meta property="article:author" content="Yucheng Xiang">
+<meta property="article:tag" content="Linux driver">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Yucheng&#39;s Blog</title>
+  <title>Interrupt subsystem - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -226,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle"></span>
+            <span id="subtitle">Interrupt subsystem</span>
           
         </div>
 
@@ -237,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-04 09:57" pubdate>
-          2023年5月4日 上午
+        <time datetime="2023-05-08 16:00" pubdate>
+          2023年5月8日 下午
         </time>
       </span>
     
@@ -249,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.4k words
+          3.5k words
         
       </span>
     
@@ -260,7 +261,7 @@
         
         
         
-          28 mins
+          29 mins
         
       </span>
     
@@ -306,12 +307,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">Interrupt subsystem</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年5月5日 上午
+                    本文最后更新于：2023年5月8日 下午
                   
                 
               </p>
@@ -358,7 +359,7 @@
 
 <h1 id="IRQ-desc"><a href="#IRQ-desc" class="headerlink" title="IRQ desc"></a>IRQ desc</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">irq_desc</span> <span class="hljs-title">irq_desc</span>[<span class="hljs-title">NR_IRQS</span>] // 全局<span class="hljs-title">irq_desc</span>数组，每个外设的中断对应一个<span class="hljs-title">irq_desc</span></span><br><span class="hljs-class"></span><br><span class="hljs-class"><span class="hljs-title">early_irq_init</span>();</span><br>  desc_set_defaults(); <span class="hljs-comment">// 对每个irq_desc都初始化赋值</span><br></code></pre></td></tr></table></figure>
 
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// irq-riscv-intc.c </span><br><span class="hljs-comment">// 每个cpu int都会调用到cpu interrupt controller的map函数，会填充irq_desc。</span><br>irq_create_mapping();<br>domain-&gt;ops-&gt;<span class="hljs-built_in">map</span>;<br>.<span class="hljs-built_in">map</span> = riscv_intc_domain_map();<br>  irq_domain_set_info();<br>    irq_set_chip_and_handler_name(virq, chip, handler, handler_name);<br>      irq_set_chip();<br>        desc-&gt;irq_data.chip = chip;<br>      __irq_set_handler();<br>        desc-&gt;handle_irq = handle; <span class="hljs-comment">// handle是handle_percpu_devid_irq</span><br>    irq_set_chip_data(virq, chip_data); <span class="hljs-comment">// d-&gt;host_data irq_domain_add_linear最后一个参数</span><br>      desc-&gt;irq_data.chip_data = data; <span class="hljs-comment">// irq chip的私有数据</span><br>    irq_set_handler_data(virq, handler_data);<br>      desc-&gt;irq_common_data.handler_data = data; <span class="hljs-comment">// data=NULL</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// irq-riscv-intc.c</span><br><span class="hljs-comment">// 每个cpu int都会调用到cpu interrupt controller的map函数，会填充irq_desc。</span><br>irq_create_mapping();<br>domain-&gt;ops-&gt;<span class="hljs-built_in">map</span>;<br>.<span class="hljs-built_in">map</span> = riscv_intc_domain_map();<br>  irq_domain_set_info();<br>    irq_set_chip_and_handler_name(virq, chip, handler, handler_name);<br>      irq_set_chip();<br>        desc-&gt;irq_data.chip = chip;<br>      __irq_set_handler();<br>        desc-&gt;handle_irq = handle; <span class="hljs-comment">// handle是handle_percpu_devid_irq</span><br>    irq_set_chip_data(virq, chip_data); <span class="hljs-comment">// d-&gt;host_data irq_domain_add_linear最后一个参数</span><br>      desc-&gt;irq_data.chip_data = data; <span class="hljs-comment">// irq chip的私有数据</span><br>    irq_set_handler_data(virq, handler_data);<br>      desc-&gt;irq_common_data.handler_data = data; <span class="hljs-comment">// data=NULL</span><br></code></pre></td></tr></table></figure>
 
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c">platform_get_irq();<br>...<br>irq_create_of_mapping<br>  irq_create_fwspec_mapping<br>    irq_domain_alloc_irqs<br>      __irq_domain_alloc_irqs<br>        irq_domain_alloc_irqs_hierarchy<br>          domain-&gt;ops-&gt;alloc<br>            irq_domain_translate_onecell<br>            plic_irqdomain_map<br>              irq_domain_set_info<br>                ...<br>                  desc-&gt;handle_irq = handle; <span class="hljs-comment">// handle: handle_fasteoi_irq</span><br></code></pre></td></tr></table></figure>
 
@@ -367,8 +368,11 @@
 <p>irq_to_desc的定义 irq_desc + irq 是什么意思？数组加上irq number？</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">struct</span> irq_desc *<span class="hljs-title function_">irq_to_desc</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> irq)</span><br>&#123;<br>  <span class="hljs-keyword">return</span> (irq &lt; NR_IRQS) ? irq_desc + irq : <span class="hljs-literal">NULL</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h1 id="risc-v中断处理流程"><a href="#risc-v中断处理流程" class="headerlink" title="risc-v中断处理流程"></a>risc-v中断处理流程</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// head.S </span><br>setup_trap_vector:     <br>  la a0, handle_exception    <br>  csrw CSR_TVEC, a0     <span class="hljs-comment">// handle_exception地址传入CSR_TVEC</span><br>  csrw CSR_SCRATCH, zero   <span class="hljs-comment">// CSR_SCRATCH清零</span><br><br><span class="hljs-comment">// entry.S</span><br>ENTRY(handle_exception)<br>  handle_arch_irq();<br>    set_handle_irq();<br>      riscv_intc_irq();<br>        handle_domain_irq();<br>          __handle_domain_irq();<br>            generic_handle_irq();<br>              generic_handle_irq_desc();<br>                desc-&gt;handle_irq(desc);<br><span class="hljs-comment">// 这里cpu int会进入handle_percpu_devid_irq, 在irq-riscv-intc.c irq_domain_set_info中设定</span><br>handle_percpu_devid_irq();<br>  action-&gt;handler(); <span class="hljs-comment">// timer-riscv.c 中request_irq会把中断处理函数赋值给action-&gt;handler();</span><br><span class="hljs-comment">// external int 会进入plic_handle_irq, 在irq-realtek-plic.c irq_set_chained_handler中设定</span><br>plic_handle_irq();<br>  generic_handle_irq();<br>    generic_handle_irq_desc();<br>      desc-&gt;handle_irq(desc);<br>        handle_fasteoi_irq();<br>          ...<br>                    <span class="hljs-comment">// request_irq中会把自定义的handler function赋值给action-&gt;handler</span><br>                    action-&gt;handler(); <br></code></pre></td></tr></table></figure>
+<h1 id="risc-v中断处理流程"><a href="#risc-v中断处理流程" class="headerlink" title="risc-v中断处理流程"></a>risc-v中断处理流程</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// head.S</span><br>setup_trap_vector:<br>  la a0, handle_exception<br>  csrw CSR_TVEC, a0     <span class="hljs-comment">// handle_exception地址传入CSR_TVEC</span><br>  csrw CSR_SCRATCH, zero   <span class="hljs-comment">// CSR_SCRATCH清零</span><br><br><span class="hljs-comment">// entry.S</span><br>ENTRY(handle_exception)<br>  handle_arch_irq();<br>    set_handle_irq();<br>      riscv_intc_irq();<br>        handle_domain_irq();<br>          __handle_domain_irq();<br>            generic_handle_irq();<br>              generic_handle_irq_desc();<br>                <span class="hljs-comment">// 不同的中断控制器在一开始初始化会设置</span><br>                desc-&gt;handle_irq(desc);<br><span class="hljs-comment">// 这里cpu int会进入handle_percpu_devid_irq, 在irq-riscv-intc.c irq_domain_set_info中设定</span><br>handle_percpu_devid_irq();<br>  action-&gt;handler(); <span class="hljs-comment">// timer-riscv.c 中request_irq会把中断处理函数赋值给action-&gt;handler();</span><br><br><span class="hljs-comment">// external int 会进入plic_handle_irq, 在irq-realtek-plic.c irq_set_chained_handler中设定</span><br>plic_handle_irq();<br>  generic_handle_irq();<br>    generic_handle_irq_desc();<br>      desc-&gt;handle_irq(desc);<br>        handle_fasteoi_irq();<br>          ...<br>                    <span class="hljs-comment">// request_irq中会把自定义的handler function赋值给action-&gt;handler</span><br>                    action-&gt;handler();<br></code></pre></td></tr></table></figure>
 
+
+
+<p><em><strong>是否所有的irq_domain的irq number是按顺序排列下去，每个irq_number设置一个interrupt handler，不会重复？</strong></em></p>
 
                 
               </div>
@@ -377,6 +381,34 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux-driver/">#Linux driver</a>
+      
+    </div>
   
 </div>
 
@@ -388,9 +420,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/05/linux_subsystem/Time/" title="">
+                      <a href="/2023/05/08/linux_subsystem/Time/" title="Time subsystem">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
+                        <span class="hidden-mobile">Time subsystem</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     

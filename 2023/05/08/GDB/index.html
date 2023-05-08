@@ -16,23 +16,24 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="CONFIG_GENERIC_CLOCKEVENTS：新的时间子系统 以下选项三选一： CONFIG_HZ_PERIODIC：无论何时，都启用用周期性的tick，即便是在系统idle的时候。 CONFIG_NO_HZ_IDLE：在系统idle的时候，停掉周期性tick。会同时enable NO_HZ_COMMON。 CONFIG_NO_HZ_FULL：即便在非idle的状态下，也就是说cpu上还运">
+    <meta name="description" content="to do">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Yucheng&#39;s Blog">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/05/05/linux_subsystem/Time/index.html">
+<meta property="og:title" content="GDB">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/05/08/GDB/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="CONFIG_GENERIC_CLOCKEVENTS：新的时间子系统 以下选项三选一： CONFIG_HZ_PERIODIC：无论何时，都启用用周期性的tick，即便是在系统idle的时候。 CONFIG_NO_HZ_IDLE：在系统idle的时候，停掉周期性tick。会同时enable NO_HZ_COMMON。 CONFIG_NO_HZ_FULL：即便在非idle的状态下，也就是说cpu上还运">
+<meta property="og:description" content="to do">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-05-05T06:42:19.571Z">
-<meta property="article:modified_time" content="2023-05-05T09:50:36.171Z">
+<meta property="article:published_time" content="2023-05-08T10:00:28.000Z">
+<meta property="article:modified_time" content="2023-05-08T09:14:01.515Z">
 <meta property="article:author" content="Yucheng Xiang">
+<meta property="article:tag" content="GDB">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Yucheng&#39;s Blog</title>
+  <title>GDB - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -226,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle"></span>
+            <span id="subtitle">GDB</span>
           
         </div>
 
@@ -237,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-05 14:42" pubdate>
-          2023年5月5日 下午
+        <time datetime="2023-05-08 18:00" pubdate>
+          2023年5月8日 晚上
         </time>
       </span>
     
@@ -249,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          680 words
+          4 words
         
       </span>
     
@@ -260,7 +261,7 @@
         
         
         
-          6 mins
+          1 mins
         
       </span>
     
@@ -306,12 +307,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">GDB</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年5月5日 下午
+                    本文最后更新于：2023年5月8日 下午
                   
                 
               </p>
@@ -319,20 +320,8 @@
             
               <div class="markdown-body">
                 
-                <p>CONFIG_GENERIC_CLOCKEVENTS：新的时间子系统</p>
-<p>以下选项三选一：</p>
-<p>CONFIG_HZ_PERIODIC：无论何时，都启用用周期性的tick，即便是在系统idle的时候。</p>
-<p>CONFIG_NO_HZ_IDLE：在系统idle的时候，停掉周期性tick。会同时enable NO_HZ_COMMON。</p>
-<p>CONFIG_NO_HZ_FULL：即便在非idle的状态下，也就是说cpu上还运行在task，也可能会停掉tick。会同时enable NO_HZ_COMMON。</p>
-<p>CONFIG_HIGH_RES_TIMERS：高精度timer。</p>
-<p>如果配置了高精度timer，或者配置了NO_HZ_COMMON的选项，那么一定需要配置CONFIG_TICK_ONESHOT，表示系统支持支持one-shot类型的tick device。</p>
-<h1 id="sysfs接口"><a href="#sysfs接口" class="headerlink" title="sysfs接口"></a>sysfs接口</h1><p>cd &#x2F;sys&#x2F;bus&#x2F;clocksource&#x2F;devices&#x2F;clocksource0</p>
-<p>cat current_clocksource: 查看当前的clocksource</p>
-<p>cat available_clocksource: 查看可用的clocksource</p>
-<p>echo xxx &gt; current_clocksource: 设置clocksource</p>
-<p>cd &#x2F;sys&#x2F;bus&#x2F;clockevents&#x2F;devices&#x2F;clockevent0</p>
-<p>cat current_device: 查看当前的clockevent</p>
-<h1 id="Clocksource"><a href="#Clocksource" class="headerlink" title="Clocksource"></a>Clocksource</h1><h1 id="Clockevent"><a href="#Clockevent" class="headerlink" title="Clockevent"></a>Clockevent</h1>
+                <p>to do</p>
+
                 
               </div>
             
@@ -340,6 +329,34 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/GDB/">#GDB</a>
+      
+    </div>
   
 </div>
 
@@ -355,8 +372,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/04/linux_subsystem/Interrupt/" title="">
-                        <span class="hidden-mobile"></span>
+                      <a href="/2023/05/08/linux_subsystem/Time/" title="Time subsystem">
+                        <span class="hidden-mobile">Time subsystem</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

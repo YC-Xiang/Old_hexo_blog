@@ -256,15 +256,17 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/05/05/linux_subsystem/Time/" target="_self">
-          
+          <i class="index-pin iconfont icon-top" title="Pin on top"></i>
+        
+        <a href="/2023/01/04/Git/" target="_self">
+          Git 常用指令
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/05/linux_subsystem/Time/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/04/Git/" target="_self">
         <div>
-          CONFIG_GENERIC_CLOCKEVENTS：新的时间子系统 以下选项三选一： CONFIG_HZ_PERIODIC：无论何时，都启用用周期性的tick，即便是在系统idle的时候。 CONFIG_NO_HZ_IDLE：在系统idle的时候，停掉周期性tick。会同时enable NO_HZ_COMMON。 CONFIG_NO_HZ_FULL：即便在非idle的状态下，也就是说cpu上还运
+          GITGit push123456789101112131415# git push [远程主机名][本地分支名]:[远程分支名]$ git push origin HEAD:master# HEAD是当前指向的分支,可以用git show HEAD 查看$ git show HEAD$ git branch -a# 需要code view 时要加/refs/for$ git push origi
         </div>
       </a>
 
@@ -272,12 +274,19 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2023-05-05 14:42" pubdate>
-              2023-05-05
+            <time datetime="2023-01-04 00:00" pubdate>
+              2023-01-04
             </time>
           </div>
         
         
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/git/">#git</a>
+            
+          </div>
         
       </div>
     </article>
@@ -289,13 +298,135 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/05/04/linux_subsystem/Interrupt/" target="_self">
-          
+        <a href="/2023/05/08/GDB/" target="_self">
+          GDB
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/04/linux_subsystem/Interrupt/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/08/GDB/" target="_self">
+        <div>
+          to do
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-05-08 18:00" pubdate>
+              2023-05-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/GDB/">#GDB</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/05/08/linux_subsystem/Time/" target="_self">
+          Time subsystem
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/08/linux_subsystem/Time/" target="_self">
+        <div>
+          CONFIG_GENERIC_CLOCKEVENTS：新的时间子系统 以下选项三选一： CONFIG_HZ_PERIODIC：无论何时，都启用用周期性的tick，即便是在系统idle的时候。 CONFIG_NO_HZ_IDLE：在系统idle的时候，停掉周期性tick。会同时enable NO_HZ_COMMON。 CONFIG_NO_HZ_FULL：即便在非idle的状态下，也就是说cpu上还运
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-05-08 17:00" pubdate>
+              2023-05-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Linux-driver/">#Linux driver</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/05/08/linux_subsystem/Interrupt/" target="_self">
+          Interrupt subsystem
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/08/linux_subsystem/Interrupt/" target="_self">
         <div>
           IRQ domain1、向系统注册irq domain interrupt controller初始化的过程中，注册irq domain irq_domain_add_linear 2、为irq domain创建映射 在各个硬件外设的驱动初始化过程中，创建HW interrupt ID和IRQ number的映射关系。 Interrupt controller初始化的时候会mapping hw i
         </div>
@@ -305,12 +436,40 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2023-05-04 09:57" pubdate>
-              2023-05-04
+            <time datetime="2023-05-08 16:00" pubdate>
+              2023-05-08
             </time>
           </div>
         
         
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Linux-driver/">#Linux driver</a>
+            
+          </div>
         
       </div>
     </article>
@@ -508,7 +667,7 @@
       <h1 class="index-header">
         
         <a href="/2023/04/13/linux_subsystem/I2C/" target="_self">
-          I2C
+          I2C subsystem
         </a>
       </h1>
 
@@ -553,8 +712,6 @@
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/PWM/">#PWM</a>
             
               <a href="/tags/Linux-driver/">#Linux driver</a>
             
@@ -678,112 +835,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/PWM/">#PWM</a>
-            
               <a href="/tags/Linux-driver/">#Linux driver</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/02/07/Missing-semester-ch4-commandline-environment/" target="_self">
-          Missing-semester_ch4_commandline_environment
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/02/07/Missing-semester-ch4-commandline-environment/" target="_self">
-        <div>
-          Job controljobs: lists the unfinished jobs associated with the current terminal session. fg + %num : num是jobs命令显示进程对应的序号。 bg+ %num: 让进程在后台从stopped-&gt;running。 ctrl + z: 让当前进程进入后台并suspend。 Tmuxtmux: o
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-02-07 15:02" pubdate>
-              2023-02-07
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/tmux/">#tmux</a>
-            
-              <a href="/tags/Missing-semester/">#Missing semester</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/01/31/ICS/ICS2022-PA2/" target="_self">
-          ICS2022 PA2
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/31/ICS/ICS2022-PA2/" target="_self">
-        <div>
-          Phase_1mul-longlong.c中check 0xaeb1c2aa * 0xaeb1c2aa = 0x19d29ab9db1a18e4LL 实现mulh指令遇到的一个问题： 由于src1和src2都是unsigned int，强制类型转换为long（零扩展），得到的是无符号相乘结果0x7736200d。 1234  // 直接u32*u32会溢出，乘出来还是u32u32 src1 = 0
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-01-31 14:24" pubdate>
-              2023-01-31
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/ICS/">#ICS</a>
             
           </div>
         

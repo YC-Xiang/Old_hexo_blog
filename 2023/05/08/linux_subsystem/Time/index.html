@@ -16,25 +16,34 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="项宇承">
-<meta property="og:type" content="website">
-<meta property="og:title" content="归档">
-<meta property="og:url" content="https://yc-xiang.github.io/archives/2023/05/index.html">
+    <meta name="description" content="CONFIG_GENERIC_CLOCKEVENTS：新的时间子系统 以下选项三选一： CONFIG_HZ_PERIODIC：无论何时，都启用用周期性的tick，即便是在系统idle的时候。 CONFIG_NO_HZ_IDLE：在系统idle的时候，停掉周期性tick。会同时enable NO_HZ_COMMON。 CONFIG_NO_HZ_FULL：即便在非idle的状态下，也就是说cpu上还运">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Time subsystem">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/05/08/linux_subsystem/Time/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="项宇承">
+<meta property="og:description" content="CONFIG_GENERIC_CLOCKEVENTS：新的时间子系统 以下选项三选一： CONFIG_HZ_PERIODIC：无论何时，都启用用周期性的tick，即便是在系统idle的时候。 CONFIG_NO_HZ_IDLE：在系统idle的时候，停掉周期性tick。会同时enable NO_HZ_COMMON。 CONFIG_NO_HZ_FULL：即便在非idle的状态下，也就是说cpu上还运">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-08T09:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-08T09:13:26.597Z">
 <meta property="article:author" content="Yucheng Xiang">
+<meta property="article:tag" content="Linux driver">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>归档 - Yucheng&#39;s Blog</title>
+  <title>Time subsystem - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
@@ -112,7 +121,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 60vh;">
+<div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -212,15 +221,63 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/homepage.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">归档</span>
+            <span id="subtitle">Time subsystem</span>
           
         </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-08 17:00" pubdate>
+          2023年5月8日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          680 words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          6 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> times
+        </span>
+        
+      
+    
+  </div>
+
 
         
       </div>
@@ -236,52 +293,168 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 29 篇文章</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2023</p>
-    
-    <a href="/2023/05/08/GDB/" class="list-group-item list-group-item-action">
-      <time>05-08</time>
-      <div class="list-group-item-title">GDB</div>
-    </a>
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Time subsystem</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年5月8日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>CONFIG_GENERIC_CLOCKEVENTS：新的时间子系统</p>
+<p>以下选项三选一：</p>
+<p>CONFIG_HZ_PERIODIC：无论何时，都启用用周期性的tick，即便是在系统idle的时候。</p>
+<p>CONFIG_NO_HZ_IDLE：在系统idle的时候，停掉周期性tick。会同时enable NO_HZ_COMMON。</p>
+<p>CONFIG_NO_HZ_FULL：即便在非idle的状态下，也就是说cpu上还运行在task，也可能会停掉tick。会同时enable NO_HZ_COMMON。</p>
+<p>CONFIG_HIGH_RES_TIMERS：高精度timer。</p>
+<p>如果配置了高精度timer，或者配置了NO_HZ_COMMON的选项，那么一定需要配置CONFIG_TICK_ONESHOT，表示系统支持支持one-shot类型的tick device。</p>
+<h1 id="sysfs接口"><a href="#sysfs接口" class="headerlink" title="sysfs接口"></a>sysfs接口</h1><p>cd &#x2F;sys&#x2F;bus&#x2F;clocksource&#x2F;devices&#x2F;clocksource0</p>
+<p>cat current_clocksource: 查看当前的clocksource</p>
+<p>cat available_clocksource: 查看可用的clocksource</p>
+<p>echo xxx &gt; current_clocksource: 设置clocksource</p>
+<p>cd &#x2F;sys&#x2F;bus&#x2F;clockevents&#x2F;devices&#x2F;clockevent0</p>
+<p>cat current_device: 查看当前的clockevent</p>
+<h1 id="Clocksource"><a href="#Clocksource" class="headerlink" title="Clocksource"></a>Clocksource</h1><h1 id="Clockevent"><a href="#Clockevent" class="headerlink" title="Clockevent"></a>Clockevent</h1>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
   
     
-    <a href="/2023/05/08/linux_subsystem/Time/" class="list-group-item list-group-item-action">
-      <time>05-08</time>
-      <div class="list-group-item-title">Time subsystem</div>
-    </a>
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
   
+  
+
+      </span>
     
-    <a href="/2023/05/08/linux_subsystem/Interrupt/" class="list-group-item list-group-item-action">
-      <time>05-08</time>
-      <div class="list-group-item-title">Interrupt subsystem</div>
-    </a>
   
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux-driver/">#Linux driver</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/05/08/GDB/" title="GDB">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">GDB</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/08/linux_subsystem/Interrupt/" title="Interrupt subsystem">
+                        <span class="hidden-mobile">Interrupt subsystem</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
 </div>
 
 
 
 
 
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
     
 
     
@@ -384,6 +557,99 @@
 
 
 
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
 
