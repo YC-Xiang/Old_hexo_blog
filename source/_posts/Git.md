@@ -8,6 +8,7 @@ header-img: img/homepage.jpg
 catalog: true
 tags:
     - git
+sticky: 100
 ---
 
 # GIT

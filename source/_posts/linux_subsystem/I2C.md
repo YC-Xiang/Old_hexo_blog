@@ -1,8 +1,7 @@
 ---
-title: I2C
+title: I2C subsystem
 date: 2023-04-13 17:40:28
 tags:
-- PWM
 - Linux driver
 categories:
 - Notes

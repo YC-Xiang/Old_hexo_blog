@@ -1,3 +1,12 @@
+---
+title: Interrupt subsystem
+date: 2023-05-08 16:00:00
+tags:
+- Linux driver
+categories:
+- Notes
+---
+
 # IRQ domain
 
 1、向系统注册irq domain
@@ -101,7 +110,7 @@ early_irq_init();
 ```
 
 ```c
-// irq-riscv-intc.c 
+// irq-riscv-intc.c
 // 每个cpu int都会调用到cpu interrupt controller的map函数，会填充irq_desc。
 irq_create_mapping();
 domain->ops->map;
@@ -148,9 +157,9 @@ struct irq_desc *irq_to_desc(unsigned int irq)
 # risc-v中断处理流程
 
 ```c
-// head.S 
-setup_trap_vector:     
-	la a0, handle_exception    
+// head.S
+setup_trap_vector:
+	la a0, handle_exception
 	csrw CSR_TVEC, a0     // handle_exception地址传入CSR_TVEC
 	csrw CSR_SCRATCH, zero   // CSR_SCRATCH清零
 
@@ -163,10 +172,12 @@ ENTRY(handle_exception)
 					__handle_domain_irq();
 						generic_handle_irq();
 							generic_handle_irq_desc();
+								// 不同的中断控制器在一开始初始化会设置
 								desc->handle_irq(desc);
 // 这里cpu int会进入handle_percpu_devid_irq, 在irq-riscv-intc.c irq_domain_set_info中设定
 handle_percpu_devid_irq();
 	action->handler(); // timer-riscv.c 中request_irq会把中断处理函数赋值给action->handler();
+
 // external int 会进入plic_handle_irq, 在irq-realtek-plic.c irq_set_chained_handler中设定
 plic_handle_irq();
 	generic_handle_irq();
@@ -175,6 +186,9 @@ plic_handle_irq();
 				handle_fasteoi_irq();
 					...
                     // request_irq中会把自定义的handler function赋值给action->handler
-                  	action->handler(); 
+                  	action->handler();
 ```
 
+
+
+***是否所有的irq_domain的irq number是按顺序排列下去，每个irq_number设置一个interrupt handler，不会重复？***

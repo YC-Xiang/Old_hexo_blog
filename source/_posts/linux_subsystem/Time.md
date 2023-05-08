@@ -1,3 +1,12 @@
+---
+title: Time subsystem
+date: 2023-05-08 17:00:00
+tags:
+- Linux driver
+categories:
+- Notes
+---
+
 CONFIG_GENERIC_CLOCKEVENTS：新的时间子系统
 
 
@@ -35,4 +44,3 @@ cat current_device: 查看当前的clockevent
 # Clocksource
 
 # Clockevent
-
