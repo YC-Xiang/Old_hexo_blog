@@ -100,7 +100,139 @@ Each external directory must contain:
 
 `make <pkg>-reconfigure`, force to re-execute the configure, build and installation steps of the package.
 
+# Self notes
 
+`platform/local.mk`: 指定自定义源码位置
 
-If you remove a package from the configuration, and run make:
-Nothing happens. The files installed by this package are not removed from the target filesystem. 需要重新rebuild all
+在`local.mk`中还定义了：
+
+`make rr`: Reconstruct rootfs
+
+`make rp`: Rebuild external packages
+
+# legacy
+
+## 添加自己的软件包
+
+### 添加package/Config.in入口
+
+```kufds
+config BR2_PACKAGE_HELLOWORLD
+bool "helloworld"
+help
+  This is a demo to add myown(fuzidage) package.
+```
+
+### 配置APP对应的Config.in和mk文件
+
+在package中新增目录helloworld，并在里面添加Config.in和helloworld.mk
+**Config.in**
+
+```fdsf
+config BR2_PACKAGE_HELLOWORLD
+bool "helloworld"
+help
+  This is a demo to add myown(fuzidage) package.
+```
+
+**helloworld.mk**
+
+```dfsdf
+HELLOWORLD_VERSION:= 1.0.0
+HELLOWORLD_SITE:= $(BR2_EXTERNAL)/source/ipcam/helloworld
+HELLOWORLD_SITE_METHOD:=local
+HELLOWORLD_INSTALL_TARGET:=YES
+
+$(eval $(cmake-package))
+
+```
+
+## 如何重新编译软件包
+
+经过第一次完整编译后，如果我们需要对源码包重新配置，我们不能直接在buildroot上的根目录下直接make，buildroot是不知道你已经对源码进行重新配置，它只会将第一次编译出来的文件，再次打包成根文件系统镜像文件。
+
+那么可以通过以下2种方式重新编译：
+
+**1. 直接删除源码包,然后make all**
+
+例如我们要重新编译helloworld，那么可以直接删除output/build/helloworld目录，那么当你make的时候，就会自动从dl文件夹下，解压缩源码包，并重新安装。这种效率偏低
+
+**2. 进行xxx-rebuild,然后make all**
+
+也是以helloworld为例子，我们直接输入make helloworld-rebuild，即可对build/helloworld/目录进行重新编译，然后还要进行make all(或者make helloworld)
+
+## Config.in 语法
+
+用Kconfig语言编写，用来配置packages
+
+必须以`BR2_PACKAGE_<PACKAGE>`开头
+
+![](https://tva1.sinaimg.cn/large/008i3skNgy1gxwbwcmsauj30i303zt8t.jpg)
+
+Config.in 是层级结构`package/<pkg>/Config.in`都被包含在`package/Config.in`
+
+### menu/endmenu
+
+menuconfig中层级目录由`menu`来嵌套定义
+
+```kbuild
+menu "Base System"
+source "$BR2_EXTERNAL_platform_PATH/package/example/Config.in"
+source "$BR2_EXTERNAL_platform_PATH/package/fstools/Config.in"
+endmenu
+
+menu "Test Package"
+source "$BR2_EXTERNAL_platform_PATH/package/foobar/Config.in"
+endmenu
+
+// Test Package在Base System下一级目录
+menu "Base System"
+menu "Test Package"
+endmenu
+endmenu
+```
+
+### if/endif
+
+### choice/endchoice
+
+### select、depends on
+
+select是一种自动依赖，如果A select B，只要A被enable，B就会被enable，而且不可unselected
+
+depends on是一种用户定义的依赖，如果A depends on B, A只有在B被enable后才可见
+
+- `make \<pkg\>-show-depend`: 查看pkg依赖的包
+- `make \<pkg\>-show-rdepend`: 查看依赖pkg的包
+
+## .mk文件
+
+```
+xxx_SITE_METHOD = local
+xxx_SITE = 本地源码库地址
+
+xxx_SITE_METHOD = remote
+xxx_SITE = 远程URL
+```
+
+Packages可以被安装到不同目录：
+
+- target目录：`$(TARGET_DIR)`
+- staging目录：`$(STAGING_DIR)`
+- images目录：`$(BINARIES_DIR)`
+
+分别由三个变量决定：
+
+- `<pkg>_INSTALL_TARGET` , defaults to `YES`. If `YES`, then `<pkg>_INSTALL_TARGET_CMDS` will be called 
+- `<pkg>_INSTALL_STAGING` , defaults to `NO`. If `YES`, then `<pkg>_INSTALL_STAGING_CMDS` will be called 
+- `<pkg>_INSTALL_IMAGES` , defaults to `NO`. If `YES`, then `<pkg>_INSTALL_IMAGES_CMDS` will be called <br/><br/>
+- Application Package一般只要安装到target
+- Shared library动态库必须安装到target与staging
+- header-based library和static-only library静态库只安装到staging
+- bootloader和linux要安装到images
+
+Config.in文件不规定编译顺序，.mk文件中的\<pkg\>_DEPENDENCIES可以规定编译顺序，\<pkg\>_DEPENDENCIES后面的软件包先编译。
+
+## 参考
+
+- [https://www.cnblogs.com/fuzidage/p/12049442.html](https://www.cnblogs.com/fuzidage/p/12049442.html)

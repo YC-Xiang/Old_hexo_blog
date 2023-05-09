@@ -7,6 +7,24 @@ categories:
 - Notes
 ---
 
+# 用户层测试指令
+
+```shell
+# 检测当前系统有几组i2c总线
+i2cdetect -l
+# 查看i2c-0接口上的设备
+i2cdetect -y -a 0 # Force scanning of non-regular addresses
+i2cdetect -y -r 0
+# 读取指定设备的全部寄存器的值
+i2cdump -f -y 0 0x68
+# 读取指定i2c设备的某个寄存器的值，如下读取i2c-0地址为0x68器件中的0x01寄存器
+i2cget -f -y 0 0x68 0x01
+# 写入指定i2c设备的某个寄存器的值，如下写入i2c-0地址为0x68器件中的0x01寄存器值为0x6f
+i2cset -f -y 0 0x68 0x01 0x6f
+# 写入i2c-0地址为0x50的eeprom，从偏移为0x64地址读8个byte。
+i2ctransfer -f -y 0 w1@0x50 0x64 r8
+```
+
 # I2C 基础知识
 
 ## 写操作

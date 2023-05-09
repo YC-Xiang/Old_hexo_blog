@@ -13,7 +13,7 @@ sticky: 100
 
 # GIT
 
-## Git push
+# Git push
 
 ```bash
 # git push [远程主机名][本地分支名]:[远程分支名]
@@ -33,7 +33,7 @@ $ git branch --set-upstream-to=origin/dev
 $ git push origin :dev
 ```
 
-## git diff
+# git diff
 
 ```bash
 # 查看unstaged的改动(还没git add)
@@ -51,7 +51,7 @@ $ git diff master origin/master
 # 比较两个commit
 git diff commit id1 commit id2
 ```
-## git log
+# git log
 ```bash
 # 查看前两个commit的修改
 $ git log -p -2
@@ -75,7 +75,7 @@ you to filter on a specific author, and the `--grep` option lets you search for 
 messages.
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230116143526.png)
 
-## git rebase, git merge
+# git rebase, git merge
 
 git merge：在dev分支git merge main，// 将main最新的commit拉到dev，有合并记录
 
@@ -87,7 +87,7 @@ e.g 在本地一个分支上有了C5，C6两个自己的commit，但此时远程
 
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git2.png)
 
-## git revert
+# git revert
 
 git branch -f dev HEAD^  //让dev分支指向HEAD^
 
@@ -110,7 +110,7 @@ git branch --set-upstream-to=origin/develop（远程分支） develop：关联�
 1. 把现在的修改 git commit
 2. git stash 暂存起来，注意这个stash 也会带到另一个分支。注意git stash pop和apply的区别，apply不会将栈弹出
 
-## git stash
+# git stash
 
 git stash save "add style to our site” 添加stash信息
 
@@ -126,7 +126,7 @@ git stash 不能stash untracked的文件，需要先git add，或者git stash -u
 
 查看某个stash的具体内容：git stash show -p stash@{1}
 
-## git 放弃修改, 放弃增加文件操作
+# git 放弃修改, 放弃增加文件操作
 
 1.本地修改了一些文件 (并没有使用 git add 到暂存区)，想放弃修改:
 
@@ -156,10 +156,10 @@ git stash 不能stash untracked的文件，需要先git add，或者git stash -u
 >这里的commit id可以通过git log查看选取前6位，commit_id是想要回到的节点
 
 
-## git rebase
+# git rebase
 > 不要通过rebase对任何已经提交到公共仓库中的commit进行修改（你自己一个人玩的分支除外）
 
-### 合并多个commit为一个完整commit
+## 合并多个commit为一个完整commit
 [https://www.jianshu.com/p/4a8f4af4e803](https://www.jianshu.com/p/4a8f4af4e803)
 
 `git rebase -i HEAD~3` 修改HEAD往后三个分支（包括HEAD)
@@ -168,13 +168,23 @@ git stash 不能stash untracked的文件，需要先git add，或者git stash -u
 
 然后`git push -f`可以修改远程的commit记录
 
-### 将某一段commit粘贴到另一个分支上
+## 将某一段commit粘贴到另一个分支上
 
-## 生成/打patch
+# git patch
 
-1.生成某个提交的补丁
+## 生成patch
 
-git format-patch 350489b43967248c71080bb17bfb2e368c5766e0 -1
+1. git diff
+2. git format-patch
+
+生成某个提交的补丁:
+
+- git diff > xxx.patch
+- 生成单个commit的patch: git format-patch <commit_id> -1
+
+## git apply
+
+git apply是另外一种打patch的命令，其与git am的区别是：git apply并不会将**commit message**等打上去，打完patch后需要重新**git add和git commit**。
 
 2.检查补丁是否有冲突
 
@@ -184,23 +194,29 @@ git apply --check xxx.patch
 
 git apply xxx.patch
 
-3.有冲突打补丁
+## git am
 
-git am --reject xxx.patch
+git am会直接将patch的**所有信息**打上去，而且不用重新git add和git commit，author也是**patch的author**而不是打patch的人。
+
+git am 之前可以git apply --check一下
+
+无冲突：git am xxx.patch
+
+有冲突：git am --reject xxx.patch
 
 此时会在有冲突的文件相同文件夹生产一个以原来文件名加后缀为.rej的新文件，里面会告知哪些地方冲突了，
 
 参考这些冲突的地方修改原文件即可
 
-修改完成后添加到缓冲区 git add xxx1.java xxx2.java ....
+修改完成后添加到缓冲区 git add xxx1.c xxx2.c ....
 
-最后 git am --continue 即可完成打补丁
+最后 git am --continue 即可完成打补丁。
 
-[https://adtxl.com/index.php/archives/471.html](https://adtxl.com/index.php/archives/471.html)
+git commit --amend -s 可以添加自己的signed-off
 
 [https://blog.csdn.net/u013318019/article/details/114860407](https://blog.csdn.net/u013318019/article/details/114860407)
 
-## git tag
+# git tag
 
 [https://www.runoob.com/git/git-tag.html](https://www.runoob.com/git/git-tag.html)
 
@@ -222,7 +238,7 @@ git checkout v1.0
 ```
 tag 需要单独上传`git push origin <tagname>` 和删除``git push origin --delete <tagname>`
 
-## 创建分支并与远程某分支关联：
+# 创建分支并与远程某分支关联：
 ```bash
 # 可以先更新远程分支信息
 git remote update origin --prune
@@ -251,13 +267,13 @@ You can view all of your settings and where they are coming from using:
 git config --list --show-origin
 ```
 
-### Your Identity
+## Your Identity
 
 ```bash
 $ git config --global user.name "John Doe"
 $ git config --global user.email johndoe@example.com
 ```
-### Your Editor
+## Your Editor
 
 ```bash
 git config --global core.editor vim
