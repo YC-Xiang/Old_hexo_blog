@@ -674,7 +674,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/04/13/linux_subsystem/I2C/" target="_self">
         <div>
-          I2C 基础知识写操作 主芯片要发出一个start信号 然后发出一个设备地址(用来确定是往哪一个芯片写数据)，方向(读&#x2F;写，0表示写，1表示读) 从设备回应(用来确定这个设备是否存在)，然后就可以传输数据 主设备发送一个字节数据给从设备，并等待回应 每传输一字节数据，接收方要有一个回应信号（确定数据是否接受完成)，然后再传输下一个数据。 数据发送完之后，主芯片就会发送一个停止信号。  下
+          用户层测试指令12345678910111213# 检测当前系统有几组i2c总线i2cdetect -l# 查看i2c-0接口上的设备i2cdetect -y -a 0 # Force scanning of non-regular addressesi2cdetect -y -r 0# 读取指定设备的全部寄存器的值i2cdump -f -y 0 0x68# 读取指定i2c设备的某个寄存器的值，如
         </div>
       </a>
 

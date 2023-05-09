@@ -24,8 +24,9 @@
 <meta property="og:description" content=".&#x2F;lanuch 最终的操作是 12cd sdk_3921&#x2F;buildroot-dist # 进入buildroot目录make BR2_EXTERNAL&#x3D;sdk_3921&#x2F;platform&#x2F; O&#x3D;sdk3921&#x2F;out&#x2F;rts3923_fpga&#x2F; rts3923_fpga_defconfig  Managing the build andthe configurationOut of tree">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230412162924.png">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gxwbwcmsauj30i303zt8t.jpg">
 <meta property="article:published_time" content="2023-04-13T09:39:28.000Z">
-<meta property="article:modified_time" content="2023-04-13T10:04:51.117Z">
+<meta property="article:modified_time" content="2023-05-09T09:03:00.059Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="Buildroot">
 <meta name="twitter:card" content="summary_large_image">
@@ -252,7 +253,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k words
+          4.8k words
         
       </span>
     
@@ -263,7 +264,7 @@
         
         
         
-          20 mins
+          40 mins
         
       </span>
     
@@ -314,7 +315,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年4月13日 晚上
+                    本文最后更新于：2023年5月9日 下午
                   
                 
               </p>
@@ -370,7 +371,59 @@
 <p><code>make &lt;pkg&gt;-dirclean</code>, completely remove the package source code directory. The next make invocation will fully rebuild this package. 相当于直接删除<code>build/&lt;pkg&gt;</code></p>
 <p><code>make &lt;pkg&gt;-rebuild</code>, force to re-execute the build and installation steps of the package.</p>
 <p><code>make &lt;pkg&gt;-reconfigure</code>, force to re-execute the configure, build and installation steps of the package.</p>
-<p>If you remove a package from the configuration, and run make:<br>Nothing happens. The files installed by this package are not removed from the target filesystem. 需要重新rebuild all</p>
+<h1 id="Self-notes"><a href="#Self-notes" class="headerlink" title="Self notes"></a>Self notes</h1><p><code>platform/local.mk</code>: 指定自定义源码位置</p>
+<p>在<code>local.mk</code>中还定义了：</p>
+<p><code>make rr</code>: Reconstruct rootfs</p>
+<p><code>make rp</code>: Rebuild external packages</p>
+<h1 id="legacy"><a href="#legacy" class="headerlink" title="legacy"></a>legacy</h1><h2 id="添加自己的软件包"><a href="#添加自己的软件包" class="headerlink" title="添加自己的软件包"></a>添加自己的软件包</h2><h3 id="添加package-x2F-Config-in入口"><a href="#添加package-x2F-Config-in入口" class="headerlink" title="添加package&#x2F;Config.in入口"></a>添加package&#x2F;Config.in入口</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kufds">config BR2_PACKAGE_HELLOWORLD<br>bool &quot;helloworld&quot;<br>help<br>  This is a demo to add myown(fuzidage) package.<br></code></pre></td></tr></table></figure>
+
+<h3 id="配置APP对应的Config-in和mk文件"><a href="#配置APP对应的Config-in和mk文件" class="headerlink" title="配置APP对应的Config.in和mk文件"></a>配置APP对应的Config.in和mk文件</h3><p>在package中新增目录helloworld，并在里面添加Config.in和helloworld.mk<br><strong>Config.in</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs fdsf">config BR2_PACKAGE_HELLOWORLD<br>bool &quot;helloworld&quot;<br>help<br>  This is a demo to add myown(fuzidage) package.<br></code></pre></td></tr></table></figure>
+
+<p><strong>helloworld.mk</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dfsdf">HELLOWORLD_VERSION:= 1.0.0<br>HELLOWORLD_SITE:= $(BR2_EXTERNAL)/source/ipcam/helloworld<br>HELLOWORLD_SITE_METHOD:=local<br>HELLOWORLD_INSTALL_TARGET:=YES<br><br>$(eval $(cmake-package))<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="如何重新编译软件包"><a href="#如何重新编译软件包" class="headerlink" title="如何重新编译软件包"></a>如何重新编译软件包</h2><p>经过第一次完整编译后，如果我们需要对源码包重新配置，我们不能直接在buildroot上的根目录下直接make，buildroot是不知道你已经对源码进行重新配置，它只会将第一次编译出来的文件，再次打包成根文件系统镜像文件。</p>
+<p>那么可以通过以下2种方式重新编译：</p>
+<p><strong>1. 直接删除源码包,然后make all</strong></p>
+<p>例如我们要重新编译helloworld，那么可以直接删除output&#x2F;build&#x2F;helloworld目录，那么当你make的时候，就会自动从dl文件夹下，解压缩源码包，并重新安装。这种效率偏低</p>
+<p><strong>2. 进行xxx-rebuild,然后make all</strong></p>
+<p>也是以helloworld为例子，我们直接输入make helloworld-rebuild，即可对build&#x2F;helloworld&#x2F;目录进行重新编译，然后还要进行make all(或者make helloworld)</p>
+<h2 id="Config-in-语法"><a href="#Config-in-语法" class="headerlink" title="Config.in 语法"></a>Config.in 语法</h2><p>用Kconfig语言编写，用来配置packages</p>
+<p>必须以<code>BR2_PACKAGE_&lt;PACKAGE&gt;</code>开头</p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gxwbwcmsauj30i303zt8t.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>Config.in 是层级结构<code>package/&lt;pkg&gt;/Config.in</code>都被包含在<code>package/Config.in</code></p>
+<h3 id="menu-x2F-endmenu"><a href="#menu-x2F-endmenu" class="headerlink" title="menu&#x2F;endmenu"></a>menu&#x2F;endmenu</h3><p>menuconfig中层级目录由<code>menu</code>来嵌套定义</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs kbuild">menu &quot;Base System&quot;<br>source &quot;$BR2_EXTERNAL_platform_PATH/package/example/Config.in&quot;<br>source &quot;$BR2_EXTERNAL_platform_PATH/package/fstools/Config.in&quot;<br>endmenu<br><br>menu &quot;Test Package&quot;<br>source &quot;$BR2_EXTERNAL_platform_PATH/package/foobar/Config.in&quot;<br>endmenu<br><br>// Test Package在Base System下一级目录<br>menu &quot;Base System&quot;<br>menu &quot;Test Package&quot;<br>endmenu<br>endmenu<br></code></pre></td></tr></table></figure>
+
+<h3 id="if-x2F-endif"><a href="#if-x2F-endif" class="headerlink" title="if&#x2F;endif"></a>if&#x2F;endif</h3><h3 id="choice-x2F-endchoice"><a href="#choice-x2F-endchoice" class="headerlink" title="choice&#x2F;endchoice"></a>choice&#x2F;endchoice</h3><h3 id="select、depends-on"><a href="#select、depends-on" class="headerlink" title="select、depends on"></a>select、depends on</h3><p>select是一种自动依赖，如果A select B，只要A被enable，B就会被enable，而且不可unselected</p>
+<p>depends on是一种用户定义的依赖，如果A depends on B, A只有在B被enable后才可见</p>
+<ul>
+<li><code>make \&lt;pkg\&gt;-show-depend</code>: 查看pkg依赖的包</li>
+<li><code>make \&lt;pkg\&gt;-show-rdepend</code>: 查看依赖pkg的包</li>
+</ul>
+<h2 id="mk文件"><a href="#mk文件" class="headerlink" title=".mk文件"></a>.mk文件</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">xxx_SITE_METHOD</span> = local<br><span class="hljs-attr">xxx_SITE</span> = 本地源码库地址<br><br><span class="hljs-attr">xxx_SITE_METHOD</span> = remote<br><span class="hljs-attr">xxx_SITE</span> = 远程URL<br></code></pre></td></tr></table></figure>
+
+<p>Packages可以被安装到不同目录：</p>
+<ul>
+<li>target目录：<code>$(TARGET_DIR)</code></li>
+<li>staging目录：<code>$(STAGING_DIR)</code></li>
+<li>images目录：<code>$(BINARIES_DIR)</code></li>
+</ul>
+<p>分别由三个变量决定：</p>
+<ul>
+<li><code>&lt;pkg&gt;_INSTALL_TARGET</code> , defaults to <code>YES</code>. If <code>YES</code>, then <code>&lt;pkg&gt;_INSTALL_TARGET_CMDS</code> will be called </li>
+<li><code>&lt;pkg&gt;_INSTALL_STAGING</code> , defaults to <code>NO</code>. If <code>YES</code>, then <code>&lt;pkg&gt;_INSTALL_STAGING_CMDS</code> will be called </li>
+<li><code>&lt;pkg&gt;_INSTALL_IMAGES</code> , defaults to <code>NO</code>. If <code>YES</code>, then <code>&lt;pkg&gt;_INSTALL_IMAGES_CMDS</code> will be called <br/><br/></li>
+<li>Application Package一般只要安装到target</li>
+<li>Shared library动态库必须安装到target与staging</li>
+<li>header-based library和static-only library静态库只安装到staging</li>
+<li>bootloader和linux要安装到images</li>
+</ul>
+<p>Config.in文件不规定编译顺序，.mk文件中的&lt;pkg&gt;_DEPENDENCIES可以规定编译顺序，&lt;pkg&gt;_DEPENDENCIES后面的软件包先编译。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/fuzidage/p/12049442.html">https://www.cnblogs.com/fuzidage/p/12049442.html</a></li>
+</ul>
 
                 
               </div>

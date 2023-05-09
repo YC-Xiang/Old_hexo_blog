@@ -16,15 +16,15 @@
   <meta name="author" content="YC-Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="第三章 目标文件里有什么3.1 目标文件的格式 可重定位文件 .o, .a 可执行文件 共享目标文件 .so 核心转储文件  file 命令可以查看文件格式 3.3 挖掘SimpleSection.ogcc -c SimpleSection.c -c 表示只编译不链接 objdump -h SimpleSection.o 可以查看目标文件的结构 -h:打印段基本信息 -s:把所有段内容以16进制打">
+    <meta name="description" content="第二部分 静态链接第二章 编译和链接2.1.1 预编译：$gcc –E hello.c –o hello.i  展开宏定义 处理预编译指令 “#if”、“#ifdef”等等 处理 “#include ”预编译指令 删除注释 添加行号和文件名标识 保留所有的 #pragma 编译器指令  2.1.2 编译编译：$gcc –S hello.i –o hello.s 预编译+编译：$gcc –S hel">
 <meta property="og:type" content="article">
 <meta property="og:title" content="程序员的自我修养学习笔记">
 <meta property="og:url" content="https://yc-xiang.github.io/2022/01/27/legacy/2022-1-27-%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="第三章 目标文件里有什么3.1 目标文件的格式 可重定位文件 .o, .a 可执行文件 共享目标文件 .so 核心转储文件  file 命令可以查看文件格式 3.3 挖掘SimpleSection.ogcc -c SimpleSection.c -c 表示只编译不链接 objdump -h SimpleSection.o 可以查看目标文件的结构 -h:打印段基本信息 -s:把所有段内容以16进制打">
+<meta property="og:description" content="第二部分 静态链接第二章 编译和链接2.1.1 预编译：$gcc –E hello.c –o hello.i  展开宏定义 处理预编译指令 “#if”、“#ifdef”等等 处理 “#include ”预编译指令 删除注释 添加行号和文件名标识 保留所有的 #pragma 编译器指令  2.1.2 编译编译：$gcc –S hello.i –o hello.s 预编译+编译：$gcc –S hel">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-28T10:04:54.822Z">
+<meta property="article:modified_time" content="2023-05-09T09:07:14.546Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="程序员的自我修养">
 <meta name="twitter:card" content="summary_large_image">
@@ -250,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          233 words
+          798 words
         
       </span>
     
@@ -261,7 +261,7 @@
         
         
         
-          2 mins
+          7 mins
         
       </span>
     
@@ -312,7 +312,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年4月28日 晚上
+                    本文最后更新于：2023年5月9日 下午
                   
                 
               </p>
@@ -320,16 +320,46 @@
             
               <div class="markdown-body">
                 
-                <h2 id="第三章-目标文件里有什么"><a href="#第三章-目标文件里有什么" class="headerlink" title="第三章 目标文件里有什么"></a>第三章 目标文件里有什么</h2><h3 id="3-1-目标文件的格式"><a href="#3-1-目标文件的格式" class="headerlink" title="3.1 目标文件的格式"></a>3.1 目标文件的格式</h3><ul>
+                <h1 id="第二部分-静态链接"><a href="#第二部分-静态链接" class="headerlink" title="第二部分 静态链接"></a>第二部分 静态链接</h1><h2 id="第二章-编译和链接"><a href="#第二章-编译和链接" class="headerlink" title="第二章 编译和链接"></a>第二章 编译和链接</h2><h3 id="2-1-1-预编译："><a href="#2-1-1-预编译：" class="headerlink" title="2.1.1 预编译："></a>2.1.1 <strong>预编译：</strong></h3><p>$gcc –E hello.c –o hello.i</p>
+<ul>
+<li>展开宏定义</li>
+<li>处理预编译指令 “#if”、“#ifdef”等等</li>
+<li>处理 “#include ”预编译指令</li>
+<li>删除注释</li>
+<li>添加行号和文件名标识</li>
+<li>保留所有的 #pragma 编译器指令</li>
+</ul>
+<h3 id="2-1-2-编译"><a href="#2-1-2-编译" class="headerlink" title="2.1.2 编译"></a>2.1.2 编译</h3><p>编译：$gcc –S hello.i –o hello.s</p>
+<p>预编译+编译：$gcc –S hello.c –o hello.s</p>
+<p>汇编：$gcc –c hello.c –o hello.o</p>
+<h2 id="第三章-目标文件里有什么"><a href="#第三章-目标文件里有什么" class="headerlink" title="第三章 目标文件里有什么"></a>第三章 目标文件里有什么</h2><h3 id="3-1-目标文件的格式"><a href="#3-1-目标文件的格式" class="headerlink" title="3.1 目标文件的格式"></a>3.1 目标文件的格式</h3><ul>
 <li>可重定位文件 .o, .a</li>
 <li>可执行文件</li>
 <li>共享目标文件 .so</li>
 <li>核心转储文件</li>
 </ul>
 <p><code>file</code> 命令可以查看文件格式</p>
-<h3 id="3-3-挖掘SimpleSection-o"><a href="#3-3-挖掘SimpleSection-o" class="headerlink" title="3.3 挖掘SimpleSection.o"></a>3.3 挖掘SimpleSection.o</h3><p><code>gcc -c SimpleSection.c</code> -c 表示只编译不链接</p>
-<p><code>objdump -h SimpleSection.o</code> 可以查看目标文件的结构 -h:打印段基本信息 -s:把所有段内容以16进制打印出来 -d:将所有包含指令的段反汇编 -x:详细信息</p>
-<p><code>size SimpleSection.o</code> 可以查看ELF文件段的长度</p>
+<p>binutils的objdump工具查看obj内部的结构(隐藏的段不显示)：</p>
+<p>objdump -h u-boot</p>
+<p>readelf -S u-boot （把段表结构打印出来）</p>
+<p>objdump -s -d u-boot</p>
+<p>-s参数：将所有段内容以16进制方式打印出来</p>
+<p>-d参数：将所有包含指令的段反汇编</p>
+<p>size命令用来查看ELF文件的代码段、数据段、BSS段的长度</p>
+<p>size u-boot</p>
+<p>查看ELF文件头：</p>
+<p>readelf -h u-boot</p>
+<p>在全局变量或函数之前加上“__ attribute__((section(“name”))) ”属性就可以把相应的变量或函数放到以“ name ”作为段名的段中。</p>
+<p><strong>attribute</strong>((section(“FOO”))) int global &#x3D; 42;<strong>attribute</strong>((section(“BAR”))) void foo()</p>
+<h1 id="第四章-静态连接"><a href="#第四章-静态连接" class="headerlink" title="第四章 静态连接"></a>第四章 静态连接</h1><h2 id="4-2-符号解析和重定位"><a href="#4-2-符号解析和重定位" class="headerlink" title="4.2 符号解析和重定位"></a>4.2 符号解析和重定位</h2><h3 id="4-2-2-重定位表"><a href="#4-2-2-重定位表" class="headerlink" title="4.2.2 重定位表"></a>4.2.2 重定位表</h3><p>.text ⇒ .rel.text</p>
+<p>.data ⇒ .rel.data</p>
+<p>查看目标文件重定位表：objdump -r a.o</p>
+<h3 id="4-2-4-指令修正方式"><a href="#4-2-4-指令修正方式" class="headerlink" title="4.2.4 指令修正方式"></a>4.2.4 指令修正方式</h3><ul>
+<li>绝对寻址修正</li>
+<li>相对寻址修正</li>
+</ul>
+<h2 id="4-3-COMMON块"><a href="#4-3-COMMON块" class="headerlink" title="4.3 COMMON块"></a>4.3 COMMON块</h2><p>把未初始化的全局变量标记为一个COMMON类型的变量。</p>
+<p>链接完成后，在最终输出文件的BSS段为其分配空间。</p>
 
                 
               </div>
@@ -366,8 +396,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/01/20/legacy/2022-1-20-csapp-ch7/" title="CSAPP-第七章 链接">
-                        <span class="hidden-mobile">CSAPP-第七章 链接</span>
+                      <a href="/2021/12/31/legacy/2021-12-31-linux%E9%87%8D%E5%AE%9A%E5%90%91/" title="Linux输入输出重定向">
+                        <span class="hidden-mobile">Linux输入输出重定向</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
