@@ -180,7 +180,7 @@ git stash 不能stash untracked的文件，需要先git add，或者git stash -u
 生成某个提交的补丁:
 
 - git diff > xxx.patch
-- 生成单个commit的patch: git format-patch <commit_id> -1
+- 生成单个commit的patch: git format-patch \<commit_id\> -1
 
 ## git apply
 
