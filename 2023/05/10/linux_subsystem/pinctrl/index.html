@@ -16,25 +16,24 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Job controljobs: lists the unfinished jobs associated with the current terminal session. fg + %num : num是jobs命令显示进程对应的序号。 bg+ %num: 让进程在后台从stopped-&gt;running。 ctrl + z: 让当前进程进入后台并suspend。 Tmuxtmux: o">
+    <meta name="description" content="项宇承">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Missing-semester_ch4_commandline_environment">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/02/07/Missing-semester-ch4-commandline-environment/index.html">
+<meta property="og:title" content="pinctrl subsystem">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/05/10/linux_subsystem/pinctrl/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Job controljobs: lists the unfinished jobs associated with the current terminal session. fg + %num : num是jobs命令显示进程对应的序号。 bg+ %num: 让进程在后台从stopped-&gt;running。 ctrl + z: 让当前进程进入后台并suspend。 Tmuxtmux: o">
+<meta property="og:description" content="项宇承">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-02-07T07:02:48.000Z">
-<meta property="article:modified_time" content="2023-02-08T07:48:22.515Z">
+<meta property="article:published_time" content="2023-05-10T01:26:47.000Z">
+<meta property="article:modified_time" content="2023-05-11T09:53:03.843Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="tmux">
-<meta property="article:tag" content="Missing semester">
+<meta property="article:tag" content="Linux driver">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Missing-semester_ch4_commandline_environment - Yucheng&#39;s Blog</title>
+  <title>pinctrl subsystem - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -228,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Missing-semester_ch4_commandline_environment</span>
+            <span id="subtitle">pinctrl subsystem</span>
           
         </div>
 
@@ -239,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-07 15:02" pubdate>
-          2023年2月7日 下午
+        <time datetime="2023-05-10 09:26" pubdate>
+          2023年5月10日 上午
         </time>
       </span>
     
@@ -251,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          787 words
+          0 words
         
       </span>
     
@@ -262,7 +261,7 @@
         
         
         
-          7 mins
+          1 mins
         
       </span>
     
@@ -308,12 +307,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Missing-semester_ch4_commandline_environment</h1>
+            <h1 style="display: none">pinctrl subsystem</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年2月8日 下午
+                    本文最后更新于：2023年5月11日 下午
                   
                 
               </p>
@@ -321,32 +320,7 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Job-control"><a href="#Job-control" class="headerlink" title="Job control"></a>Job control</h1><p><code>jobs</code>: lists the unfinished jobs associated with the current terminal session.</p>
-<p><code>fg + %num </code>: <code>num</code>是<code>jobs</code>命令显示进程对应的序号。</p>
-<p><code>bg+ %num</code>: 让进程在后台从stopped-&gt;running。</p>
-<p><code>ctrl + z</code>: 让当前进程进入后台并suspend。</p>
-<h1 id="Tmux"><a href="#Tmux" class="headerlink" title="Tmux"></a>Tmux</h1><p><code>tmux</code>: open a new session.</p>
-<p><code>C-b %</code>: 左右分屏。</p>
-<p><code>C-b &quot;</code>: 上下分屏。</p>
-<p><code>C-b &lt;arrow key&gt;</code>:在panes间移动。</p>
-<p><code>exit</code> or hit <code>Ctrl-d</code>：退出当前pane。</p>
-<p><code>C-b c</code>: new window.</p>
-<p><code>C-b p</code>: previous window.</p>
-<p><code>C-b n</code>: next window.</p>
-<p><code>C-b &lt;number&gt;</code> : move to window n.</p>
-<p><code>tmux ls</code>: list sessions.</p>
-<p><code>tmux attach -t 0</code>: attach to 0 session.</p>
-<p><code>C-b ?</code>: help message.</p>
-<p><code>C-b z</code>: make a pane go full screen. Hit <code>C-b z</code> again to shrink it back to its previous size</p>
-<p><code>C-b C-&lt;arrow key&gt;</code>: Resize pane in direction of <arrow key></p>
-<p><code>C-b ,</code>: Rename the current window</p>
-<p><code>&lt;C-b&gt; [</code> Start scrollback. You can then press <code>&lt;space&gt;</code> to start a selection and <code>&lt;enter&gt;</code> to copy that selection.</p>
-<h2 id="my-configs"><a href="#my-configs" class="headerlink" title="my configs"></a>my configs</h2><p><code>C-b</code> -&gt; <code>C-a</code></p>
-<p><code>C-b %</code> -&gt; <code>C-a |</code></p>
-<p><code>C-b &quot;</code> -&gt; <code>C-a -</code></p>
-<p><code>C-b &lt;arrow key&gt;</code> -&gt; <code>alt &lt;arrow key&gt;</code></p>
-<p><a target="_blank" rel="noopener" href="https://missing.csail.mit.edu/2020/command-line/">more commands click this</a></p>
-
+                
                 
               </div>
             
@@ -354,13 +328,32 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/tmux/">#tmux</a>
-      
-        <a href="/tags/Missing-semester/">#Missing semester</a>
+        <a href="/tags/Linux-driver/">#Linux driver</a>
       
     </div>
   
@@ -374,9 +367,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/21/linux_subsystem/PWM/" title="PWM子系统">
+                      <a href="/2023/05/10/linux_subsystem/cmd&amp;dma/" title="CMA&amp;DMA">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">PWM子系统</span>
+                        <span class="hidden-mobile">CMA&amp;DMA</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -384,8 +377,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/01/31/ICS/ICS2022-PA2/" title="ICS2022 PA2">
-                        <span class="hidden-mobile">ICS2022 PA2</span>
+                      <a href="/2023/05/08/GDB/" title="GDB">
+                        <span class="hidden-mobile">GDB</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
