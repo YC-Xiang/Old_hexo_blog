@@ -16,24 +16,26 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="IRQ domain1、向系统注册irq domain interrupt controller初始化的过程中，注册irq domain irq_domain_add_linear 2、为irq domain创建映射 在各个硬件外设的驱动初始化过程中，创建HW interrupt ID和IRQ number的映射关系。 Interrupt controller初始化的时候会mapping hw i">
+    <meta name="description" content="https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;41942876 push pull推挽输出 推挽输出的最大特点是可以真正能真正的输出高电平和低电平，在两种电平下都具有驱动能力。 open drain开漏输出 open source开集输出 这两种输出的原理和特性基本是类似的，区别在于一个是使用MOS管，其中的”漏”指的就是MOS管的漏极；另一个使用三极管，其中的”集”指的就是MOS三极">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Interrupt subsystem">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/05/08/linux_subsystem/Interrupt/index.html">
+<meta property="og:title" content="GPIO subsystem">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/05/12/linux_subsystem/GPIO/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="IRQ domain1、向系统注册irq domain interrupt controller初始化的过程中，注册irq domain irq_domain_add_linear 2、为irq domain创建映射 在各个硬件外设的驱动初始化过程中，创建HW interrupt ID和IRQ number的映射关系。 Interrupt controller初始化的时候会mapping hw i">
+<meta property="og:description" content="https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;41942876 push pull推挽输出 推挽输出的最大特点是可以真正能真正的输出高电平和低电平，在两种电平下都具有驱动能力。 open drain开漏输出 open source开集输出 这两种输出的原理和特性基本是类似的，区别在于一个是使用MOS管，其中的”漏”指的就是MOS管的漏极；另一个使用三极管，其中的”集”指的就是MOS三极">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-05-08T08:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-08T09:13:19.764Z">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/gpio.png">
+<meta property="article:published_time" content="2023-05-12T02:19:00.000Z">
+<meta property="article:modified_time" content="2023-05-12T09:03:24.544Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="Linux driver">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/gpio.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Interrupt subsystem - Yucheng&#39;s Blog</title>
+  <title>GPIO subsystem - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +229,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Interrupt subsystem</span>
+            <span id="subtitle">GPIO subsystem</span>
           
         </div>
 
@@ -238,8 +240,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-08 16:00" pubdate>
-          2023年5月8日 下午
+        <time datetime="2023-05-12 10:19" pubdate>
+          2023年5月12日 上午
         </time>
       </span>
     
@@ -250,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.5k words
+          3.3k words
         
       </span>
     
@@ -261,7 +263,7 @@
         
         
         
-          29 mins
+          28 mins
         
       </span>
     
@@ -307,12 +309,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Interrupt subsystem</h1>
+            <h1 style="display: none">GPIO subsystem</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年5月8日 下午
+                    本文最后更新于：2023年5月12日 下午
                   
                 
               </p>
@@ -320,59 +322,52 @@
             
               <div class="markdown-body">
                 
-                <h1 id="IRQ-domain"><a href="#IRQ-domain" class="headerlink" title="IRQ domain"></a>IRQ domain</h1><p>1、向系统注册irq domain</p>
-<p>interrupt controller初始化的过程中，注册irq domain</p>
-<p><code>irq_domain_add_linear</code></p>
-<p>2、为irq domain创建映射</p>
-<p>在各个硬件外设的驱动初始化过程中，创建HW interrupt ID和IRQ number的映射关系。</p>
-<p><em><strong>Interrupt controller初始化的时候会mapping hw id和irq number吗？</strong></em></p>
-<p>方法1：</p>
-<p><code>irq_create_mapping(struct irq_domain *host, irq_hw_number_t hwirq);</code></p>
-<p>比如<code>drivers/clocksource/timer-riscv.c</code>中<code>irq_create_mapping(domain, RV_IRQ_TIMER);</code>直接将hw id(RV_IRQ_TIMER)传入, 创建hw id和irq number的映射。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">irq_create_mapping(domain, hwirq);<br>  irq_create_mapping_affinity();<br>    irq_domain_alloc_descs(); <span class="hljs-comment">// 创建hw id和irq number的映射</span><br>    irq_domain_associate();<br>      domain-&gt;ops-&gt;<span class="hljs-built_in">map</span>(); <span class="hljs-comment">//调用到interrupt controller的map函数</span><br></code></pre></td></tr></table></figure>
+                <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/41942876">https://zhuanlan.zhihu.com/p/41942876</a></p>
+<p><strong>push pull推挽输出</strong></p>
+<p>推挽输出的最大特点是可以真正能真正的输出高电平和低电平，在两种电平下都具有驱动能力。</p>
+<p><strong>open drain开漏输出</strong></p>
+<p><strong>open source开集输出</strong></p>
+<p>这两种输出的原理和特性基本是类似的，区别在于一个是使用MOS管，其中的”漏”指的就是MOS管的漏极；另一个使用三极管，其中的”集”指的就是MOS三极管的集电极。这两者其实都是和推挽输出相对应的输出模式，由于使用MOS管的情况较多，很多时候就用”开漏输出”这个词代替了开漏输出和开集输出。</p>
+<p>开漏、开集输出最主要的特性就是高电平没有驱动能力，需要借助外部上拉电阻才能真正输出高电平。</p>
+<h1 id="Kernel-doc-General-Purpose-Input-x2F-Output-GPIO"><a href="#Kernel-doc-General-Purpose-Input-x2F-Output-GPIO" class="headerlink" title="Kernel doc: General Purpose Input&#x2F;Output (GPIO)"></a>Kernel doc: General Purpose Input&#x2F;Output (GPIO)</h1><h2 id="GPIO-Driver-Interface"><a href="#GPIO-Driver-Interface" class="headerlink" title="GPIO Driver Interface"></a>GPIO Driver Interface</h2><h3 id="Controller-Drivers-gpio-chip"><a href="#Controller-Drivers-gpio-chip" class="headerlink" title="Controller Drivers: gpio_chip"></a>Controller Drivers: gpio_chip</h3><p><code>struct gpio_chip</code> 抽象gpio controller。</p>
+<p><code>gpiochip_add_data()</code> or <code>devm_gpiochip_add_data()</code>接口用来注册gpio controller。<code>gpiochip_remove()</code>释放gpio controller。</p>
+<p><code>gpiochip_is_request()</code>在gpio controller driver中用于检测某个gpio是否被其他chip占用，没占用返回NULL，占用返回request时传入的string。</p>
+<h3 id="GPIO-electrical-configuration"><a href="#GPIO-electrical-configuration" class="headerlink" title="GPIO electrical configuration"></a>GPIO electrical configuration</h3><p>gpio_chip的<code>.set_config</code>回调用于设置：</p>
+<ul>
+<li>Debouncing</li>
+<li>Single-ended modes (open drain&#x2F;open source)</li>
+<li>Pull up and pull down resistor enablement</li>
+</ul>
+<p>这些属性可以在dts中指定，<code>include/dt-bindings/gpio/gpio.h</code> <code>GPIO_PUSH_PULL</code> <code>GPIO_LINE_OPEN_SOURCE</code> <code>GPIO_OPEN_DRAIN </code>…</p>
+<p>可以设置为<code>gpiochip_generic_config()</code>会调用到<code>pinctrl_gpio_set_config()</code>-&gt;<code>ops-&gt;pin_config_set</code></p>
+<h3 id="GPIO-drivers-providing-IRQs"><a href="#GPIO-drivers-providing-IRQs" class="headerlink" title="GPIO drivers providing IRQs"></a>GPIO drivers providing IRQs</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c">gpiod_to_irq(); <span class="hljs-comment">// 传入gpio_desc，返回gpio的irq number(软件映射的，不是irq hw id)</span><br>  gpio_chip_hwgpio();<br>    gc-&gt;to_irq();<br>      rts_gpio_to_irq();<br>        irq_linear_revmap();<br><br></code></pre></td></tr></table></figure>
 
+<h4 id="Cascaded-GPIO-irqchips"><a href="#Cascaded-GPIO-irqchips" class="headerlink" title="Cascaded GPIO irqchips"></a>Cascaded GPIO irqchips</h4><ul>
+<li><p>CHAINED CASCADED GPIO IRQCHIPS：挺多soc上是这种做法，打开<code>CONFIG_GPIOLIB_IRQCHIP</code>设置girq-&gt;parent_handler。gpio controller注册过程中通过<strong>irq_set_chained_handler</strong>设置中断处理函数，因此在中断处理函数中需要chained_irq_enter，chained_irq_exit。</p>
+<ul>
+<li>&#96;&#96;&#96;c<br>static irqreturn_t foo_gpio_irq(int irq, void *data) &#x2F;&#x2F;&#x2F; 中断处理函数<br>chained_irq_enter(…);<br>generic_handle_irq(…);<br>chained_irq_exit(…);<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><br>- GENERIC CHAINED GPIO IRQCHIPS：rts3917是这种做法，通过**reuqest_irq**进入的rts_irq_handler中断处理函数。发现的每一个gpio都进入generic_handle_irq，最后会到各自irq_desc中通过request_irq的中断处理函数。<br><br>  - ```c<br>    static irqreturn_t rts<span class="hljs-constructor">_irq_handler(<span class="hljs-params">int</span> <span class="hljs-params">irq</span>, <span class="hljs-params">void</span> <span class="hljs-operator">*</span><span class="hljs-params">dev_id</span>)</span><br>        <span class="hljs-keyword">for</span> each detected GPIO IRQ<br>            generic<span class="hljs-constructor">_handle_irq(<span class="hljs-operator">...</span>)</span>;<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>NESTED THREADED GPIO IRQCHIPS：gpio expander的做法，不深究。</p>
+</li>
+</ul>
+<h3 id="Infrastructure-helpers-for-GPIO-irqchips"><a href="#Infrastructure-helpers-for-GPIO-irqchips" class="headerlink" title="Infrastructure helpers for GPIO irqchips"></a>Infrastructure helpers for GPIO irqchips</h3><p>GPIO子系统有针对中断的一套框架，Kconfig为<code>GPIOLIB_IRQCHIP</code>，rts没有用到就不分析了。可以看文档中具体的解释。</p>
+<p>注意一点，方法一：如果parent_handler赋值了<code>girq-&gt;parent_handler = ftgpio_gpio_irq_handler</code>应该就是上面<code>CHAINED CASCADED GPIO IRQCHIPS</code>的做法。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">gpiochip_add_data();<br>    gpiochip_add_data_with_key();<br>      gpiochip_add_irqchip();<br>        irq_set_chained_handler_and_data(gc-&gt;irq.parents[i], gc-&gt;irq.parent_handler, data);<br></code></pre></td></tr></table></figure>
 
+<p>方法二：<code>girq-&gt;parent_handler = NULL</code>，直接在driver中<code>devm_request_threaded_irq</code>对应<code>GENERIC CHAINED GPIO IRQCHIPS</code>的做法。</p>
+<h2 id="GPIO-Descriptor-Consumer-Interface"><a href="#GPIO-Descriptor-Consumer-Interface" class="headerlink" title="GPIO Descriptor Consumer Interface"></a>GPIO Descriptor Consumer Interface</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/gpio.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">struct</span> gpio_desc *<span class="hljs-title function_">gpiod_get</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *con_id, <span class="hljs-keyword">enum</span> gpiod_flags flags)</span>;<br><span class="hljs-keyword">struct</span> gpio_desc *<span class="hljs-title function_">gpiod_get_index</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *con_id, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> idx, <span class="hljs-keyword">enum</span> gpiod_flags flags)</span>;<br><span class="hljs-comment">// return NULL 如果没有request到GPIO</span><br><span class="hljs-keyword">struct</span> gpio_desc *<span class="hljs-title function_">gpiod_get_optional</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *con_id, <span class="hljs-keyword">enum</span> gpiod_flags flags)</span>;<br></code></pre></td></tr></table></figure>
 
-<p>方法2：</p>
-<p><code>irq_of_parse_and_map</code></p>
-<p>比如<code>drivers/irqchip/irq-realtek-plic.c</code>中<code>irq_of_parse_and_map</code></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">irq_of_parse_and_map(<span class="hljs-keyword">struct</span> device_node *dev, <span class="hljs-type">int</span> index);<br>  of_irq_parse_one(dev, index, &amp;oirq); <span class="hljs-comment">// 解析设备树</span><br>  irq_create_of_mapping(&amp;oirq);<br>    irq_create_fwspec_mapping();<br>      irq_create_mapping(domain, hwirq); <span class="hljs-comment">// 最终还是调用到irq_create_mapping</span><br></code></pre></td></tr></table></figure>
+<h2 id="GPIO-Mappings"><a href="#GPIO-Mappings" class="headerlink" title="GPIO Mappings"></a>GPIO Mappings</h2><h3 id="device-tree"><a href="#device-tree" class="headerlink" title="device tree"></a>device tree</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c">foo_device &#123;<br>        compatible = <span class="hljs-string">&quot;acme,foo&quot;</span>;<br>        ...<br>        led-gpios = &lt;&amp;gpio <span class="hljs-number">15</span> GPIO_ACTIVE_HIGH&gt;, <span class="hljs-comment">/* red */</span><br>                    &lt;&amp;gpio <span class="hljs-number">16</span> GPIO_ACTIVE_HIGH&gt;, <span class="hljs-comment">/* green */</span><br>                    &lt;&amp;gpio <span class="hljs-number">17</span> GPIO_ACTIVE_HIGH&gt;; <span class="hljs-comment">/* blue */</span><br><br>        power-gpios = &lt;&amp;gpio <span class="hljs-number">1</span> GPIO_ACTIVE_LOW&gt;;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
+<p>对应</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">gpio_desc</span> *<span class="hljs-title">red</span>, *<span class="hljs-title">green</span>, *<span class="hljs-title">blue</span>, *<span class="hljs-title">power</span>;</span><br><br>red = gpiod_get_index(dev, <span class="hljs-string">&quot;led&quot;</span>, <span class="hljs-number">0</span>, GPIOD_OUT_HIGH);<br>green = gpiod_get_index(dev, <span class="hljs-string">&quot;led&quot;</span>, <span class="hljs-number">1</span>, GPIOD_OUT_HIGH);<br>blue = gpiod_get_index(dev, <span class="hljs-string">&quot;led&quot;</span>, <span class="hljs-number">2</span>, GPIOD_OUT_HIGH);<br><br>power = gpiod_get(dev, <span class="hljs-string">&quot;power&quot;</span>, GPIOD_OUT_HIGH);<br></code></pre></td></tr></table></figure>
 
-
-<p>方法3：</p>
-<p>外设driver中直接<code>platform_get_irq</code></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">platform_get_irq();<br>  platform_get_irq_optional();<br>    of_irq_get();<br>      of_irq_parse_one();<br>      irq_create_of_mapping(); <span class="hljs-comment">// 到这里和上面一样了</span><br></code></pre></td></tr></table></figure>
-
-
-
-<p>级联的第二级interrupt controller调用<code>irq_set_chained_handler</code>设置 interrupt handler</p>
-<p>irq初始化</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// init/main.c</span><br>init_IRQ();<br><span class="hljs-comment">//arch/riscv/kernel/irq.c</span><br>init_IRQ();<br>  irqchip_init();<br><span class="hljs-comment">// drivers/irqchip/irqchip.c</span><br>irqchip_init();<br>  of_irq_init();<br>    IRQCHIP_DECLARE(riscv, <span class="hljs-string">&quot;riscv,cpu-intc&quot;</span>, riscv_intc_init); <span class="hljs-comment">// 进入riscv_intc_init</span><br><br></code></pre></td></tr></table></figure>
-
-
-
-
-
-<p>risc-v 中断处理流程</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><br></code></pre></td></tr></table></figure>
-
-<h1 id="IRQ-desc"><a href="#IRQ-desc" class="headerlink" title="IRQ desc"></a>IRQ desc</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">irq_desc</span> <span class="hljs-title">irq_desc</span>[<span class="hljs-title">NR_IRQS</span>] // 全局<span class="hljs-title">irq_desc</span>数组，每个外设的中断对应一个<span class="hljs-title">irq_desc</span></span><br><span class="hljs-class"></span><br><span class="hljs-class"><span class="hljs-title">early_irq_init</span>();</span><br>  desc_set_defaults(); <span class="hljs-comment">// 对每个irq_desc都初始化赋值</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// irq-riscv-intc.c</span><br><span class="hljs-comment">// 每个cpu int都会调用到cpu interrupt controller的map函数，会填充irq_desc。</span><br>irq_create_mapping();<br>domain-&gt;ops-&gt;<span class="hljs-built_in">map</span>;<br>.<span class="hljs-built_in">map</span> = riscv_intc_domain_map();<br>  irq_domain_set_info();<br>    irq_set_chip_and_handler_name(virq, chip, handler, handler_name);<br>      irq_set_chip();<br>        desc-&gt;irq_data.chip = chip;<br>      __irq_set_handler();<br>        desc-&gt;handle_irq = handle; <span class="hljs-comment">// handle是handle_percpu_devid_irq</span><br>    irq_set_chip_data(virq, chip_data); <span class="hljs-comment">// d-&gt;host_data irq_domain_add_linear最后一个参数</span><br>      desc-&gt;irq_data.chip_data = data; <span class="hljs-comment">// irq chip的私有数据</span><br>    irq_set_handler_data(virq, handler_data);<br>      desc-&gt;irq_common_data.handler_data = data; <span class="hljs-comment">// data=NULL</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c">platform_get_irq();<br>...<br>irq_create_of_mapping<br>  irq_create_fwspec_mapping<br>    irq_domain_alloc_irqs<br>      __irq_domain_alloc_irqs<br>        irq_domain_alloc_irqs_hierarchy<br>          domain-&gt;ops-&gt;alloc<br>            irq_domain_translate_onecell<br>            plic_irqdomain_map<br>              irq_domain_set_info<br>                ...<br>                  desc-&gt;handle_irq = handle; <span class="hljs-comment">// handle: handle_fasteoi_irq</span><br></code></pre></td></tr></table></figure>
-
-
-
-<p>irq_to_desc的定义 irq_desc + irq 是什么意思？数组加上irq number？</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">struct</span> irq_desc *<span class="hljs-title function_">irq_to_desc</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> irq)</span><br>&#123;<br>  <span class="hljs-keyword">return</span> (irq &lt; NR_IRQS) ? irq_desc + irq : <span class="hljs-literal">NULL</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h1 id="risc-v中断处理流程"><a href="#risc-v中断处理流程" class="headerlink" title="risc-v中断处理流程"></a>risc-v中断处理流程</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// head.S</span><br>setup_trap_vector:<br>  la a0, handle_exception<br>  csrw CSR_TVEC, a0     <span class="hljs-comment">// handle_exception地址传入CSR_TVEC</span><br>  csrw CSR_SCRATCH, zero   <span class="hljs-comment">// CSR_SCRATCH清零</span><br><br><span class="hljs-comment">// entry.S</span><br>ENTRY(handle_exception)<br>  handle_arch_irq();<br>    set_handle_irq();<br>      riscv_intc_irq();<br>        handle_domain_irq();<br>          __handle_domain_irq();<br>            generic_handle_irq();<br>              generic_handle_irq_desc();<br>                <span class="hljs-comment">// 不同的中断控制器在一开始初始化会设置</span><br>                desc-&gt;handle_irq(desc);<br><span class="hljs-comment">// 这里cpu int会进入handle_percpu_devid_irq, 在irq-riscv-intc.c irq_domain_set_info中设定</span><br>handle_percpu_devid_irq();<br>  action-&gt;handler(); <span class="hljs-comment">// timer-riscv.c 中request_irq会把中断处理函数赋值给action-&gt;handler();</span><br><br><span class="hljs-comment">// external int 会进入plic_handle_irq, 在irq-realtek-plic.c irq_set_chained_handler中设定</span><br>plic_handle_irq();<br>  generic_handle_irq();<br>    generic_handle_irq_desc();<br>      desc-&gt;handle_irq(desc);<br>        handle_fasteoi_irq();<br>          ...<br>                    <span class="hljs-comment">// request_irq中会把自定义的handler function赋值给action-&gt;handler</span><br>                    action-&gt;handler();<br></code></pre></td></tr></table></figure>
-
-
-
-<p><em><strong>是否所有的irq_domain的irq number是按顺序排列下去，每个irq_number设置一个interrupt handler，不会重复？</strong></em></p>
+<p>gpiod_set_value设置的值是“逻辑值”，不一定等于物理值。</p>
+<h2 id="Sysfs接口"><a href="#Sysfs接口" class="headerlink" title="Sysfs接口"></a>Sysfs接口</h2><p>&#x2F;sys&#x2F;class&#x2F;gpio&#x2F;</p>
+<p>echo 19 &gt; export</p>
+<p>&#x2F;sys&#x2F;class&#x2F;gpio&#x2F;gpioN&#x2F;</p>
 
                 
               </div>
@@ -420,9 +415,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/08/linux_subsystem/Time/" title="Time subsystem">
+                      <a href="/2023/05/12/rCore_uCore/Chapter2/" title="">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Time subsystem</span>
+                        <span class="hidden-mobile"></span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -430,8 +425,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/25/rCore_uCore/Chapter1/" title="uCore_chapter1">
-                        <span class="hidden-mobile">uCore_chapter1</span>
+                      <a href="/2023/05/10/linux_subsystem/cmd&amp;dma/" title="CMA&amp;DMA">
+                        <span class="hidden-mobile">CMA&amp;DMA</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

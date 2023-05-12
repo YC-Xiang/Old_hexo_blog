@@ -27,7 +27,7 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230421093917.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230421113527.png">
 <meta property="article:published_time" content="2023-04-21T07:51:28.000Z">
-<meta property="article:modified_time" content="2023-04-21T08:34:16.278Z">
+<meta property="article:modified_time" content="2023-05-12T05:54:16.049Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="RISC-V">
 <meta property="article:tag" content="OpenSBI">
@@ -255,7 +255,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.8k words
+          2.7k words
         
       </span>
     
@@ -266,7 +266,7 @@
         
         
         
-          24 mins
+          23 mins
         
       </span>
     
@@ -317,7 +317,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年4月21日 下午
+                    本文最后更新于：2023年5月12日 下午
                   
                 
               </p>
@@ -353,7 +353,6 @@
 <h2 id="SSE-opensbi-处理Ecall过程"><a href="#SSE-opensbi-处理Ecall过程" class="headerlink" title="SSE(opensbi)处理Ecall过程"></a>SSE(opensbi)处理Ecall过程</h2><p>还是以Function: Get SBI specification version (FID #0, EID #0x10)为例</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c">_trap_handler<br>TRAP_CALL_C_ROUTINE<br>  <span class="hljs-type">void</span> <span class="hljs-title function_">sbi_trap_handler</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> sbi_trap_regs *regs)</span><br>    <span class="hljs-title function_">sbi_ecall_handler</span><span class="hljs-params">(regs)</span>; <span class="hljs-comment">// sbi_ecall.c</span><br>      sbi_ecall_find_extension(extension_id);<br>      ext-&gt;handle(extension_id, func_id, regs, &amp;out_val, &amp;trap);<br>      sbi_ecall_base_handler(); <span class="hljs-comment">//根据不同的eid找到不同的handle函数</span><br>        <span class="hljs-keyword">case</span> SBI_EXT_BASE_GET_SPEC_VERSION:<br>                      *out_val = (SBI_ECALL_VERSION_MAJOR &lt;&lt; <span class="hljs-comment">//SBI_ECALL_VERSION_MAJOR 0</span><br>                             SBI_SPEC_VERSION_MAJOR_OFFSET) &amp;<br>                             (SBI_SPEC_VERSION_MAJOR_MASK &lt;&lt;<br>                              SBI_SPEC_VERSION_MAJOR_OFFSET);<br>              <span class="hljs-comment">//SBI_ECALL_VERSION_MINOR 2 可以看出sbi version为0.2</span><br>                      *out_val = *out_val | SBI_ECALL_VERSION_MINOR;<br></code></pre></td></tr></table></figure>
 
-<h1 id="5-Legacy-Extensions-EIDs-0x00-0x0F"><a href="#5-Legacy-Extensions-EIDs-0x00-0x0F" class="headerlink" title="5. Legacy Extensions(EIDs #0x00 - 0x0F)"></a>5. Legacy Extensions(EIDs #0x00 - 0x0F)</h1><p>需要在kernel中打开<code>CONFIG_RISCV_SBI_V01</code>0.1版本的sbi spec支持这些函数</p>
 <h1 id="OpenSBI"><a href="#OpenSBI" class="headerlink" title="OpenSBI"></a>OpenSBI</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"># fw_base.S<br><span class="hljs-meta"># relocate code 使load address==link address</span><br>call  fw_platform_init <span class="hljs-meta"># platform/generic/platform.c</span><br>  <span class="hljs-keyword">extern</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sbi_platform</span> <span class="hljs-title">platform</span>;</span> <span class="hljs-comment">// 在platform/realtek/sheipa/platform.c中定义</span><br>    <br>call  sbi_init <span class="hljs-comment">// lib/sbi/sbi_init.c</span><br>  init_coldboot();<br>    sbi_scratch_init();<br>    sbi_domain_init();<br></code></pre></td></tr></table></figure>
 
 
@@ -405,9 +404,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/25/rCore_uCore/uCore/" title="uCore">
+                      <a href="/2023/04/25/rCore_uCore/Chapter1/" title="uCore_chapter1">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">uCore</span>
+                        <span class="hidden-mobile">uCore_chapter1</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     

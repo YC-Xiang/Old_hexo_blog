@@ -16,24 +16,24 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="IRQ domain1、向系统注册irq domain interrupt controller初始化的过程中，注册irq domain irq_domain_add_linear 2、为irq domain创建映射 在各个硬件外设的驱动初始化过程中，创建HW interrupt ID和IRQ number的映射关系。 Interrupt controller初始化的时候会mapping hw i">
+    <meta name="description" content="Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG&#x3D;LOG_LEVEL_TRACE # 其他选项可以看Makefilemake clean # rm build&#x2F;make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 ch1流程1234567">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Interrupt subsystem">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/05/08/linux_subsystem/Interrupt/index.html">
+<meta property="og:title" content="uCore_chapter1">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/04/25/rCore_uCore/Chapter1/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="IRQ domain1、向系统注册irq domain interrupt controller初始化的过程中，注册irq domain irq_domain_add_linear 2、为irq domain创建映射 在各个硬件外设的驱动初始化过程中，创建HW interrupt ID和IRQ number的映射关系。 Interrupt controller初始化的时候会mapping hw i">
+<meta property="og:description" content="Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG&#x3D;LOG_LEVEL_TRACE # 其他选项可以看Makefilemake clean # rm build&#x2F;make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 ch1流程1234567">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-05-08T08:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-08T09:13:19.764Z">
+<meta property="article:published_time" content="2023-04-25T15:11:28.000Z">
+<meta property="article:modified_time" content="2023-05-12T09:06:38.716Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="Linux driver">
+<meta property="article:tag" content="uCore">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Interrupt subsystem - Yucheng&#39;s Blog</title>
+  <title>uCore_chapter1 - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Interrupt subsystem</span>
+            <span id="subtitle">uCore_chapter1</span>
           
         </div>
 
@@ -238,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-08 16:00" pubdate>
-          2023年5月8日 下午
+        <time datetime="2023-04-25 23:11" pubdate>
+          2023年4月25日 晚上
         </time>
       </span>
     
@@ -250,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.5k words
+          1.1k words
         
       </span>
     
@@ -261,7 +261,7 @@
         
         
         
-          29 mins
+          10 mins
         
       </span>
     
@@ -307,12 +307,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Interrupt subsystem</h1>
+            <h1 style="display: none">uCore_chapter1</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年5月8日 下午
+                    本文最后更新于：2023年5月12日 下午
                   
                 
               </p>
@@ -320,59 +320,19 @@
             
               <div class="markdown-body">
                 
-                <h1 id="IRQ-domain"><a href="#IRQ-domain" class="headerlink" title="IRQ domain"></a>IRQ domain</h1><p>1、向系统注册irq domain</p>
-<p>interrupt controller初始化的过程中，注册irq domain</p>
-<p><code>irq_domain_add_linear</code></p>
-<p>2、为irq domain创建映射</p>
-<p>在各个硬件外设的驱动初始化过程中，创建HW interrupt ID和IRQ number的映射关系。</p>
-<p><em><strong>Interrupt controller初始化的时候会mapping hw id和irq number吗？</strong></em></p>
-<p>方法1：</p>
-<p><code>irq_create_mapping(struct irq_domain *host, irq_hw_number_t hwirq);</code></p>
-<p>比如<code>drivers/clocksource/timer-riscv.c</code>中<code>irq_create_mapping(domain, RV_IRQ_TIMER);</code>直接将hw id(RV_IRQ_TIMER)传入, 创建hw id和irq number的映射。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">irq_create_mapping(domain, hwirq);<br>  irq_create_mapping_affinity();<br>    irq_domain_alloc_descs(); <span class="hljs-comment">// 创建hw id和irq number的映射</span><br>    irq_domain_associate();<br>      domain-&gt;ops-&gt;<span class="hljs-built_in">map</span>(); <span class="hljs-comment">//调用到interrupt controller的map函数</span><br></code></pre></td></tr></table></figure>
+                <h1 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">make build # 仅编译<br>make run # 编译+运行qemu<br>make run LOG=LOG_LEVEL_TRACE # 其他选项可以看Makefile<br>make clean # rm build/<br>make debug # 编译+运行gdb调试<br></code></pre></td></tr></table></figure>
 
+<p>每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。</p>
+<h1 id="ch1"><a href="#ch1" class="headerlink" title="ch1"></a>ch1</h1><h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// entry.S</span><br>_entry<br>    la sp, boot_stack_top <span class="hljs-comment">//设置堆栈</span><br>    call main<br><span class="hljs-comment">// main.c</span><br>  clean_bss();<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;hello wrold!\n&quot;</span>);<br>    consputc();<br>      console_putchar(<span class="hljs-type">int</span> c);<br>        sbi_call(SBI_CONSOLE_PUTCHAR, c, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
 
+<p class="note note-danger">怎么用gdb调试？`file kernel`然后？</p>
 
-<p>方法2：</p>
-<p><code>irq_of_parse_and_map</code></p>
-<p>比如<code>drivers/irqchip/irq-realtek-plic.c</code>中<code>irq_of_parse_and_map</code></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">irq_of_parse_and_map(<span class="hljs-keyword">struct</span> device_node *dev, <span class="hljs-type">int</span> index);<br>  of_irq_parse_one(dev, index, &amp;oirq); <span class="hljs-comment">// 解析设备树</span><br>  irq_create_of_mapping(&amp;oirq);<br>    irq_create_fwspec_mapping();<br>      irq_create_mapping(domain, hwirq); <span class="hljs-comment">// 最终还是调用到irq_create_mapping</span><br></code></pre></td></tr></table></figure>
+<h2 id="Makefile流程分析"><a href="#Makefile流程分析" class="headerlink" title="Makefile流程分析"></a>Makefile流程分析</h2><p>根据<code>make run </code>打印的信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">riscv64-unknown-elf-gcc -Wall -Werror -O -fno-omit-frame-pointer -ggdb -MD -mcmodel=medany -ffreestanding -fno-common -nostdlib -mno-relax -Ios -fno-stack-protector -D LOG_LEVEL_ERROR  -fno-pie -no-pie -c os/console.c -o build/os/console.o<br>... # 编译所有的.c文件成.o文件<br>riscv64-unknown-elf-ld -z max-page-size=4096 -T os/kernel.ld -o build/kernel build/os/console.o build/os/main.o build/os/sbi.o build/os/printf.o  build/os/entry.o build/os/link_app.o # 链接<br>riscv64-unknown-elf-objdump -S build/kernel &gt; build/kernel.asm<br>riscv64-unknown-elf-objdump -t build/kernel | sed &#x27;1,/SYMBOL TABLE/d; s/ .* / /; /^$/d&#x27; &gt; build/kernel.sym<br>Build kernel done<br></code></pre></td></tr></table></figure>
 
-
-
-<p>方法3：</p>
-<p>外设driver中直接<code>platform_get_irq</code></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">platform_get_irq();<br>  platform_get_irq_optional();<br>    of_irq_get();<br>      of_irq_parse_one();<br>      irq_create_of_mapping(); <span class="hljs-comment">// 到这里和上面一样了</span><br></code></pre></td></tr></table></figure>
-
-
-
-<p>级联的第二级interrupt controller调用<code>irq_set_chained_handler</code>设置 interrupt handler</p>
-<p>irq初始化</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// init/main.c</span><br>init_IRQ();<br><span class="hljs-comment">//arch/riscv/kernel/irq.c</span><br>init_IRQ();<br>  irqchip_init();<br><span class="hljs-comment">// drivers/irqchip/irqchip.c</span><br>irqchip_init();<br>  of_irq_init();<br>    IRQCHIP_DECLARE(riscv, <span class="hljs-string">&quot;riscv,cpu-intc&quot;</span>, riscv_intc_init); <span class="hljs-comment">// 进入riscv_intc_init</span><br><br></code></pre></td></tr></table></figure>
-
-
-
-
-
-<p>risc-v 中断处理流程</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><br></code></pre></td></tr></table></figure>
-
-<h1 id="IRQ-desc"><a href="#IRQ-desc" class="headerlink" title="IRQ desc"></a>IRQ desc</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">irq_desc</span> <span class="hljs-title">irq_desc</span>[<span class="hljs-title">NR_IRQS</span>] // 全局<span class="hljs-title">irq_desc</span>数组，每个外设的中断对应一个<span class="hljs-title">irq_desc</span></span><br><span class="hljs-class"></span><br><span class="hljs-class"><span class="hljs-title">early_irq_init</span>();</span><br>  desc_set_defaults(); <span class="hljs-comment">// 对每个irq_desc都初始化赋值</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// irq-riscv-intc.c</span><br><span class="hljs-comment">// 每个cpu int都会调用到cpu interrupt controller的map函数，会填充irq_desc。</span><br>irq_create_mapping();<br>domain-&gt;ops-&gt;<span class="hljs-built_in">map</span>;<br>.<span class="hljs-built_in">map</span> = riscv_intc_domain_map();<br>  irq_domain_set_info();<br>    irq_set_chip_and_handler_name(virq, chip, handler, handler_name);<br>      irq_set_chip();<br>        desc-&gt;irq_data.chip = chip;<br>      __irq_set_handler();<br>        desc-&gt;handle_irq = handle; <span class="hljs-comment">// handle是handle_percpu_devid_irq</span><br>    irq_set_chip_data(virq, chip_data); <span class="hljs-comment">// d-&gt;host_data irq_domain_add_linear最后一个参数</span><br>      desc-&gt;irq_data.chip_data = data; <span class="hljs-comment">// irq chip的私有数据</span><br>    irq_set_handler_data(virq, handler_data);<br>      desc-&gt;irq_common_data.handler_data = data; <span class="hljs-comment">// data=NULL</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c">platform_get_irq();<br>...<br>irq_create_of_mapping<br>  irq_create_fwspec_mapping<br>    irq_domain_alloc_irqs<br>      __irq_domain_alloc_irqs<br>        irq_domain_alloc_irqs_hierarchy<br>          domain-&gt;ops-&gt;alloc<br>            irq_domain_translate_onecell<br>            plic_irqdomain_map<br>              irq_domain_set_info<br>                ...<br>                  desc-&gt;handle_irq = handle; <span class="hljs-comment">// handle: handle_fasteoi_irq</span><br></code></pre></td></tr></table></figure>
-
-
-
-<p>irq_to_desc的定义 irq_desc + irq 是什么意思？数组加上irq number？</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">struct</span> irq_desc *<span class="hljs-title function_">irq_to_desc</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> irq)</span><br>&#123;<br>  <span class="hljs-keyword">return</span> (irq &lt; NR_IRQS) ? irq_desc + irq : <span class="hljs-literal">NULL</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h1 id="risc-v中断处理流程"><a href="#risc-v中断处理流程" class="headerlink" title="risc-v中断处理流程"></a>risc-v中断处理流程</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// head.S</span><br>setup_trap_vector:<br>  la a0, handle_exception<br>  csrw CSR_TVEC, a0     <span class="hljs-comment">// handle_exception地址传入CSR_TVEC</span><br>  csrw CSR_SCRATCH, zero   <span class="hljs-comment">// CSR_SCRATCH清零</span><br><br><span class="hljs-comment">// entry.S</span><br>ENTRY(handle_exception)<br>  handle_arch_irq();<br>    set_handle_irq();<br>      riscv_intc_irq();<br>        handle_domain_irq();<br>          __handle_domain_irq();<br>            generic_handle_irq();<br>              generic_handle_irq_desc();<br>                <span class="hljs-comment">// 不同的中断控制器在一开始初始化会设置</span><br>                desc-&gt;handle_irq(desc);<br><span class="hljs-comment">// 这里cpu int会进入handle_percpu_devid_irq, 在irq-riscv-intc.c irq_domain_set_info中设定</span><br>handle_percpu_devid_irq();<br>  action-&gt;handler(); <span class="hljs-comment">// timer-riscv.c 中request_irq会把中断处理函数赋值给action-&gt;handler();</span><br><br><span class="hljs-comment">// external int 会进入plic_handle_irq, 在irq-realtek-plic.c irq_set_chained_handler中设定</span><br>plic_handle_irq();<br>  generic_handle_irq();<br>    generic_handle_irq_desc();<br>      desc-&gt;handle_irq(desc);<br>        handle_fasteoi_irq();<br>          ...<br>                    <span class="hljs-comment">// request_irq中会把自定义的handler function赋值给action-&gt;handler</span><br>                    action-&gt;handler();<br></code></pre></td></tr></table></figure>
-
-
-
-<p><em><strong>是否所有的irq_domain的irq number是按顺序排列下去，每个irq_number设置一个interrupt handler，不会重复？</strong></em></p>
+<p>比较熟悉的是<code>objdump -d</code> <code>objdump -D</code>将所有段都反汇编，而<code>-d</code>应该仅反汇编代码段。</p>
+<p><code>objdump -S</code>是在-d的基础上，代码段反汇编的同时，将反汇编代码与源代码交替显示，编译时需要使用<code>-g</code>参数，即需要调试信息。</p>
+<p><code>objdump -t</code>打印符号表。</p>
 
                 
               </div>
@@ -391,7 +351,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  <a href="/categories/Project/" class="category-chain-item">Project</a>
   
   
 
@@ -406,7 +366,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Linux-driver/">#Linux driver</a>
+        <a href="/tags/uCore/">#uCore</a>
       
     </div>
   
@@ -420,9 +380,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/08/linux_subsystem/Time/" title="Time subsystem">
+                      <a href="/2023/05/08/linux_subsystem/Interrupt/" title="Interrupt subsystem">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Time subsystem</span>
+                        <span class="hidden-mobile">Interrupt subsystem</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -430,8 +390,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/25/rCore_uCore/Chapter1/" title="uCore_chapter1">
-                        <span class="hidden-mobile">uCore_chapter1</span>
+                      <a href="/2023/04/21/sbi/" title="RISC-V SBI">
+                        <span class="hidden-mobile">RISC-V SBI</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
