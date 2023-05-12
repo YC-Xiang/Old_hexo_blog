@@ -1,13 +1,18 @@
-# Chapter 2 批处理系统
-
-
+---
+title: uCore_Chapter2 批处理系统
+date: 2023-04-25 23:11:28
+tags:
+- uCore
+categories:
+- Project
+---
 
 ```makefile
 make -C user clean # 在os目录，相当于cd user;make clean;cd ..
 make clean # 或者在user目录
 git checkout ch2
 make user BASE=1 CHAPTER=2
-make run 
+make run
 make test BASE=1 # make test 会完成　make user 和 make run 两个步骤（自动设置 CHAPTER）
 ```
 
@@ -28,14 +33,14 @@ main();
 			w_sstatus();
 			userret();
 				sret // 返回到sepc中的值，0x80400000第一个app
-                    
+
 // 进入应用程序
 exit(MAGIC);
 	syscall(SYS_exit, code);
 		__syscall1(n, long(1234));
 			__asm_syscall("r"(a7), "0"(a0));
 				ecall //通过ecall 进入uservec
-                    
+
 uservec
 	usertrap();
 		r_scause();

@@ -1,6 +1,6 @@
 ---
 title: GPIO subsystem
-date: 2023-05-012 10:19:00
+date: 2023-05-12 10:19:00
 tags:
 - Linux driver
 categories:

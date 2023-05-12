@@ -1,5 +1,5 @@
 ---
-title: uCore_chapter1
+title: uCore_Chapter1 应用程序与基本执行环境
 date: 2023-04-25 23:11:28
 tags:
 - uCore
@@ -56,6 +56,3 @@ Build kernel done
 `objdump -S`是在-d的基础上，代码段反汇编的同时，将反汇编代码与源代码交替显示，编译时需要使用`-g`参数，即需要调试信息。
 
 `objdump -t`打印符号表。
-
-
-

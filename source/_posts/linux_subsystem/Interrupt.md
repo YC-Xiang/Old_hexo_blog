@@ -192,3 +192,7 @@ plic_handle_irq();
 
 
 ***是否所有的irq_domain的irq number是按顺序排列下去，每个irq_number设置一个interrupt handler，不会重复？***
+
+# irq_chip
+
+need to do.
