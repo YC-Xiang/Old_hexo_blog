@@ -88,10 +88,6 @@ TRAP_CALL_C_ROUTINE
                       *out_val = *out_val | SBI_ECALL_VERSION_MINOR;
 ```
 
-# 5. Legacy Extensions(EIDs #0x00 - 0x0F)
-
-需要在kernel中打开`CONFIG_RISCV_SBI_V01`0.1版本的sbi spec支持这些函数
-
 # OpenSBI
 
 ```c
