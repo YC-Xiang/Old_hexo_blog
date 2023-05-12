@@ -16,23 +16,24 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="项宇承">
+    <meta name="description" content="123456make -C user clean # 在os目录，相当于cd user;make clean;cd ..make clean # 或者在user目录git checkout ch2make user BASE&#x3D;1 CHAPTER&#x3D;2make runmake test BASE&#x3D;1 # make test 会完成　make user 和 make run 两个步骤（自动设置 CHAP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Yucheng&#39;s Blog">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/05/12/rCore_uCore/Chapter3/index.html">
+<meta property="og:title" content="uCore_Chapter2 批处理系统">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/04/25/rCore_uCore/uCore_Chapter2/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="项宇承">
+<meta property="og:description" content="123456make -C user clean # 在os目录，相当于cd user;make clean;cd ..make clean # 或者在user目录git checkout ch2make user BASE&#x3D;1 CHAPTER&#x3D;2make runmake test BASE&#x3D;1 # make test 会完成　make user 和 make run 两个步骤（自动设置 CHAP">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-05-12T09:06:38.717Z">
-<meta property="article:modified_time" content="2023-05-12T09:06:38.717Z">
+<meta property="article:published_time" content="2023-04-25T15:11:28.000Z">
+<meta property="article:modified_time" content="2023-05-12T09:31:44.918Z">
 <meta property="article:author" content="Yucheng Xiang">
+<meta property="article:tag" content="uCore">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Yucheng&#39;s Blog</title>
+  <title>uCore_Chapter2 批处理系统 - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -226,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle"></span>
+            <span id="subtitle">uCore_Chapter2 批处理系统</span>
           
         </div>
 
@@ -237,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-12 17:06" pubdate>
-          2023年5月12日 下午
+        <time datetime="2023-04-25 23:11" pubdate>
+          2023年4月25日 晚上
         </time>
       </span>
     
@@ -249,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 words
+          1.7k words
         
       </span>
     
@@ -260,7 +261,7 @@
         
         
         
-          1 mins
+          15 mins
         
       </span>
     
@@ -306,12 +307,34 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">uCore_Chapter2 批处理系统</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年5月12日 下午
+                  
+                
+              </p>
             
             
               <div class="markdown-body">
                 
-                
+                <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs makefile">make -C user clean <span class="hljs-comment"># 在os目录，相当于cd user;make clean;cd ..</span><br>make clean <span class="hljs-comment"># 或者在user目录</span><br>git checkout ch2<br>make user BASE=1 CHAPTER=2<br>make run<br>make test BASE=1 <span class="hljs-comment"># make test 会完成　make user 和 make run 两个步骤（自动设置 CHAPTER）</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c">main();<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;hello wrold!\n&quot;</span>);<br>  trap_init(); <span class="hljs-comment">// 设置中断/异常处理地址</span><br>    w_stvec((uint64)uservec &amp; ~<span class="hljs-number">0x3</span>); <span class="hljs-comment">//把uservec地址传入,uservec在trampoline.S中定义</span><br>      <span class="hljs-keyword">asm</span> <span class="hljs-title function_">volatile</span><span class="hljs-params">(<span class="hljs-string">&quot;csrw stvec, %0&quot;</span> : : <span class="hljs-string">&quot;r&quot;</span>(x))</span>; <span class="hljs-comment">// 设置stvec CSR</span><br>  loader_init();<br>  run_next_app();<br>    load_app();<br>    usertrapret(trapframe, (uint64)boot_stack_top);<br>      w_sepc(trapframe-&gt;epc);<br>      r_sstatus();<br>      w_sstatus();<br>      userret();<br>        sret <span class="hljs-comment">// 返回到sepc中的值，0x80400000第一个app</span><br><br><span class="hljs-comment">// 进入应用程序</span><br><span class="hljs-built_in">exit</span>(MAGIC);<br>  syscall(SYS_exit, code);<br>    __syscall1(n, <span class="hljs-type">long</span>(<span class="hljs-number">1234</span>));<br>      __asm_syscall(<span class="hljs-string">&quot;r&quot;</span>(a7), <span class="hljs-string">&quot;0&quot;</span>(a0));<br>        ecall <span class="hljs-comment">//通过ecall 进入uservec</span><br><br>uservec<br>  <span class="hljs-title function_">usertrap</span><span class="hljs-params">()</span>;<br>    r_scause();<br>    syscall();<br>    usertrapret(); <span class="hljs-comment">// 这里回到第九行一样，循环，执行第二个应用程序</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>分析下<code>uservec</code>,注意：这里只是把stvec设置为uservec地址，并不会执行uservec下的代码，要等U mode的中断&#x2F;异常到来时才会从uservec开始执行。</p>
+<p class="note note-warning">uservec是U mode异常/中断的入口。</p>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs assembly">.globl uservec<br>uservec:<br>        csrrw a0, sscratch, a0 # 交换a0和sscratch<br><br>        # save the user registers in TRAPFRAME<br>        sd ra, 40(a0)<br>        sd sp, 48(a0)<br>    ...<br>        sd t6, 280(a0)<br><br>  # save the user a0 in p-&gt;trapframe-&gt;a0<br>        csrr t0, sscratch<br>        sd t0, 112(a0)<br><br>        csrr t1, sepc<br>        sd t1, 24(a0) # BASE_ADDRESS 0x80400000<br><br>        ld sp, 8(a0) # kstack + PGSIZE<br>        ld tp, 32(a0)<br>        ld t1, 0(a0)<br>        # csrw satp, t1<br>        # sfence.vma zero, zero<br>        ld t0, 16(a0)<br>        jr t0<br><br></code></pre></td></tr></table></figure>
+
+<p>这里需要注意sscratch这个CSR寄存器的作用就是一个cache，它只负责存某一个值，这里它保存的就是trapframe结构体的位置。</p>
+<h1 id="实现批处理操作系统的细节"><a href="#实现批处理操作系统的细节" class="headerlink" title="实现批处理操作系统的细节"></a>实现批处理操作系统的细节</h1><p>从Makefile中可以发现，scripts&#x2F;pack.py，scripts&#x2F;kernelld.py用来生成os&#x2F;link_app.S和os&#x2F;kernel_app.ld。link_app.S将用户程序加入kernel可执行文件中。kernel_app.ld规定了用户程序所在的段(.data.app[x])。在load_app()中将用户程序relocate到0x80400000。</p>
+<p>需要relocate的原因：我们并不能直接跳转到 app_n_start 直接运行，因为用户程序在编译的时候，会假定程序处在虚存的特定位置，而由于我们还没有虚存机制，因此我们在运行之前还需要将用户程序加载到规定的物理内存位置。</p>
+
                 
               </div>
             
@@ -319,6 +342,34 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/uCore/">#uCore</a>
+      
+    </div>
   
 </div>
 
@@ -330,12 +381,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2023/04/25/rCore_uCore/uCore_Chapter1/" title="uCore_Chapter1 应用程序与基本执行环境">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">uCore_Chapter1 应用程序与基本执行环境</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/12/rCore_uCore/Chapter2/" title="">
-                        <span class="hidden-mobile"></span>
+                      <a href="/2023/04/21/sbi/" title="RISC-V SBI">
+                        <span class="hidden-mobile">RISC-V SBI</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

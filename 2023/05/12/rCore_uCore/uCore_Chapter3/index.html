@@ -16,24 +16,23 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG&#x3D;LOG_LEVEL_TRACE # 其他选项可以看Makefilemake clean # rm build&#x2F;make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 ch1流程1234567">
+    <meta name="description" content="项宇承">
 <meta property="og:type" content="article">
-<meta property="og:title" content="uCore_chapter1">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/04/25/rCore_uCore/Chapter1/index.html">
+<meta property="og:title" content="Yucheng&#39;s Blog">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/05/12/rCore_uCore/uCore_Chapter3/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG&#x3D;LOG_LEVEL_TRACE # 其他选项可以看Makefilemake clean # rm build&#x2F;make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 ch1流程1234567">
+<meta property="og:description" content="项宇承">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-25T15:11:28.000Z">
-<meta property="article:modified_time" content="2023-05-12T09:06:38.716Z">
+<meta property="article:published_time" content="2023-05-12T09:06:38.717Z">
+<meta property="article:modified_time" content="2023-05-12T09:06:38.717Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="uCore">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>uCore_chapter1 - Yucheng&#39;s Blog</title>
+  <title>Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +226,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">uCore_chapter1</span>
+            <span id="subtitle"></span>
           
         </div>
 
@@ -238,8 +237,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-25 23:11" pubdate>
-          2023年4月25日 晚上
+        <time datetime="2023-05-12 17:06" pubdate>
+          2023年5月12日 下午
         </time>
       </span>
     
@@ -250,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k words
+          0 words
         
       </span>
     
@@ -261,7 +260,7 @@
         
         
         
-          10 mins
+          1 mins
         
       </span>
     
@@ -307,33 +306,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">uCore_chapter1</h1>
-            
-              <p class="note note-info">
-                
-                  
-                    本文最后更新于：2023年5月12日 下午
-                  
-                
-              </p>
+            <h1 style="display: none"></h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">make build # 仅编译<br>make run # 编译+运行qemu<br>make run LOG=LOG_LEVEL_TRACE # 其他选项可以看Makefile<br>make clean # rm build/<br>make debug # 编译+运行gdb调试<br></code></pre></td></tr></table></figure>
-
-<p>每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。</p>
-<h1 id="ch1"><a href="#ch1" class="headerlink" title="ch1"></a>ch1</h1><h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// entry.S</span><br>_entry<br>    la sp, boot_stack_top <span class="hljs-comment">//设置堆栈</span><br>    call main<br><span class="hljs-comment">// main.c</span><br>  clean_bss();<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;hello wrold!\n&quot;</span>);<br>    consputc();<br>      console_putchar(<span class="hljs-type">int</span> c);<br>        sbi_call(SBI_CONSOLE_PUTCHAR, c, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
-
-<p class="note note-danger">怎么用gdb调试？`file kernel`然后？</p>
-
-<h2 id="Makefile流程分析"><a href="#Makefile流程分析" class="headerlink" title="Makefile流程分析"></a>Makefile流程分析</h2><p>根据<code>make run </code>打印的信息：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">riscv64-unknown-elf-gcc -Wall -Werror -O -fno-omit-frame-pointer -ggdb -MD -mcmodel=medany -ffreestanding -fno-common -nostdlib -mno-relax -Ios -fno-stack-protector -D LOG_LEVEL_ERROR  -fno-pie -no-pie -c os/console.c -o build/os/console.o<br>... # 编译所有的.c文件成.o文件<br>riscv64-unknown-elf-ld -z max-page-size=4096 -T os/kernel.ld -o build/kernel build/os/console.o build/os/main.o build/os/sbi.o build/os/printf.o  build/os/entry.o build/os/link_app.o # 链接<br>riscv64-unknown-elf-objdump -S build/kernel &gt; build/kernel.asm<br>riscv64-unknown-elf-objdump -t build/kernel | sed &#x27;1,/SYMBOL TABLE/d; s/ .* / /; /^$/d&#x27; &gt; build/kernel.sym<br>Build kernel done<br></code></pre></td></tr></table></figure>
-
-<p>比较熟悉的是<code>objdump -d</code> <code>objdump -D</code>将所有段都反汇编，而<code>-d</code>应该仅反汇编代码段。</p>
-<p><code>objdump -S</code>是在-d的基础上，代码段反汇编的同时，将反汇编代码与源代码交替显示，编译时需要使用<code>-g</code>参数，即需要调试信息。</p>
-<p><code>objdump -t</code>打印符号表。</p>
-
+                
                 
               </div>
             
@@ -341,34 +319,6 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Project/" class="category-chain-item">Project</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/uCore/">#uCore</a>
-      
-    </div>
   
 </div>
 
@@ -380,18 +330,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/08/linux_subsystem/Interrupt/" title="Interrupt subsystem">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Interrupt subsystem</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/21/sbi/" title="RISC-V SBI">
-                        <span class="hidden-mobile">RISC-V SBI</span>
+                      <a href="/2023/05/12/linux_subsystem/GPIO/" title="GPIO subsystem">
+                        <span class="hidden-mobile">GPIO subsystem</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
