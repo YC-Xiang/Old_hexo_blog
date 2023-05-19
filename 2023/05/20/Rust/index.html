@@ -16,25 +16,34 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="项宇承">
-<meta property="og:type" content="website">
-<meta property="og:title" content="分类 - Notes">
-<meta property="og:url" content="https://yc-xiang.github.io/categories/Notes/page/2/index.html">
+    <meta name="description" content="1.2 Even Better TOML，支持 .toml 文件完整特性 Error Lens, 更好的获得错误展示 One Dark Pro, 非常好看的 VSCode 主题 CodeLLDB, Debugger 程序  1.3cargo new hello_world tree cargo run is equal to cargo build + .&#x2F;target&#x2F;debug&#x2F;world_h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rust">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/05/20/Rust/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="项宇承">
+<meta property="og:description" content="1.2 Even Better TOML，支持 .toml 文件完整特性 Error Lens, 更好的获得错误展示 One Dark Pro, 非常好看的 VSCode 主题 CodeLLDB, Debugger 程序  1.3cargo new hello_world tree cargo run is equal to cargo build + .&#x2F;target&#x2F;debug&#x2F;world_h">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-20T09:39:28.000Z">
+<meta property="article:modified_time" content="2023-05-19T09:43:22.223Z">
 <meta property="article:author" content="Yucheng Xiang">
+<meta property="article:tag" content="Rust">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>分类 - Notes - Yucheng&#39;s Blog</title>
+  <title>Rust - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
@@ -112,7 +121,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 60vh;">
+<div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -212,15 +221,63 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/homepage.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">分类 - Notes</span>
+            <span id="subtitle">Rust</span>
           
         </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-20 17:39" pubdate>
+          2023年5月20日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          534 words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          5 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> times
+        </span>
+        
+      
+    
+  </div>
+
 
         
       </div>
@@ -236,100 +293,166 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 23 篇文章</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2023</p>
-    
-    <a href="/2023/04/19/U-Boot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" class="list-group-item list-group-item-action">
-      <time>04-19</time>
-      <div class="list-group-item-title">U-Boot启动流程</div>
-    </a>
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Rust</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年5月19日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="1-2"><a href="#1-2" class="headerlink" title="1.2"></a>1.2</h2><ol>
+<li><code>Even Better TOML</code>，支持 .toml 文件完整特性</li>
+<li><code>Error Lens</code>, 更好的获得错误展示</li>
+<li><code>One Dark Pro</code>, 非常好看的 VSCode 主题</li>
+<li><code>CodeLLDB</code>, Debugger 程序</li>
+</ol>
+<h2 id="1-3"><a href="#1-3" class="headerlink" title="1.3"></a>1.3</h2><p><code>cargo new hello_world</code></p>
+<p><code>tree</code></p>
+<p><code>cargo run</code> is equal to <code>cargo build</code> + <code>./target/debug/world_hello</code> 默认的是debug模式，编译器不会做任何的优化，编译速度快，运行慢。</p>
+<p>高性能模式，生产发布模式：</p>
+<p><code>cargo run --release</code></p>
+<p><code>cargo build --release</code></p>
+<p><code>cargo check</code> 检查编译能否通过</p>
+<p><code>cargo.toml</code> <strong>项目数据描述文件</strong></p>
+<p><code>cargo.lock</code> <strong>项目依赖详细清单</strong></p>
+<p>在cargo.toml中定义依赖的三种方式：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs rust">[dependencies]<br>rand = <span class="hljs-string">&quot;0.3&quot;</span><br>hammer = &#123; version = <span class="hljs-string">&quot;0.5.0&quot;</span>&#125;<br>color = &#123; git = <span class="hljs-string">&quot;https://github.com/bjz/color-rs&quot;</span> &#125;<br>geometry = &#123; path = <span class="hljs-string">&quot;crates/geometry&quot;</span> &#125;<br><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
   
     
-    <a href="/2023/04/13/linux_subsystem/I2C/" class="list-group-item list-group-item-action">
-      <time>04-13</time>
-      <div class="list-group-item-title">I2C subsystem</div>
-    </a>
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
   
-    
-    <a href="/2023/04/13/Buildroot/" class="list-group-item list-group-item-action">
-      <time>04-13</time>
-      <div class="list-group-item-title">Buildroot</div>
-    </a>
   
+
+      </span>
     
-    <a href="/2023/03/21/linux_subsystem/PWM/" class="list-group-item list-group-item-action">
-      <time>03-21</time>
-      <div class="list-group-item-title">PWM subsystem</div>
-    </a>
   
-    
-    <a href="/2023/01/31/ICS/ICS2022-PA2/" class="list-group-item list-group-item-action">
-      <time>01-31</time>
-      <div class="list-group-item-title">ICS2022 PA2</div>
-    </a>
+</span>
+
+    </div>
   
-    
-    <a href="/2023/01/30/Missing-semester_ch1_shell-scripts/" class="list-group-item list-group-item-action">
-      <time>01-30</time>
-      <div class="list-group-item-title">Shell scripts</div>
-    </a>
   
-    
-    <a href="/2023/01/13/Missing-semester_ch2_Vim/" class="list-group-item list-group-item-action">
-      <time>01-13</time>
-      <div class="list-group-item-title">Vim</div>
-    </a>
-  
-    
-    <a href="/2023/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="list-group-item list-group-item-action">
-      <time>01-12</time>
-      <div class="list-group-item-title">正则表达式</div>
-    </a>
-  
-    
-    <a href="/2023/01/10/ICS/ICS2022%20PA1/" class="list-group-item list-group-item-action">
-      <time>01-10</time>
-      <div class="list-group-item-title">ICS_2022 PA1</div>
-    </a>
-  
-    
-    <a href="/2023/01/09/RISC-V%E7%AC%AC%E5%8D%81%E7%AB%A0/" class="list-group-item list-group-item-action">
-      <time>01-09</time>
-      <div class="list-group-item-title">RISC-V手册 第十章 RISC-V特权架构</div>
-    </a>
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Rust/">#Rust</a>
+      
+    </div>
   
 </div>
 
 
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/categories/Notes/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/categories/Notes/">1</a><span class="page-number current">2</span><a class="page-number" href="/categories/Notes/page/3/#board">3</a><a class="extend next" rel="next" href="/categories/Notes/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
-    </span>
-  </nav>
+              
 
-
-
-
-              </div>
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/19/linux_subsystem/Universal/" title="Linux driver common essentials">
+                        <span class="hidden-mobile">Linux driver common essentials</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
             </div>
-          </div>
+
+            
+          </article>
         </div>
       </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
     
 
     
@@ -432,6 +555,99 @@
 
 
 
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
 

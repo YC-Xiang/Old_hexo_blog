@@ -4,22 +4,34 @@
   
   
   <entry>
-    <title></title>
-    <link href="/2023/05/16/Rust/"/>
-    <url>/2023/05/16/Rust/</url>
+    <title>Rust</title>
+    <link href="/2023/05/20/Rust/"/>
+    <url>/2023/05/20/Rust/</url>
     
-    <content type="html"><![CDATA[<h1 id="Rust-语言基础学习"><a href="#Rust-语言基础学习" class="headerlink" title="Rust 语言基础学习"></a>Rust 语言基础学习</h1><h2 id="1-2"><a href="#1-2" class="headerlink" title="1.2"></a>1.2</h2><ol><li><code>Even Better TOML</code>，支持 .toml 文件完整特性</li><li><code>Error Lens</code>, 更好的获得错误展示</li><li><code>One Dark Pro</code>, 非常好看的 VSCode 主题</li><li><code>CodeLLDB</code>, Debugger 程序</li></ol><h2 id="1-3"><a href="#1-3" class="headerlink" title="1.3"></a>1.3</h2><p><code>cargo new hello_world</code></p><p><code>tree</code></p><p><code>cargo run</code> is equal to <code>cargo build</code> + <code>./target/debug/world_hello</code> 默认的是debug模式，编译器不会做任何的优化，编译速度快，运行慢。</p><p>高性能模式，生产发布模式：</p><p><code>cargo run --release</code></p><p><code>cargo build --release</code></p><p><code>cargo check</code> 检查编译能否通过</p><p><code>cargo.toml</code> <strong>项目数据描述文件</strong></p><p><code>cargo.lock</code> <strong>项目依赖详细清单</strong></p><p>在cargo.toml中定义依赖的三种方式：</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs rust">[dependencies]<br>rand = <span class="hljs-string">&quot;0.3&quot;</span><br>hammer = &#123; version = <span class="hljs-string">&quot;0.5.0&quot;</span>&#125;<br>color = &#123; git = <span class="hljs-string">&quot;https://github.com/bjz/color-rs&quot;</span> &#125;<br>geometry = &#123; path = <span class="hljs-string">&quot;crates/geometry&quot;</span> &#125;<br><br></code></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<h2 id="1-2"><a href="#1-2" class="headerlink" title="1.2"></a>1.2</h2><ol><li><code>Even Better TOML</code>，支持 .toml 文件完整特性</li><li><code>Error Lens</code>, 更好的获得错误展示</li><li><code>One Dark Pro</code>, 非常好看的 VSCode 主题</li><li><code>CodeLLDB</code>, Debugger 程序</li></ol><h2 id="1-3"><a href="#1-3" class="headerlink" title="1.3"></a>1.3</h2><p><code>cargo new hello_world</code></p><p><code>tree</code></p><p><code>cargo run</code> is equal to <code>cargo build</code> + <code>./target/debug/world_hello</code> 默认的是debug模式，编译器不会做任何的优化，编译速度快，运行慢。</p><p>高性能模式，生产发布模式：</p><p><code>cargo run --release</code></p><p><code>cargo build --release</code></p><p><code>cargo check</code> 检查编译能否通过</p><p><code>cargo.toml</code> <strong>项目数据描述文件</strong></p><p><code>cargo.lock</code> <strong>项目依赖详细清单</strong></p><p>在cargo.toml中定义依赖的三种方式：</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs rust">[dependencies]<br>rand = <span class="hljs-string">&quot;0.3&quot;</span><br>hammer = &#123; version = <span class="hljs-string">&quot;0.5.0&quot;</span>&#125;<br>color = &#123; git = <span class="hljs-string">&quot;https://github.com/bjz/color-rs&quot;</span> &#125;<br>geometry = &#123; path = <span class="hljs-string">&quot;crates/geometry&quot;</span> &#125;<br><br></code></pre></td></tr></table></figure>]]></content>
     
     
+    <categories>
+      
+      <category>Notes</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Rust</tag>
+      
+    </tags>
     
   </entry>
   
   
   
   <entry>
-    <title>Linux driver common essential</title>
-    <link href="/2023/05/15/linux_subsystem/Universal/"/>
-    <url>/2023/05/15/linux_subsystem/Universal/</url>
+    <title>Linux driver common essentials</title>
+    <link href="/2023/05/19/linux_subsystem/Universal/"/>
+    <url>/2023/05/19/linux_subsystem/Universal/</url>
     
     <content type="html"><![CDATA[<p>include &lt;asm&#x2F;xxx.h&gt; 先找arch&#x2F;xxx&#x2F;include&#x2F;xxx.h，没有的话就找&#x2F;include&#x2F;asm-generic&#x2F;xxx.h</p>]]></content>
     
@@ -61,19 +73,6 @@
       <tag>Linux driver</tag>
       
     </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title></title>
-    <link href="/2023/05/12/rCore_uCore/uCore_Chapter3/"/>
-    <url>/2023/05/12/rCore_uCore/uCore_Chapter3/</url>
-    
-    <content type="html"><![CDATA[]]></content>
-    
-    
     
   </entry>
   
@@ -280,6 +279,31 @@
   
   
   <entry>
+    <title>uCore_Chapter3</title>
+    <link href="/2023/04/25/rCore_uCore/uCore_Chapter3/"/>
+    <url>/2023/04/25/rCore_uCore/uCore_Chapter3/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>Project</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>uCore</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>RISC-V SBI</title>
     <link href="/2023/04/21/sbi/"/>
     <url>/2023/04/21/sbi/</url>
@@ -417,9 +441,9 @@
     
     <tags>
       
-      <tag>Missing semester</tag>
-      
       <tag>tmux</tag>
+      
+      <tag>Missing semester</tag>
       
     </tags>
     
@@ -469,9 +493,9 @@
     
     <tags>
       
-      <tag>Shell</tag>
-      
       <tag>Missing semester</tag>
+      
+      <tag>Shell</tag>
       
     </tags>
     
