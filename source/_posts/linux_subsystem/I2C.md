@@ -1,5 +1,5 @@
 ---
-title: I2C subsystem
+title: I2C Subsystem
 date: 2023-04-13 17:40:28
 tags:
 - Linux driver

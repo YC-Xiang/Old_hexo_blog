@@ -1,5 +1,5 @@
 ---
-title: Time subsystem
+title: Time Subsystem
 date: 2023-05-08 17:00:00
 tags:
 - Linux driver

@@ -1,5 +1,5 @@
 ---
-title: Interrupt subsystem
+title: Interrupt Subsystem
 date: 2023-05-08 16:00:00
 tags:
 - Linux driver

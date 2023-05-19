@@ -1,5 +1,5 @@
 ---
-title: GPIO subsystem
+title: GPIO Subsystem
 date: 2023-05-12 10:19:00
 tags:
 - Linux driver
@@ -152,4 +152,3 @@ gpiod_set_value设置的值是“逻辑值”，不一定等于物理值。
 echo 19 > export
 
 /sys/class/gpio/gpioN/
-

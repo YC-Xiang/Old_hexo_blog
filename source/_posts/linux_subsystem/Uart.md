@@ -1,5 +1,5 @@
 ---
-title: Uart subsystem
+title: Uart Subsystem
 date: 2023-05-15 22:25:00
 tags:
 - Linux driver
@@ -17,7 +17,7 @@ categories:
 
 不关心终端是真实的还是虚拟的，都可以通过/dev/tty找到当前终端。
 
-**/dev/console** 
+**/dev/console**
 
 内核的打印信息可以通过cmdline来选择打印到哪个设备。
 
@@ -155,7 +155,7 @@ serial8250_init(); /// 内核打印: Serial: 8250/16550 driver, 3 ports, IRQ sha
     	tty_register_driver();
     serial8250_register_ports(); /// 注册三个uart_port(serial8250_ports)进uart_driver.
 		uart_add_one_port(drv, &up->port);
-			uart_configure_port(); // 会直接返回 因为port->iobase没初始化	
+			uart_configure_port(); // 会直接返回 因为port->iobase没初始化
 	serial8250_probe();
 
 
@@ -163,7 +163,7 @@ console_initcall(univ8250_console_init);
 	serial8250_isa_init_ports
     register_console
 
-   
+
 ```
 
 ##  8250_dw.c
@@ -177,7 +177,7 @@ struct uart_port *p = &up->port;
 
 p->type		= PORT_8250;
 p->flags	= UPF_SHARE_IRQ | UPF_FIXED_PORT;
-p->dev		= dev;	
+p->dev		= dev;
 p->iotype	= UPIO_MEM;
 p->serial_in	= dw8250_serial_in;
 p->serial_out	= dw8250_serial_out;
@@ -199,16 +199,16 @@ dw8250_probe();
         uart_remove_one_port();
             unregister_console(); // 内核打印:printk: console [ttyS1] disabled
 		serial8250_set_defaults();
-        uart_add_one_port(); 
+        uart_add_one_port();
 			uart_configure_port();
 				port->ops->config_port(port, flags); // 调用到8250_port.c中uart_ops的config_port
 				uart_report_port();// 打印: ...ttyS1 at MMIO 0x18810100 (irq = 13, base_baud = 1500000) is a 16550A
-				register_console();// 内核打印:printk: console [ttyS1] enabled 
+				register_console();// 内核打印:printk: console [ttyS1] enabled
 					try_enable_new_console();
 						newcon->setup(); // 这里调用到8250_core.c中univ8250_console.setup创建console
 					unregister_console();//内核打印:bootconsole [earlycon0] disabled
-				
-                            
+
+
 ```
 
 

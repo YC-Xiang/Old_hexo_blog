@@ -1,5 +1,5 @@
 ---
-title: Pinctrl subsystem
+title: Pinctrl Subsystem
 date: 2023-05-10 09:26:47
 tags:
 - Linux driver

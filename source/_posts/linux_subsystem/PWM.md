@@ -1,5 +1,5 @@
 ---
-title: PWM subsystem
+title: PWM Subsystem
 date: 2023-03-21 16:00:00
 tags:
 - Linux driver

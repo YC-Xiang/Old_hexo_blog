@@ -1,5 +1,5 @@
 ---
-title: Linux driver common essentials
+title: Linux Driver Common Essentials
 date: 2023-05-19 22:25:00
 tags:
 - Linux driver
