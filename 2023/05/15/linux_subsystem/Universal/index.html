@@ -16,25 +16,34 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="项宇承">
-<meta property="og:type" content="website">
-<meta property="og:title" content="归档">
-<meta property="og:url" content="https://yc-xiang.github.io/archives/2023/01/index.html">
+    <meta name="description" content="include &lt;asm&#x2F;xxx.h&gt; 先找arch&#x2F;xxx&#x2F;include&#x2F;xxx.h，没有的话就找&#x2F;include&#x2F;asm-generic&#x2F;xxx.h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux driver common essential">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/05/15/linux_subsystem/Universal/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="项宇承">
+<meta property="og:description" content="include &lt;asm&#x2F;xxx.h&gt; 先找arch&#x2F;xxx&#x2F;include&#x2F;xxx.h，没有的话就找&#x2F;include&#x2F;asm-generic&#x2F;xxx.h">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-15T14:25:00.000Z">
+<meta property="article:modified_time" content="2023-05-19T03:35:15.677Z">
 <meta property="article:author" content="Yucheng Xiang">
+<meta property="article:tag" content="Linux driver">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>归档 - Yucheng&#39;s Blog</title>
+  <title>Linux driver common essential - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
@@ -112,7 +121,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 60vh;">
+<div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -212,15 +221,63 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/homepage.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">归档</span>
+            <span id="subtitle">Linux driver common essential</span>
           
         </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-15 22:25" pubdate>
+          2023年5月15日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          116 words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          1 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> times
+        </span>
+        
+      
+    
+  </div>
+
 
         
       </div>
@@ -236,100 +293,156 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 32 篇文章</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2023</p>
-    
-    <a href="/2023/01/31/ICS/ICS2022-PA2/" class="list-group-item list-group-item-action">
-      <time>01-31</time>
-      <div class="list-group-item-title">ICS2022 PA2</div>
-    </a>
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Linux driver common essential</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年5月19日 中午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>include &lt;asm&#x2F;xxx.h&gt; 先找arch&#x2F;xxx&#x2F;include&#x2F;xxx.h，没有的话就找&#x2F;include&#x2F;asm-generic&#x2F;xxx.h</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
   
     
-    <a href="/2023/01/30/Missing-semester_ch1_shell-scripts/" class="list-group-item list-group-item-action">
-      <time>01-30</time>
-      <div class="list-group-item-title">Shell scripts</div>
-    </a>
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
   
-    
-    <a href="/2023/01/13/Missing-semester_ch2_Vim/" class="list-group-item list-group-item-action">
-      <time>01-13</time>
-      <div class="list-group-item-title">Vim</div>
-    </a>
   
+
+      </span>
     
-    <a href="/2023/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="list-group-item list-group-item-action">
-      <time>01-12</time>
-      <div class="list-group-item-title">正则表达式</div>
-    </a>
   
-    
-    <a href="/2023/01/11/reading/%E6%80%9D%E7%BB%B4%E7%9A%84%E4%B9%90%E8%B6%A3/" class="list-group-item list-group-item-action">
-      <time>01-11</time>
-      <div class="list-group-item-title">沉默的大多数</div>
-    </a>
+</span>
+
+    </div>
   
-    
-    <a href="/2023/01/10/ICS/ICS2022%20PA1/" class="list-group-item list-group-item-action">
-      <time>01-10</time>
-      <div class="list-group-item-title">ICS_2022 PA1</div>
-    </a>
   
-    
-    <a href="/2023/01/09/RISC-V%E7%AC%AC%E5%8D%81%E7%AB%A0/" class="list-group-item list-group-item-action">
-      <time>01-09</time>
-      <div class="list-group-item-title">RISC-V手册 第十章 RISC-V特权架构</div>
-    </a>
-  
-    
-    <a href="/2023/01/06/RISC-V%E7%AC%AC%E4%B8%89%E5%9B%9B%E7%AB%A0/" class="list-group-item list-group-item-action">
-      <time>01-06</time>
-      <div class="list-group-item-title">RISC-V手册 第三、四章 RISC-V汇编语言，乘法和除法指令</div>
-    </a>
-  
-    
-    <a href="/2023/01/06/RISC-V%E7%AC%AC%E4%BA%8C%E7%AB%A0/" class="list-group-item list-group-item-action">
-      <time>01-06</time>
-      <div class="list-group-item-title">RISC-V手册 第二章 RV32I基础整数指令集</div>
-    </a>
-  
-    
-    <a href="/2023/01/05/Ref/Markdown%E8%AF%AD%E6%B3%95/" class="list-group-item list-group-item-action">
-      <time>01-05</time>
-      <div class="list-group-item-title">Markdown and theme Fluid syntax</div>
-    </a>
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux-driver/">#Linux driver</a>
+      
+    </div>
   
 </div>
 
 
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2023/01/page/2/#board">2</a><a class="extend next" rel="next" href="/archives/2023/01/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
-    </span>
-  </nav>
+              
 
-
-
-
-              </div>
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/05/16/Rust/" title="">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/15/linux_subsystem/Uart/" title="Uart subsystem">
+                        <span class="hidden-mobile">Uart subsystem</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
             </div>
-          </div>
+
+            
+          </article>
         </div>
       </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
     
 
     
@@ -432,6 +545,99 @@
 
 
 
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
 
