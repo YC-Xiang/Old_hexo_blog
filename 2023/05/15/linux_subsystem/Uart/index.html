@@ -18,13 +18,13 @@
   
     <meta name="description" content="波特率115200，bps每秒传输的bit数。 每一位1&#x2F;115200秒，传输1byte需要10位（start, data, stop）,那么每秒能传11520byte。 115200，8n1。8:data，n:校验位不用，1：停止位。 TTY体系中设备节点的差别不关心终端是真实的还是虚拟的，都可以通过&#x2F;dev&#x2F;tty找到当前终端。 &#x2F;dev&#x2F;co">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Uart subsystem">
+<meta property="og:title" content="Uart Subsystem">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/05/15/linux_subsystem/Uart/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
 <meta property="og:description" content="波特率115200，bps每秒传输的bit数。 每一位1&#x2F;115200秒，传输1byte需要10位（start, data, stop）,那么每秒能传11520byte。 115200，8n1。8:data，n:校验位不用，1：停止位。 TTY体系中设备节点的差别不关心终端是真实的还是虚拟的，都可以通过&#x2F;dev&#x2F;tty找到当前终端。 &#x2F;dev&#x2F;co">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-15T14:25:00.000Z">
-<meta property="article:modified_time" content="2023-05-19T09:18:45.492Z">
+<meta property="article:modified_time" content="2023-05-19T10:01:20.830Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="Linux driver">
 <meta name="twitter:card" content="summary_large_image">
@@ -33,7 +33,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Uart subsystem - Yucheng&#39;s Blog</title>
+  <title>Uart Subsystem - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Uart subsystem</span>
+            <span id="subtitle">Uart Subsystem</span>
           
         </div>
 
@@ -307,12 +307,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Uart subsystem</h1>
+            <h1 style="display: none">Uart Subsystem</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年5月19日 下午
+                    本文最后更新于：2023年5月19日 晚上
                   
                 
               </p>
@@ -324,7 +324,7 @@
 <p>每一位1&#x2F;115200秒，传输1byte需要10位（start, data, stop）,那么每秒能传11520byte。</p>
 <p>115200，8n1。8:data，n:校验位不用，1：停止位。</p>
 <h1 id="TTY体系中设备节点的差别"><a href="#TTY体系中设备节点的差别" class="headerlink" title="TTY体系中设备节点的差别"></a>TTY体系中设备节点的差别</h1><p>不关心终端是真实的还是虚拟的，都可以通过&#x2F;dev&#x2F;tty找到当前终端。</p>
-<p><strong>&#x2F;dev&#x2F;console</strong> </p>
+<p><strong>&#x2F;dev&#x2F;console</strong></p>
 <p>内核的打印信息可以通过cmdline来选择打印到哪个设备。</p>
 <p>console&#x3D;ttyS0 console&#x3D;tty</p>
 <p>console&#x3D;ttyS0时，&#x2F;dev&#x2F;console就是ttyS0</p>
@@ -356,10 +356,10 @@
 <li><p>注册uart_port（后面更底层的8250_dw.c会注册uart_port替换）</p>
 </li>
 </ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//8250_core.c</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">uart_8250_port</span> *<span class="hljs-title">up</span> =</span> &amp;serial8250_ports[i];<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">uart_port</span> *<span class="hljs-title">port</span> =</span> &amp;up-&gt;port;<br><br>port-&gt;line = i;<br>port-&gt;ops = &amp;serial8250_pops;<br>port-&gt;has_sysrq = IS_ENABLED(CONFIG_SERIAL_8250_CONSOLE);<br>up-&gt;cur_iotype = <span class="hljs-number">0xFF</span>;<br>port-&gt;ops = &amp;univ8250_port_ops;<br><br>up-&gt;dl_read = default_serial_dl_read;<br>up-&gt;dl_write = default_serial_dl_write;<br>port-&gt;serial_in = io_serial_in;<br>port-&gt;serial_out = io_serial_out;<br>up-&gt;cur_iotype = p-&gt;iotype; <span class="hljs-comment">/// p-&gt;iotype=0</span><br>univ8250_port_ops = *base_ops; <span class="hljs-comment">/// 相当于又赋值回来port-&gt;ops = &amp;serial8250_pops;</span><br><br><br>serial8250_init(); <span class="hljs-comment">/// 内核打印: Serial: 8250/16550 driver, 3 ports, IRQ sharing disabled</span><br>  serial8250_isa_init_ports();<br>      serial8250_init_port(); <span class="hljs-comment">// 8250_port.c</span><br>    serial8250_set_defaults();<br>        set_io_from_upio();<br>    uart_register_driver();<br>      tty_register_driver();<br>    serial8250_register_ports(); <span class="hljs-comment">/// 注册三个uart_port(serial8250_ports)进uart_driver.</span><br>    uart_add_one_port(drv, &amp;up-&gt;port);<br>      uart_configure_port(); <span class="hljs-comment">// 会直接返回 因为port-&gt;iobase没初始化	</span><br>  serial8250_probe();<br><br><br>console_initcall(univ8250_console_init);<br>  serial8250_isa_init_ports<br>    register_console<br><br>   <br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//8250_core.c</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">uart_8250_port</span> *<span class="hljs-title">up</span> =</span> &amp;serial8250_ports[i];<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">uart_port</span> *<span class="hljs-title">port</span> =</span> &amp;up-&gt;port;<br><br>port-&gt;line = i;<br>port-&gt;ops = &amp;serial8250_pops;<br>port-&gt;has_sysrq = IS_ENABLED(CONFIG_SERIAL_8250_CONSOLE);<br>up-&gt;cur_iotype = <span class="hljs-number">0xFF</span>;<br>port-&gt;ops = &amp;univ8250_port_ops;<br><br>up-&gt;dl_read = default_serial_dl_read;<br>up-&gt;dl_write = default_serial_dl_write;<br>port-&gt;serial_in = io_serial_in;<br>port-&gt;serial_out = io_serial_out;<br>up-&gt;cur_iotype = p-&gt;iotype; <span class="hljs-comment">/// p-&gt;iotype=0</span><br>univ8250_port_ops = *base_ops; <span class="hljs-comment">/// 相当于又赋值回来port-&gt;ops = &amp;serial8250_pops;</span><br><br><br>serial8250_init(); <span class="hljs-comment">/// 内核打印: Serial: 8250/16550 driver, 3 ports, IRQ sharing disabled</span><br>  serial8250_isa_init_ports();<br>      serial8250_init_port(); <span class="hljs-comment">// 8250_port.c</span><br>    serial8250_set_defaults();<br>        set_io_from_upio();<br>    uart_register_driver();<br>      tty_register_driver();<br>    serial8250_register_ports(); <span class="hljs-comment">/// 注册三个uart_port(serial8250_ports)进uart_driver.</span><br>    uart_add_one_port(drv, &amp;up-&gt;port);<br>      uart_configure_port(); <span class="hljs-comment">// 会直接返回 因为port-&gt;iobase没初始化</span><br>  serial8250_probe();<br><br><br>console_initcall(univ8250_console_init);<br>  serial8250_isa_init_ports<br>    register_console<br><br><br></code></pre></td></tr></table></figure>
 
 <h2 id="8250-dw-c"><a href="#8250-dw-c" class="headerlink" title="8250_dw.c"></a>8250_dw.c</h2><p>在8250_core之后注册。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 8250_dw.c</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">uart_8250_port</span> <span class="hljs-title">uart</span> =</span> &#123;&#125;, *up = &amp;uart;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">uart_port</span> *<span class="hljs-title">p</span> =</span> &amp;up-&gt;port;<br><br>p-&gt;type    = PORT_8250;<br>p-&gt;flags  = UPF_SHARE_IRQ | UPF_FIXED_PORT;<br>p-&gt;dev    = dev;	<br>p-&gt;iotype  = UPIO_MEM;<br>p-&gt;serial_in  = dw8250_serial_in;<br>p-&gt;serial_out  = dw8250_serial_out;<br>p-&gt;set_ldisc  = dw8250_set_ldisc;<br>p-&gt;set_termios  = dw8250_set_termios; <span class="hljs-comment">/// 在dw8250_quirks中又p-&gt;set_termios=NULL</span><br>p-&gt;membase = devm_ioremap(dev, regs-&gt;start, resource_size(regs));<br>p-&gt;private_data = &amp;data-&gt;data;<br>p-&gt;iotype = UPIO_MEM32;<br>p-&gt;serial_in = dw8250_serial_in32;<br>p-&gt;serial_out = dw8250_serial_out32;<br>p-&gt;line = id;<br>p-&gt;set_termios = <span class="hljs-literal">NULL</span>;<br>port-&gt;type = PORT_16550A;<br><br>dw8250_probe();<br>  dw8250_quirks();<br>    serial8250_register_8250_port();<br>    serial8250_find_match_or_unused();<br>        uart_remove_one_port();<br>            unregister_console(); <span class="hljs-comment">// 内核打印:printk: console [ttyS1] disabled</span><br>    serial8250_set_defaults();<br>        uart_add_one_port(); <br>      uart_configure_port();<br>        port-&gt;ops-&gt;config_port(port, flags); <span class="hljs-comment">// 调用到8250_port.c中uart_ops的config_port</span><br>        uart_report_port();<span class="hljs-comment">// 打印: ...ttyS1 at MMIO 0x18810100 (irq = 13, base_baud = 1500000) is a 16550A</span><br>        register_console();<span class="hljs-comment">// 内核打印:printk: console [ttyS1] enabled </span><br>          try_enable_new_console();<br>            newcon-&gt;setup(); <span class="hljs-comment">// 这里调用到8250_core.c中univ8250_console.setup创建console</span><br>          unregister_console();<span class="hljs-comment">//内核打印:bootconsole [earlycon0] disabled</span><br>        <br>                            <br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 8250_dw.c</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">uart_8250_port</span> <span class="hljs-title">uart</span> =</span> &#123;&#125;, *up = &amp;uart;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">uart_port</span> *<span class="hljs-title">p</span> =</span> &amp;up-&gt;port;<br><br>p-&gt;type    = PORT_8250;<br>p-&gt;flags  = UPF_SHARE_IRQ | UPF_FIXED_PORT;<br>p-&gt;dev    = dev;<br>p-&gt;iotype  = UPIO_MEM;<br>p-&gt;serial_in  = dw8250_serial_in;<br>p-&gt;serial_out  = dw8250_serial_out;<br>p-&gt;set_ldisc  = dw8250_set_ldisc;<br>p-&gt;set_termios  = dw8250_set_termios; <span class="hljs-comment">/// 在dw8250_quirks中又p-&gt;set_termios=NULL</span><br>p-&gt;membase = devm_ioremap(dev, regs-&gt;start, resource_size(regs));<br>p-&gt;private_data = &amp;data-&gt;data;<br>p-&gt;iotype = UPIO_MEM32;<br>p-&gt;serial_in = dw8250_serial_in32;<br>p-&gt;serial_out = dw8250_serial_out32;<br>p-&gt;line = id;<br>p-&gt;set_termios = <span class="hljs-literal">NULL</span>;<br>port-&gt;type = PORT_16550A;<br><br>dw8250_probe();<br>  dw8250_quirks();<br>    serial8250_register_8250_port();<br>    serial8250_find_match_or_unused();<br>        uart_remove_one_port();<br>            unregister_console(); <span class="hljs-comment">// 内核打印:printk: console [ttyS1] disabled</span><br>    serial8250_set_defaults();<br>        uart_add_one_port();<br>      uart_configure_port();<br>        port-&gt;ops-&gt;config_port(port, flags); <span class="hljs-comment">// 调用到8250_port.c中uart_ops的config_port</span><br>        uart_report_port();<span class="hljs-comment">// 打印: ...ttyS1 at MMIO 0x18810100 (irq = 13, base_baud = 1500000) is a 16550A</span><br>        register_console();<span class="hljs-comment">// 内核打印:printk: console [ttyS1] enabled</span><br>          try_enable_new_console();<br>            newcon-&gt;setup(); <span class="hljs-comment">// 这里调用到8250_core.c中univ8250_console.setup创建console</span><br>          unregister_console();<span class="hljs-comment">//内核打印:bootconsole [earlycon0] disabled</span><br><br><br></code></pre></td></tr></table></figure>
 
 
 
@@ -426,9 +426,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/19/linux_subsystem/Universal/" title="Linux driver common essentials">
+                      <a href="/2023/05/19/linux_subsystem/Universal/" title="Linux Driver Common Essentials">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Linux driver common essentials</span>
+                        <span class="hidden-mobile">Linux Driver Common Essentials</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -436,8 +436,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/12/linux_subsystem/GPIO/" title="GPIO subsystem">
-                        <span class="hidden-mobile">GPIO subsystem</span>
+                      <a href="/2023/05/12/linux_subsystem/GPIO/" title="GPIO Subsystem">
+                        <span class="hidden-mobile">GPIO Subsystem</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
