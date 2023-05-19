@@ -1,4 +1,11 @@
-# Rust 语言基础学习
+---
+title: Rust
+date: 2023-05-20 17:39:28
+tags:
+- Rust
+categories:
+- Notes
+---
 
 ## 1.2
 
@@ -43,4 +50,3 @@ color = { git = "https://github.com/bjz/color-rs" }
 geometry = { path = "crates/geometry" }
 
 ```
-
