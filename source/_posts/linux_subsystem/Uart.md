@@ -7,11 +7,19 @@ categories:
 - Notes
 ---
 
+# Reference
+
+https://www.kernel.org/doc/Documentation/serial/driver
+
+# Introduction
+
 波特率115200，bps每秒传输的bit数。
 
 每一位1/115200秒，传输1byte需要10位（start, data, stop）,那么每秒能传11520byte。
 
 115200，8n1。8:data，n:校验位不用，1：停止位。
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230522151159.png)
 
 # TTY体系中设备节点的差别
 
@@ -176,11 +184,9 @@ struct uart_8250_port uart = {}, *up = &uart;
 struct uart_port *p = &up->port;
 
 p->type		= PORT_8250;
-p->flags	= UPF_SHARE_IRQ | UPF_FIXED_PORT;
+p->flags	= UPF_SHARE_IRQ | UPF_FIXED_PORT | UPF_BOOT_AUTOCONF; //最后一个在之后append
 p->dev		= dev;
 p->iotype	= UPIO_MEM;
-p->serial_in	= dw8250_serial_in;
-p->serial_out	= dw8250_serial_out;
 p->set_ldisc	= dw8250_set_ldisc;
 p->set_termios	= dw8250_set_termios; /// 在dw8250_quirks中又p->set_termios=NULL
 p->membase = devm_ioremap(dev, regs->start, resource_size(regs));
@@ -191,7 +197,8 @@ p->serial_out = dw8250_serial_out32;
 p->line = id;
 p->set_termios = NULL;
 port->type = PORT_16550A;
-
+up->capabilities = UART_CAP_FIFO;
+    
 dw8250_probe();
 	dw8250_quirks();
     serial8250_register_8250_port();
@@ -202,6 +209,8 @@ dw8250_probe();
         uart_add_one_port();
 			uart_configure_port();
 				port->ops->config_port(port, flags); // 调用到8250_port.c中uart_ops的config_port
+					autoconfig();
+						autoconfig_16550a();
 				uart_report_port();// 打印: ...ttyS1 at MMIO 0x18810100 (irq = 13, base_baud = 1500000) is a 16550A
 				register_console();// 内核打印:printk: console [ttyS1] enabled
 					try_enable_new_console();
@@ -209,9 +218,18 @@ dw8250_probe();
 					unregister_console();//内核打印:bootconsole [earlycon0] disabled
 
 
+// 中断处理
+p->handle_irq	= dw8250_handle_irq;
+dw8250_handle_irq();
+	serial8250_handle_irq();
+		serial8250_rx_chars(); // 读数据
+		serial8250_tx_chars(); // 发数据
+
 ```
 
+## Serial_core.c
 
+注册一个`tty driver`, 提供了`static const struct tty_operations uart_ops` `static const struct tty_port_operations uart_port_ops`供上层调用。
 
 # Printk
 
@@ -245,15 +263,13 @@ univ8250_console_write();
 	serial8250_console_write();
 		uart_console_write();
 			putchar();//即serial8250_console_putchar();
-				serial_port_out();
-					up->serial_out(up, offset, value); // 最后调用到8250_dw.c中最底层的.serial_out函数
+				serial_port_out(port, UART_TX, ch); // 往UART_TX寄存器写数据
+					up->serial_out(up, offset, value); // 调用到8250_dw.c中写寄存器函数
 ```
-
-
 
 # Early printk
 
-打开CONFIG_EARLY_PRINTK
+打开`CONFIG_EARLY_PRINTK`
 
 如果在设备树cmdline中添加了`earlyprintk`，会进入`/arch/arm/kernel/early_printk.c` 中`early_param(" earlyprintk", setup_early_printk);`指定的setup_early_printk函数。可以看到这个earlyprintk是在arch arm上实现的，比如其他risc-v是没有的(通过earlycon实现)。
 
@@ -282,7 +298,17 @@ register_console
 		newcon->name, newcon->index);
 ```
 
+# Earlycon
 
+- command line中`earlycon`如果不带参数，参数在下面的`stdout-path`中，所以要解析设备树。
+
+使用"/chosen"下的"stdout-path"找到节点，根据节点的`"compatible"`找到对应的`OF_EARLYCON_DECLARE`，进入setup函数。
+
+- 如果`earlycon=xxx`含参数，无需设备树。
+
+可以利用`EARLYCON_DECLARE`宏，根据`name(xxx)`，找到对应的setup函数。
+
+例如`earlycon-riscv-sbi.c`中`EARLYCON_DECLARE(sbi, early_sbi_setup);` 只需在设备树中指定`earlycon=sbi`
 
 # Question
 

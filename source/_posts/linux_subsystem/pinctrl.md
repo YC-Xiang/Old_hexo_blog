@@ -7,6 +7,39 @@ categories:
 - Notes
 ---
 
+/sys/kernel/debug/pinctrl
+
+
+
+其他驱动调用pinctrl子系统：
+
+```c
+#include <linux/pinctrl/consumer.h>
+
+static struct pinctrl *xxx_pinctrl;
+
+struct pinctrl_state *default_state = NULL;
+
+// dts
+pinctrl-0 = <&state1>
+
+pinctrl-1 = <&state2>
+
+1. /* 获取pin control state holder 的句柄 */
+    
+    pinctrl = devm_pinctrl_get(dev);
+    
+2. /* 得到名字为state1和state2对应的pin state */
+    
+    **struct** pinctrl_state * turnon_tes = pinctrl_lookup_state(pinctrl, "state1");
+    
+    **struct** pinctrl_state * turnoff_tes = pinctrl_lookup_state(pinctrl, "state2");
+    
+3. pinctrl_select_state(pinctrl, turnon_tes)。
+```
+
+
+
 ```c
 devm_pinctrl_get(struct device *dev) //返回一个pinctrl句柄
 	pinctrl_get(struct device *dev)
