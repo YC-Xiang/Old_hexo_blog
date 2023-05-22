@@ -430,7 +430,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/05/15/linux_subsystem/Uart/" target="_self">
         <div>
-          波特率115200，bps每秒传输的bit数。 每一位1&#x2F;115200秒，传输1byte需要10位（start, data, stop）,那么每秒能传11520byte。 115200，8n1。8:data，n:校验位不用，1：停止位。 TTY体系中设备节点的差别不关心终端是真实的还是虚拟的，都可以通过&#x2F;dev&#x2F;tty找到当前终端。 &#x2F;dev&#x2F;co
+          Referencehttps://www.kernel.org/doc/Documentation/serial/driver Introduction波特率115200，bps每秒传输的bit数。 每一位1&#x2F;115200秒，传输1byte需要10位（start, data, stop）,那么每秒能传11520byte。 115200，8n1。8:data，n:校验位不用，1：停止位。
         </div>
       </a>
 
@@ -613,7 +613,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/05/10/linux_subsystem/Pinctrl/" target="_self">
         <div>
-          1234567891011121314151617181920212223242526272829303132333435363738394041devm_pinctrl_get(struct device *dev) //返回一个pinctrl句柄  pinctrl_get(struct device *dev)    find_pinctrl(struct device *dev) // 查看
+          &#x2F;sys&#x2F;kernel&#x2F;debug&#x2F;pinctrl 其他驱动调用pinctrl子系统： 12345678910111213141516171819202122#include &lt;linux/pinctrl/consumer.h&gt;static struct pinctrl *xxx_pinctrl;struct pinctrl_state *def
         </div>
       </a>
 
