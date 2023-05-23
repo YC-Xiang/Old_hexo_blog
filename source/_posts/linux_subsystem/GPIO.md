@@ -64,24 +64,24 @@ gpiod_to_irq(); // 传入gpio_desc，返回gpio的irq number(软件映射的，�
 
 #### Cascaded GPIO irqchips
 
-- CHAINED CASCADED GPIO IRQCHIPS：挺多soc上是这种做法，打开`CONFIG_GPIOLIB_IRQCHIP`设置girq->parent_handler。gpio controller注册过程中通过**irq_set_chained_handler**设置中断处理函数，因此在中断处理函数中需要chained_irq_enter，chained_irq_exit。
+1. CHAINED CASCADED GPIO IRQCHIPS：挺多soc上是这种做法，打开`CONFIG_GPIOLIB_IRQCHIP`设置girq->parent_handler。gpio controller注册过程中通过**irq_set_chained_handler**设置中断处理函数，因此在中断处理函数中需要chained_irq_enter，chained_irq_exit。相当于级联中断处理器的做法。
 
-  - ```c
-    static irqreturn_t foo_gpio_irq(int irq, void *data) /// 中断处理函数
-        chained_irq_enter(...);
+```c
+static irqreturn_t foo_gpio_irq(int irq, void *data) /// 中断处理函数
+    chained_irq_enter(...);
+    generic_handle_irq(...);
+    chained_irq_exit(...);
+```
+
+2. GENERIC CHAINED GPIO IRQCHIPS：rts3917是这种做法，通过**reuqest_irq**进入的rts_irq_handler中断处理函数。发现的每一个gpio都进入generic_handle_irq，最后会到各自irq_desc中通过request_irq的中断处理函数。
+
+```c
+static irqreturn_t rts_irq_handler(int irq, void *dev_id)
+    for each detected GPIO IRQ
         generic_handle_irq(...);
-        chained_irq_exit(...);
-    ```
+```
 
-- GENERIC CHAINED GPIO IRQCHIPS：rts3917是这种做法，通过**reuqest_irq**进入的rts_irq_handler中断处理函数。发现的每一个gpio都进入generic_handle_irq，最后会到各自irq_desc中通过request_irq的中断处理函数。
-
-  - ```c
-    static irqreturn_t rts_irq_handler(int irq, void *dev_id)
-        for each detected GPIO IRQ
-            generic_handle_irq(...);
-    ```
-
-- NESTED THREADED GPIO IRQCHIPS：gpio expander的做法，不深究。
+3. NESTED THREADED GPIO IRQCHIPS：gpio expander的做法，不深究。
 
 
 

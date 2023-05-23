@@ -9,25 +9,21 @@ categories:
 
 # IRQ domain
 
-1、向系统注册irq domain
+http://www.wowotech.net/linux_kenrel/irq-domain.html
+
+## 1. 向系统注册irq domain
 
 interrupt controller初始化的过程中，注册irq domain
 
-`irq_domain_add_linear`
+`irq_domain_add_linear(struct device_node *of_node, unsigned int size, const struct irq_domain_ops *ops, void *host_data)`
 
 
 
-2、为irq domain创建映射
+## 2. 为irq domain创建映射
 
 在各个硬件外设的驱动初始化过程中，创建HW interrupt ID和IRQ number的映射关系。
 
-***Interrupt controller初始化的时候会mapping hw id和irq number吗？***
-
-
-
-方法1：
-
-`irq_create_mapping(struct irq_domain *host, irq_hw_number_t hwirq);`
+**方法1**：`irq_create_mapping(struct irq_domain *host, irq_hw_number_t hwirq);`
 
 比如`drivers/clocksource/timer-riscv.c`中`irq_create_mapping(domain, RV_IRQ_TIMER);`直接将hw id(RV_IRQ_TIMER)传入, 创建hw id和irq number的映射。
 
@@ -39,11 +35,7 @@ irq_create_mapping(domain, hwirq);
 			domain->ops->map(); //调用到interrupt controller的map函数
 ```
 
-
-
-方法2：
-
-`irq_of_parse_and_map`
+**方法2**：`irq_of_parse_and_map`. 需要在设备树中指定hw id。
 
 比如`drivers/irqchip/irq-realtek-plic.c`中`irq_of_parse_and_map`
 
@@ -55,11 +47,7 @@ irq_of_parse_and_map(struct device_node *dev, int index);
 			irq_create_mapping(domain, hwirq); // 最终还是调用到irq_create_mapping
 ```
 
-
-
-方法3：
-
-外设driver中直接`platform_get_irq`
+**方法3**：外设driver中直接`platform_get_irq`
 
 ```c
 platform_get_irq();
@@ -71,9 +59,124 @@ platform_get_irq();
 
 
 
-级联的第二级interrupt controller调用`irq_set_chained_handler`设置 interrupt handler
+`struct irq_domain_ops`抽象了一个`irq domain`的callback函数。
+
+`(*map)`函数在irq domain创建映射`irq_create_mapping`时会调用到。
+
+`(*xlate)`用来翻译设备树。
+
+如果定义了`CONFIG_IRQ_DOMAIN_HIERARCHY`，`(*map)`函数对应到`*(alloc)`, `(*xlate)`对应到`(*translate)`。
+
+参考`irq_create_of_mapping->irq_create_fwspec_mapping`如下部分：
+
+```c
+if (irq_domain_is_hierarchy(domain)) {
+    virq = irq_domain_alloc_irqs(domain, 1, NUMA_NO_NODE, fwspec); // 往下追会调用到domain->ops->alloc
+    if (virq <= 0)
+        return 0;
+} else {
+    /* Create mapping */
+    virq = irq_create_mapping(domain, hwirq); // 往下追会调用到domain->ops->map
+    if (!virq)
+        return virq;
+}
+```
+
+在map/alloc函数中需要做的有：
+
+（1）设定该IRQ number对应的中断描述符（struct irq_desc）的irq chip
+
+（2）设定该IRQ number对应的中断描述符的highlevel irq-events handler
+
+（3）设定该IRQ number对应的中断描述符的 irq chip data
+
+有一个API，`irq_domain_set_info`
+
+# 重要的数据结构
+
+http://www.wowotech.net/irq_subsystem/interrupt_descriptor.html
+
+### irq_desc
+
+每个外设驱动调用platform_get_irq就会调用到irq_domain中的.map/.alloc函数，填充irq_desc结构体。
+
+```c
+struct irq_desc irq_desc[NR_IRQS] // 全局irq_desc数组，每个外设的中断对应一个irq_desc
+
+// init/main.c
+early_irq_init();
+	desc_set_defaults(); // 对每个irq_desc都初始化赋值
+```
+
+```c
+struct irq_desc {
+    struct irq_data        irq_data;
+    irq_flow_handler_t    handle_irq;
+    struct irqaction    *action;
+	//...
+}
+```
+
+handle_irq就是highlevel irq-events handler。irq_set_chip_and_handlerz等接口中会设置。
+
+highlevel irq-events handler可以分成：
+
+（a）处理电平触发类型的中断handler（handle_level_irq）
+
+（b）处理边缘触发类型的中断handler（handle_edge_irq）
+
+（c）处理简单类型的中断handler（handle_simple_irq）
+
+（d）处理EOI类型的中断handler（handle_fasteoi_irq）
+
+### irq_data
+
+irq_desc中包含irq_data，irq_data中保存了irq_chip, irq_domain等数据结构。
+
+```c
+struct irq_data {
+    unsigned int        irq; // IRQ number
+    unsigned long        hwirq; //HW interrupt ID
+    struct irq_chip        *chip; //该中断描述符对应的irq chip数据结构
+    struct irq_domain    *domain; //该中断描述符对应的irq domain数据结构
+    void            *handler_data; //和外设specific handler相关的私有数据
+    void            *chip_data; //和中断控制器相关的私有数据 e.g.irq_set_chip_data(gpioirq, rtspc);
+};
+```
+
+### irq_chip
+
+提供回调函数，在request_irq过程中会被调用。
+
+```c
+struct irq_chip {
+	const char	*name;
+	unsigned int	(*irq_startup)(struct irq_data *data); // start up the interrupt (defaults to ->irq_enable if NULL)
+	void		(*irq_shutdown)(struct irq_data *data);
+	void		(*irq_enable)(struct irq_data *data); // enable the interrupt (defaults to ->irq_unmask if NULL)
+	void		(*irq_disable)(struct irq_data *data);
+	void		(*irq_mask)(struct irq_data *data);
+	void		(*irq_unmask)(struct irq_data *data);
+	int		(*irq_set_type)(struct irq_data *data, unsigned int flow_type); // 指定触发方式，电平触发还是边缘触发
+```
+
+一些设置的API:
+
+```c
+irq_set_chip
+irq_set_irq_type
+irq_set_chip_data
+__irq_set_handler
+irq_set_chip_and_handler
+irq_set_chip_and_handler_name
+irq_domain_set_info
+```
 
 
+
+# 第一级IRQ Domain cpu-intc
+
+ `irq-riscv-intc.c`
 
 irq初始化
 
@@ -88,29 +191,14 @@ irqchip_init();
 	of_irq_init();
 		IRQCHIP_DECLARE(riscv, "riscv,cpu-intc", riscv_intc_init); // 进入riscv_intc_init
 
+riscv_intc_init();
+intc_domain = irq_domain_add_linear(node, BITS_PER_LONG, &riscv_intc_domain_ops, NULL /// 注册irq_domain
+set_handle_irq(&riscv_intc_irq); /// 设置中断handler
 ```
 
 
 
-
-
-risc-v 中断处理流程
-
 ```c
-
-```
-
-# IRQ desc
-
-```c
-struct irq_desc irq_desc[NR_IRQS] // 全局irq_desc数组，每个外设的中断对应一个irq_desc
-
-early_irq_init();
-	desc_set_defaults(); // 对每个irq_desc都初始化赋值
-```
-
-```c
-// irq-riscv-intc.c
 // 每个cpu int都会调用到cpu interrupt controller的map函数，会填充irq_desc。
 irq_create_mapping();
 domain->ops->map;
@@ -127,6 +215,38 @@ domain->ops->map;
 			desc->irq_common_data.handler_data = data; // data=NULL
 ```
 
+# 第二级 IRQ Domain Plic
+
+`irq-realtek-plic.c`
+
+```c
+irq_domain_add_linear(node, nr_irqs + 1, &plic_irqdomain_ops, priv);
+irq_of_parse_and_map(node, i);
+irq_set_chained_handler(plic_parent_irq, plic_handle_irq); //发生9号外部中断(plic_parent_irq)，会进plic_handle_irq
+```
+
+级联的第二级interrupt controller调用`irq_set_chained_handler`设置 interrupt handler
+
+# IRQ Domain GPIO interrupt controller
+
+`pinctrl-rts3917.c` 做法不像plic的级联中断处理。
+
+```c
+rtspc->irq_domain = irq_domain_add_linear();
+int gpioirq = irq_create_mapping();
+irq_set_chip_and_handler();
+// 中断来了会先进handle_simple_irq，再进rts_irq_handler
+request_irq();
+```
+
+
+
+
+
+
+
+外设调用platform_get_irq：
+
 ```c
 platform_get_irq();
 ...
@@ -141,17 +261,6 @@ irq_create_of_mapping
 							irq_domain_set_info
 								...
   								desc->handle_irq = handle; // handle: handle_fasteoi_irq
-```
-
-
-
-irq_to_desc的定义 irq_desc + irq 是什么意思？数组加上irq number？
-
-```c
-struct irq_desc *irq_to_desc(unsigned int irq)
-{
-	return (irq < NR_IRQS) ? irq_desc + irq : NULL;
-}
 ```
 
 # risc-v中断处理流程
@@ -174,6 +283,7 @@ ENTRY(handle_exception)
 							generic_handle_irq_desc();
 								// 不同的中断控制器在一开始初始化会设置
 								desc->handle_irq(desc);
+
 // 这里cpu int会进入handle_percpu_devid_irq, 在irq-riscv-intc.c irq_domain_set_info中设定
 handle_percpu_devid_irq();
 	action->handler(); // timer-riscv.c 中request_irq会把中断处理函数赋值给action->handler();
@@ -193,6 +303,9 @@ plic_handle_irq();
 
 ***是否所有的irq_domain的irq number是按顺序排列下去，每个irq_number设置一个interrupt handler，不会重复？***
 
-# irq_chip
 
-need to do.
+
+
+
+
+
