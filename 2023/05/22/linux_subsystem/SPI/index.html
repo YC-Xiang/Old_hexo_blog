@@ -16,26 +16,26 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;41942876 push pull推挽输出 推挽输出的最大特点是可以真正能真正的输出高电平和低电平，在两种电平下都具有驱动能力。 open drain开漏输出 open source开集输出 这两种输出的原理和特性基本是类似的，区别在于一个是使用MOS管，其中的”漏”指的就是MOS管的漏极；另一个使用三极管，其中的”集”指的就是MOS三极">
+    <meta name="description" content="1. SPI协议介绍CPOL:表示SPICLK的初始电平，0为低电平，1为高电平 CPHA:表示相位，即第一个还是第二个时钟沿采样数据，0为第一个时钟沿，1为第二个时钟沿    CPOL CPHA 模式 含义    0 0 0 SPICLK初始电平为低电平，在第一个时钟沿采样数据   0 1 1 SPICLK初始电平为低电平，在第二个时钟沿采样数据   1 0 2 SPICLK初始电平为高电平，在">
 <meta property="og:type" content="article">
-<meta property="og:title" content="GPIO Subsystem">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/05/12/linux_subsystem/GPIO/index.html">
+<meta property="og:title" content="Spi Subsystem">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/05/22/linux_subsystem/SPI/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;41942876 push pull推挽输出 推挽输出的最大特点是可以真正能真正的输出高电平和低电平，在两种电平下都具有驱动能力。 open drain开漏输出 open source开集输出 这两种输出的原理和特性基本是类似的，区别在于一个是使用MOS管，其中的”漏”指的就是MOS管的漏极；另一个使用三极管，其中的”集”指的就是MOS三极">
+<meta property="og:description" content="1. SPI协议介绍CPOL:表示SPICLK的初始电平，0为低电平，1为高电平 CPHA:表示相位，即第一个还是第二个时钟沿采样数据，0为第一个时钟沿，1为第二个时钟沿    CPOL CPHA 模式 含义    0 0 0 SPICLK初始电平为低电平，在第一个时钟沿采样数据   0 1 1 SPICLK初始电平为低电平，在第二个时钟沿采样数据   1 0 2 SPICLK初始电平为高电平，在">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/gpio.png">
-<meta property="article:published_time" content="2023-05-12T02:19:00.000Z">
-<meta property="article:modified_time" content="2023-05-23T06:32:42.071Z">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230522180216.png">
+<meta property="article:published_time" content="2023-05-22T09:40:28.000Z">
+<meta property="article:modified_time" content="2023-05-22T10:03:29.480Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="Linux driver">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/gpio.png">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230522180216.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>GPIO Subsystem - Yucheng&#39;s Blog</title>
+  <title>Spi Subsystem - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +229,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">GPIO Subsystem</span>
+            <span id="subtitle">Spi Subsystem</span>
           
         </div>
 
@@ -240,8 +240,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-12 10:19" pubdate>
-          2023年5月12日 上午
+        <time datetime="2023-05-22 17:40" pubdate>
+          2023年5月22日 下午
         </time>
       </span>
     
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.3k words
+          3.1k words
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          28 mins
+          26 mins
         
       </span>
     
@@ -309,12 +309,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">GPIO Subsystem</h1>
+            <h1 style="display: none">Spi Subsystem</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年5月23日 下午
+                    本文最后更新于：2023年5月22日 晚上
                   
                 
               </p>
@@ -322,57 +322,108 @@
             
               <div class="markdown-body">
                 
-                <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/41942876">https://zhuanlan.zhihu.com/p/41942876</a></p>
-<p><strong>push pull推挽输出</strong></p>
-<p>推挽输出的最大特点是可以真正能真正的输出高电平和低电平，在两种电平下都具有驱动能力。</p>
-<p><strong>open drain开漏输出</strong></p>
-<p><strong>open source开集输出</strong></p>
-<p>这两种输出的原理和特性基本是类似的，区别在于一个是使用MOS管，其中的”漏”指的就是MOS管的漏极；另一个使用三极管，其中的”集”指的就是MOS三极管的集电极。这两者其实都是和推挽输出相对应的输出模式，由于使用MOS管的情况较多，很多时候就用”开漏输出”这个词代替了开漏输出和开集输出。</p>
-<p>开漏、开集输出最主要的特性就是高电平没有驱动能力，需要借助外部上拉电阻才能真正输出高电平。</p>
-<h1 id="Kernel-doc-General-Purpose-Input-x2F-Output-GPIO"><a href="#Kernel-doc-General-Purpose-Input-x2F-Output-GPIO" class="headerlink" title="Kernel doc: General Purpose Input&#x2F;Output (GPIO)"></a>Kernel doc: General Purpose Input&#x2F;Output (GPIO)</h1><h2 id="GPIO-Driver-Interface"><a href="#GPIO-Driver-Interface" class="headerlink" title="GPIO Driver Interface"></a>GPIO Driver Interface</h2><h3 id="Controller-Drivers-gpio-chip"><a href="#Controller-Drivers-gpio-chip" class="headerlink" title="Controller Drivers: gpio_chip"></a>Controller Drivers: gpio_chip</h3><p><code>struct gpio_chip</code> 抽象gpio controller。</p>
-<p><code>gpiochip_add_data()</code> or <code>devm_gpiochip_add_data()</code>接口用来注册gpio controller。<code>gpiochip_remove()</code>释放gpio controller。</p>
-<p><code>gpiochip_is_request()</code>在gpio controller driver中用于检测某个gpio是否被其他chip占用，没占用返回NULL，占用返回request时传入的string。</p>
-<h3 id="GPIO-electrical-configuration"><a href="#GPIO-electrical-configuration" class="headerlink" title="GPIO electrical configuration"></a>GPIO electrical configuration</h3><p>gpio_chip的<code>.set_config</code>回调用于设置：</p>
+                <h1 id="1-SPI协议介绍"><a href="#1-SPI协议介绍" class="headerlink" title="1. SPI协议介绍"></a>1. SPI协议介绍</h1><p>CPOL:表示SPICLK的初始电平，0为低电平，1为高电平</p>
+<p>CPHA:表示相位，即第一个还是第二个时钟沿采样数据，0为第一个时钟沿，1为第二个时钟沿</p>
+<table>
+<thead>
+<tr>
+<th>CPOL</th>
+<th>CPHA</th>
+<th>模式</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>SPICLK初始电平为低电平，在第一个时钟沿采样数据</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>SPICLK初始电平为低电平，在第二个时钟沿采样数据</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>SPICLK初始电平为高电平，在第一个时钟沿采样数据</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>SPICLK初始电平为高电平，在第二个时钟沿采样数据</td>
+</tr>
+</tbody></table>
+<p>我们常用的是模式0和模式3，因为它们都是在上升沿采样数据，不用去在乎时钟的初始电平是什么，只要在上升沿采集数据就行。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230522180216.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="2-SPI-driver"><a href="#2-SPI-driver" class="headerlink" title="2. SPI driver"></a>2. SPI driver</h1><h2 id="2-2-spi-controller"><a href="#2-2-spi-controller" class="headerlink" title="2.2 spi_controller"></a>2.2 spi_controller</h2><p>include&#x2F;linux&#x2F;spi.h</p>
+<h2 id="2-3-spi-device"><a href="#2-3-spi-device" class="headerlink" title="2.3 spi_device"></a>2.3 spi_device</h2><p>include&#x2F;linux&#x2F;spi.h</p>
+<h2 id="2-4-spi-transfer、spi-message"><a href="#2-4-spi-transfer、spi-message" class="headerlink" title="2.4 spi_transfer、spi_message"></a>2.4 spi_transfer、spi_message</h2><p>在SPI子系统中，用spi_transfer结构体描述一个传输，用spi_message管理整个传输。可以构造多个spi_transfer结构体，把它们放入一个spi_message里面。</p>
+<p>SPI传输时，发出N个字节，就可以同时得到N个字节。</p>
 <ul>
-<li>Debouncing</li>
-<li>Single-ended modes (open drain&#x2F;open source)</li>
-<li>Pull up and pull down resistor enablement</li>
+<li>即使只想读N个字节，也必须发出N个字节：可以发出0xff</li>
+<li>即使只想发出N个字节，也会读到N个字节：可以忽略读到的数据。</li>
 </ul>
-<p>这些属性可以在dts中指定，<code>include/dt-bindings/gpio/gpio.h</code> <code>GPIO_PUSH_PULL</code> <code>GPIO_LINE_OPEN_SOURCE</code> <code>GPIO_OPEN_DRAIN </code>…</p>
-<p>可以设置为<code>gpiochip_generic_config()</code>会调用到<code>pinctrl_gpio_set_config()</code>-&gt;<code>ops-&gt;pin_config_set</code></p>
-<h3 id="GPIO-drivers-providing-IRQs"><a href="#GPIO-drivers-providing-IRQs" class="headerlink" title="GPIO drivers providing IRQs"></a>GPIO drivers providing IRQs</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c">gpiod_to_irq(); <span class="hljs-comment">// 传入gpio_desc，返回gpio的irq number(软件映射的，不是irq hw id)</span><br>  gpio_chip_hwgpio();<br>    gc-&gt;to_irq();<br>      rts_gpio_to_irq();<br>        irq_linear_revmap();<br><br></code></pre></td></tr></table></figure>
+<h1 id="3-SPI-设备树处理"><a href="#3-SPI-设备树处理" class="headerlink" title="3. SPI 设备树处理"></a>3. SPI 设备树处理</h1><p><strong>SPI Master</strong></p>
+<p>必须的属性如下：</p>
+<ul>
+<li>address-cells：这个SPI Master下的SPI设备，需要多少个cell来表述它的片选引脚</li>
+<li>size-cells：必须设置为0</li>
+<li>compatible：根据它找到SPI Master驱动</li>
+</ul>
+<p>可选的属性如下：</p>
+<ul>
+<li>cs-gpios：SPI Master可以使用多个GPIO当做片选，可以在这个属性列出那些GPIO</li>
+<li>num-cs：片选引脚总数</li>
+</ul>
+<p><strong>SPI Device</strong></p>
+<p>必须的属性如下：</p>
+<ul>
+<li>compatible：根据它找到SPI Device驱动</li>
+<li>reg：用来表示它使用哪个片选引脚</li>
+<li>spi-max-frequency：必选，该SPI设备支持的最大SPI时钟</li>
+</ul>
+<p>可选的属性如下：</p>
+<ul>
+<li>spi-cpol：这是一个空属性(没有值)，表示CPOL为1，即平时SPI时钟为低电平</li>
+<li>spi-cpha：这是一个空属性(没有值)，表示CPHA为1)，即在时钟的第2个边沿采样数据</li>
+<li>spi-cs-high：这是一个空属性(没有值)，表示片选引脚高电平有效</li>
+<li>spi-3wire：这是一个空属性(没有值)，表示使用SPI 三线模式</li>
+<li>spi-lsb-first：这是一个空属性(没有值)，表示使用SPI传输数据时先传输最低位(LSB)</li>
+<li>spi-tx-bus-width：表示有几条MOSI引脚；没有这个属性时默认只有1条MOSI引脚</li>
+<li>spi-rx-bus-width：表示有几条MISO引脚；没有这个属性时默认只有1条MISO引脚</li>
+<li>spi-rx-delay-us：单位是毫秒，表示每次读传输后要延时多久</li>
+<li>spi-tx-delay-us：单位是毫秒，表示每次写传输后要延时多久</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c">spi@f00 &#123;<br>    <span class="hljs-meta">#address-cells = <span class="hljs-string">&lt;1&gt;</span>;</span><br>    <span class="hljs-meta">#size-cells = <span class="hljs-string">&lt;0&gt;</span>;</span><br>    compatible = <span class="hljs-string">&quot;fsl,mpc5200b-spi&quot;</span>,<span class="hljs-string">&quot;fsl,mpc5200-spi&quot;</span>;<br>    reg = &lt;<span class="hljs-number">0xf00</span> <span class="hljs-number">0x20</span>&gt;;<br>    interrupts = &lt;<span class="hljs-number">2</span> <span class="hljs-number">13</span> <span class="hljs-number">0</span> <span class="hljs-number">2</span> <span class="hljs-number">14</span> <span class="hljs-number">0</span>&gt;;<br>    interrupt-parent = &lt;&amp;mpc5200_pic&gt;;<br><br>    ethernet-<span class="hljs-keyword">switch</span>@<span class="hljs-number">0</span> &#123;<br>      compatible = <span class="hljs-string">&quot;micrel,ks8995m&quot;</span>;<br>      spi-max-frequency = &lt;<span class="hljs-number">1000000</span>&gt;;<br>      reg = &lt;<span class="hljs-number">0</span>&gt;;<br>    &#125;;<br><br>    codec@<span class="hljs-number">1</span> &#123;<br>      compatible = <span class="hljs-string">&quot;ti,tlv320aic26&quot;</span>;<br>      spi-max-frequency = &lt;<span class="hljs-number">100000</span>&gt;;<br>      reg = &lt;<span class="hljs-number">1</span>&gt;;<br>    &#125;;<br>  &#125;;<br></code></pre></td></tr></table></figure>
 
-<h4 id="Cascaded-GPIO-irqchips"><a href="#Cascaded-GPIO-irqchips" class="headerlink" title="Cascaded GPIO irqchips"></a>Cascaded GPIO irqchips</h4><ol>
-<li>CHAINED CASCADED GPIO IRQCHIPS：挺多soc上是这种做法，打开<code>CONFIG_GPIOLIB_IRQCHIP</code>设置girq-&gt;parent_handler。gpio controller注册过程中通过<strong>irq_set_chained_handler</strong>设置中断处理函数，因此在中断处理函数中需要chained_irq_enter，chained_irq_exit。相当于级联中断处理器的做法。</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">irqreturn_t</span> <span class="hljs-title function_">foo_gpio_irq</span><span class="hljs-params">(<span class="hljs-type">int</span> irq, <span class="hljs-type">void</span> *data)</span> <span class="hljs-comment">/// 中断处理函数</span><br>    <span class="hljs-title function_">chained_irq_enter</span><span class="hljs-params">(...)</span>;<br>    generic_handle_irq(...);<br>    chained_irq_exit(...);<br></code></pre></td></tr></table></figure>
+<h1 id="4-spidev的使用-SPI用户态API"><a href="#4-spidev的使用-SPI用户态API" class="headerlink" title="4. spidev的使用(SPI用户态API)"></a>4. spidev的使用(SPI用户态API)</h1><ul>
+<li>内核驱动：<code>drivers\spi\spidev.c</code></li>
+<li>内核提供的测试程序：<code>tools\spi\spidev_fdx.c</code></li>
+<li>内核文档：<code>Documentation\spi\spidev</code></li>
+</ul>
+<h2 id="4-1-spidev驱动程序分析"><a href="#4-1-spidev驱动程序分析" class="headerlink" title="4.1 spidev驱动程序分析"></a>4.1 spidev驱动程序分析</h2><p>内核驱动：<code>drivers\spi\spidev.c</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c">spidev_write();<br>  spidev_sync_write();<br>    spidev_sync();<br><br>spidev_read();<br>  spidev_sync_read();<br>    spidev_sync();<br><br>spidev_ioctl();<br><span class="hljs-comment">// 在应用层通过ioctl(fd, SPI_IOC_MESSAGE(x), xfer) 来调用，进行spi传输. 参考spidev_fdx.c</span><br></code></pre></td></tr></table></figure>
 
-<ol start="2">
-<li>GENERIC CHAINED GPIO IRQCHIPS：rts3917是这种做法，通过<strong>reuqest_irq</strong>进入的rts_irq_handler中断处理函数。发现的每一个gpio都进入generic_handle_irq，最后会到各自irq_desc中通过request_irq的中断处理函数。</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">irqreturn_t</span> <span class="hljs-title function_">rts_irq_handler</span><span class="hljs-params">(<span class="hljs-type">int</span> irq, <span class="hljs-type">void</span> *dev_id)</span><br>    <span class="hljs-keyword">for</span> each detected GPIO IRQ<br>        <span class="hljs-title function_">generic_handle_irq</span><span class="hljs-params">(...)</span>;<br></code></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>NESTED THREADED GPIO IRQCHIPS：gpio expander的做法，不深究。</li>
-</ol>
-<h3 id="Infrastructure-helpers-for-GPIO-irqchips"><a href="#Infrastructure-helpers-for-GPIO-irqchips" class="headerlink" title="Infrastructure helpers for GPIO irqchips"></a>Infrastructure helpers for GPIO irqchips</h3><p>GPIO子系统有针对中断的一套框架，Kconfig为<code>GPIOLIB_IRQCHIP</code>，rts没有用到就不分析了。可以看文档中具体的解释。</p>
-<p>注意一点，方法一：如果parent_handler赋值了<code>girq-&gt;parent_handler = ftgpio_gpio_irq_handler</code>应该就是上面<code>CHAINED CASCADED GPIO IRQCHIPS</code>的做法。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">gpiochip_add_data();<br>    gpiochip_add_data_with_key();<br>      gpiochip_add_irqchip();<br>        irq_set_chained_handler_and_data(gc-&gt;irq.parents[i], gc-&gt;irq.parent_handler, data);<br></code></pre></td></tr></table></figure>
-
-<p>方法二：<code>girq-&gt;parent_handler = NULL</code>，直接在driver中<code>devm_request_threaded_irq</code>对应<code>GENERIC CHAINED GPIO IRQCHIPS</code>的做法。</p>
-<h2 id="GPIO-Descriptor-Consumer-Interface"><a href="#GPIO-Descriptor-Consumer-Interface" class="headerlink" title="GPIO Descriptor Consumer Interface"></a>GPIO Descriptor Consumer Interface</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/gpio.png" srcset="/img/loading.gif" lazyload></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">struct</span> gpio_desc *<span class="hljs-title function_">gpiod_get</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *con_id, <span class="hljs-keyword">enum</span> gpiod_flags flags)</span>;<br><span class="hljs-keyword">struct</span> gpio_desc *<span class="hljs-title function_">gpiod_get_index</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *con_id, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> idx, <span class="hljs-keyword">enum</span> gpiod_flags flags)</span>;<br><span class="hljs-comment">// return NULL 如果没有request到GPIO</span><br><span class="hljs-keyword">struct</span> gpio_desc *<span class="hljs-title function_">gpiod_get_optional</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *con_id, <span class="hljs-keyword">enum</span> gpiod_flags flags)</span>;<br></code></pre></td></tr></table></figure>
-
-<h2 id="GPIO-Mappings"><a href="#GPIO-Mappings" class="headerlink" title="GPIO Mappings"></a>GPIO Mappings</h2><h3 id="device-tree"><a href="#device-tree" class="headerlink" title="device tree"></a>device tree</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c">foo_device &#123;<br>        compatible = <span class="hljs-string">&quot;acme,foo&quot;</span>;<br>        ...<br>        led-gpios = &lt;&amp;gpio <span class="hljs-number">15</span> GPIO_ACTIVE_HIGH&gt;, <span class="hljs-comment">/* red */</span><br>                    &lt;&amp;gpio <span class="hljs-number">16</span> GPIO_ACTIVE_HIGH&gt;, <span class="hljs-comment">/* green */</span><br>                    &lt;&amp;gpio <span class="hljs-number">17</span> GPIO_ACTIVE_HIGH&gt;; <span class="hljs-comment">/* blue */</span><br><br>        power-gpios = &lt;&amp;gpio <span class="hljs-number">1</span> GPIO_ACTIVE_LOW&gt;;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<p>对应</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">gpio_desc</span> *<span class="hljs-title">red</span>, *<span class="hljs-title">green</span>, *<span class="hljs-title">blue</span>, *<span class="hljs-title">power</span>;</span><br><br>red = gpiod_get_index(dev, <span class="hljs-string">&quot;led&quot;</span>, <span class="hljs-number">0</span>, GPIOD_OUT_HIGH);<br>green = gpiod_get_index(dev, <span class="hljs-string">&quot;led&quot;</span>, <span class="hljs-number">1</span>, GPIOD_OUT_HIGH);<br>blue = gpiod_get_index(dev, <span class="hljs-string">&quot;led&quot;</span>, <span class="hljs-number">2</span>, GPIOD_OUT_HIGH);<br><br>power = gpiod_get(dev, <span class="hljs-string">&quot;power&quot;</span>, GPIOD_OUT_HIGH);<br></code></pre></td></tr></table></figure>
-
-<p>gpiod_set_value设置的值是“逻辑值”，不一定等于物理值。</p>
-<h2 id="Sysfs接口"><a href="#Sysfs接口" class="headerlink" title="Sysfs接口"></a>Sysfs接口</h2><p>&#x2F;sys&#x2F;class&#x2F;gpio&#x2F;</p>
-<p>echo 19 &gt; export</p>
-<p>&#x2F;sys&#x2F;class&#x2F;gpio&#x2F;gpioN&#x2F;</p>
-
+<h2 id="4-2-spidev应用程序分析"><a href="#4-2-spidev应用程序分析" class="headerlink" title="4.2 spidev应用程序分析"></a>4.2 spidev应用程序分析</h2><p>内核提供的测试程序：<code>tools\spi\spidev_fdx.c</code></p>
+<p>使用方法：</p>
+<p>spidev_fdx [-h] [-m N] [-r N] &#x2F;dev&#x2F;spidevB.D</p>
+<p>h: 打印用法</p>
+<p>m N：先写1个字节0xaa，再读N个字节，<strong>注意：</strong>不是同时写同时读</p>
+<p>r N：读N个字节</p>
+<h2 id="4-3-spidev缺点"><a href="#4-3-spidev缺点" class="headerlink" title="4.3 spidev缺点"></a>4.3 spidev缺点</h2><p>使用read、write函数时，只能读、写，这是半双工方式。</p>
+<p>使用ioctl可以达到全双工的读写。</p>
+<p>但是spidev有2个缺点：</p>
+<ul>
+<li>不支持中断</li>
+<li>只支持同步操作，不支持异步操作：就是read&#x2F;write&#x2F;ioctl这些函数只能执行完毕才可返回</li>
+</ul>
+<h3 id="5-1-SPI传输接口函数"><a href="#5-1-SPI传输接口函数" class="headerlink" title="5.1 SPI传输接口函数"></a>5.1 SPI传输接口函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c">/include/linux/spi/spi.h<br><span class="hljs-comment">// 简易函数</span><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">spi_write</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *buf, <span class="hljs-type">size_t</span> len)</span>;<br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">spi_read</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, <span class="hljs-type">void</span> *buf, <span class="hljs-type">size_t</span> len)</span>;<br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> <span class="hljs-title function_">spi_write_then_read</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *txbuf, <span class="hljs-type">unsigned</span> n_tx, <span class="hljs-type">void</span> *rxbuf, <span class="hljs-type">unsigned</span> n_rx)</span>;<br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">ssize_t</span> <span class="hljs-title function_">spi_w8r8</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, u8 cmd)</span>;<br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">ssize_t</span> <span class="hljs-title function_">spi_w8r16</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, u8 cmd)</span>;<br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">ssize_t</span> <span class="hljs-title function_">spi_w8r16be</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, u8 cmd)</span>;<br><br><span class="hljs-comment">// 复杂函数</span><br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> <span class="hljs-title function_">spi_async</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, <span class="hljs-keyword">struct</span> spi_message *message)</span>;<br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> <span class="hljs-title function_">spi_sync</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, <span class="hljs-keyword">struct</span> spi_message *message)</span>;<br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">spi_sync_transfer</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, <span class="hljs-keyword">struct</span> spi_transfer *xfers, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> num_xfers)</span>;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -419,18 +470,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/15/linux_subsystem/Uart/" title="Uart Subsystem">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Uart Subsystem</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/10/linux_subsystem/CMA&amp;DMA/" title="CMA&amp;DMA">
-                        <span class="hidden-mobile">CMA&amp;DMA</span>
+                      <a href="/2023/05/20/Rust/" title="Rust">
+                        <span class="hidden-mobile">Rust</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
