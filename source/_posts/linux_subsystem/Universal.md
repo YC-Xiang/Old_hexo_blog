@@ -11,3 +11,38 @@ sticky: 99
 
 
 include <asm/xxx.h> 先找arch/xxx/include/xxx.h，没有的话就找/include/asm-generic/xxx.h
+
+
+
+# Initcalls
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230524150950.png)
+
+- 图中initcalls优先级从上到下。这些都是只能用于builtin的modules。loadable的modules使用module_init()。
+
+- 使用initcalls会在目标文件object file中创建ELF sections。
+
+**module_init()**
+
+本质是device_initcall。
+
+```c
+#define module_init(x)	__initcall(x);
+#define __initcall(fn) device_initcall(fn)
+```
+
+kernel的`System.map`可以查看符号文件，其中`__initcall6_start`后的顺序就对应`device_initcall`的驱动加载顺序。
+
+```c
+#define pure_initcall(fn)		__define_initcall(fn, 0)
+
+#define core_initcall(fn)		__define_initcall(fn, 1)
+#define postcore_initcall(fn)		__define_initcall(fn, 2)
+#define arch_initcall(fn)		__define_initcall(fn, 3)
+#define subsys_initcall(fn)		__define_initcall(fn, 4)
+#define fs_initcall(fn)			__define_initcall(fn, 5)
+#define rootfs_initcall(fn)		__define_initcall(fn, rootfs)
+#define device_initcall(fn)		__define_initcall(fn, 6)
+#define late_initcall(fn)		__define_initcall(fn, 7)
+```
+

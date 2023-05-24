@@ -283,6 +283,8 @@ ENTRY(handle_exception)
 							generic_handle_irq_desc();
 								// 不同的中断控制器在一开始初始化会设置
 								desc->handle_irq(desc);
+	handle_syscall(); //处理系统调用
+	excp_vect_table(); //处理异常
 
 // 这里cpu int会进入handle_percpu_devid_irq, 在irq-riscv-intc.c irq_domain_set_info中设定
 handle_percpu_devid_irq();
@@ -303,9 +305,12 @@ plic_handle_irq();
 
 ***是否所有的irq_domain的irq number是按顺序排列下去，每个irq_number设置一个interrupt handler，不会重复？***
 
+# Bottom half
 
+softirq，tasklet，workqueue。
 
+workqueue运行在**process context**，而softirq和tasklet运行在**interrupt context**。
 
+在有sleep需求的场景中，defering task必须延迟到kernel thread中执行，也就是说必须使用workqueue机制。
 
-
-
+softirq更倾向于性能，而tasklet更倾向于易用性。软中断可以在多个CPU上并行运行，因此需要考虑可重入问题，而tasklet会绑定在某个cpu上运行，不要求重入问题，因此性能会下降一些。
