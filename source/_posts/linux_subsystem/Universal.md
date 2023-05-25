@@ -8,11 +8,19 @@ categories:
 sticky: 99
 ---
 
-
+# NOT indexed
 
 include <asm/xxx.h> 先找arch/xxx/include/xxx.h，没有的话就找/include/asm-generic/xxx.h
 
 
+
+从dts中获取regs地址并映射到virtual address:
+
+linux5.10: void __iomem *devm_platform_get_and_ioremap_resource(struct platform_device *pdev, unsigned int index, struct resource **res)
+
+linux5.4: void __iomem *devm_platform_ioremap_resource(struct platform_device *pdev, unsigned int index)
+
+相当于platform_get_resource + devm_request_mem_region **+** devm_ioremap
 
 # Initcalls
 
@@ -45,4 +53,3 @@ kernel的`System.map`可以查看符号文件，其中`__initcall6_start`后的�
 #define device_initcall(fn)		__define_initcall(fn, 6)
 #define late_initcall(fn)		__define_initcall(fn, 7)
 ```
-
