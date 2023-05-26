@@ -28,9 +28,8 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/10.4.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/10.5.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/10.6.png">
-<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/10.7.png">
 <meta property="article:published_time" content="2023-01-09T09:13:28.000Z">
-<meta property="article:modified_time" content="2023-04-21T07:54:24.218Z">
+<meta property="article:modified_time" content="2023-05-26T02:52:02.680Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="RISC-V">
 <meta name="twitter:card" content="summary_large_image">
@@ -257,7 +256,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.8k words
+          3.2k words
         
       </span>
     
@@ -268,7 +267,7 @@
         
         
         
-          32 mins
+          27 mins
         
       </span>
     
@@ -319,7 +318,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年4月21日 下午
+                    本文最后更新于：2023年5月26日 上午
                   
                 
               </p>
@@ -384,10 +383,6 @@
             <p>操作 CSR 的指令在 RISC-V 的 <code>Zicsr</code> 扩展模块中定义。包括伪指令在内，共有以下 7 种操作类型：</p><ol><li><code>csrr</code>，读取一个 CSR 的值到通用寄存器。如：<code>csrr t0, mstatus</code>，读取 <code>mstatus</code> 的值到 <code>t0</code> 中。</li><li><code>csrw</code>，把一个通用寄存器中的值写入 CSR 中。如：<code>csrw mstatus, t0</code>，将 <code>t0</code> 的值写入 <code>mstatus</code>。</li><li><code>csrs</code>，把 CSR 中指定的 bit 置 1。如：<code>csrsi mstatus, (1 &lt;&lt; 2)</code>，将 <code>mstatus</code> 的右起第 3 位置 1。</li><li><code>csrc</code>，把 CSR 中指定的 bit 置 0。如：<code>csrci mstatus, (1 &lt;&lt; 2)</code>，将 <code>mstatus</code> 的右起第 3 位置 0。</li><li><code>csrrw</code>，读取一个 CSR 的值到通用寄存器，然后把另一个值写入该 CSR。如：<code>csrrw t0, mstatus, t0</code>，将 <code>mstatus</code> 的值与 <code>t0</code> 的值交换。</li><li><code>csrrs</code>，读取一个 CSR 的值到通用寄存器，然后把该 CSR 中指定的 bit 置 1。</li><li><code>csrrc</code>，读取一个 CSR 的值到通用寄存器，然后把该 CSR 中指定的 bit 置 0。</li></ol>
           </div>
 
-<h2 id="10-4-嵌入式系统中的用户模式和进程隔离"><a href="#10-4-嵌入式系统中的用户模式和进程隔离" class="headerlink" title="10.4 嵌入式系统中的用户模式和进程隔离"></a>10.4 嵌入式系统中的用户模式和进程隔离</h2><p>必须禁止不可信的代码执行特权指令（如 mret）和访问特权控制状态寄存器（如mstatus），因为这将允许程序控制系统。这样的限制很容易实现，只要加入一种额外的权限模式： 用户模式（U模式）。这种模式拒绝使用这些功能，并在尝试执行M模式指令或访问CSR的时候产生非法指令异常。其它时候，U模式和M模式的表现十分相似。通过将mstatus.MPP设置为U（如图 10.5所示，编码为 0），然后执行mret指令，软件可以从M模式进入U模式。如果在U模式下发生异常，则把控制移交给M模式。</p>
-<p>这些不可信的代码还必须被限制只能访问自己那部分内存。实现了M和U模式的处理器具有一个叫做<strong>物理内存保护</strong> （PMP Physical Memory Protection）的功能，允许M模式指定U模式可以访问的内存地址。PMP包括几个地址寄存器（通常为8到16个）和相应的配置寄存器。这些配置寄存器可以授予或拒绝读、写和执行权限。当处于U模式的处理器尝试取指或执行load或 store操作时，将地址和所有的PMP地址寄存器比较。</p>
-<p>图 10.7显示了PMP地址寄存器和配置寄存器的布局。两者都是CSR。地址寄存器右移两位，因为PMP以四字节为单位。配置寄存器密集地填充在CSR中以加速上下文切换，如图10.8所示。</p>
-<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/10.7.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="10-5-现代操作系统的监管者模式"><a href="#10-5-现代操作系统的监管者模式" class="headerlink" title="10.5 现代操作系统的监管者模式"></a>10.5 现代操作系统的监管者模式</h2><p>更复杂的 RISC-V处理器用和几乎所有通用架构相同的方式处理这些问题：使用基于页面的虚拟内存。这个功能构成了监管者模式（S模式）的核心，这是一种可选的权限模式，旨在支持现代类Unix操作系统，如Linux。S模式比 U模式权限更高，但比M模式低。与U模式一样，S模式下运行的软件不能使用M模式的CSR和指令，并且受到PMP的限制。</p>
 <p>mideleg（Machine Interrupt Delegation），机器中断委托 CSR控制将哪些中断委托给S模式。与mip和mie一样，mideleg中的每个位对应于图10.3中相同的异常。例如，mideleg[5]对应于S模式的时钟中断，如果把它置位，S模式的时钟中断将会移交S模式的异常处理程序，而不是M模式的异常处理程序。</p>
 <p>委托给S模式的任何中断都可以被S模式的软件屏蔽。sie (Supervisor Interrupt enable) 和sip (Superivisor Interrupt pending) CSR是S模式的控制状态寄存器。他们是mie和mip的子集。它们有着和M模式下相同的布局，但在sie和sip中只有与由mideleg委托的中断对应的位才能读写。那些没有被委派的中断对应的位始终为零。</p>
