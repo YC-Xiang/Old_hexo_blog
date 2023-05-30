@@ -12,12 +12,16 @@ categories:
 ```shell
 make build # 仅编译
 make run # 编译+运行qemu
-make run LOG=LOG_LEVEL_TRACE # 其他选项可以看Makefile
+make run LOG=trace # 其他选项可以看Makefile
 make clean # rm build/
 make debug # 编译+运行gdb调试
 ```
 
 每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。
+
+**退出 qemu 的方法**
+
+如果是正常推出，uCore 会自动关闭 qemu，但如果 os 跑飞了，我们不能通过 `Ctrl + C` 来推出。此时可以先按下 `Ctrl+A` ，再按下 `X` 来退出 Qemu。
 
 # ch1
 

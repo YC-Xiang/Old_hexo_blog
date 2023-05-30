@@ -34,6 +34,13 @@ main();
 			userret();
 				sret // 返回到sepc中的值，0x80400000第一个app
 
+```
+
+
+
+## 应用程序系统调用ecall进入内核异常处理过程
+
+```c
 // 进入应用程序
 exit(MAGIC);
 	syscall(SYS_exit, code);
@@ -42,13 +49,14 @@ exit(MAGIC);
 				ecall //通过ecall 进入uservec
 
 uservec
-	usertrap();
-		r_scause();
+	usertrap(); // ld t0, 16(a0) jr t0
+		r_scause(); 
+			csrr %0, scause // 应用层调用了ecall指令，所以scause自动被设置为8
 		syscall();
+			//在uservec中应用层传入eid到寄存器a7,这里读a7来判断是什么system call
+			id = trapframe->a7; 
 		usertrapret(); // 这里回到第九行一样，循环，执行第二个应用程序
 ```
-
-
 
 分析下`uservec`,注意：这里只是把stvec设置为uservec地址，并不会执行uservec下的代码，要等U mode的中断/异常到来时才会从uservec开始执行。
 
