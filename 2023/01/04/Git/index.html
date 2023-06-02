@@ -27,7 +27,7 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git1.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git2.png">
 <meta property="article:published_time" content="2023-01-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-12T09:06:38.715Z">
+<meta property="article:modified_time" content="2023-06-01T09:02:00.543Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary_large_image">
@@ -254,7 +254,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.8k words
+          4.7k words
         
       </span>
     
@@ -316,7 +316,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年5月12日 下午
+                    本文最后更新于：2023年6月1日 下午
                   
                 
               </p>
@@ -334,22 +334,7 @@
 <p>e.g 在本地一个分支上有了C5，C6两个自己的commit，但此时远程master分支上别人又合并了两个C3,C4分支。如果用git pull（git fetch + git merge）会有一个新的merge commit。此时需要git rebase 将c5,c6接到最新的master代码(c4)上。</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git1.png" srcset="/img/loading.gif" lazyload></p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git2.png" srcset="/img/loading.gif" lazyload></p>
-<h1 id="git-revert"><a href="#git-revert" class="headerlink" title="git revert"></a>git revert</h1><p>git branch -f dev HEAD^  &#x2F;&#x2F;让dev分支指向HEAD^</p>
-<p>本地撤销当前提交：git reset HEAD^</p>
-<p>远程撤销当前提交：git revert HEAD</p>
-<p>git remote show origin：查看远程信息</p>
-<p>git branch –set-upstream-to&#x3D;origin&#x2F;develop（远程分支） develop：关联远程分支</p>
-<p>那么如何查看已经配置分支关联信息呢，通过下述三条命令均可：</p>
-<ol>
-<li>git branch -vv</li>
-<li>git remote show origin</li>
-<li>cat .git&#x2F;config</li>
-</ol>
-<p>在一个分支上修改，突然要切到另一个分支：</p>
-<ol>
-<li>把现在的修改 git commit</li>
-<li>git stash 暂存起来，注意这个stash 也会带到另一个分支。注意git stash pop和apply的区别，apply不会将栈弹出</li>
-</ol>
+<h1 id="git-revert"><a href="#git-revert" class="headerlink" title="git revert"></a>git revert</h1><p>git revert + commit_id: revert掉指定的commit, 会生成一个新的commit，需要git push到远程。加上-n参数可以自定义commit信息。</p>
 <h1 id="git-stash"><a href="#git-stash" class="headerlink" title="git stash"></a>git stash</h1><p>git stash save “add style to our site” 添加stash信息</p>
 <p>git stash clear :注意这是清空你所有的内容</p>
 <p>git stash drop stash@{0} 这是删除第一个队列</p>
@@ -433,6 +418,15 @@
 <h2 id="Your-Editor"><a href="#Your-Editor" class="headerlink" title="Your Editor"></a>Your Editor</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global core.editor vim<br></code></pre></td></tr></table></figure>
 <h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><p>在repository中不小心上传了大文件或者隐私数据：<br><a target="_blank" rel="noopener" href="https://help.github.com/articles/removing-sensitive-data-from-a-repository/">https://help.github.com/articles/removing-sensitive-data-from-a-repository/</a></p>
 <p><strong>git alias</strong>: <a target="_blank" rel="noopener" href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-alias">https://git-scm.com/docs/git-config#Documentation/git-config.txt-alias</a></p>
+<p>git branch -f dev HEAD^  &#x2F;&#x2F;让dev分支指向HEAD^</p>
+<p>git remote show origin：查看远程信息</p>
+<p>git branch –set-upstream-to&#x3D;origin&#x2F;develop（远程分支） develop：关联远程分支</p>
+<p>那么如何查看已经配置分支关联信息呢，通过下述三条命令均可：</p>
+<ol>
+<li>git branch -vv</li>
+<li>git remote show origin</li>
+<li>cat .git&#x2F;config</li>
+</ol>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p><a target="_blank" rel="noopener" href="https://learngitbranching.js.org/">An online game to learn Git</a><br><a target="_blank" rel="noopener" href="https://git-scm.com/book/en/v2">Pro Git</a></p>
 
                 

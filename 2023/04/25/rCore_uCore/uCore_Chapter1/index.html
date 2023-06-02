@@ -16,15 +16,15 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG&#x3D;LOG_LEVEL_TRACE # 其他选项可以看Makefilemake clean # rm build&#x2F;make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 ch1流程1234567">
+    <meta name="description" content="Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG&#x3D;trace # 其他选项可以看Makefilemake clean # rm build&#x2F;make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 退出 qemu 的方法 如果是正常推出，uC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="uCore_Chapter1 应用程序与基本执行环境">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/04/25/rCore_uCore/uCore_Chapter1/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG&#x3D;LOG_LEVEL_TRACE # 其他选项可以看Makefilemake clean # rm build&#x2F;make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 ch1流程1234567">
+<meta property="og:description" content="Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG&#x3D;trace # 其他选项可以看Makefilemake clean # rm build&#x2F;make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 退出 qemu 的方法 如果是正常推出，uC">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-25T15:11:28.000Z">
-<meta property="article:modified_time" content="2023-05-12T09:32:08.391Z">
+<meta property="article:modified_time" content="2023-05-31T09:55:16.573Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="uCore">
 <meta name="twitter:card" content="summary_large_image">
@@ -250,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k words
+          1.2k words
         
       </span>
     
@@ -312,7 +312,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年5月12日 下午
+                    本文最后更新于：2023年5月31日 下午
                   
                 
               </p>
@@ -320,9 +320,11 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">make build # 仅编译<br>make run # 编译+运行qemu<br>make run LOG=LOG_LEVEL_TRACE # 其他选项可以看Makefile<br>make clean # rm build/<br>make debug # 编译+运行gdb调试<br></code></pre></td></tr></table></figure>
+                <h1 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">make build # 仅编译<br>make run # 编译+运行qemu<br>make run LOG=trace # 其他选项可以看Makefile<br>make clean # rm build/<br>make debug # 编译+运行gdb调试<br></code></pre></td></tr></table></figure>
 
 <p>每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。</p>
+<p><strong>退出 qemu 的方法</strong></p>
+<p>如果是正常推出，uCore 会自动关闭 qemu，但如果 os 跑飞了，我们不能通过 <code>Ctrl + C</code> 来推出。此时可以先按下 <code>Ctrl+A</code> ，再按下 <code>X</code> 来退出 Qemu。</p>
 <h1 id="ch1"><a href="#ch1" class="headerlink" title="ch1"></a>ch1</h1><h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// entry.S</span><br>_entry<br>    la sp, boot_stack_top <span class="hljs-comment">//设置堆栈</span><br>    call main<br><span class="hljs-comment">// main.c</span><br>  clean_bss();<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;hello wrold!\n&quot;</span>);<br>    consputc();<br>      console_putchar(<span class="hljs-type">int</span> c);<br>        sbi_call(SBI_CONSOLE_PUTCHAR, c, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
 
 <p class="note note-danger">怎么用gdb调试？`file kernel`然后？</p>
@@ -390,8 +392,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/25/rCore_uCore/uCore_Chapter3/" title="uCore_Chapter3">
-                        <span class="hidden-mobile">uCore_Chapter3</span>
+                      <a href="/2023/04/25/rCore_uCore/uCore_Chapter2/" title="uCore_Chapter2 批处理系统">
+                        <span class="hidden-mobile">uCore_Chapter2 批处理系统</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

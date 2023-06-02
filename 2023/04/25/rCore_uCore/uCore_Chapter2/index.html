@@ -24,7 +24,7 @@
 <meta property="og:description" content="123456make -C user clean # 在os目录，相当于cd user;make clean;cd ..make clean # 或者在user目录git checkout ch2make user BASE&#x3D;1 CHAPTER&#x3D;2make runmake test BASE&#x3D;1 # make test 会完成　make user 和 make run 两个步骤（自动设置 CHAP">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-25T15:11:28.000Z">
-<meta property="article:modified_time" content="2023-05-12T09:31:44.918Z">
+<meta property="article:modified_time" content="2023-05-31T09:55:16.573Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="uCore">
 <meta name="twitter:card" content="summary_large_image">
@@ -250,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k words
+          1.9k words
         
       </span>
     
@@ -261,7 +261,7 @@
         
         
         
-          15 mins
+          16 mins
         
       </span>
     
@@ -312,7 +312,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年5月12日 下午
+                    本文最后更新于：2023年5月31日 下午
                   
                 
               </p>
@@ -322,9 +322,11 @@
                 
                 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs makefile">make -C user clean <span class="hljs-comment"># 在os目录，相当于cd user;make clean;cd ..</span><br>make clean <span class="hljs-comment"># 或者在user目录</span><br>git checkout ch2<br>make user BASE=1 CHAPTER=2<br>make run<br>make test BASE=1 <span class="hljs-comment"># make test 会完成　make user 和 make run 两个步骤（自动设置 CHAPTER）</span><br></code></pre></td></tr></table></figure>
 
-<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c">main();<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;hello wrold!\n&quot;</span>);<br>  trap_init(); <span class="hljs-comment">// 设置中断/异常处理地址</span><br>    w_stvec((uint64)uservec &amp; ~<span class="hljs-number">0x3</span>); <span class="hljs-comment">//把uservec地址传入,uservec在trampoline.S中定义</span><br>      <span class="hljs-keyword">asm</span> <span class="hljs-title function_">volatile</span><span class="hljs-params">(<span class="hljs-string">&quot;csrw stvec, %0&quot;</span> : : <span class="hljs-string">&quot;r&quot;</span>(x))</span>; <span class="hljs-comment">// 设置stvec CSR</span><br>  loader_init();<br>  run_next_app();<br>    load_app();<br>    usertrapret(trapframe, (uint64)boot_stack_top);<br>      w_sepc(trapframe-&gt;epc);<br>      r_sstatus();<br>      w_sstatus();<br>      userret();<br>        sret <span class="hljs-comment">// 返回到sepc中的值，0x80400000第一个app</span><br><br><span class="hljs-comment">// 进入应用程序</span><br><span class="hljs-built_in">exit</span>(MAGIC);<br>  syscall(SYS_exit, code);<br>    __syscall1(n, <span class="hljs-type">long</span>(<span class="hljs-number">1234</span>));<br>      __asm_syscall(<span class="hljs-string">&quot;r&quot;</span>(a7), <span class="hljs-string">&quot;0&quot;</span>(a0));<br>        ecall <span class="hljs-comment">//通过ecall 进入uservec</span><br><br>uservec<br>  <span class="hljs-title function_">usertrap</span><span class="hljs-params">()</span>;<br>    r_scause();<br>    syscall();<br>    usertrapret(); <span class="hljs-comment">// 这里回到第九行一样，循环，执行第二个应用程序</span><br></code></pre></td></tr></table></figure>
+<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c">main();<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;hello wrold!\n&quot;</span>);<br>  trap_init(); <span class="hljs-comment">// 设置中断/异常处理地址</span><br>    w_stvec((uint64)uservec &amp; ~<span class="hljs-number">0x3</span>); <span class="hljs-comment">//把uservec地址传入,uservec在trampoline.S中定义</span><br>      <span class="hljs-keyword">asm</span> <span class="hljs-title function_">volatile</span><span class="hljs-params">(<span class="hljs-string">&quot;csrw stvec, %0&quot;</span> : : <span class="hljs-string">&quot;r&quot;</span>(x))</span>; <span class="hljs-comment">// 设置stvec CSR</span><br>  loader_init();<br>  run_next_app();<br>    load_app();<br>    usertrapret(trapframe, (uint64)boot_stack_top);<br>      w_sepc(trapframe-&gt;epc);<br>      r_sstatus();<br>      w_sstatus();<br>      userret();<br>        sret <span class="hljs-comment">// 返回到sepc中的值，0x80400000第一个app</span><br><br></code></pre></td></tr></table></figure>
 
 
+
+<h2 id="应用程序系统调用ecall进入内核异常处理过程"><a href="#应用程序系统调用ecall进入内核异常处理过程" class="headerlink" title="应用程序系统调用ecall进入内核异常处理过程"></a>应用程序系统调用ecall进入内核异常处理过程</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 进入应用程序</span><br><span class="hljs-built_in">exit</span>(MAGIC);<br>  syscall(SYS_exit, code);<br>    __syscall1(n, <span class="hljs-type">long</span>(<span class="hljs-number">1234</span>));<br>      __asm_syscall(<span class="hljs-string">&quot;r&quot;</span>(a7), <span class="hljs-string">&quot;0&quot;</span>(a0));<br>        ecall <span class="hljs-comment">//通过ecall 进入uservec</span><br><br>uservec<br>  <span class="hljs-title function_">usertrap</span><span class="hljs-params">()</span>; <span class="hljs-comment">// ld t0, 16(a0) jr t0</span><br>    r_scause(); <br>      csrr %<span class="hljs-number">0</span>, scause <span class="hljs-comment">// 应用层调用了ecall指令，所以scause自动被设置为8</span><br>    syscall();<br>      <span class="hljs-comment">//在uservec中应用层传入eid到寄存器a7,这里读a7来判断是什么system call</span><br>      id = trapframe-&gt;a7; <br>    usertrapret(); <span class="hljs-comment">// 这里回到第九行一样，循环，执行第二个应用程序</span><br></code></pre></td></tr></table></figure>
 
 <p>分析下<code>uservec</code>,注意：这里只是把stvec设置为uservec地址，并不会执行uservec下的代码，要等U mode的中断&#x2F;异常到来时才会从uservec开始执行。</p>
 <p class="note note-warning">uservec是U mode异常/中断的入口。</p>
@@ -381,9 +383,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/25/rCore_uCore/uCore_Chapter3/" title="uCore_Chapter3">
+                      <a href="/2023/04/25/rCore_uCore/uCore_Chapter1/" title="uCore_Chapter1 应用程序与基本执行环境">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">uCore_Chapter3</span>
+                        <span class="hidden-mobile">uCore_Chapter1 应用程序与基本执行环境</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
