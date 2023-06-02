@@ -89,26 +89,7 @@ e.g 在本地一个分支上有了C5，C6两个自己的commit，但此时远程
 
 # git revert
 
-git branch -f dev HEAD^  //让dev分支指向HEAD^
-
-本地撤销当前提交：git reset HEAD^
-
-远程撤销当前提交：git revert HEAD
-
-git remote show origin：查看远程信息
-
-git branch --set-upstream-to=origin/develop（远程分支） develop：关联远程分支
-
-那么如何查看已经配置分支关联信息呢，通过下述三条命令均可：
-
-1. git branch -vv
-2. git remote show origin
-3. cat .git/config
-
-在一个分支上修改，突然要切到另一个分支：
-
-1. 把现在的修改 git commit
-2. git stash 暂存起来，注意这个stash 也会带到另一个分支。注意git stash pop和apply的区别，apply不会将栈弹出
+git revert + commit_id: revert掉指定的commit, 会生成一个新的commit，需要git push到远程。加上-n参数可以自定义commit信息。
 
 # git stash
 
@@ -283,6 +264,18 @@ git config --global core.editor vim
 https://help.github.com/articles/removing-sensitive-data-from-a-repository/
 
 **git alias**: https://git-scm.com/docs/git-config#Documentation/git-config.txt-alias
+
+git branch -f dev HEAD^  //让dev分支指向HEAD^
+
+git remote show origin：查看远程信息
+
+git branch --set-upstream-to=origin/develop（远程分支） develop：关联远程分支
+
+那么如何查看已经配置分支关联信息呢，通过下述三条命令均可：
+
+1. git branch -vv
+2. git remote show origin
+3. cat .git/config
 
 # References
 [An online game to learn Git](https://learngitbranching.js.org/)

@@ -7,6 +7,8 @@ categories:
 - Notes
 ---
 
+# Notes
+
 `./lanuch` 最终的操作是
 
 ```shell
@@ -14,7 +16,34 @@ cd sdk_3921/buildroot-dist # 进入buildroot目录
 make BR2_EXTERNAL=sdk_3921/platform/ O=sdk3921/out/rts3923_fpga/ rts3923_fpga_defconfig
 ```
 
-## Managing the build andthe configuration
+
+
+```makefile
+local.mk # BR2_PACKAGE_OVERRIDE_FILE 在platform/configs中定义
+external.mk
+    include common.mk
+    	include package/*/*/*.mk
+    	include package/*/*.mk
+    include package/*/*/src.mki
+    include package/*/*/gen.mki
+    include post_pkg.mk
+```
+
+
+
+
+
+`platform/local.mk`: 指定自定义源码位置
+
+在`local.mk`中还定义了：
+
+`make rr`: Reconstruct rootfs
+
+`make rp`: Rebuild external packages
+
+
+
+## Managing the build and the configuration
 
 ### Out of tree build
 
@@ -99,16 +128,6 @@ Each external directory must contain:
 `make <pkg>-rebuild`, force to re-execute the build and installation steps of the package.
 
 `make <pkg>-reconfigure`, force to re-execute the configure, build and installation steps of the package.
-
-# Self notes
-
-`platform/local.mk`: 指定自定义源码位置
-
-在`local.mk`中还定义了：
-
-`make rr`: Reconstruct rootfs
-
-`make rp`: Rebuild external packages
 
 # legacy
 

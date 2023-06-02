@@ -29,7 +29,7 @@ categories:
 
 ### **stvec**
 
-Supervisor Trap Vector Base Address Register, 保存S mode异常/中断的跳转地址。
+Supervisor Trap Vector Base Address Register, **保存S mode异常/中断的跳转地址。**
 
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230526104414.png)
 
@@ -48,19 +48,16 @@ Supervisor Interrupt pending/enable Registers
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230526111246.png)
 
 1. SIP中断挂起（待处理的中断）和SIE中断使能。每一位代表的中断与scause中的为每个中断分配的异常码一致。
-
 2. 当sstatus.SIE=1, SIP[x]=1, SIE[x]=1，表示系统能够处理某个中断。
-
 3. SIP中有的位是只读的，不能通过直接写0来清除：
    1. SEIP is read-only in sip, and is set and cleared by the **execution environment**, typically through a **platform-specific interrupt controller**.
    2. STIP is read-only in sip, and is set and cleared by the **execution environment**.
    3. SSIP is writable in sip and may also be set to 1 by a **platform-specific interrupt controller**.
-
 4. 看系统中实现了哪些interrupts，可以直接通过写SIE某位为1来enable，再读回SIE看是否为1，来判断是否实现了。
-
 5. sip，sie的bit 3，7，11分别代表了M mode的software，timer，external interrupts，因为大多数平台不会将M mode的中断委托到S mode，所以图4.6和4.7中相应的位直接为0了。
-
 6. 优先级：SEI>SSI>STI。
+
+### scounteren
 
 ### sscratch
 
@@ -68,8 +65,28 @@ Supervisor Interrupt pending/enable Registers
 
 Supervisor Exception Program Counter.
 
-当trap发生时，sepc保存发生中断/异常指令的虚拟地址。
+当trap发生时，sepc**保存发生中断/异常指令的虚拟地址**。
 
 如果需要返回到sepc后一条指令，就需要在sret之前修改sepc的值。
 
 对于同步异常，sepc指向导致异常的指令；对于中断，它指向中断处理后应该恢复执行的位置。
+
+### scause
+
+**保存发生中断/异常指令的事件**。
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230601170420.png)
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230601170540.png)
+
+### stval
+
+kernel中`/ptrace.h pt_regs中的badaddr`就是stval。发生kernel panic会打印出badaddr(stval)。
+
+- 当instruction fetch/load/store时发生breakpoint(3), address-misaligned, access-fault, page-fault，stval会保存导致错误的虚拟地址。
+
+- 当发生不对齐load/store导致的access-fault/page-fault, stval包含导致故障访问的虚拟地址。
+
+- 当发生instruction access-fault(1) or page-fault(12)，stval保存导致故障的指令的虚拟地址，此时sepc也会指向指令的开始地址。
+- illegal instruction(2), spec71页。
+- 其他trap，还没实现，stval的值都为0。
