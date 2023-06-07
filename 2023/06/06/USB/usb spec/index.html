@@ -16,15 +16,33 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="article">
+    <meta name="description" content="Questions时钟？ gadget ep0 endpoint OthersUSB标准名称变更： USB 1.0 -&gt; USB 2.0 Low-Speed USB 1.1 -&gt; USB 2.0 Full-Speed USB 2.0 -&gt; USB 2.0 High-Speed USB 3.0 -&gt; USB 3.1 Gen1 -&gt; USB 3.2 Gen1 USB 3.">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Yucheng&#39;s Blog">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/05/31/rCore_uCore/uCore_Chapter4/index.html">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/06/06/USB/usb%20spec/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
+<meta property="og:description" content="Questions时钟？ gadget ep0 endpoint OthersUSB标准名称变更： USB 1.0 -&gt; USB 2.0 Low-Speed USB 1.1 -&gt; USB 2.0 Full-Speed USB 2.0 -&gt; USB 2.0 High-Speed USB 3.0 -&gt; USB 3.1 Gen1 -&gt; USB 3.2 Gen1 USB 3.">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-05-31T09:55:16.574Z">
-<meta property="article:modified_time" content="2023-05-31T09:55:16.575Z">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230606134650.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607093420.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607094320.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607101850.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607103019.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607104959.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607105059.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607112911.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607112056.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607150914.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607150746.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607151058.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607153555.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607153606.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607163045.png">
+<meta property="article:published_time" content="2023-06-06T02:48:06.747Z">
+<meta property="article:modified_time" content="2023-06-07T09:53:44.499Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230606134650.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -235,8 +253,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-31 17:55" pubdate>
-          2023年5月31日 下午
+        <time datetime="2023-06-06 10:48" pubdate>
+          2023年6月6日 上午
         </time>
       </span>
     
@@ -247,7 +265,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 words
+          2.1k words
         
       </span>
     
@@ -258,7 +276,7 @@
         
         
         
-          1 mins
+          18 mins
         
       </span>
     
@@ -309,7 +327,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年5月31日 下午
+                    本文最后更新于：2023年6月7日 下午
                   
                 
               </p>
@@ -317,8 +335,85 @@
             
               <div class="markdown-body">
                 
-                <hr>
-<hr>
+                <h1 id="Questions"><a href="#Questions" class="headerlink" title="Questions"></a>Questions</h1><p>时钟？</p>
+<p>gadget</p>
+<p>ep0</p>
+<p>endpoint</p>
+<h1 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h1><p>USB标准名称变更：</p>
+<p>USB 1.0 -&gt; USB 2.0 Low-Speed</p>
+<p>USB 1.1 -&gt; USB 2.0 Full-Speed</p>
+<p>USB 2.0 -&gt; USB 2.0 High-Speed</p>
+<p>USB 3.0 -&gt; USB 3.1 Gen1 -&gt; USB 3.2 Gen1</p>
+<p>USB 3.1 -&gt; USB 3.1 Gen2 -&gt; USB 3.2 Gen2 × 1</p>
+<p>USB 3.2 -&gt; USB 3.2 Gen2 × 2</p>
+<h1 id="Chapter3-Background"><a href="#Chapter3-Background" class="headerlink" title="Chapter3 Background"></a>Chapter3 Background</h1><p>USB 接口可用于连接多达 127 种外设。</p>
+<h1 id="Chapter4-Architectural-Overview"><a href="#Chapter4-Architectural-Overview" class="headerlink" title="Chapter4 Architectural Overview"></a>Chapter4 Architectural Overview</h1><h3 id="4-1-1-Bus-Topology-总线拓扑"><a href="#4-1-1-Bus-Topology-总线拓扑" class="headerlink" title="4.1.1 Bus Topology 总线拓扑"></a>4.1.1 Bus Topology 总线拓扑</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230606134650.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>USB Host</li>
+<li>USB Device<ul>
+<li>Hub：用来扩展USB接口，最多接5层hub，如上图。</li>
+<li>Function：USB设备。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-2-1-Electrical"><a href="#4-2-1-Electrical" class="headerlink" title="4.2.1 Electrical"></a>4.2.1 Electrical</h3><p>USB 2.0协议支持3种速率：</p>
+<ul>
+<li>低速(Low Speed，1.5Mbps)，兼容USB1.0</li>
+<li>全速(Full Speed, 12Mbps)，兼容USB1.1</li>
+<li>高速(High Speed, 480Mbps)</li>
+</ul>
+<p>USB 2.0 host controllers和hubs提供能力使<strong>full speed和low speed的数据</strong>能</p>
+<p>以<strong>high speed</strong>的速率在<strong>host controller和hub</strong>之间传递，</p>
+<p>以<strong>full speed和low speed</strong>的速率在<strong>hub和device</strong>之间传递。</p>
+<h1 id="Chapter7-Electrical"><a href="#Chapter7-Electrical" class="headerlink" title="Chapter7 Electrical"></a>Chapter7 Electrical</h1><h2 id="7-1-Signaling"><a href="#7-1-Signaling" class="headerlink" title="7.1 Signaling"></a>7.1 Signaling</h2><p>High Speed电路图。</p>
+<p>Hub D+, D-信号线上有右下两个15k Rpd下拉电阻，所以默认电平为0。</p>
+<p>device D+信号线上有1.5k Rpu上拉电阻，接上后D+被拉高。运行后会被Rpu_enable移除。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607093420.png" srcset="/img/loading.gif" lazyload></p>
+<p>Spec Table 7.1对各元器件功能有详细解释。</p>
+<p>高速设备D+, D-各有Rs 45Ω的下拉电阻，用来消除反射信号：</p>
+<p>当断开高速设备后，Hub发出信号，得到的反射信号无法衰减，Hub监测到这些信号后就知道高速设备已经断开。对应上图的Rs和Disconnection Envelope Detector。当差分信号线的幅值超过<strong>625mV</strong>，意味着断开。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607094320.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="7-1-5-1-Low-x2F-Full-speed-Device-Speed-Identification"><a href="#7-1-5-1-Low-x2F-Full-speed-Device-Speed-Identification" class="headerlink" title="7.1.5.1 Low-&#x2F;Full-speed Device Speed Identification"></a>7.1.5.1 Low-&#x2F;Full-speed Device Speed Identification</h4><p>Full&#x2F;High-speed device D+ 上有1.5k Rpu上拉。</p>
+<p>Low-speed device D- 上有1.5k Rpu上拉。</p>
+<p>用于attach时区分不同速率的设备。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607101850.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="7-1-7-Signaling-levels"><a href="#7-1-7-Signaling-levels" class="headerlink" title="7.1.7 Signaling levels"></a>7.1.7 Signaling levels</h3><h4 id="7-1-7-1-Low-x2F-Full-speed-Signaling-Levels"><a href="#7-1-7-1-Low-x2F-Full-speed-Signaling-Levels" class="headerlink" title="7.1.7.1 Low-&#x2F;Full-speed Signaling Levels"></a>7.1.7.1 Low-&#x2F;Full-speed Signaling Levels</h4><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607103019.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="7-1-7-2-High-speed-Signaling-Levels"><a href="#7-1-7-2-High-speed-Signaling-Levels" class="headerlink" title="7.1.7.2 High-speed Signaling Levels"></a>7.1.7.2 High-speed Signaling Levels</h4><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607104959.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607105059.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="7-1-7-4-Data-Signaling"><a href="#7-1-7-4-Data-Signaling" class="headerlink" title="7.1.7.4 Data Signaling"></a>7.1.7.4 Data Signaling</h4><h5 id="7-1-7-4-1-Low-x2F-Full-Speed-Signaling"><a href="#7-1-7-4-1-Low-x2F-Full-Speed-Signaling" class="headerlink" title="7.1.7.4.1 Low-&#x2F;Full-Speed Signaling"></a>7.1.7.4.1 Low-&#x2F;Full-Speed Signaling</h5><p>SOP：Start Of Packet，Hub驱动D+、D-这两条线路从Idle状态变为K状态。SOP中的K状态就是SYNC信号的第1位数据，SYNC格式为3对KJ外加2个K。</p>
+<p>EOP：End Of Packet，由数据的发送方发出EOP，数据发送方驱动D+、D-这两条线路，先设为SE0状态并维持2位时间，再设置为J状态并维持1位时间，最后D+、D-变为高阻状态，这时由线路的上下拉电阻使得总线进入Idle状态。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607112911.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="7-1-7-4-2-High-speed-Signaling"><a href="#7-1-7-4-2-High-speed-Signaling" class="headerlink" title="7.1.7.4.2 High-speed Signaling"></a>7.1.7.4.2 High-speed Signaling</h5><h4 id="7-1-7-5-Reset"><a href="#7-1-7-5-Reset" class="headerlink" title="7.1.7.5 Reset"></a>7.1.7.5 Reset</h4><h4 id="7-1-7-6-Suspend"><a href="#7-1-7-6-Suspend" class="headerlink" title="7.1.7.6 Suspend"></a>7.1.7.6 Suspend</h4><h4 id="7-1-7-7-Resume"><a href="#7-1-7-7-Resume" class="headerlink" title="7.1.7.7 Resume"></a>7.1.7.7 Resume</h4><h3 id="7-1-8-Data-encoding-数据编码"><a href="#7-1-8-Data-encoding-数据编码" class="headerlink" title="7.1.8 Data encoding 数据编码"></a>7.1.8 Data encoding 数据编码</h3><p>NRZI编码，电平信号不变表示1，跳变表示0。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607112056.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="7-1-9-Bit-Stuffing-位填充"><a href="#7-1-9-Bit-Stuffing-位填充" class="headerlink" title="7.1.9 Bit Stuffing 位填充"></a>7.1.9 Bit Stuffing 位填充</h3><p>连续传送6个1后，会填充一个0强制翻转信号。</p>
+<h1 id="Chapter8-Protocol-Layer"><a href="#Chapter8-Protocol-Layer" class="headerlink" title="Chapter8 Protocol Layer"></a>Chapter8 Protocol Layer</h1><h2 id="8-2-SYNC-field"><a href="#8-2-SYNC-field" class="headerlink" title="8.2 SYNC field"></a>8.2 SYNC field</h2><p>对于低速&#x2F;全速设备，SYNC信号是8位数据(从做到右是00000001)；对于高速设备，SYNC信号是32位数据(从左到右是00000000000000000000000000000001)。使用NRZI编码时，前面每个”0”都对应一个跳变。</p>
+<p>同步域这样可以用来同步主机端和设备端的数据时钟。</p>
+<h2 id="8-3-Packet-Field-Formats"><a href="#8-3-Packet-Field-Formats" class="headerlink" title="8.3 Packet Field Formats"></a>8.3 Packet Field Formats</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607150914.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="8-3-1-PID"><a href="#8-3-1-PID" class="headerlink" title="8.3.1 PID"></a>8.3.1 PID</h3><p>PID表示了包的类型。</p>
+<p>PID后四位为前四位的取反。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607150746.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607151058.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="8-3-2-Address-fields"><a href="#8-3-2-Address-fields" class="headerlink" title="8.3.2 Address fields"></a>8.3.2 Address fields</h3><h4 id="8-3-2-1-Address-Field"><a href="#8-3-2-1-Address-Field" class="headerlink" title="8.3.2.1 Address Field"></a>8.3.2.1 Address Field</h4><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607153555.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="8-3-2-2-Endpoint-Field"><a href="#8-3-2-2-Endpoint-Field" class="headerlink" title="8.3.2.2 Endpoint Field"></a>8.3.2.2 Endpoint Field</h4><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607153606.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="8-3-3-Frame-Number-Field"><a href="#8-3-3-Frame-Number-Field" class="headerlink" title="8.3.3 Frame Number Field"></a>8.3.3 Frame Number Field</h3><h3 id="8-3-4-Data-Field"><a href="#8-3-4-Data-Field" class="headerlink" title="8.3.4 Data Field"></a>8.3.4 Data Field</h3><h2 id="8-4-Packet-Formats"><a href="#8-4-Packet-Formats" class="headerlink" title="8.4 Packet Formats"></a>8.4 Packet Formats</h2><h3 id="8-4-1-Token-Packets"><a href="#8-4-1-Token-Packets" class="headerlink" title="8.4.1 Token Packets"></a>8.4.1 Token Packets</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607163045.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>OUT<ul>
+<li>通知设备将要输出一个数据包。</li>
+</ul>
+</li>
+<li>IN<ul>
+<li>通知设备返回一个数据包。</li>
+</ul>
+</li>
+<li>SETUP<ul>
+<li>只用于控制传输，跟OUT令牌包作用一样，通知设备将要输出一个数据包。区别在于SETUP后只使用DATA0数据包，且只能发送到设备的endpoint，并且设备必须接收。</li>
+</ul>
+</li>
+<li>SOF<ul>
+<li>以广播的形式发送，所有USB全速设备和高速设备都可以收到SOF包。host在full-speed bus每ms产生一个帧，在high-speed bus每125us产生一个微帧。USB主机会对当前帧号</li>
+</ul>
+</li>
+</ul>
 
                 
               </div>
@@ -338,7 +433,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/06/06/USB/usb%20spec/" title="">
+                      <a href="/2023/06/07/USB/%E5%9C%88%E5%9C%88%E6%95%99%E4%BD%A0%E7%8E%A9usb/" title="">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile"></span>
                         <span class="visible-mobile">上一篇</span>
@@ -348,8 +443,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/26/rCore_uCore/Lookup/" title="risc-v Lookup">
-                        <span class="hidden-mobile">risc-v Lookup</span>
+                      <a href="/2023/05/31/rCore_uCore/uCore_Chapter4/" title="">
+                        <span class="hidden-mobile"></span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
