@@ -6,7 +6,7 @@ gadget
 
 ep0
 
-endpoint
+uvc
 
 # Others
 
@@ -169,13 +169,121 @@ PID后四位为前四位的取反。
 
 ### 8.4.1 Token Packets
 
-![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607163045.png)
-
 - OUT
   - 通知设备将要输出一个数据包。
 - IN
   - 通知设备返回一个数据包。
 - SETUP
   - 只用于控制传输，跟OUT令牌包作用一样，通知设备将要输出一个数据包。区别在于SETUP后只使用DATA0数据包，且只能发送到设备的endpoint，并且设备必须接收。
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607163045.png)
+
+### 8.4.3 SOF packets
+
 - SOF
-  - 以广播的形式发送，所有USB全速设备和高速设备都可以收到SOF包。host在full-speed bus每ms产生一个帧，在high-speed bus每125us产生一个微帧。USB主机会对当前帧号
+  - 以广播的形式发送，所有USB全速设备和高速设备都可以收到SOF包。host在full-speed bus每ms产生一个帧，在high-speed bus每125us产生一个微帧。USB主机会对当前帧号进行计数，在每次帧开始时（或者微帧开始时，每毫秒有8个微帧，这8个微帧的帧号是相同的，即相同的SOF）。
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608111151.png)
+
+### 8.4.4 Data Packets
+
+low-speed 最大8bytes。
+
+full-speed 最大1023bytes。
+
+high-speed 最大1024bytes。
+
+### 8.4.5 Handshake Packets
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608112219.png)
+
+- ACK
+
+  表示正确接受数据，并且有足够空间来容纳数据。主机和设备都可以用ACK来确认。而NAK, STALL, NYET只有设备能够返回。
+
+- NAK
+
+  表示设备无法从主机端接收数据，或者设备没有数据返回给主机。
+
+- STALL
+
+  表示设备无法执行这个请求，或者端点已经被挂起了，表示一种错误的状态。如果端点的Halt feature被设置了，会返回STALL。
+
+- NYET
+
+  只在high-speed输出事务中使用，表示设备本次数据成功接收，但是没有足够空间来接收下一次数据。主机在下一次输出数据时，将先使用PING令牌包来试探设备是否有足够空间接收数据。
+
+### 8.4.6 Handshake Response
+
+#### 8.4.6.1 Function Response to IN Transactions
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608113546.png)
+
+#### 8.4.6.2 Host Response to IN Transactions
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608114127.png)
+
+#### 8.4.6.3 Function Response to an OUT Transaction
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608114206.png)
+
+第三行对应If the transaction is maintaining sequence bit synchronization and a mismatch is detected (refer to Section 8.6 for details), then the function returns ACK and discards the data。
+
+### 8.5.2 Bulk Transactions
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608135656.png)
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608142617.png)
+
+数据包类型在DATA0和DATA1之间切换。
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608141406.png)
+
+### 8.5.3 Control Transfer
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608142906.png)
+
+对应下图的Setup Stage。
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145713.png)
+
+Setup Stage必须是DATA0。
+
+Data Stage是可选的。
+
+### 8.5.4 Interrupt Transactions
+
+没有PING和NYET两个包。
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145003.png)
+
+### 8.5.5 Isochronous Transactions
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145252.png)
+
+# Chapter9 Device Framework
+
+## 9.4 Standard Device Requests
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608170120.png)
+
+## 9.6 Standard USB Descriptor Definitions
+
+### 9.6.1 Device
+
+### 9.6.3 Configuration
+
+### 9.6.5 Interface
+
+接口对应一种function。
+
+### 9.6.6 Endpoint
+
+### 9.6.7 String
+
+
+
+
+
+
+
