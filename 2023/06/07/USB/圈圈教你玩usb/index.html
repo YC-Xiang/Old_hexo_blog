@@ -24,7 +24,7 @@
 <meta property="og:description" content="1.4 USB的电气特性USB OTG中增加了一种MINI USB接头，使用5条线，比标准USB多一条身份识别线。 USB协议规定，设备在未配置前，可以从Vbus最多获取100mA电流，配置之后，最多可以获得500mA电流。Vbus是5V的电压。 1.7 USB的描述符及其之间的关系 设备描述符 配置描述符 接口描述符 端点描述符  多个端点构成一个接口，多个接口构成一个配置，多个配置构成一个设备">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-06-07T06:05:15.494Z">
-<meta property="article:modified_time" content="2023-06-07T06:41:20.377Z">
+<meta property="article:modified_time" content="2023-06-08T07:21:54.846Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -249,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          218 words
+          444 words
         
       </span>
     
@@ -260,7 +260,7 @@
         
         
         
-          2 mins
+          4 mins
         
       </span>
     
@@ -311,7 +311,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年6月7日 下午
+                    本文最后更新于：2023年6月8日 下午
                   
                 
               </p>
@@ -329,6 +329,10 @@
 </ul>
 <p>多个端点构成一个接口，多个接口构成一个配置，多个配置构成一个设备。</p>
 <h2 id="1-8-USB设备枚举过程"><a href="#1-8-USB设备枚举过程" class="headerlink" title="1.8 USB设备枚举过程"></a>1.8 USB设备枚举过程</h2><p>枚举就是从设备读取各种描述符信息。</p>
+<h3 id="1-10-7-传输类型与端点支持的最大包长"><a href="#1-10-7-传输类型与端点支持的最大包长" class="headerlink" title="1.10.7 传输类型与端点支持的最大包长"></a>1.10.7 传输类型与端点支持的最大包长</h3><p>Control transfer：低速8字节，高速64字节，全速8&#x2F;16&#x2F;32&#x2F;64字节。</p>
+<p>Isochronous Transfer：全速1023字节，高速1024字节，低速不支持。</p>
+<p>Interrupt Transfer：低速上限8字节，全速上限64字节，高速上限1024字节。</p>
+<p>Bulk transfer：高速512字节，全速8&#x2F;16&#x2F;32&#x2F;64字节，低速不支持。</p>
 
                 
               </div>

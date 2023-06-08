@@ -16,12 +16,12 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Questions时钟？ gadget ep0 endpoint OthersUSB标准名称变更： USB 1.0 -&gt; USB 2.0 Low-Speed USB 1.1 -&gt; USB 2.0 Full-Speed USB 2.0 -&gt; USB 2.0 High-Speed USB 3.0 -&gt; USB 3.1 Gen1 -&gt; USB 3.2 Gen1 USB 3.">
+    <meta name="description" content="Questions时钟？ gadget ep0 uvc OthersUSB标准名称变更： USB 1.0 -&gt; USB 2.0 Low-Speed USB 1.1 -&gt; USB 2.0 Full-Speed USB 2.0 -&gt; USB 2.0 High-Speed USB 3.0 -&gt; USB 3.1 Gen1 -&gt; USB 3.2 Gen1 USB 3.1 -&amp;g">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Yucheng&#39;s Blog">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/06/06/USB/usb%20spec/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Questions时钟？ gadget ep0 endpoint OthersUSB标准名称变更： USB 1.0 -&gt; USB 2.0 Low-Speed USB 1.1 -&gt; USB 2.0 Full-Speed USB 2.0 -&gt; USB 2.0 High-Speed USB 3.0 -&gt; USB 3.1 Gen1 -&gt; USB 3.2 Gen1 USB 3.">
+<meta property="og:description" content="Questions时钟？ gadget ep0 uvc OthersUSB标准名称变更： USB 1.0 -&gt; USB 2.0 Low-Speed USB 1.1 -&gt; USB 2.0 Full-Speed USB 2.0 -&gt; USB 2.0 High-Speed USB 3.0 -&gt; USB 3.1 Gen1 -&gt; USB 3.2 Gen1 USB 3.1 -&amp;g">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230606134650.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607093420.png">
@@ -38,8 +38,21 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607153555.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607153606.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607163045.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608111151.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608112219.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608113546.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608114127.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608114206.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608135656.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608142617.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608141406.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608142906.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145713.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145003.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145252.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608170120.png">
 <meta property="article:published_time" content="2023-06-06T02:48:06.747Z">
-<meta property="article:modified_time" content="2023-06-07T09:53:44.499Z">
+<meta property="article:modified_time" content="2023-06-08T09:11:26.056Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230606134650.png">
@@ -265,7 +278,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.1k words
+          3.2k words
         
       </span>
     
@@ -276,7 +289,7 @@
         
         
         
-          18 mins
+          27 mins
         
       </span>
     
@@ -327,7 +340,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年6月7日 下午
+                    本文最后更新于：2023年6月8日 下午
                   
                 
               </p>
@@ -338,7 +351,7 @@
                 <h1 id="Questions"><a href="#Questions" class="headerlink" title="Questions"></a>Questions</h1><p>时钟？</p>
 <p>gadget</p>
 <p>ep0</p>
-<p>endpoint</p>
+<p>uvc</p>
 <h1 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h1><p>USB标准名称变更：</p>
 <p>USB 1.0 -&gt; USB 2.0 Low-Speed</p>
 <p>USB 1.1 -&gt; USB 2.0 Full-Speed</p>
@@ -395,8 +408,7 @@
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607151058.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="8-3-2-Address-fields"><a href="#8-3-2-Address-fields" class="headerlink" title="8.3.2 Address fields"></a>8.3.2 Address fields</h3><h4 id="8-3-2-1-Address-Field"><a href="#8-3-2-1-Address-Field" class="headerlink" title="8.3.2.1 Address Field"></a>8.3.2.1 Address Field</h4><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607153555.png" srcset="/img/loading.gif" lazyload></p>
 <h4 id="8-3-2-2-Endpoint-Field"><a href="#8-3-2-2-Endpoint-Field" class="headerlink" title="8.3.2.2 Endpoint Field"></a>8.3.2.2 Endpoint Field</h4><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607153606.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="8-3-3-Frame-Number-Field"><a href="#8-3-3-Frame-Number-Field" class="headerlink" title="8.3.3 Frame Number Field"></a>8.3.3 Frame Number Field</h3><h3 id="8-3-4-Data-Field"><a href="#8-3-4-Data-Field" class="headerlink" title="8.3.4 Data Field"></a>8.3.4 Data Field</h3><h2 id="8-4-Packet-Formats"><a href="#8-4-Packet-Formats" class="headerlink" title="8.4 Packet Formats"></a>8.4 Packet Formats</h2><h3 id="8-4-1-Token-Packets"><a href="#8-4-1-Token-Packets" class="headerlink" title="8.4.1 Token Packets"></a>8.4.1 Token Packets</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607163045.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
+<h3 id="8-3-3-Frame-Number-Field"><a href="#8-3-3-Frame-Number-Field" class="headerlink" title="8.3.3 Frame Number Field"></a>8.3.3 Frame Number Field</h3><h3 id="8-3-4-Data-Field"><a href="#8-3-4-Data-Field" class="headerlink" title="8.3.4 Data Field"></a>8.3.4 Data Field</h3><h2 id="8-4-Packet-Formats"><a href="#8-4-Packet-Formats" class="headerlink" title="8.4 Packet Formats"></a>8.4 Packet Formats</h2><h3 id="8-4-1-Token-Packets"><a href="#8-4-1-Token-Packets" class="headerlink" title="8.4.1 Token Packets"></a>8.4.1 Token Packets</h3><ul>
 <li>OUT<ul>
 <li>通知设备将要输出一个数据包。</li>
 </ul>
@@ -409,12 +421,52 @@
 <li>只用于控制传输，跟OUT令牌包作用一样，通知设备将要输出一个数据包。区别在于SETUP后只使用DATA0数据包，且只能发送到设备的endpoint，并且设备必须接收。</li>
 </ul>
 </li>
+</ul>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607163045.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="8-4-3-SOF-packets"><a href="#8-4-3-SOF-packets" class="headerlink" title="8.4.3 SOF packets"></a>8.4.3 SOF packets</h3><ul>
 <li>SOF<ul>
-<li>以广播的形式发送，所有USB全速设备和高速设备都可以收到SOF包。host在full-speed bus每ms产生一个帧，在high-speed bus每125us产生一个微帧。USB主机会对当前帧号</li>
+<li>以广播的形式发送，所有USB全速设备和高速设备都可以收到SOF包。host在full-speed bus每ms产生一个帧，在high-speed bus每125us产生一个微帧。USB主机会对当前帧号进行计数，在每次帧开始时（或者微帧开始时，每毫秒有8个微帧，这8个微帧的帧号是相同的，即相同的SOF）。</li>
 </ul>
 </li>
 </ul>
-
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608111151.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="8-4-4-Data-Packets"><a href="#8-4-4-Data-Packets" class="headerlink" title="8.4.4 Data Packets"></a>8.4.4 Data Packets</h3><p>low-speed 最大8bytes。</p>
+<p>full-speed 最大1023bytes。</p>
+<p>high-speed 最大1024bytes。</p>
+<h3 id="8-4-5-Handshake-Packets"><a href="#8-4-5-Handshake-Packets" class="headerlink" title="8.4.5 Handshake Packets"></a>8.4.5 Handshake Packets</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608112219.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><p>ACK</p>
+<p>表示正确接受数据，并且有足够空间来容纳数据。主机和设备都可以用ACK来确认。而NAK, STALL, NYET只有设备能够返回。</p>
+</li>
+<li><p>NAK</p>
+<p>表示设备无法从主机端接收数据，或者设备没有数据返回给主机。</p>
+</li>
+<li><p>STALL</p>
+<p>表示设备无法执行这个请求，或者端点已经被挂起了，表示一种错误的状态。如果端点的Halt feature被设置了，会返回STALL。</p>
+</li>
+<li><p>NYET</p>
+<p>只在high-speed输出事务中使用，表示设备本次数据成功接收，但是没有足够空间来接收下一次数据。主机在下一次输出数据时，将先使用PING令牌包来试探设备是否有足够空间接收数据。</p>
+</li>
+</ul>
+<h3 id="8-4-6-Handshake-Response"><a href="#8-4-6-Handshake-Response" class="headerlink" title="8.4.6 Handshake Response"></a>8.4.6 Handshake Response</h3><h4 id="8-4-6-1-Function-Response-to-IN-Transactions"><a href="#8-4-6-1-Function-Response-to-IN-Transactions" class="headerlink" title="8.4.6.1 Function Response to IN Transactions"></a>8.4.6.1 Function Response to IN Transactions</h4><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608113546.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="8-4-6-2-Host-Response-to-IN-Transactions"><a href="#8-4-6-2-Host-Response-to-IN-Transactions" class="headerlink" title="8.4.6.2 Host Response to IN Transactions"></a>8.4.6.2 Host Response to IN Transactions</h4><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608114127.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="8-4-6-3-Function-Response-to-an-OUT-Transaction"><a href="#8-4-6-3-Function-Response-to-an-OUT-Transaction" class="headerlink" title="8.4.6.3 Function Response to an OUT Transaction"></a>8.4.6.3 Function Response to an OUT Transaction</h4><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608114206.png" srcset="/img/loading.gif" lazyload></p>
+<p>第三行对应If the transaction is maintaining sequence bit synchronization and a mismatch is detected (refer to Section 8.6 for details), then the function returns ACK and discards the data。</p>
+<h3 id="8-5-2-Bulk-Transactions"><a href="#8-5-2-Bulk-Transactions" class="headerlink" title="8.5.2 Bulk Transactions"></a>8.5.2 Bulk Transactions</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608135656.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608142617.png" srcset="/img/loading.gif" lazyload></p>
+<p>数据包类型在DATA0和DATA1之间切换。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608141406.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="8-5-3-Control-Transfer"><a href="#8-5-3-Control-Transfer" class="headerlink" title="8.5.3 Control Transfer"></a>8.5.3 Control Transfer</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608142906.png" srcset="/img/loading.gif" lazyload></p>
+<p>对应下图的Setup Stage。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145713.png" srcset="/img/loading.gif" lazyload></p>
+<p>Setup Stage必须是DATA0。</p>
+<p>Data Stage是可选的。</p>
+<h3 id="8-5-4-Interrupt-Transactions"><a href="#8-5-4-Interrupt-Transactions" class="headerlink" title="8.5.4 Interrupt Transactions"></a>8.5.4 Interrupt Transactions</h3><p>没有PING和NYET两个包。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145003.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="8-5-5-Isochronous-Transactions"><a href="#8-5-5-Isochronous-Transactions" class="headerlink" title="8.5.5 Isochronous Transactions"></a>8.5.5 Isochronous Transactions</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145252.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="Chapter9-Device-Framework"><a href="#Chapter9-Device-Framework" class="headerlink" title="Chapter9 Device Framework"></a>Chapter9 Device Framework</h1><h2 id="9-4-Standard-Device-Requests"><a href="#9-4-Standard-Device-Requests" class="headerlink" title="9.4 Standard Device Requests"></a>9.4 Standard Device Requests</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608170120.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="9-6-Standard-USB-Descriptor-Definitions"><a href="#9-6-Standard-USB-Descriptor-Definitions" class="headerlink" title="9.6 Standard USB Descriptor Definitions"></a>9.6 Standard USB Descriptor Definitions</h2><h3 id="9-6-1-Device"><a href="#9-6-1-Device" class="headerlink" title="9.6.1 Device"></a>9.6.1 Device</h3><h3 id="9-6-3-Configuration"><a href="#9-6-3-Configuration" class="headerlink" title="9.6.3 Configuration"></a>9.6.3 Configuration</h3><h3 id="9-6-5-Interface"><a href="#9-6-5-Interface" class="headerlink" title="9.6.5 Interface"></a>9.6.5 Interface</h3><p>接口对应一种function。</p>
+<h3 id="9-6-6-Endpoint"><a href="#9-6-6-Endpoint" class="headerlink" title="9.6.6 Endpoint"></a>9.6.6 Endpoint</h3><h3 id="9-6-7-String"><a href="#9-6-7-String" class="headerlink" title="9.6.7 String"></a>9.6.7 String</h3>
                 
               </div>
             
