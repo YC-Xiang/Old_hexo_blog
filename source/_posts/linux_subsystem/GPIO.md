@@ -152,3 +152,5 @@ gpiod_set_value设置的值是“逻辑值”，不一定等于物理值。
 echo 19 > export
 
 /sys/class/gpio/gpioN/
+
+/sys/kernel/debug/gpio 可以看哪些gpio被申请了

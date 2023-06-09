@@ -1,12 +1,6 @@
 # Questions
 
-时钟？
-
-gadget
-
-ep0
-
-uvc
+USB-IF
 
 # Others
 
@@ -23,6 +17,26 @@ USB 3.0 -> USB 3.1 Gen1 -> USB 3.2 Gen1
 USB 3.1 -> USB 3.1 Gen2 -> USB 3.2 Gen2 × 1
 
 USB 3.2 -> USB 3.2 Gen2 × 2
+
+
+
+USB OTG中增加了一种MINI USB接头，使用5条线，比标准USB多一条身份识别线。
+
+USB协议规定，设备在未配置前，可以从Vbus最多获取100mA电流，配置之后，最多可以获得500mA电流。Vbus是5V的电压。
+
+
+
+枚举就是从设备读取各种描述符信息。
+
+
+
+Control transfer：低速8字节，高速64字节，全速8/16/32/64字节。
+
+Isochronous Transfer：全速1023字节，高速1024字节，低速不支持。
+
+Interrupt Transfer：低速上限8字节，全速上限64字节，高速上限1024字节。
+
+Bulk transfer：高速512字节，全速8/16/32/64字节，低速不支持。
 
 # Chapter3 Background
 
@@ -54,6 +68,31 @@ USB 2.0 host controllers和hubs提供能力使**full speed和low speed的数据*
 以**high speed**的速率在**host controller和hub**之间传递，
 
 以**full speed和low speed**的速率在**hub和device**之间传递。
+
+# Chapter5 USB Data Flow Model
+
+### 5.3.1 Device Endpoints
+
+Endpoint 只支持一种方向的数据流通，input or output。除endpoint0，input+output。
+
+endpoint 描述的内容有：
+
+- 总线访问频率/延迟要求
+- 带宽要求
+- endpoint number
+- Error handling
+- 最大的packet size
+- 数据传输方向
+
+### 5.3.2 Pipes
+
+- Stream
+
+  传输的data没有USB-defined structure
+
+- Message
+
+  传输的data有USB-defined structure
 
 # Chapter7 Electrical
 
@@ -263,23 +302,47 @@ Data Stage是可选的。
 
 # Chapter9 Device Framework
 
+USB的状态切换图：
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174140.png)
+
 ## 9.4 Standard Device Requests
 
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608170120.png)
 
 ## 9.6 Standard USB Descriptor Definitions
 
-### 9.6.1 Device
+### 9.6.1 Device 设备描述符
 
-### 9.6.3 Configuration
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609173233.png)
 
-### 9.6.5 Interface
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609173252.png)
+
+### 9.6.2 Device_qualifer
+
+### 9.6.3 Configuration 配置描述符
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609173911.png)
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609173929.png)
+
+### 9.6.5 Interface 接口描述符
 
 接口对应一种function。
 
-### 9.6.6 Endpoint
+![image-20230609174005424](C:\Users\yucheng_xiang\AppData\Roaming\Typora\typora-user-images\image-20230609174005424.png)
 
-### 9.6.7 String
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174012.png)
+
+### 9.6.6 Endpoint 端点描述符
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174035.png)
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174043.png)
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174055.png)
+
+### 9.6.7 String 字符串描述符
 
 
 
