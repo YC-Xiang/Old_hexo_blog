@@ -16,12 +16,12 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Questions时钟？ gadget ep0 uvc OthersUSB标准名称变更： USB 1.0 -&gt; USB 2.0 Low-Speed USB 1.1 -&gt; USB 2.0 Full-Speed USB 2.0 -&gt; USB 2.0 High-Speed USB 3.0 -&gt; USB 3.1 Gen1 -&gt; USB 3.2 Gen1 USB 3.1 -&amp;g">
+    <meta name="description" content="QuestionsUSB-IF OthersUSB标准名称变更： USB 1.0 -&gt; USB 2.0 Low-Speed USB 1.1 -&gt; USB 2.0 Full-Speed USB 2.0 -&gt; USB 2.0 High-Speed USB 3.0 -&gt; USB 3.1 Gen1 -&gt; USB 3.2 Gen1 USB 3.1 -&gt; USB 3.1 G">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Yucheng&#39;s Blog">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/06/06/USB/usb%20spec/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Questions时钟？ gadget ep0 uvc OthersUSB标准名称变更： USB 1.0 -&gt; USB 2.0 Low-Speed USB 1.1 -&gt; USB 2.0 Full-Speed USB 2.0 -&gt; USB 2.0 High-Speed USB 3.0 -&gt; USB 3.1 Gen1 -&gt; USB 3.2 Gen1 USB 3.1 -&amp;g">
+<meta property="og:description" content="QuestionsUSB-IF OthersUSB标准名称变更： USB 1.0 -&gt; USB 2.0 Low-Speed USB 1.1 -&gt; USB 2.0 Full-Speed USB 2.0 -&gt; USB 2.0 High-Speed USB 3.0 -&gt; USB 3.1 Gen1 -&gt; USB 3.2 Gen1 USB 3.1 -&gt; USB 3.1 G">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230606134650.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607093420.png">
@@ -50,9 +50,19 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145713.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145003.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145252.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174140.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608170120.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609173233.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609173252.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609173911.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609173929.png">
+<meta property="og:image" content="c:\Users\yucheng_xiang\AppData\Roaming\Typora\typora-user-images\image-20230609174005424.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174012.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174035.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174043.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174055.png">
 <meta property="article:published_time" content="2023-06-06T02:48:06.747Z">
-<meta property="article:modified_time" content="2023-06-08T09:11:26.056Z">
+<meta property="article:modified_time" content="2023-06-09T09:41:54.316Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230606134650.png">
@@ -278,7 +288,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.2k words
+          3.8k words
         
       </span>
     
@@ -289,7 +299,7 @@
         
         
         
-          27 mins
+          32 mins
         
       </span>
     
@@ -340,7 +350,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年6月8日 下午
+                    本文最后更新于：2023年6月9日 下午
                   
                 
               </p>
@@ -348,10 +358,7 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Questions"><a href="#Questions" class="headerlink" title="Questions"></a>Questions</h1><p>时钟？</p>
-<p>gadget</p>
-<p>ep0</p>
-<p>uvc</p>
+                <h1 id="Questions"><a href="#Questions" class="headerlink" title="Questions"></a>Questions</h1><p>USB-IF</p>
 <h1 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h1><p>USB标准名称变更：</p>
 <p>USB 1.0 -&gt; USB 2.0 Low-Speed</p>
 <p>USB 1.1 -&gt; USB 2.0 Full-Speed</p>
@@ -359,6 +366,13 @@
 <p>USB 3.0 -&gt; USB 3.1 Gen1 -&gt; USB 3.2 Gen1</p>
 <p>USB 3.1 -&gt; USB 3.1 Gen2 -&gt; USB 3.2 Gen2 × 1</p>
 <p>USB 3.2 -&gt; USB 3.2 Gen2 × 2</p>
+<p>USB OTG中增加了一种MINI USB接头，使用5条线，比标准USB多一条身份识别线。</p>
+<p>USB协议规定，设备在未配置前，可以从Vbus最多获取100mA电流，配置之后，最多可以获得500mA电流。Vbus是5V的电压。</p>
+<p>枚举就是从设备读取各种描述符信息。</p>
+<p>Control transfer：低速8字节，高速64字节，全速8&#x2F;16&#x2F;32&#x2F;64字节。</p>
+<p>Isochronous Transfer：全速1023字节，高速1024字节，低速不支持。</p>
+<p>Interrupt Transfer：低速上限8字节，全速上限64字节，高速上限1024字节。</p>
+<p>Bulk transfer：高速512字节，全速8&#x2F;16&#x2F;32&#x2F;64字节，低速不支持。</p>
 <h1 id="Chapter3-Background"><a href="#Chapter3-Background" class="headerlink" title="Chapter3 Background"></a>Chapter3 Background</h1><p>USB 接口可用于连接多达 127 种外设。</p>
 <h1 id="Chapter4-Architectural-Overview"><a href="#Chapter4-Architectural-Overview" class="headerlink" title="Chapter4 Architectural Overview"></a>Chapter4 Architectural Overview</h1><h3 id="4-1-1-Bus-Topology-总线拓扑"><a href="#4-1-1-Bus-Topology-总线拓扑" class="headerlink" title="4.1.1 Bus Topology 总线拓扑"></a>4.1.1 Bus Topology 总线拓扑</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230606134650.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
@@ -378,6 +392,24 @@
 <p>USB 2.0 host controllers和hubs提供能力使<strong>full speed和low speed的数据</strong>能</p>
 <p>以<strong>high speed</strong>的速率在<strong>host controller和hub</strong>之间传递，</p>
 <p>以<strong>full speed和low speed</strong>的速率在<strong>hub和device</strong>之间传递。</p>
+<h1 id="Chapter5-USB-Data-Flow-Model"><a href="#Chapter5-USB-Data-Flow-Model" class="headerlink" title="Chapter5 USB Data Flow Model"></a>Chapter5 USB Data Flow Model</h1><h3 id="5-3-1-Device-Endpoints"><a href="#5-3-1-Device-Endpoints" class="headerlink" title="5.3.1 Device Endpoints"></a>5.3.1 Device Endpoints</h3><p>Endpoint 只支持一种方向的数据流通，input or output。除endpoint0，input+output。</p>
+<p>endpoint 描述的内容有：</p>
+<ul>
+<li>总线访问频率&#x2F;延迟要求</li>
+<li>带宽要求</li>
+<li>endpoint number</li>
+<li>Error handling</li>
+<li>最大的packet size</li>
+<li>数据传输方向</li>
+</ul>
+<h3 id="5-3-2-Pipes"><a href="#5-3-2-Pipes" class="headerlink" title="5.3.2 Pipes"></a>5.3.2 Pipes</h3><ul>
+<li><p>Stream</p>
+<p>传输的data没有USB-defined structure</p>
+</li>
+<li><p>Message</p>
+<p>传输的data有USB-defined structure</p>
+</li>
+</ul>
 <h1 id="Chapter7-Electrical"><a href="#Chapter7-Electrical" class="headerlink" title="Chapter7 Electrical"></a>Chapter7 Electrical</h1><h2 id="7-1-Signaling"><a href="#7-1-Signaling" class="headerlink" title="7.1 Signaling"></a>7.1 Signaling</h2><p>High Speed电路图。</p>
 <p>Hub D+, D-信号线上有右下两个15k Rpd下拉电阻，所以默认电平为0。</p>
 <p>device D+信号线上有1.5k Rpu上拉电阻，接上后D+被拉高。运行后会被Rpu_enable移除。</p>
@@ -464,9 +496,20 @@
 <h3 id="8-5-4-Interrupt-Transactions"><a href="#8-5-4-Interrupt-Transactions" class="headerlink" title="8.5.4 Interrupt Transactions"></a>8.5.4 Interrupt Transactions</h3><p>没有PING和NYET两个包。</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145003.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="8-5-5-Isochronous-Transactions"><a href="#8-5-5-Isochronous-Transactions" class="headerlink" title="8.5.5 Isochronous Transactions"></a>8.5.5 Isochronous Transactions</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145252.png" srcset="/img/loading.gif" lazyload></p>
-<h1 id="Chapter9-Device-Framework"><a href="#Chapter9-Device-Framework" class="headerlink" title="Chapter9 Device Framework"></a>Chapter9 Device Framework</h1><h2 id="9-4-Standard-Device-Requests"><a href="#9-4-Standard-Device-Requests" class="headerlink" title="9.4 Standard Device Requests"></a>9.4 Standard Device Requests</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608170120.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="9-6-Standard-USB-Descriptor-Definitions"><a href="#9-6-Standard-USB-Descriptor-Definitions" class="headerlink" title="9.6 Standard USB Descriptor Definitions"></a>9.6 Standard USB Descriptor Definitions</h2><h3 id="9-6-1-Device"><a href="#9-6-1-Device" class="headerlink" title="9.6.1 Device"></a>9.6.1 Device</h3><h3 id="9-6-3-Configuration"><a href="#9-6-3-Configuration" class="headerlink" title="9.6.3 Configuration"></a>9.6.3 Configuration</h3><h3 id="9-6-5-Interface"><a href="#9-6-5-Interface" class="headerlink" title="9.6.5 Interface"></a>9.6.5 Interface</h3><p>接口对应一种function。</p>
-<h3 id="9-6-6-Endpoint"><a href="#9-6-6-Endpoint" class="headerlink" title="9.6.6 Endpoint"></a>9.6.6 Endpoint</h3><h3 id="9-6-7-String"><a href="#9-6-7-String" class="headerlink" title="9.6.7 String"></a>9.6.7 String</h3>
+<h1 id="Chapter9-Device-Framework"><a href="#Chapter9-Device-Framework" class="headerlink" title="Chapter9 Device Framework"></a>Chapter9 Device Framework</h1><p>USB的状态切换图：</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174140.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="9-4-Standard-Device-Requests"><a href="#9-4-Standard-Device-Requests" class="headerlink" title="9.4 Standard Device Requests"></a>9.4 Standard Device Requests</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608170120.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="9-6-Standard-USB-Descriptor-Definitions"><a href="#9-6-Standard-USB-Descriptor-Definitions" class="headerlink" title="9.6 Standard USB Descriptor Definitions"></a>9.6 Standard USB Descriptor Definitions</h2><h3 id="9-6-1-Device-设备描述符"><a href="#9-6-1-Device-设备描述符" class="headerlink" title="9.6.1 Device 设备描述符"></a>9.6.1 Device 设备描述符</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609173233.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609173252.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="9-6-2-Device-qualifer"><a href="#9-6-2-Device-qualifer" class="headerlink" title="9.6.2 Device_qualifer"></a>9.6.2 Device_qualifer</h3><h3 id="9-6-3-Configuration-配置描述符"><a href="#9-6-3-Configuration-配置描述符" class="headerlink" title="9.6.3 Configuration 配置描述符"></a>9.6.3 Configuration 配置描述符</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609173911.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609173929.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="9-6-5-Interface-接口描述符"><a href="#9-6-5-Interface-接口描述符" class="headerlink" title="9.6.5 Interface 接口描述符"></a>9.6.5 Interface 接口描述符</h3><p>接口对应一种function。</p>
+<p><img src="C:\Users\yucheng_xiang\AppData\Roaming\Typora\typora-user-images\image-20230609174005424.png" srcset="/img/loading.gif" lazyload alt="image-20230609174005424"></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174012.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="9-6-6-Endpoint-端点描述符"><a href="#9-6-6-Endpoint-端点描述符" class="headerlink" title="9.6.6 Endpoint 端点描述符"></a>9.6.6 Endpoint 端点描述符</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174035.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174043.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174055.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="9-6-7-String-字符串描述符"><a href="#9-6-7-String-字符串描述符" class="headerlink" title="9.6.7 String 字符串描述符"></a>9.6.7 String 字符串描述符</h3>
                 
               </div>
             
@@ -484,12 +527,6 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
-                    
-                      <a href="/2023/06/07/USB/%E5%9C%88%E5%9C%88%E6%95%99%E4%BD%A0%E7%8E%A9usb/" title="">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
                     
                   </article>
                   <article class="post-next col-6">
