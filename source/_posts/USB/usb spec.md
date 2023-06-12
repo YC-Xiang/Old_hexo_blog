@@ -306,9 +306,75 @@ USB的状态切换图：
 
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174140.png)
 
+## 9.3 USB Device Requests
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612145851.png)
+
+- bmRequestType：区分方向，type，device/interface/endpoint。
+
+- bRequest: 具体的事件，只定义了bmRequestType D[6:5]为Standard的情况。
+
+- wValue: 传递一些需要的值。
+
+- wIndex: 分为endpoint和interface，两种的wIndex不同。
+
+**endpoint:**
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612152356.png)
+
+D7: 0:OUT 1:IN 在control pipe中direction应该被设为0，即OUT事件。但device可以接收0或1。
+
+**interface:**
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612152452.png)
+
+- wLength: control transfer第二段传递data0的字节数。如果wLength为0, 不需要传递数据，没有数据传输的阶段（注意这里的数据传输阶段是control transfer 中data0那段，是SETUP stage中那段）。
+
+  INPUT request wLength不能超过wLength字节数，可以比wLength少。
+
+  OUTPUT request wLength正确表示host传递给device的字节数。
+
 ## 9.4 Standard Device Requests
 
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608170120.png)
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612110946.png)
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612111010.png)
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612155242.png)
+
+### 9.4.1 Clear Feature
+
+在Address state下合法。Recipient为device or ep0合法，看Table9-6。
+
+Test_Mode feature 不能被ClearFeature()清除。
+
+### 9.4.5 Get Status
+
+bmRequestType为Device，device返回的信息。
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612160419.png)
+
+bmRequestType为Interface，status为0。
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612160437.png)
+
+bmRequestType为endpoint，返回是否halt。
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612160446.png)
+
+所有interrupt和bulk endpoints都要实现Halt feature。
+
+Default control pipe，即ep0 in and ep0 out，不需要也不推荐实现Halt feature。
+
+### 9.4.6 Set Address
+
+Default stage: 传递的地址不为0则进入Address stage， 为0则保持在Default stage。
+
+Address stage: 传递的地址为0则进入Default stage，不为0则保持在Address stage，并更换新的地址。
+
+地址不能超过127。
 
 ## 9.6 Standard USB Descriptor Definitions
 

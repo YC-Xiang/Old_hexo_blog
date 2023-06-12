@@ -22,6 +22,24 @@ linux5.4: void __iomem *devm_platform_ioremap_resource(struct platform_device *p
 
 相当于platform_get_resource + devm_request_mem_region **+** devm_ioremap
 
+
+
+container_of: 
+
+```c
+#define list_entry(ptr, type, member) \ /// list_entry作用和container_of相同
+	container_of(ptr, type, member)
+
+container_of(ptr, type, member)
+
+// ptr:表示结构体中member的地址 h
+// type:表示结构体类型 struct xxx
+// member:表示结构体中的成员 yyy
+// 返回结构体的首地址
+```
+
+
+
 # Initcalls
 
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230524150950.png)
