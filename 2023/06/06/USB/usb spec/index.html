@@ -51,7 +51,16 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145003.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145252.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174140.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612145851.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612152356.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612152452.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608170120.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612110946.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612111010.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612155242.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612160419.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612160437.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612160446.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609173233.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609173252.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609173911.png">
@@ -62,7 +71,7 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174043.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174055.png">
 <meta property="article:published_time" content="2023-06-06T02:48:06.747Z">
-<meta property="article:modified_time" content="2023-06-09T09:41:54.316Z">
+<meta property="article:modified_time" content="2023-06-12T09:06:19.765Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230606134650.png">
@@ -288,7 +297,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.8k words
+          4.8k words
         
       </span>
     
@@ -299,7 +308,7 @@
         
         
         
-          32 mins
+          40 mins
         
       </span>
     
@@ -350,7 +359,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年6月9日 下午
+                    本文最后更新于：2023年6月12日 下午
                   
                 
               </p>
@@ -498,7 +507,45 @@
 <h3 id="8-5-5-Isochronous-Transactions"><a href="#8-5-5-Isochronous-Transactions" class="headerlink" title="8.5.5 Isochronous Transactions"></a>8.5.5 Isochronous Transactions</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145252.png" srcset="/img/loading.gif" lazyload></p>
 <h1 id="Chapter9-Device-Framework"><a href="#Chapter9-Device-Framework" class="headerlink" title="Chapter9 Device Framework"></a>Chapter9 Device Framework</h1><p>USB的状态切换图：</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174140.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="9-3-USB-Device-Requests"><a href="#9-3-USB-Device-Requests" class="headerlink" title="9.3 USB Device Requests"></a>9.3 USB Device Requests</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612145851.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><p>bmRequestType：区分方向，type，device&#x2F;interface&#x2F;endpoint。</p>
+</li>
+<li><p>bRequest: 具体的事件，只定义了bmRequestType D[6:5]为Standard的情况。</p>
+</li>
+<li><p>wValue: 传递一些需要的值。</p>
+</li>
+<li><p>wIndex: 分为endpoint和interface，两种的wIndex不同。</p>
+</li>
+</ul>
+<p><strong>endpoint:</strong></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612152356.png" srcset="/img/loading.gif" lazyload></p>
+<p>D7: 0:OUT 1:IN 在control pipe中direction应该被设为0，即OUT事件。但device可以接收0或1。</p>
+<p><strong>interface:</strong></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612152452.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><p>wLength: control transfer第二段传递data0的字节数。如果wLength为0, 不需要传递数据，没有数据传输的阶段（注意这里的数据传输阶段是control transfer 中data0那段，是SETUP stage中那段）。</p>
+<p>INPUT request wLength不能超过wLength字节数，可以比wLength少。</p>
+<p>OUTPUT request wLength正确表示host传递给device的字节数。</p>
+</li>
+</ul>
 <h2 id="9-4-Standard-Device-Requests"><a href="#9-4-Standard-Device-Requests" class="headerlink" title="9.4 Standard Device Requests"></a>9.4 Standard Device Requests</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608170120.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612110946.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612111010.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612155242.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="9-4-1-Clear-Feature"><a href="#9-4-1-Clear-Feature" class="headerlink" title="9.4.1 Clear Feature"></a>9.4.1 Clear Feature</h3><p>在Address state下合法。Recipient为device or ep0合法，看Table9-6。</p>
+<p>Test_Mode feature 不能被ClearFeature()清除。</p>
+<h3 id="9-4-5-Get-Status"><a href="#9-4-5-Get-Status" class="headerlink" title="9.4.5 Get Status"></a>9.4.5 Get Status</h3><p>bmRequestType为Device，device返回的信息。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612160419.png" srcset="/img/loading.gif" lazyload></p>
+<p>bmRequestType为Interface，status为0。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612160437.png" srcset="/img/loading.gif" lazyload></p>
+<p>bmRequestType为endpoint，返回是否halt。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612160446.png" srcset="/img/loading.gif" lazyload></p>
+<p>所有interrupt和bulk endpoints都要实现Halt feature。</p>
+<p>Default control pipe，即ep0 in and ep0 out，不需要也不推荐实现Halt feature。</p>
+<h3 id="9-4-6-Set-Address"><a href="#9-4-6-Set-Address" class="headerlink" title="9.4.6 Set Address"></a>9.4.6 Set Address</h3><p>Default stage: 传递的地址不为0则进入Address stage， 为0则保持在Default stage。</p>
+<p>Address stage: 传递的地址为0则进入Default stage，不为0则保持在Address stage，并更换新的地址。</p>
+<p>地址不能超过127。</p>
 <h2 id="9-6-Standard-USB-Descriptor-Definitions"><a href="#9-6-Standard-USB-Descriptor-Definitions" class="headerlink" title="9.6 Standard USB Descriptor Definitions"></a>9.6 Standard USB Descriptor Definitions</h2><h3 id="9-6-1-Device-设备描述符"><a href="#9-6-1-Device-设备描述符" class="headerlink" title="9.6.1 Device 设备描述符"></a>9.6.1 Device 设备描述符</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609173233.png" srcset="/img/loading.gif" lazyload></p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609173252.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="9-6-2-Device-qualifer"><a href="#9-6-2-Device-qualifer" class="headerlink" title="9.6.2 Device_qualifer"></a>9.6.2 Device_qualifer</h3><h3 id="9-6-3-Configuration-配置描述符"><a href="#9-6-3-Configuration-配置描述符" class="headerlink" title="9.6.3 Configuration 配置描述符"></a>9.6.3 Configuration 配置描述符</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609173911.png" srcset="/img/loading.gif" lazyload></p>
@@ -527,6 +574,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2023/06/12/USB/usb%20driver/" title="">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

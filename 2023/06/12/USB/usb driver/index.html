@@ -16,26 +16,23 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="NOT indexedinclude &lt;asm&#x2F;xxx.h&gt; 先找arch&#x2F;xxx&#x2F;include&#x2F;xxx.h，没有的话就找&#x2F;include&#x2F;asm-generic&#x2F;xxx.h 从dts中获取regs地址并映射到virtual address: linux5.10: void __iomem *devm_platfo">
+    <meta name="description" content="&#96; 1234567891011121314151617181920212223&#x2F;&#x2F; rts3917 endpoints  &#x2F;*   * ep0 - CONTROL   *   * ep1in - BULK IN   * ep2in - BULK IN   * ep3in - BULK IN   * ep4in - UAC ISO IN   * ep5in - UVC ISO IN">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux Driver Common Essentials">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/05/19/linux_subsystem/Universal/index.html">
+<meta property="og:title" content="Yucheng&#39;s Blog">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/06/12/USB/usb%20driver/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="NOT indexedinclude &lt;asm&#x2F;xxx.h&gt; 先找arch&#x2F;xxx&#x2F;include&#x2F;xxx.h，没有的话就找&#x2F;include&#x2F;asm-generic&#x2F;xxx.h 从dts中获取regs地址并映射到virtual address: linux5.10: void __iomem *devm_platfo">
+<meta property="og:description" content="&#96; 1234567891011121314151617181920212223&#x2F;&#x2F; rts3917 endpoints  &#x2F;*   * ep0 - CONTROL   *   * ep1in - BULK IN   * ep2in - BULK IN   * ep3in - BULK IN   * ep4in - UAC ISO IN   * ep5in - UVC ISO IN">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230524150950.png">
-<meta property="article:published_time" content="2023-05-19T14:25:00.000Z">
-<meta property="article:modified_time" content="2023-06-12T09:35:05.554Z">
+<meta property="article:published_time" content="2023-06-12T01:58:56.591Z">
+<meta property="article:modified_time" content="2023-06-12T09:59:36.405Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="Linux driver">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230524150950.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Linux Driver Common Essentials - Yucheng&#39;s Blog</title>
+  <title>Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +226,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Linux Driver Common Essentials</span>
+            <span id="subtitle"></span>
           
         </div>
 
@@ -240,8 +237,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-19 22:25" pubdate>
-          2023年5月19日 晚上
+        <time datetime="2023-06-12 09:58" pubdate>
+          2023年6月12日 上午
         </time>
       </span>
     
@@ -309,7 +306,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Linux Driver Common Essentials</h1>
+            <h1 style="display: none"></h1>
             
               <p class="note note-info">
                 
@@ -322,29 +319,29 @@
             
               <div class="markdown-body">
                 
-                <h1 id="NOT-indexed"><a href="#NOT-indexed" class="headerlink" title="NOT indexed"></a>NOT indexed</h1><p>include &lt;asm&#x2F;xxx.h&gt; 先找arch&#x2F;xxx&#x2F;include&#x2F;xxx.h，没有的话就找&#x2F;include&#x2F;asm-generic&#x2F;xxx.h</p>
-<p>从dts中获取regs地址并映射到virtual address:</p>
-<p>linux5.10: void __iomem *devm_platform_get_and_ioremap_resource(struct platform_device *pdev, unsigned int index, struct resource **res)</p>
-<p>linux5.4: void __iomem *devm_platform_ioremap_resource(struct platform_device *pdev, unsigned int index)</p>
-<p>相当于platform_get_resource + devm_request_mem_region <strong>+</strong> devm_ioremap</p>
-<p>container_of: </p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> list_entry(ptr, type, member) \ <span class="hljs-comment">/// list_entry作用和container_of相同</span></span><br>  container_of(ptr, type, member)<br><br>container_of(ptr, type, member)<br><br><span class="hljs-comment">// ptr:表示结构体中member的地址 h</span><br><span class="hljs-comment">// type:表示结构体类型 struct xxx</span><br><span class="hljs-comment">// member:表示结构体中的成员 yyy</span><br><span class="hljs-comment">// 返回结构体的首地址</span><br></code></pre></td></tr></table></figure>
+                <hr>
+<hr>
+<p>&#96;</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// rts3917 endpoints</span><br><br>  <span class="hljs-comment">/*</span><br><span class="hljs-comment">   * ep0 - CONTROL</span><br><span class="hljs-comment">   *</span><br><span class="hljs-comment">   * ep1in - BULK IN</span><br><span class="hljs-comment">   * ep2in - BULK IN</span><br><span class="hljs-comment">   * ep3in - BULK IN</span><br><span class="hljs-comment">   * ep4in - UAC ISO IN</span><br><span class="hljs-comment">   * ep5in - UVC ISO IN</span><br><span class="hljs-comment">   * ep6in - UVC ISO IN</span><br><span class="hljs-comment">   * ep7in - INTERRUPT IN</span><br><span class="hljs-comment">   * ep8in - INTERRUPT IN</span><br><span class="hljs-comment">   * ep9in - INTERRUPT IN</span><br><span class="hljs-comment">   * ep10in - INTERRUPT IN</span><br><span class="hljs-comment">   * ep11in - INTERRUPT IN</span><br><span class="hljs-comment">   * ep12in - INTERRUPT IN</span><br><span class="hljs-comment">   *</span><br><span class="hljs-comment">   * ep1out - BULK OUT</span><br><span class="hljs-comment">   * ep2out - BULK OUT</span><br><span class="hljs-comment">   * ep3out - BULK OUT</span><br><span class="hljs-comment">   * ep4out - UAC ISO OUT</span><br><span class="hljs-comment">   */</span><br></code></pre></td></tr></table></figure>
 
 
 
-<h1 id="Initcalls"><a href="#Initcalls" class="headerlink" title="Initcalls"></a>Initcalls</h1><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230524150950.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li><p>图中initcalls优先级从上到下。这些都是只能用于builtin的modules。loadable的modules使用module_init()。</p>
-</li>
-<li><p>使用initcalls会在目标文件object file中创建ELF sections。</p>
-</li>
-</ul>
-<p><strong>module_init()</strong></p>
-<p>本质是device_initcall。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> module_init(x)  __initcall(x);</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> __initcall(fn) device_initcall(fn)</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 上层usb device driver, 模拟各种usb设备</span><br>usb_composite_probe(); <span class="hljs-comment">//或者利用封装的module_usb_composite_driver</span><br>  usb_gadget_probe_driver();<br>    udc_bind_to_driver();<br>      usb_gadget_udc_start();<br>        udc-&gt;gadget-&gt;ops-&gt;udc_start();<br>          rts_gadget_udc_start();<br><br></code></pre></td></tr></table></figure>
 
-<p>kernel的<code>System.map</code>可以查看符号文件，其中<code>__initcall6_start</code>后的顺序就对应<code>device_initcall</code>的驱动加载顺序。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> pure_initcall(fn)    __define_initcall(fn, 0)</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> core_initcall(fn)    __define_initcall(fn, 1)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> postcore_initcall(fn)    __define_initcall(fn, 2)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> arch_initcall(fn)    __define_initcall(fn, 3)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> subsys_initcall(fn)    __define_initcall(fn, 4)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> fs_initcall(fn)      __define_initcall(fn, 5)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> rootfs_initcall(fn)    __define_initcall(fn, rootfs)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> device_initcall(fn)    __define_initcall(fn, 6)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> late_initcall(fn)    __define_initcall(fn, 7)</span><br></code></pre></td></tr></table></figure>
+
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c">rts_usb_common_irq();<br>  rts_usb_ep_irq();<br>    rts_usb_se0_irq(); <span class="hljs-comment">/// root port reset irq</span><br>      usb_gadget_udc_reset();<br>        driver-&gt;reset(); <span class="hljs-comment">/// 进入composite.c中composite_driver_template .reset</span><br>    rts_usb_ep0_irq();<br>    rts_usb_intrep_irq();<br>    rts_usb_bulkinep_irq();<br>    rts_usb_bulkoutep_irq();<br>    rts_usb_uacinep_irq();<br>    rts_usb_uacoutep_irq();<br>    rts_usb_uvcinep_irq();<br>    <br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// setup irq</span><br>rts_usb_ep0_irq();<br>  usb_read_reg(USB_EP0_SETUP_DATA0) &amp; <span class="hljs-number">0xff</span>;<br>  <span class="hljs-comment">//... 读setup事务的data</span><br>  rts_usb_setup_process();<br>    rts_usb_ep0_standard_request();<br>      rts_usb_req_ep0_get_status();<br>        rts_ep_queue();<br>          rts_ep0_queue();	<br>            rts_start_ep0_transfer();<br>      rts_usb_req_ep0_clear_feature();<br>      rts_usb_req_ep0_set_feature();<br>      rts_usb_req_ep0_set_address();<br>      rts_usb_req_ep0_set_configuration();<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">rts_usb_intrep_irq();<br>  rts_usb_intr_in_process();<br>    rts_intr_transfer_process();<br></code></pre></td></tr></table></figure>
+
+
+
 
                 
               </div>
@@ -353,34 +350,6 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/Linux-driver/">#Linux driver</a>
-      
-    </div>
   
 </div>
 
@@ -392,18 +361,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/20/Rust/" title="Rust">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Rust</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/17/rCore_uCore/uCore_Chapter3/" title="uCore_Chapter3 多道程序与分时多任务">
-                        <span class="hidden-mobile">uCore_Chapter3 多道程序与分时多任务</span>
+                      <a href="/2023/06/06/USB/usb%20spec/" title="">
+                        <span class="hidden-mobile"></span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

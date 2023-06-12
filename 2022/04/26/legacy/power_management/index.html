@@ -1,0 +1,725 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yucheng Xiang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="This article is out of date and need to rewrite. http:&#x2F;&#x2F;www.wowotech.net&#x2F;pm_subsystem&#x2F;suspend_and_resume.html Linux内核提供了三种Suspend: Freeze、Standby和STR(Suspend to RAM)，在用户空间向”&#x2F;sys&#x2F;power&#x2F;s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="电源管理">
+<meta property="og:url" content="https://yc-xiang.github.io/2022/04/26/legacy/power_management/index.html">
+<meta property="og:site_name" content="Yucheng&#39;s Blog">
+<meta property="og:description" content="This article is out of date and need to rewrite. http:&#x2F;&#x2F;www.wowotech.net&#x2F;pm_subsystem&#x2F;suspend_and_resume.html Linux内核提供了三种Suspend: Freeze、Standby和STR(Suspend to RAM)，在用户空间向”&#x2F;sys&#x2F;power&#x2F;s">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609175345.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609175729.png">
+<meta property="article:published_time" content="2022-04-26T02:19:00.000Z">
+<meta property="article:modified_time" content="2023-06-09T09:58:45.699Z">
+<meta property="article:author" content="Yucheng Xiang">
+<meta property="article:tag" content="Legacy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609175345.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>电源管理 - Yucheng&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yc-xiang.github.io","root":"/","version":"1.9.4","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"C"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"ed5b2440a3a7651272e4681ae4ac17e2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?ed5b2440a3a7651272e4681ae4ac17e2";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>YC&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/homepage.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">电源管理</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-04-26 10:19" pubdate>
+          2022年4月26日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.7k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          56 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> times
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">电源管理</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年6月9日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>This article is out of date and need to rewrite.</strong></p>
+<p><a target="_blank" rel="noopener" href="http://www.wowotech.net/pm_subsystem/suspend_and_resume.html">http://www.wowotech.net/pm_subsystem/suspend_and_resume.html</a></p>
+<p>Linux内核提供了三种Suspend: Freeze、Standby和STR(Suspend to RAM)，在用户空间向”&#x2F;sys&#x2F;power&#x2F;state”文件分别写入”freeze”、”standby”和”mem”，即可触发它们。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">echo &quot;freeze&quot; &gt; /sys/power/state<br><br>echo &quot;standby&quot; &gt; /sys/power/state<br><br>echo &quot;mem&quot; &gt; /sys/power/state<br></code></pre></td></tr></table></figure>
+
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/arnoldlu/p/6253665.html">https://www.cnblogs.com/arnoldlu/p/6253665.html</a></p>
+<p><strong>系统睡眠模型</strong></p>
+<ul>
+<li>On                                                           S0 - working</li>
+<li>Standby                                                   S1 - CPU and RAM are powered but not executed</li>
+<li>Suspend to RAM                                     S3 - RAM is powered and the running content is saved to RAM</li>
+<li>Suspend to Disk , Hibernation(disk)       S4 - All content is saved to Disk and power down   嵌入式系统中一般没有</li>
+</ul>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609175345.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>Runtime电源管理模型</strong></p>
+<p>在运行状态下如何省电</p>
+<p><strong>Linux系统Suspend的实现</strong></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609175729.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs c">启动 suspend to ram：<br><br>echo mem &gt; sys/power/state<br><br><span class="hljs-title function_">state_store</span> <span class="hljs-params">(kernel/power/main.c)</span><br><span class="hljs-title function_">pm_suspend</span> <span class="hljs-params">(kernel/power/suspend.c)</span><br><span class="hljs-title function_">enter_state</span> <span class="hljs-params">(kernel/power/suspend.c)</span><br><span class="hljs-title function_">suspend_prepare</span> <span class="hljs-params">(kernel/power/suspend.c)</span><br><span class="hljs-title function_">pm_prepare_console</span><span class="hljs-params">(kernel/power/console.c)</span> <span class="hljs-comment">// 将当前console切换到一个虚拟console并重定向内核的kmsg</span><br><br>__<span class="hljs-title function_">pm_notifier_call_chain</span> <span class="hljs-params">(kernel/power/main.c)</span> <span class="hljs-comment">// 通知所有关系“休眠消息”的驱动程序</span><br><span class="hljs-title function_">suspend_freeze_processes</span> <span class="hljs-params">(kernel/power/power.h)</span> <span class="hljs-comment">// 冻结app和内核线程</span><br><span class="hljs-title function_">suspend_devices_and_enter</span> <span class="hljs-params">(kernel/power/suspend.c)</span> <span class="hljs-comment">// 让设备进入休眠状态</span><br>suspend_ops-&gt;begin 如果平台相关的代码有begin函数则调用它 ，**arm/arch/mach-realtek/pm.c**<br><br><span class="hljs-title function_">suspend_console</span> <span class="hljs-params">(kernel/power/suspend.c)</span><br><br><span class="hljs-title function_">dpm_suspend_start</span> <span class="hljs-params">(PMSG_SUSPEND)</span> <span class="hljs-params">(drivers/base/power/main.c)</span><br><span class="hljs-title function_">dpm_prepare</span><span class="hljs-params">(state)</span> <span class="hljs-params">(drivers/base/power/main.c)</span> 对于dmp_list链表中的每一个设备，都调用<span class="hljs-title function_">device_prepare</span><span class="hljs-params">(dev, state)</span>;<br><br>对于该设备调用它的dev→pm_domain→ops.prepare      或<br>                            dev→type→pm→prepare                或<br>                      dev→<span class="hljs-class"><span class="hljs-keyword">class</span>→<span class="hljs-title">pm</span>→<span class="hljs-title">prepare</span>                或</span><br><span class="hljs-class">                      <span class="hljs-title">dev</span>→<span class="hljs-title">bus</span>→<span class="hljs-title">pm</span>→<span class="hljs-title">prepare</span>                  或</span><br><span class="hljs-class">                      <span class="hljs-title">dev</span>→<span class="hljs-title">driver</span>→<span class="hljs-title">pm</span>→<span class="hljs-title">prepare</span>               </span><br><span class="hljs-class"></span><br><span class="hljs-class"><span class="hljs-title">dpm_suspend</span>(<span class="hljs-title">state</span>) (<span class="hljs-title">drivers</span>/<span class="hljs-title">base</span>/<span class="hljs-title">power</span>/<span class="hljs-title">main</span>.<span class="hljs-title">c</span>) 让各类设备休眠，对于<span class="hljs-title">dpm_prepare_list</span>链表中的每一个设备，都调用<span class="hljs-title">device_suspend</span>(<span class="hljs-title">dev</span>)</span><br><span class="hljs-class"></span><br><span class="hljs-class">__<span class="hljs-title">device_suspend</span>(<span class="hljs-title">dev</span>, <span class="hljs-title">pm_transition</span>, <span class="hljs-title">false</span>) </span><br><span class="hljs-class"></span><br><span class="hljs-class">对于该设备，调用它的<span class="hljs-title">dev</span>→<span class="hljs-title">pm_domain</span>→<span class="hljs-title">ops</span>.<span class="hljs-title">suspend</span> 或</span><br><span class="hljs-class">                         <span class="hljs-title">dev</span>→<span class="hljs-title">type</span>→<span class="hljs-title">pm</span>→<span class="hljs-title">suspend</span>           或</span><br><span class="hljs-class">                         <span class="hljs-title">dev</span>→<span class="hljs-keyword">class</span>→<span class="hljs-title">pm</span>→<span class="hljs-title">suspend</span>           或</span><br><span class="hljs-class">                         <span class="hljs-title">dev</span>→<span class="hljs-title">bus</span>→<span class="hljs-title">pm</span>→<span class="hljs-title">suspend</span>             或</span><br><span class="hljs-class">                         <span class="hljs-title">dev</span>→<span class="hljs-title">driver</span>→<span class="hljs-title">pm</span>→<span class="hljs-title">suspend</span></span><br><span class="hljs-class"></span><br><span class="hljs-class"><span class="hljs-title">suspend_enter</span>(<span class="hljs-title">state</span>, &amp;<span class="hljs-title">wakeup</span>) (<span class="hljs-title">kernel</span>/<span class="hljs-title">power</span>/<span class="hljs-title">suspend</span>.<span class="hljs-title">c</span>)</span><br><span class="hljs-class"></span><br><span class="hljs-class"><span class="hljs-title">suspend_ops</span>→<span class="hljs-title">prepare</span></span><br><span class="hljs-class"></span><br><span class="hljs-class"><span class="hljs-title">dpm_suspend_late</span>(<span class="hljs-title">state</span>) (<span class="hljs-title">drivers</span>/<span class="hljs-title">base</span>/<span class="hljs-title">power</span>/<span class="hljs-title">main</span>.<span class="hljs-title">c</span>) 对于<span class="hljs-title">dpm_suspend_list</span>链表中的每一个设备，都调用<span class="hljs-title">device_suspend_late</span>(<span class="hljs-title">dev</span>, <span class="hljs-title">state</span>)</span><br><span class="hljs-class"></span><br><span class="hljs-class">对于该设备，调用它的<span class="hljs-title">dev</span>→<span class="hljs-title">pm_domain</span>→<span class="hljs-title">ops</span>.<span class="hljs-title">suspend_late</span> 或</span><br><span class="hljs-class">                               <span class="hljs-title">dev</span>→<span class="hljs-title">type</span>→<span class="hljs-title">pm</span>→<span class="hljs-title">suspend_late</span>           或</span><br><span class="hljs-class">                         <span class="hljs-title">dev</span>→<span class="hljs-keyword">class</span>→<span class="hljs-title">pm</span>→<span class="hljs-title">suspend_late</span>           或</span><br><span class="hljs-class">                         <span class="hljs-title">dev</span>→<span class="hljs-title">bus</span>→<span class="hljs-title">pm</span>→<span class="hljs-title">suspend_late</span>             或</span><br><span class="hljs-class">                         <span class="hljs-title">dev</span>→<span class="hljs-title">driver</span>→<span class="hljs-title">pm</span>→<span class="hljs-title">suspend_late</span></span><br><span class="hljs-class"></span><br><span class="hljs-class"><span class="hljs-title">suspend_ops</span>→<span class="hljs-title">prepare_late</span>()</span><br><span class="hljs-class"><span class="hljs-title">disable_nonboot_cpus</span>()</span><br><span class="hljs-class"><span class="hljs-title">arch_suspend_disable_irqs</span>()</span><br><span class="hljs-class"><span class="hljs-title">syscore_suspend</span>()</span><br><span class="hljs-class"><span class="hljs-title">suspend_ops</span>→<span class="hljs-title">enter</span>(<span class="hljs-title">state</span>) </span><br><span class="hljs-class"><span class="hljs-title">power_attr</span>(<span class="hljs-title">state</span>);</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> power_attr(_name) \</span><br><span class="hljs-meta">static struct kobj_attribute _name##_attr = &#123;  \</span><br><span class="hljs-meta">.attr  = &#123;				\</span><br><span class="hljs-meta">.name = __stringify(_name),  \</span><br><span class="hljs-meta">.mode = 0644,      \</span><br><span class="hljs-meta">&#125;,          \</span><br><span class="hljs-meta">.show  = _name##_show,			\</span><br><span class="hljs-meta">.store  = _name##_store,		\</span><br><span class="hljs-meta">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="给驱动程序添加电源管理功能"><a href="#给驱动程序添加电源管理功能" class="headerlink" title="给驱动程序添加电源管理功能"></a><strong>给驱动程序添加电源管理功能</strong></h1><h2 id="1-通知notifier"><a href="#1-通知notifier" class="headerlink" title="1. 通知notifier"></a>1. 通知notifier</h2><p>在冻结APP之前，使用pm_notifier_call_chain(PM_SUSPEND_PREPARE)来通知驱动程序</p>
+<p>在重启APP后，使用pm_notifier_call_chain(PM_POST_SUSPEND)来通知驱动程序</p>
+<p>如果驱动程序有事情在上述时机要处理，可以使用register_pm_notifier注册一个notifier</p>
+<h2 id="添加suspend、resume函数（常用）"><a href="#添加suspend、resume函数（常用）" class="headerlink" title="添加suspend、resume函数（常用）"></a>添加suspend、resume函数（常用）</h2><p>在platform_driver中可以定义.suspend、.resume两个函数（老方法）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// pinctrl-rts3917.c</span><br><br><span class="hljs-type">static</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">platform_driver</span> <span class="hljs-title">rts_pinctrl_driver</span> =</span> &#123;<br>  .probe = rts_pinctrl_probe,<br>  .remove = rts_pinctrl_remove,<br>  .suspend = rts_pinctrl_suspend,<br>  .resume = rts_pinctrl_resume,<br>  .driver = &#123;<br>       .name = <span class="hljs-string">&quot;pinctrl_rts3917&quot;</span>,<br>       .owner = THIS_MODULE,<br>       .of_match_table = rts_pinctrl_match,<br>       &#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>新的内核推荐在driver中定义一个.pm结构体，在其中实现suspend、resume，比如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">dev_pm_ops</span> <span class="hljs-title">xxx</span> =</span> <br>&#123;<br>              .suspend = rts_pinctrl_suspend,<br>              .resume = rts_pinctrl_resume,<br>&#125;<br><br><span class="hljs-type">static</span> <span class="hljs-keyword">struct</span> platform_driver rts_pinctrl_driver = &#123;<br>  .probe = rts_pinctrl_probe,<br>  .remove = rts_pinctrl_remove,<br>  .driver = &#123;<br>       .name = <span class="hljs-string">&quot;pinctrl_rts3917&quot;</span>,<br>       .owner = THIS_MODULE,<br>       .of_match_table = rts_pinctrl_match,<br>       .pm = &amp;xxx,<br>       &#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h1 id="Runtime-PM"><a href="#Runtime-PM" class="headerlink" title="Runtime PM"></a>Runtime PM</h1><p>runtime PM 提供辅助函数：</p>
+<ol>
+<li>增加计数&#x2F;减少计数</li>
+<li>使能runtime PM</li>
+</ol>
+<p>内核驱动示例driver&#x2F;dma&#x2F;rts_dmac.c</p>
+<p>修改驱动程序和使用：</p>
+<ol>
+<li>在dev_pm_ops中提供3个回调函数：runtime_suspend, runtime_resume, runtime_idle</li>
+<li>在对应的系统调用接口里调用：</li>
+</ol>
+<p>probe函数中：pm_runtime_enable(&amp;pdev-&gt;dev); 使能Runtime PM 修改power.disable_depth变量</p>
+<p>remove函数中：pm_runtime_disable(&amp;pdev-&gt;dev); 禁止Runtime PM 修改power.disable_depth变量</p>
+<p>pm_runtime_get_sync(&amp;pdev-&gt;dev);  增加计数值</p>
+<p>pm_runtime_put_sync(&amp;pdev-&gt;dev); 减小计数值</p>
+<p>如何使用runtime PM：</p>
+<ol>
+<li><p>echo on &gt; &#x2F;sys&#x2F;devices&#x2F;…&#x2F;power&#x2F;control  &#x2F;&#x2F; 导致control_store-&gt;pm_runtime_forbid(dev);</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">                                                                               atomic<span class="hljs-constructor">_inc(&amp;<span class="hljs-params">dev</span>-&gt;<span class="hljs-params">power</span>.<span class="hljs-params">usage_count</span>)</span>;<br><br>                                                                               rpm<span class="hljs-constructor">_resume(<span class="hljs-params">dev</span>, 0)</span>;<br><br>echo auto &gt; /sys/devices/.../power/control <span class="hljs-comment">// 导致control_store-&gt;pm_runtime_allow(dev);</span><br><br>                                                                                 atomic<span class="hljs-constructor">_dec_and_test(&amp;<span class="hljs-params">dev</span>-&gt;<span class="hljs-params">power</span>.<span class="hljs-params">usage_count</span>)</span>;<br><br>                                                                                 rpm<span class="hljs-constructor">_idle(<span class="hljs-params">dev</span>, RPM_AUTO | RPM_ASYNC)</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在对应的系统调用接口里调用：pm_runtime_get_sync &#x2F; pm_runtime_put_sync</p>
+</li>
+<li><p>autosuspend: 如果不想让设备频繁开关，可以使用autosuspend功能</p>
+<p>驱动里：执行pm_runtime_use_autosuspend来设置启动autosuspend功能</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs scss">      put设备时，执行这两个函数：<br>   <br><span class="hljs-built_in">pm_runtime_mark_last_busy</span>();<br>   <br><span class="hljs-built_in">pm_runtime_put_sync_autosuspend</span>();<br></code></pre></td></tr></table></figure>
+
+<p>用户空间：执行echo 秒数 &gt; &#x2F;sys&#x2F;devices&#x2F;xxx&#x2F;power&#x2F;autosuspend_delay_ms</p>
+</li>
+</ol>
+<p><strong>流程分析：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs c">pm_runtime_get_sync(include/linux/pm_runtime.h)<br>__pm_runtime_resume(dev, RPM_GET_PUT) (drivers/base/runtime.c)<br><span class="hljs-type">atomic_inc</span>(&amp;dev-&gt;power.usage_count);  <span class="hljs-comment">// 增加使用计数</span><br>rpm_resume(dev, rpmflags); <span class="hljs-comment">// resume 设备</span><br><span class="hljs-keyword">if</span> (dev-&gt;power.disable_depth &gt; <span class="hljs-number">0</span>)  <span class="hljs-comment">// 该变量初始值为1，要使用runtime PM，要先enable</span><br>retval = -EACCES;<br><span class="hljs-keyword">if</span> (!dev-&gt;power.timer_autosuspends) <span class="hljs-comment">// 为防止设备频繁地开关，可以设置autosuspends的值</span><br>pm_runtime_deactivate_timer(dev);<br><span class="hljs-keyword">if</span> (dev-&gt;power.runtime_status == RPM_ACTIVE) &#123;  <span class="hljs-comment">// 如果设备已经是RPM_ACTIVE 就不用resume 直接返回</span><br><br><span class="hljs-comment">// 如果设备处于RPM_RESUMING或RPM_SUSPENDING，等待该操作完成</span><br><span class="hljs-comment">//Increment the parent&#x27;s usage counter and resume it is necessary</span><br><span class="hljs-comment">//resume设备本身，前面4个函数被称为subsystem-level callback</span><br><br>callback = RPM_GET_CALLBACK(dev, runtime_resume);<br><br>ops = &amp;dev-&gt;pm_domain-&gt;ops-&gt;runtime_resume; 或<br>ops = dev-&gt;type-&gt;pm-&gt;runtime_resume;                 或<br>ops = dev-&gt;class-&gt;pm-&gt;runtime_resume;                或<br>ops = dev-&gt;bus-&gt;pm-&gt;runtime_resume;                  或<br><br>如果都没定义，则调用我们在驱动中定义的函数<br><br>dev-&gt;driver-&gt;pm-&gt;runtime_resume<br><br><span class="hljs-comment">// 成功时，给父亲的child_count加1</span><br><br><span class="hljs-keyword">if</span> (parent)<br><span class="hljs-type">atomic_inc</span>(&amp;parent-&gt;power.child_count);<br><br><span class="hljs-comment">// 唤醒其他进程</span><br><br>wake_up_all(&amp;dev-&gt;power.wait_queue);<br><br><span class="hljs-comment">// 如果resume失败，让设备进入idle状态</span><br><br><span class="hljs-keyword">if</span> (retval &gt;= <span class="hljs-number">0</span>)<br>rpm_idle(dev, RPM_ASYNC);<br><br>pm_runtime_put_sync<br><br>__pm_runtime_idle(dev, RPM_GET_PUT)<br><br>atomic_dec_and_test(&amp;dev-&gt;power.usage_count) <span class="hljs-comment">// 减小使用计数</span><br>rpm_idle(dev, rpmflags)                                           <span class="hljs-comment">// 让设备进入idle状态</span><br>rpm_check_suspend_allowed(dev);                     <span class="hljs-comment">// 检查是否允许设备进入suspend状态 </span><br><span class="hljs-keyword">if</span> (dev-&gt;power.disable_depth &gt; <span class="hljs-number">0</span>)                <span class="hljs-comment">// 失败</span><br><span class="hljs-keyword">if</span> (<span class="hljs-type">atomic_read</span>(&amp;dev-&gt;power.usage_count) &gt; <span class="hljs-number">0</span>) <span class="hljs-comment">// 当前的使用计数不是0也失败</span><br><span class="hljs-keyword">if</span> (!dev-&gt;power.ignore_children &amp;&amp;<br><span class="hljs-type">atomic_read</span>(&amp;dev-&gt;power.child_count))        <span class="hljs-comment">// 如果有子设备没suspend也失败</span><br><span class="hljs-keyword">if</span> (dev-&gt;power.runtime_status != RPM_ACTIVE)      <span class="hljs-comment">// 如果设备不是RPM_ACTIVE状态，直接返回也不用suspend了</span><br><br>callback = RPM_GET_CALLBACK(dev, runtime_idle);<br><br>ops = &amp;dev-&gt;pm_domain-&gt;ops-&gt;runtime_idle; 或<br>ops = dev-&gt;type-&gt;pm-&gt;runtime_idle;                 或<br>ops = dev-&gt;class-&gt;pm-&gt;runtime_idle;                或<br>ops = dev-&gt;bus-&gt;pm-&gt;runtime_idle;                  或<br><br>如果都没定义，则调用我们在驱动中定义的函数<br><br>dev-&gt;driver-&gt;pm-&gt;runtime_idle<br><br>__rpm_callback(callback, dev);<br><br>wake_up_all(&amp;dev-&gt;power.wait_queue);<br><br>如果设备不提供runtime_idle，则最终会调用runtime_suspend<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Legacy/" class="category-chain-item">Legacy</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Legacy/">#Legacy</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/01/04/Git/" title="Git 常用指令">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Git 常用指令</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/27/legacy/2022-1-27-%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB/" title="程序员的自我修养学习笔记">
+                        <span class="hidden-mobile">程序员的自我修养学习笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
