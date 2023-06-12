@@ -280,6 +280,10 @@ high-speed 最大1024bytes。
 
 ### 8.5.3 Control Transfer
 
+Control 是transfer而不是transaction的原因是，control transfer由多个事务(transaction)组成。包括SETUP stage（SETUP事务），data stage（1个或者多个批量事务），status stage（1个批量事务）。
+
+而Bulk/interrupt/isochronous transfer都是由对应的单独一个Bulk/interrupt/isochronous transaction组成。
+
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608142906.png)
 
 对应下图的Setup Stage。
@@ -292,7 +296,7 @@ Data Stage是可选的。
 
 ### 8.5.4 Interrupt Transactions
 
-没有PING和NYET两个包。
+和bulk transaction区别是没有PING和NYET两个包，interrupt 是周期性地发起传输。
 
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145003.png)
 
