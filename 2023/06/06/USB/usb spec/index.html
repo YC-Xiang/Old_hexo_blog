@@ -48,6 +48,7 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608141406.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608142906.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145713.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230613155449.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145003.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145252.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174140.png">
@@ -71,7 +72,7 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174043.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174055.png">
 <meta property="article:published_time" content="2023-06-06T02:48:06.747Z">
-<meta property="article:modified_time" content="2023-06-12T09:06:19.765Z">
+<meta property="article:modified_time" content="2023-06-13T08:26:01.306Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230606134650.png">
@@ -297,7 +298,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.8k words
+          5.8k words
         
       </span>
     
@@ -308,7 +309,7 @@
         
         
         
-          40 mins
+          49 mins
         
       </span>
     
@@ -359,7 +360,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年6月12日 下午
+                    本文最后更新于：2023年6月13日 下午
                   
                 
               </p>
@@ -449,7 +450,9 @@
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607151058.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="8-3-2-Address-fields"><a href="#8-3-2-Address-fields" class="headerlink" title="8.3.2 Address fields"></a>8.3.2 Address fields</h3><h4 id="8-3-2-1-Address-Field"><a href="#8-3-2-1-Address-Field" class="headerlink" title="8.3.2.1 Address Field"></a>8.3.2.1 Address Field</h4><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607153555.png" srcset="/img/loading.gif" lazyload></p>
 <h4 id="8-3-2-2-Endpoint-Field"><a href="#8-3-2-2-Endpoint-Field" class="headerlink" title="8.3.2.2 Endpoint Field"></a>8.3.2.2 Endpoint Field</h4><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607153606.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="8-3-3-Frame-Number-Field"><a href="#8-3-3-Frame-Number-Field" class="headerlink" title="8.3.3 Frame Number Field"></a>8.3.3 Frame Number Field</h3><h3 id="8-3-4-Data-Field"><a href="#8-3-4-Data-Field" class="headerlink" title="8.3.4 Data Field"></a>8.3.4 Data Field</h3><h2 id="8-4-Packet-Formats"><a href="#8-4-Packet-Formats" class="headerlink" title="8.4 Packet Formats"></a>8.4 Packet Formats</h2><h3 id="8-4-1-Token-Packets"><a href="#8-4-1-Token-Packets" class="headerlink" title="8.4.1 Token Packets"></a>8.4.1 Token Packets</h3><ul>
+<h3 id="8-3-3-Frame-Number-Field"><a href="#8-3-3-Frame-Number-Field" class="headerlink" title="8.3.3 Frame Number Field"></a>8.3.3 Frame Number Field</h3><p>11 bits。</p>
+<h3 id="8-3-4-Data-Field"><a href="#8-3-4-Data-Field" class="headerlink" title="8.3.4 Data Field"></a>8.3.4 Data Field</h3><p>0-1024 bytes。</p>
+<h2 id="8-4-Packet-Formats"><a href="#8-4-Packet-Formats" class="headerlink" title="8.4 Packet Formats"></a>8.4 Packet Formats</h2><h3 id="8-4-1-Token-Packets"><a href="#8-4-1-Token-Packets" class="headerlink" title="8.4.1 Token Packets"></a>8.4.1 Token Packets</h3><ul>
 <li>OUT<ul>
 <li>通知设备将要输出一个数据包。</li>
 </ul>
@@ -493,18 +496,42 @@
 <h4 id="8-4-6-2-Host-Response-to-IN-Transactions"><a href="#8-4-6-2-Host-Response-to-IN-Transactions" class="headerlink" title="8.4.6.2 Host Response to IN Transactions"></a>8.4.6.2 Host Response to IN Transactions</h4><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608114127.png" srcset="/img/loading.gif" lazyload></p>
 <h4 id="8-4-6-3-Function-Response-to-an-OUT-Transaction"><a href="#8-4-6-3-Function-Response-to-an-OUT-Transaction" class="headerlink" title="8.4.6.3 Function Response to an OUT Transaction"></a>8.4.6.3 Function Response to an OUT Transaction</h4><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608114206.png" srcset="/img/loading.gif" lazyload></p>
 <p>第三行对应If the transaction is maintaining sequence bit synchronization and a mismatch is detected (refer to Section 8.6 for details), then the function returns ACK and discards the data。</p>
-<h3 id="8-5-2-Bulk-Transactions"><a href="#8-5-2-Bulk-Transactions" class="headerlink" title="8.5.2 Bulk Transactions"></a>8.5.2 Bulk Transactions</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608135656.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="8-5-2-Bulk-Transactions"><a href="#8-5-2-Bulk-Transactions" class="headerlink" title="8.5.2 Bulk Transactions"></a>8.5.2 Bulk Transactions</h3><p><strong>BULK IN:</strong></p>
+<p>host端发送IN令牌包，device回应data或者NAK, STALL。NAK表示目前无法返回data，STALL表示endpoint已经被挂起了。</p>
+<p>如果host端成功收到data，会回一个ACK握手包。如果有错误，不会返回握手包。 </p>
+<p><strong>BULK OUT:</strong></p>
+<p>host端发送OUT令牌包，紧接着data包或者PING包。</p>
+<p>如果device端正确收到data，可能会回四种握手包：</p>
+<ul>
+<li><p>ACK: 数据正确，通知host可以发送下一个包。</p>
+</li>
+<li><p>NAK: 数据正确，但通知host需要重新发送数据，因为device端没能接收成功(比如 buffer full)。</p>
+</li>
+<li><p>STALL: endpoint挂起。</p>
+</li>
+<li><p>NYET: 只在high speed中存在。</p>
+</li>
+</ul>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608135656.png" srcset="/img/loading.gif" lazyload></p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608142617.png" srcset="/img/loading.gif" lazyload></p>
 <p>数据包类型在DATA0和DATA1之间切换。</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608141406.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="8-5-3-Control-Transfer"><a href="#8-5-3-Control-Transfer" class="headerlink" title="8.5.3 Control Transfer"></a>8.5.3 Control Transfer</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608142906.png" srcset="/img/loading.gif" lazyload></p>
-<p>对应下图的Setup Stage。</p>
+<h3 id="8-5-3-Control-Transfer"><a href="#8-5-3-Control-Transfer" class="headerlink" title="8.5.3 Control Transfer"></a>8.5.3 Control Transfer</h3><p>Control 是transfer而不是transaction的原因是，control transfer由多个事务(transaction)组成。包括SETUP stage（SETUP事务），data stage（1个或者多个IN&#x2F;OUT事务），status stage（1个IN事务）。Data Stage是可选的。</p>
+<p>而Bulk&#x2F;interrupt&#x2F;isochronous transfer都是由对应的单独一个Bulk&#x2F;interrupt&#x2F;isochronous transaction组成。</p>
+<p>下图为SETUP事务流程，Setup Stage必须是DATA0。如果device端正确收到SETUP data, 回复ACK握手包。如果数据错误丢弃数据并且不发送握手包。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608142906.png" srcset="/img/loading.gif" lazyload></p>
+<p>对应下图的<strong>Setup Stage</strong>。</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145713.png" srcset="/img/loading.gif" lazyload></p>
-<p>Setup Stage必须是DATA0。</p>
-<p>Data Stage是可选的。</p>
-<h3 id="8-5-4-Interrupt-Transactions"><a href="#8-5-4-Interrupt-Transactions" class="headerlink" title="8.5.4 Interrupt Transactions"></a>8.5.4 Interrupt Transactions</h3><p>没有PING和NYET两个包。</p>
+<p><strong>Data stage</strong>：由一个或多个IN or OUT事务组成，和bulk transfer相同。</p>
+<p><strong>Status stage</strong>：始终使用DATA1包，方向与前一个stage相反(如果没有data stage，则为IN)。见上图。</p>
+<h4 id="8-5-3-1-Reporting-Status-Results"><a href="#8-5-3-1-Reporting-Status-Results" class="headerlink" title="8.5.3.1 Reporting Status Results"></a>8.5.3.1 Reporting Status Results</h4><p>status stage返回host Setup和Data stage的结果。</p>
+<p>Control write在status stage的data phase返回status信息。</p>
+<p>Control read在status stage的handshake phase返回status信息。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230613155449.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="8-5-4-Interrupt-Transactions"><a href="#8-5-4-Interrupt-Transactions" class="headerlink" title="8.5.4 Interrupt Transactions"></a>8.5.4 Interrupt Transactions</h3><p>和bulk transaction区别是没有PING和NYET两个包，interrupt 是周期性地发起传输。而不是传统的设备发出中断请求，cpu处理中断。所以USB的中断实际意义是实时查询操作。</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145003.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="8-5-5-Isochronous-Transactions"><a href="#8-5-5-Isochronous-Transactions" class="headerlink" title="8.5.5 Isochronous Transactions"></a>8.5.5 Isochronous Transactions</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145252.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="8-5-5-Isochronous-Transactions"><a href="#8-5-5-Isochronous-Transactions" class="headerlink" title="8.5.5 Isochronous Transactions"></a>8.5.5 Isochronous Transactions</h3><p>没有handshake阶段。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145252.png" srcset="/img/loading.gif" lazyload></p>
 <h1 id="Chapter9-Device-Framework"><a href="#Chapter9-Device-Framework" class="headerlink" title="Chapter9 Device Framework"></a>Chapter9 Device Framework</h1><p>USB的状态切换图：</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174140.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="9-3-USB-Device-Requests"><a href="#9-3-USB-Device-Requests" class="headerlink" title="9.3 USB Device Requests"></a>9.3 USB Device Requests</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612145851.png" srcset="/img/loading.gif" lazyload></p>
