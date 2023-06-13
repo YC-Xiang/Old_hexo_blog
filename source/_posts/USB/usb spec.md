@@ -202,7 +202,11 @@ PID后四位为前四位的取反。
 
 ### 8.3.3 Frame Number Field
 
+11 bits。
+
 ### 8.3.4 Data Field
+
+0-1024 bytes。
 
 ## 8.4 Packet Formats
 
@@ -270,6 +274,28 @@ high-speed 最大1024bytes。
 
 ### 8.5.2 Bulk Transactions
 
+**BULK IN:**
+
+host端发送IN令牌包，device回应data或者NAK, STALL。NAK表示目前无法返回data，STALL表示endpoint已经被挂起了。
+
+如果host端成功收到data，会回一个ACK握手包。如果有错误，不会返回握手包。 
+
+**BULK OUT:**
+
+host端发送OUT令牌包，紧接着data包或者PING包。
+
+如果device端正确收到data，可能会回四种握手包：
+
+- ACK: 数据正确，通知host可以发送下一个包。
+
+- NAK: 数据正确，但通知host需要重新发送数据，因为device端没能接收成功(比如 buffer full)。
+
+- STALL: endpoint挂起。
+
+- NYET: 只在high speed中存在。
+
+  
+
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608135656.png)
 
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608142617.png)
@@ -280,27 +306,43 @@ high-speed 最大1024bytes。
 
 ### 8.5.3 Control Transfer
 
-Control 是transfer而不是transaction的原因是，control transfer由多个事务(transaction)组成。包括SETUP stage（SETUP事务），data stage（1个或者多个批量事务），status stage（1个批量事务）。
+Control 是transfer而不是transaction的原因是，control transfer由多个事务(transaction)组成。包括SETUP stage（SETUP事务），data stage（1个或者多个IN/OUT事务），status stage（1个IN事务）。Data Stage是可选的。
 
 而Bulk/interrupt/isochronous transfer都是由对应的单独一个Bulk/interrupt/isochronous transaction组成。
 
+下图为SETUP事务流程，Setup Stage必须是DATA0。如果device端正确收到SETUP data, 回复ACK握手包。如果数据错误丢弃数据并且不发送握手包。
+
+
+
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608142906.png)
 
-对应下图的Setup Stage。
+对应下图的**Setup Stage**。
 
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145713.png)
 
-Setup Stage必须是DATA0。
+**Data stage**：由一个或多个IN or OUT事务组成，和bulk transfer相同。
 
-Data Stage是可选的。
+**Status stage**：始终使用DATA1包，方向与前一个stage相反(如果没有data stage，则为IN)。见上图。
+
+#### 8.5.3.1 Reporting Status Results
+
+status stage返回host Setup和Data stage的结果。
+
+Control write在status stage的data phase返回status信息。
+
+Control read在status stage的handshake phase返回status信息。
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230613155449.png)
 
 ### 8.5.4 Interrupt Transactions
 
-和bulk transaction区别是没有PING和NYET两个包，interrupt 是周期性地发起传输。
+和bulk transaction区别是没有PING和NYET两个包，interrupt 是周期性地发起传输。而不是传统的设备发出中断请求，cpu处理中断。所以USB的中断实际意义是实时查询操作。
 
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145003.png)
 
 ### 8.5.5 Isochronous Transactions
+
+没有handshake阶段。
 
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608145252.png)
 

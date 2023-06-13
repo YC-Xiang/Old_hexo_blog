@@ -24,7 +24,7 @@ linux5.4: void __iomem *devm_platform_ioremap_resource(struct platform_device *p
 
 
 
-container_of: 
+linux链表相关操作：
 
 ```c
 #define list_entry(ptr, type, member) \ /// list_entry作用和container_of相同
@@ -32,10 +32,18 @@ container_of:
 
 container_of(ptr, type, member)
 
-// ptr:表示结构体中member的地址 h
+// ptr:表示结构体中member的地址h(已知的)
 // type:表示结构体类型 struct xxx
 // member:表示结构体中的成员 yyy
 // 返回结构体的首地址
+        
+/**
+ * list_for_each_entry	-	iterate over list of given type
+ * @pos:	the type * to use as a loop cursor. pos中的list_head被加入了第二个成员head中
+ * @head:	the head for your list. 要循环的链表
+ * @member:	the name of the list_head within the struct. pos中的list_head链表对象
+ */
+list_for_each_entry(pos, head, member)
 ```
 
 

@@ -4,45 +4,54 @@
 
 ---
 
-`
+
+
+# USB function driver
+
+f_loopback.c
+
+# USB composite driver
+
+zero.c
 
 ```c
-// rts3917 endpoints
+// 上层usb device driver, 模拟各种usb设备
+module_usb_composite_driver();
+    usb_composite_probe(); // composite.c
+        usb_gadget_probe_driver(); //gadget/udc/core.c
+            udc_bind_to_driver();
+				driver->bind(); // 调用到composite.c 的.bind = composite_bind
+					composite_bind();
+						composite->bind(); //调用到zero.c 的.bind = zero_bind
+                usb_gadget_udc_start();
+                    udc->gadget->ops->udc_start();
+                        rts_gadget_udc_start();
 
-	/*
-	 * ep0 - CONTROL
-	 *
-	 * ep1in - BULK IN
-	 * ep2in - BULK IN
-	 * ep3in - BULK IN
-	 * ep4in - UAC ISO IN
-	 * ep5in - UVC ISO IN
-	 * ep6in - UVC ISO IN
-	 * ep7in - INTERRUPT IN
-	 * ep8in - INTERRUPT IN
-	 * ep9in - INTERRUPT IN
-	 * ep10in - INTERRUPT IN
-	 * ep11in - INTERRUPT IN
-	 * ep12in - INTERRUPT IN
-	 *
-	 * ep1out - BULK OUT
-	 * ep2out - BULK OUT
-	 * ep3out - BULK OUT
-	 * ep4out - UAC ISO OUT
-	 */
 ```
 
 
 
-```c
-// 上层usb device driver, 模拟各种usb设备
-usb_composite_probe(); //或者利用封装的module_usb_composite_driver
-	usb_gadget_probe_driver();
-		udc_bind_to_driver();
-			usb_gadget_udc_start();
-				udc->gadget->ops->udc_start();
-					rts_gadget_udc_start();
+# USB gadget driver
 
+composite.c
+
+
+
+# UDC driver
+
+设置usb_gadget
+
+```c
+// rts_usb_driver_probe
+rtsusb->gadget.ops = &rts_gadget_ops;
+rtsusb->gadget.name = "rts_gadget";
+rtsusb->gadget.max_speed = USB_SPEED_HIGH;
+rtsusb->gadget.dev.parent = dev;
+rtsusb->gadget.speed = USB_SPEED_UNKNOWN;
+
+rts_gadget_init_endpoints(); // 初始化endpoints
+rts_usb_init(rtsusb); // 写一些寄存器
+usb_add_gadget_udc(dev, &rtsusb->gadget); // 注册udc
 ```
 
 
