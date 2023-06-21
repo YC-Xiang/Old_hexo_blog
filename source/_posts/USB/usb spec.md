@@ -1,3 +1,14 @@
+---
+title: usb spec
+date: 2023-06-15 17:38:28
+tags:
+- usb
+categories:
+- usb
+---
+
+
+
 # Questions
 
 USB-IF
@@ -395,6 +406,12 @@ D7: 0:OUT 1:IN 在control pipe中direction应该被设为0，即OUT事件。但d
 在Address state下合法。Recipient为device or ep0合法，看Table9-6。
 
 Test_Mode feature 不能被ClearFeature()清除。
+
+### 9.4.3 Get Descriptor
+
+wValue bit8开始是描述符的类型，具体参考Table9-5. 
+
+bit0 是index
 
 ### 9.4.5 Get Status
 
