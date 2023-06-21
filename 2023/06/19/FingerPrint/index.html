@@ -16,23 +16,24 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="USB function driverf_loopback.c USB composite driverzero.c 123456789101112&#x2F;&#x2F; 上层usb device driver, 模拟各种usb设备module_usb_composite_driver();    usb_composite_probe(); &#x2F;&#x2F; composite.c        usb_gadget_p">
+    <meta name="description" content="Normal world EnrollGPIOUart123456789InitUart();  Uart_EnableTX();  Uart_EnableRX();  Uart_Init();    SetUartBaudRate();    CfgUartDataFormat();    Clock_SwtichUart0();  Uart_InitFifoMode();    Uart_Se">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Yucheng&#39;s Blog">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/06/12/USB/usb%20driver/index.html">
+<meta property="og:title" content="FingerPrint">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/06/19/FingerPrint/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="USB function driverf_loopback.c USB composite driverzero.c 123456789101112&#x2F;&#x2F; 上层usb device driver, 模拟各种usb设备module_usb_composite_driver();    usb_composite_probe(); &#x2F;&#x2F; composite.c        usb_gadget_p">
+<meta property="og:description" content="Normal world EnrollGPIOUart123456789InitUart();  Uart_EnableTX();  Uart_EnableRX();  Uart_Init();    SetUartBaudRate();    CfgUartDataFormat();    Clock_SwtichUart0();  Uart_InitFifoMode();    Uart_Se">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-06-12T01:58:56.591Z">
-<meta property="article:modified_time" content="2023-06-13T09:48:30.426Z">
+<meta property="article:published_time" content="2023-06-19T09:00:28.000Z">
+<meta property="article:modified_time" content="2023-06-21T08:11:28.193Z">
 <meta property="article:author" content="Yucheng Xiang">
+<meta property="article:tag" content="FingerPrint">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Yucheng&#39;s Blog</title>
+  <title>FingerPrint - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -226,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle"></span>
+            <span id="subtitle">FingerPrint</span>
           
         </div>
 
@@ -237,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-06-12 09:58" pubdate>
-          2023年6月12日 上午
+        <time datetime="2023-06-19 17:00" pubdate>
+          2023年6月19日 下午
         </time>
       </span>
     
@@ -249,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k words
+          812 words
         
       </span>
     
@@ -260,7 +261,7 @@
         
         
         
-          14 mins
+          7 mins
         
       </span>
     
@@ -306,12 +307,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">FingerPrint</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年6月13日 下午
+                    本文最后更新于：2023年6月21日 下午
                   
                 
               </p>
@@ -319,33 +320,21 @@
             
               <div class="markdown-body">
                 
-                <hr>
-<hr>
-<h1 id="USB-function-driver"><a href="#USB-function-driver" class="headerlink" title="USB function driver"></a>USB function driver</h1><p>f_loopback.c</p>
-<h1 id="USB-composite-driver"><a href="#USB-composite-driver" class="headerlink" title="USB composite driver"></a>USB composite driver</h1><p>zero.c</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 上层usb device driver, 模拟各种usb设备</span><br>module_usb_composite_driver();<br>    usb_composite_probe(); <span class="hljs-comment">// composite.c</span><br>        usb_gadget_probe_driver(); <span class="hljs-comment">//gadget/udc/core.c</span><br>            udc_bind_to_driver();<br>        driver-&gt;bind(); <span class="hljs-comment">// 调用到composite.c 的.bind = composite_bind</span><br>          composite_bind();<br>            composite-&gt;bind(); <span class="hljs-comment">//调用到zero.c 的.bind = zero_bind</span><br>                usb_gadget_udc_start();<br>                    udc-&gt;gadget-&gt;ops-&gt;udc_start();<br>                        rts_gadget_udc_start();<br><br></code></pre></td></tr></table></figure>
+                <h1 id="Normal-world-Enroll"><a href="#Normal-world-Enroll" class="headerlink" title="Normal world Enroll"></a>Normal world Enroll</h1><h1 id="GPIO"><a href="#GPIO" class="headerlink" title="GPIO"></a>GPIO</h1><h1 id="Uart"><a href="#Uart" class="headerlink" title="Uart"></a>Uart</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c">InitUart();<br>  Uart_EnableTX();<br>  Uart_EnableRX();<br>  Uart_Init();<br>    SetUartBaudRate();<br>    CfgUartDataFormat();<br>    Clock_SwtichUart0();<br>  Uart_InitFifoMode();<br>    Uart_SetIntEn();<br></code></pre></td></tr></table></figure>
 
-
-
-<h1 id="USB-gadget-driver"><a href="#USB-gadget-driver" class="headerlink" title="USB gadget driver"></a>USB gadget driver</h1><p>composite.c</p>
-<h1 id="UDC-driver"><a href="#UDC-driver" class="headerlink" title="UDC driver"></a>UDC driver</h1><p>设置usb_gadget</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// rts_usb_driver_probe</span><br>rtsusb-&gt;gadget.ops = &amp;rts_gadget_ops;<br>rtsusb-&gt;gadget.name = <span class="hljs-string">&quot;rts_gadget&quot;</span>;<br>rtsusb-&gt;gadget.max_speed = USB_SPEED_HIGH;<br>rtsusb-&gt;gadget.dev.parent = dev;<br>rtsusb-&gt;gadget.speed = USB_SPEED_UNKNOWN;<br><br>rts_gadget_init_endpoints(); <span class="hljs-comment">// 初始化endpoints</span><br>rts_usb_init(rtsusb); <span class="hljs-comment">// 写一些寄存器</span><br>usb_add_gadget_udc(dev, &amp;rtsusb-&gt;gadget); <span class="hljs-comment">// 注册udc</span><br></code></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c">rts_usb_common_irq();<br>  rts_usb_ep_irq();<br>    rts_usb_se0_irq(); <span class="hljs-comment">/// root port reset irq</span><br>      usb_gadget_udc_reset();<br>        driver-&gt;reset(); <span class="hljs-comment">/// 进入composite.c中composite_driver_template .reset</span><br>    rts_usb_ep0_irq();<br>    rts_usb_intrep_irq();<br>    rts_usb_bulkinep_irq();<br>    rts_usb_bulkoutep_irq();<br>    rts_usb_uacinep_irq();<br>    rts_usb_uacoutep_irq();<br>    rts_usb_uvcinep_irq();<br>    <br></code></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// setup irq</span><br>rts_usb_ep0_irq();<br>  usb_read_reg(USB_EP0_SETUP_DATA0) &amp; <span class="hljs-number">0xff</span>;<br>  <span class="hljs-comment">//... 读setup事务的data</span><br>  rts_usb_setup_process();<br>    rts_usb_ep0_standard_request();<br>      rts_usb_req_ep0_get_status();<br>        rts_ep_queue();<br>          rts_ep0_queue();	<br>            rts_start_ep0_transfer();<br>      rts_usb_req_ep0_clear_feature();<br>      rts_usb_req_ep0_set_feature();<br>      rts_usb_req_ep0_set_address();<br>      rts_usb_req_ep0_set_configuration();<br></code></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">rts_usb_intrep_irq();<br>  rts_usb_intr_in_process();<br>    rts_intr_transfer_process();<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">UART232_Handler();<br>  Uart232ProInterrupt();<br></code></pre></td></tr></table></figure>
 
 
 
 
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c">writel(UART_INT_EN, <span class="hljs-number">0</span>); <span class="hljs-comment">// 禁止中断</span><br><br>writel_mask(UART_LINE_CTRL, DIV_LATCH_ACCESS, BIT_7);<br>writel(UART_DIV_LATCH_L, BYTE0(wDiv));<br>writel(UART_DIV_LATCH_H, BYTE1(wDiv));<br>writel_mask(UART_LINE_CTRL, DIV_LATCH_RELEASE, BIT_7);<br><br>writel_mask(UART_LINE_CTRL, data_len|stop_bits|parity, BIT_0|BIT_1|BIT_2|BIT_3);<br><br>clearl_bits(UART_LINE_CTRL, BREAK_CONTROL);<br>setl_bits(UART_FIFO_CTRL, FIFO_ENABLE);<br>setl_bits(UART_FIFO_CTRL, RCVR_FIFO_RESET|XMIT_FIFO_RESET);<br>writel_mask(UART_FIFO_CTRL, (tTxTrigLevel&lt;&lt;<span class="hljs-number">4</span>)|(tRxTrigLevel&lt;&lt;<span class="hljs-number">6</span>), TX_EMPTY_TRIGGER|RCVR_TRIGGER);<br><br>setl_bits(UART_INT_EN, byIntMask);<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h1><h1 id="I2C"><a href="#I2C" class="headerlink" title="I2C"></a>I2C</h1>
                 
               </div>
             
@@ -353,6 +342,34 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/FingerPrint/" class="category-chain-item">FingerPrint</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/FingerPrint/">#FingerPrint</a>
+      
+    </div>
   
 </div>
 
@@ -368,8 +385,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/06/06/USB/usb%20spec/" title="">
-                        <span class="hidden-mobile"></span>
+                      <a href="/2023/06/15/USB/usb%20driver/" title="linux usb driver">
+                        <span class="hidden-mobile">linux usb driver</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
