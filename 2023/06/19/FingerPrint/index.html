@@ -16,15 +16,15 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Normal world EnrollGPIOUart123456789InitUart();  Uart_EnableTX();  Uart_EnableRX();  Uart_Init();    SetUartBaudRate();    CfgUartDataFormat();    Clock_SwtichUart0();  Uart_InitFifoMode();    Uart_Se">
+    <meta name="description" content="Normal world EnrollGPIOUart1234567891011&#x2F;&#x2F; FpUart.cInitUart();  &#x2F;&#x2F; FpUartHal.c  Uart_EnableTX();  Uart_EnableRX();  Uart_Init();     SetUartBaudRate();    CfgUartDataFormat();    Clock_SwtichUart0();">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FingerPrint">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/06/19/FingerPrint/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Normal world EnrollGPIOUart123456789InitUart();  Uart_EnableTX();  Uart_EnableRX();  Uart_Init();    SetUartBaudRate();    CfgUartDataFormat();    Clock_SwtichUart0();  Uart_InitFifoMode();    Uart_Se">
+<meta property="og:description" content="Normal world EnrollGPIOUart1234567891011&#x2F;&#x2F; FpUart.cInitUart();  &#x2F;&#x2F; FpUartHal.c  Uart_EnableTX();  Uart_EnableRX();  Uart_Init();     SetUartBaudRate();    CfgUartDataFormat();    Clock_SwtichUart0();">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-06-19T09:00:28.000Z">
-<meta property="article:modified_time" content="2023-06-21T08:11:28.193Z">
+<meta property="article:modified_time" content="2023-06-25T09:45:50.887Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="FingerPrint">
 <meta name="twitter:card" content="summary_large_image">
@@ -250,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          812 words
+          3k words
         
       </span>
     
@@ -261,7 +261,7 @@
         
         
         
-          7 mins
+          25 mins
         
       </span>
     
@@ -312,7 +312,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年6月21日 下午
+                    本文最后更新于：2023年6月25日 下午
                   
                 
               </p>
@@ -320,21 +320,35 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Normal-world-Enroll"><a href="#Normal-world-Enroll" class="headerlink" title="Normal world Enroll"></a>Normal world Enroll</h1><h1 id="GPIO"><a href="#GPIO" class="headerlink" title="GPIO"></a>GPIO</h1><h1 id="Uart"><a href="#Uart" class="headerlink" title="Uart"></a>Uart</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c">InitUart();<br>  Uart_EnableTX();<br>  Uart_EnableRX();<br>  Uart_Init();<br>    SetUartBaudRate();<br>    CfgUartDataFormat();<br>    Clock_SwtichUart0();<br>  Uart_InitFifoMode();<br>    Uart_SetIntEn();<br></code></pre></td></tr></table></figure>
+                <h1 id="Normal-world-Enroll"><a href="#Normal-world-Enroll" class="headerlink" title="Normal world Enroll"></a>Normal world Enroll</h1><h1 id="GPIO"><a href="#GPIO" class="headerlink" title="GPIO"></a>GPIO</h1><h1 id="Uart"><a href="#Uart" class="headerlink" title="Uart"></a>Uart</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// FpUart.c</span><br>InitUart();<br>  <span class="hljs-comment">// FpUartHal.c</span><br>  Uart_EnableTX();<br>  Uart_EnableRX();<br>  Uart_Init(); <br>    SetUartBaudRate();<br>    CfgUartDataFormat();<br>    Clock_SwtichUart0();<br>  Uart_InitFifoMode();<br>    Uart_SetIntEn();<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">UART232_Handler();<br>  Uart232ProInterrupt();<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">UART232_Handler();<br>  Uart232ProInterrupt();<br>    Uart_GetIntSts(DATA_AVAILABLE_INT)&amp;&amp;Uart_GetIntEn(UART_ERBFI_EN);<br>    Uart_GetMulc();<br></code></pre></td></tr></table></figure>
 
-
-
-
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c">writel(UART_INT_EN, <span class="hljs-number">0</span>); <span class="hljs-comment">// 禁止中断</span><br><br>writel_mask(UART_LINE_CTRL, DIV_LATCH_ACCESS, BIT_7);<br>writel(UART_DIV_LATCH_L, BYTE0(wDiv));<br>writel(UART_DIV_LATCH_H, BYTE1(wDiv));<br>writel_mask(UART_LINE_CTRL, DIV_LATCH_RELEASE, BIT_7);<br><br>writel_mask(UART_LINE_CTRL, data_len|stop_bits|parity, BIT_0|BIT_1|BIT_2|BIT_3);<br><br>clearl_bits(UART_LINE_CTRL, BREAK_CONTROL);<br>setl_bits(UART_FIFO_CTRL, FIFO_ENABLE);<br>setl_bits(UART_FIFO_CTRL, RCVR_FIFO_RESET|XMIT_FIFO_RESET);<br>writel_mask(UART_FIFO_CTRL, (tTxTrigLevel&lt;&lt;<span class="hljs-number">4</span>)|(tRxTrigLevel&lt;&lt;<span class="hljs-number">6</span>), TX_EMPTY_TRIGGER|RCVR_TRIGGER);<br><br>setl_bits(UART_INT_EN, byIntMask);<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">uart_printf();<br>  uart_puts();<br>    Uart_Putc();<br>      UartTbufEmpty();<br></code></pre></td></tr></table></figure>
 
 
 
+<p>InitUart();</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* Uart_Init */</span><br>writel(UART_INT_EN, <span class="hljs-number">0</span>); <span class="hljs-comment">// 禁止中断</span><br><br>writel_mask(UART_LINE_CTRL, DIV_LATCH_ACCESS, BIT_7);<br>writel(UART_DIV_LATCH_L, BYTE0(wDiv));<br>writel(UART_DIV_LATCH_H, BYTE1(wDiv));<br>writel_mask(UART_LINE_CTRL, DIV_LATCH_RELEASE, BIT_7);<br><br>writel_mask(UART_LINE_CTRL, data_len|stop_bits|parity, BIT_0|BIT_1|BIT_2|BIT_3);<br><br><span class="hljs-comment">/* Uart_InitFifoMode */</span><br>clearl_bits(UART_LINE_CTRL, BREAK_CONTROL);<br>setl_bits(UART_FIFO_CTRL, FIFO_ENABLE);<br>setl_bits(UART_FIFO_CTRL, RCVR_FIFO_RESET|XMIT_FIFO_RESET);<br>writel_mask(UART_FIFO_CTRL, (tTxTrigLevel&lt;&lt;<span class="hljs-number">4</span>)|(tRxTrigLevel&lt;&lt;<span class="hljs-number">6</span>), TX_EMPTY_TRIGGER|RCVR_TRIGGER);<br><br><span class="hljs-comment">/* Uart_SetIntEn */</span><br>setl_bits(UART_INT_EN, byIntMask);<br></code></pre></td></tr></table></figure>
+
+<p>UART232_Handler();</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">readl(UART_INT_EN) &amp; byIntMask;<br>readl(UART_INT_EN) &amp; byIntMask;<br>testl_bit(UART_LINE_STAT, DATA_READY_FLAG);<br>buffer[i] = readb(UART_RBUF);<br></code></pre></td></tr></table></figure>
+
+<p>uart_printf();</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">testl_bit(UART_LINE_STAT, BIT_5);<br>writel(UART_TBUF, byChar);<br></code></pre></td></tr></table></figure>
 
 
-<h1 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h1><h1 id="I2C"><a href="#I2C" class="headerlink" title="I2C"></a>I2C</h1>
+
+<h1 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h1><p>cache spi<br>data spi<br>ssor spi<br>ssi spi</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c">DataSpi_FlashInit();<br>  DataSpiInit();<br>  DataSpiFlashJudge();<br>    DataSpiReadID();<br>      SCB_CleanInvalidateDCache_by_Addr();<br>      DataSpiStartTransfer();<br>        DataSpiDmaStart();<br>        DataSpiDmaCheckEnd();<br>  DataSpi_WriteWP();<br>    DataSpiWriteStatus();<br>  DataSpi_SetAutoMode();<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="I2C"><a href="#I2C" class="headerlink" title="I2C"></a>I2C</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs c">I2C0_Init();<br>  I2C0Disable();<br>  I2C0_ClkPadEn();<br><br><span class="hljs-comment">/*i2c master 读写*/</span><br>I2C0_MasterWrite();<br>  writel( I2C0_TAR, address );<br>  WaitTimeOut( I2C0_RAW_INTR_STAT, TX_EMPTY, <span class="hljs-number">1</span>, <span class="hljs-number">20</span>);<br>    writel_mask( I2C0_DATA_CMD, *data_p, I2C_STOP|I2C_DATA_MASK|I2C_WRITE_CMD_MASK);<br>  WaitTimeOut( I2C0_RAW_INTR_STAT, TX_EMPTY, <span class="hljs-number">1</span>, <span class="hljs-number">50</span>);<br>I2C0_MasterRead();<br>  writel( I2C0_TAR, address );<br>  writel_mask( I2C0_DATA_CMD, I2C_READ_CMD, I2C_READ_CMD);<br>  WaitTimeOut( I2C0_RAW_INTR_STAT, RX_FULL, <span class="hljs-number">1</span>, <span class="hljs-number">20</span>);<br>    (readl(I2C0_DATA_CMD))&amp; I2C_DATA_MASK;<br><br><span class="hljs-comment">/*i2c slave 读写*/</span><br>I2C0ProInterrupt0();<br>  I2C0_SlaveGetIntEn(I2C_SLAVE_READ_REQ) &amp;&amp; I2C0_SlaveGetIntSts(I2C_SLAVE_READ_REQ);<br>  I2C0_SlaveReceive();<br>    <span class="hljs-keyword">return</span> ((readl( I2C0_DATA_CMD))&amp;I2C_DATA_MASK);<br>  I2C0_SlaveClrIntSts(I2C_SLAVE_READ_REQ);<br><br>  I2C0_SlaveGetIntEn(I2C_SLAVE_WRITE_REQ) &amp;&amp; I2C0_SlaveGetIntSts(I2C_SLAVE_WRITE_REQ);<br>  I2C0_SlaveSend();<br>    readl(I2C0_CLR_TX_ABRT);<br>    writel_mask( I2C0_DATA_CMD, value, I2C_DATA_MASK);<br>  <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* I2C0_Init */</span><br>writel(I2C0_ENABLE, <span class="hljs-number">0</span>)<br>writel(I2C0_INTR_MASK, <span class="hljs-number">0</span>);<br><br>writel( I2C0_CON, IC_SLAVE_DISABLE | IC_RESTART_EN | MASTER_MODE | I2C_FAST_SPEED );<br>writel( I2C0_INTR_MASK, M_GEN_CALL);<br><br>writel(I2C0_RX_TL, <span class="hljs-number">0</span>);<br>writel(I2C0_TX_TL, <span class="hljs-number">0</span>);<br><br><span class="hljs-comment">/*  change frequency */</span><br>writel(I2C0_FS_SCL_HCNT, (U16)((<span class="hljs-type">float</span>)((dwI2cSpeed&gt;&gt;<span class="hljs-number">16</span>)&amp;<span class="hljs-number">0xffff</span>)/fMul));<br>writel(I2C0_FS_SCL_LCNT, (U16)((<span class="hljs-type">float</span>)(dwI2cSpeed&amp;<span class="hljs-number">0xffff</span>)/fMul));<br><br><span class="hljs-comment">/* change SDA Hold Time */</span><br>writel(I2C0_SDA_HOLD, (U16)((<span class="hljs-type">float</span>)(dwI2cSpeed&amp;<span class="hljs-number">0xffff</span>)/(fMul*<span class="hljs-number">3</span>)));<br><br>writel(I2C0_ENABLE, <span class="hljs-number">1</span> )<br></code></pre></td></tr></table></figure>
+
+
                 
               </div>
             
