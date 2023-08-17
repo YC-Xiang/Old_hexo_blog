@@ -1,1 +1,0 @@
-`cmake PATH` 生成Makefile，其中， `PATH` 是 CMakeLists.txt 所在的目录。
