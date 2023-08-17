@@ -109,6 +109,21 @@ DataSpi_FlashInit();
 
 
 
+```c
+SensorSpiInitialization();
+	g_tSnrAdapter.fp_SnrSpiCfg();
+	Snrspi_Init(10, SPI_MODE0);
+g_tSnrAdapter.fp_SnrPwron();
+SnrIntInit();
+g_tSnrAdapter.fp_SnrInit();
+	mafp_param_init();
+		mafp_sensor_init();
+		mafp_set_memory_addr();
+		Gpio_ClrIntSts();
+```
+
+
+
 # I2C
 
 ```c

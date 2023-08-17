@@ -91,6 +91,8 @@ log：
 
 https://docs.kernel.org/core-api/dma-api-howto.html
 
+https://zhuanlan.zhihu.com/p/109919756
+
 ## CPU and DMA addresses
 
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230510112218.png)

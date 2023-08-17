@@ -237,29 +237,36 @@ git branch --set-upstream-to=origin/develop
 
 # Pro Git
 
+# 1. Getting Started
+
 ## First-Time Git Setup
 
-1. `[path]/etc/gitconfig` system全局配置。pass the option `--system` to `git config`。
-2. `~/.gitconfig` or `~/.config/git/config` user全局配置。`--global`。
-3. `config` file in the Git directory (that is, `.git/config`) 某个库的本地配置。`--local`。
+1. `[path]/etc/gitconfig` system全局配置，会影响所有用户。pass the option `--system` to `git config`可以修改全局配置。
+2. `~/.gitconfig` or `~/.config/git/config` user全局配置。pass the  option `--global` to `git config`可以修改用户配置。
+3. `config` file in the Git directory (that is, `.git/config`) 某个库的本地配置。pass the  option`--local` to `git config`可以修改某个库的配置。也是`git config`的默认选项。
 
-You can view all of your settings and where they are coming from using:
+查看所有配置：
 ```bash
 git config --list --show-origin
 ```
 
-## Your Identity
+**Your Identity**
 
 ```bash
 $ git config --global user.name "John Doe"
 $ git config --global user.email johndoe@example.com
 ```
-## Your Editor
+**Your Editor**
 
 ```bash
 git config --global core.editor vim
 ```
+可以通过
+
+`git config xxx.xxx`查看某个配置。
+
 # MISC
+
 在repository中不小心上传了大文件或者隐私数据：
 https://help.github.com/articles/removing-sensitive-data-from-a-repository/
 

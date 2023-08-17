@@ -407,11 +407,15 @@ D7: 0:OUT 1:IN 在control pipe中direction应该被设为0，即OUT事件。但d
 
 Test_Mode feature 不能被ClearFeature()清除。
 
+### 9.4.2 Get configuration
+
+
+
 ### 9.4.3 Get Descriptor
 
-wValue bit8开始是描述符的类型，具体参考Table9-5. 
+wValue high byte是描述符的类型，具体参考Table9-5. 
 
-bit0 是index
+low byte是index
 
 ### 9.4.5 Get Status
 
@@ -438,6 +442,10 @@ Default stage: 传递的地址不为0则进入Address stage， 为0则保持在D
 Address stage: 传递的地址为0则进入Default stage，不为0则保持在Address stage，并更换新的地址。
 
 地址不能超过127。
+
+### 9.4.7 Set Configuration
+
+
 
 ## 9.6 Standard USB Descriptor Definitions
 
