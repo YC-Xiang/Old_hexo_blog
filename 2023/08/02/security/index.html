@@ -16,24 +16,32 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Normal world EnrollGPIOUart1234567891011&#x2F;&#x2F; FpUart.cInitUart();  &#x2F;&#x2F; FpUartHal.c  Uart_EnableTX();  Uart_EnableRX();  Uart_Init();     SetUartBaudRate();    CfgUartDataFormat();    Clock_SwtichUart0();">
+    <meta name="description" content="1. 非可逆加密1.1 SHA256https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;SHA-2 Pseudocode伪代码流程 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;94619052 概述对于任意长度的消息，SHA256都会产生一个256位的哈希值。  对消息进行补位处理，最终的长度是512位的倍数。 以512位为单位对消息进行分块为M1, M2, …, Mn。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FingerPrint">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/06/19/FingerPrint/index.html">
+<meta property="og:title" content="Yucheng&#39;s Blog">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/08/02/security/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Normal world EnrollGPIOUart1234567891011&#x2F;&#x2F; FpUart.cInitUart();  &#x2F;&#x2F; FpUartHal.c  Uart_EnableTX();  Uart_EnableRX();  Uart_Init();     SetUartBaudRate();    CfgUartDataFormat();    Clock_SwtichUart0();">
+<meta property="og:description" content="1. 非可逆加密1.1 SHA256https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;SHA-2 Pseudocode伪代码流程 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;94619052 概述对于任意长度的消息，SHA256都会产生一个256位的哈希值。  对消息进行补位处理，最终的长度是512位的倍数。 以512位为单位对消息进行分块为M1, M2, …, Mn。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-06-19T09:00:28.000Z">
-<meta property="article:modified_time" content="2023-06-26T02:04:27.978Z">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731145934.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731145958.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731150022.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731173545.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230801141720.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731175508.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230801094130.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230801140325.png">
+<meta property="article:published_time" content="2023-08-02T06:25:37.486Z">
+<meta property="article:modified_time" content="2023-08-03T08:03:37.577Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="FingerPrint">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731145934.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>FingerPrint - Yucheng&#39;s Blog</title>
+  <title>Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +235,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">FingerPrint</span>
+            <span id="subtitle"></span>
           
         </div>
 
@@ -238,8 +246,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-06-19 17:00" pubdate>
-          2023年6月19日 下午
+        <time datetime="2023-08-02 14:25" pubdate>
+          2023年8月2日 下午
         </time>
       </span>
     
@@ -250,7 +258,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.2k words
+          1.9k words
         
       </span>
     
@@ -261,7 +269,7 @@
         
         
         
-          27 mins
+          17 mins
         
       </span>
     
@@ -307,12 +315,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">FingerPrint</h1>
+            <h1 style="display: none"></h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年6月26日 上午
+                    本文最后更新于：2023年8月3日 下午
                   
                 
               </p>
@@ -320,39 +328,63 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Normal-world-Enroll"><a href="#Normal-world-Enroll" class="headerlink" title="Normal world Enroll"></a>Normal world Enroll</h1><h1 id="GPIO"><a href="#GPIO" class="headerlink" title="GPIO"></a>GPIO</h1><h1 id="Uart"><a href="#Uart" class="headerlink" title="Uart"></a>Uart</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// FpUart.c</span><br>InitUart();<br>  <span class="hljs-comment">// FpUartHal.c</span><br>  Uart_EnableTX();<br>  Uart_EnableRX();<br>  Uart_Init(); <br>    SetUartBaudRate();<br>    CfgUartDataFormat();<br>    Clock_SwtichUart0();<br>  Uart_InitFifoMode();<br>    Uart_SetIntEn();<br></code></pre></td></tr></table></figure>
+                <h1 id="1-非可逆加密"><a href="#1-非可逆加密" class="headerlink" title="1. 非可逆加密"></a>1. 非可逆加密</h1><h2 id="1-1-SHA256"><a href="#1-1-SHA256" class="headerlink" title="1.1 SHA256"></a>1.1 SHA256</h2><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/SHA-2">https://en.wikipedia.org/wiki/SHA-2</a> Pseudocode伪代码流程</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/94619052">https://zhuanlan.zhihu.com/p/94619052</a></p>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>对于任意长度的消息，SHA256都会产生一个<strong>256位</strong>的哈希值。</p>
+<ul>
+<li>对消息进行补位处理，最终的长度是<strong>512位的倍数</strong>。</li>
+<li>以512位为单位对消息进行分块为M1, M2, …, Mn。</li>
+</ul>
+<p>消息区块将进行逐个处理：从一个固定的初始哈希$H^{0}$开始，进行以下序列计算：</p>
+<p>$H^{(i)}&#x3D;H^{(i-1)}+C_{M^{i}}(H^{(i-1)})$</p>
+<p>C是SHA256压缩函数，+是mod $2^{32}$加法，相加后对$2^{32}$取余。</p>
+<h3 id="常量初始化"><a href="#常量初始化" class="headerlink" title="常量初始化"></a>常量初始化</h3><blockquote>
+<p>code中的iv向量即初始化哈希</p>
+</blockquote>
+<p>初始哈希值$H^0$取自然数前八个素数(2, 3, 5, 7, 11, 13, 19)的平方根的小数部分。并且取前面的32位。</p>
+<p>比如根号2的小数部分为0.414213562373095048约等于$6<em>16^{-1}+a</em>16^{-2}+0*16^{-3}…$</p>
+<p>$H^{0}$对应0x6a09e667</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> SHA256_DIGEST_SIZE</span><br><span class="hljs-type">const</span> U8 g_cbySha256IV[SHA256_DIGEST_SIZE]=<br>&#123;<br>  <span class="hljs-number">0x6A</span>, <span class="hljs-number">0x09</span>, <span class="hljs-number">0xE6</span>, <span class="hljs-number">0x67</span>,<br>  <span class="hljs-number">0xBB</span>, <span class="hljs-number">0x67</span>, <span class="hljs-number">0xAE</span>, <span class="hljs-number">0x85</span>,<br>  <span class="hljs-number">0x3C</span>, <span class="hljs-number">0x6E</span>, <span class="hljs-number">0xF3</span>, <span class="hljs-number">0x72</span>,<br>  <span class="hljs-number">0xA5</span>, <span class="hljs-number">0x4F</span>, <span class="hljs-number">0xF5</span>, <span class="hljs-number">0x3A</span>,<br>  <span class="hljs-number">0x51</span>, <span class="hljs-number">0x0E</span>, <span class="hljs-number">0x52</span>, <span class="hljs-number">0x7F</span>,<br>  <span class="hljs-number">0x9B</span>, <span class="hljs-number">0x05</span>, <span class="hljs-number">0x68</span>, <span class="hljs-number">0x8C</span>,<br>  <span class="hljs-number">0x1F</span>, <span class="hljs-number">0x83</span>, <span class="hljs-number">0xD9</span>, <span class="hljs-number">0xAB</span>,<br>  <span class="hljs-number">0x5B</span>, <span class="hljs-number">0xE0</span>, <span class="hljs-number">0xCD</span>, <span class="hljs-number">0x19</span><br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">UART232_Handler();<br>  Uart232ProInterrupt();<br>    Uart_GetIntSts(DATA_AVAILABLE_INT)&amp;&amp;Uart_GetIntEn(UART_ERBFI_EN);<br>    Uart_GetMulc();<br></code></pre></td></tr></table></figure>
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">uart_printf();<br>  uart_puts();<br>    Uart_Putc();<br>      UartTbufEmpty();<br></code></pre></td></tr></table></figure>
-
-
-
-<p>InitUart();</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* Uart_Init */</span><br>writel(UART_INT_EN, <span class="hljs-number">0</span>); <span class="hljs-comment">// 禁止中断</span><br><br>writel_mask(UART_LINE_CTRL, DIV_LATCH_ACCESS, BIT_7);<br>writel(UART_DIV_LATCH_L, BYTE0(wDiv));<br>writel(UART_DIV_LATCH_H, BYTE1(wDiv));<br>writel_mask(UART_LINE_CTRL, DIV_LATCH_RELEASE, BIT_7);<br><br>writel_mask(UART_LINE_CTRL, data_len|stop_bits|parity, BIT_0|BIT_1|BIT_2|BIT_3);<br><br><span class="hljs-comment">/* Uart_InitFifoMode */</span><br>clearl_bits(UART_LINE_CTRL, BREAK_CONTROL);<br>setl_bits(UART_FIFO_CTRL, FIFO_ENABLE);<br>setl_bits(UART_FIFO_CTRL, RCVR_FIFO_RESET|XMIT_FIFO_RESET);<br>writel_mask(UART_FIFO_CTRL, (tTxTrigLevel&lt;&lt;<span class="hljs-number">4</span>)|(tRxTrigLevel&lt;&lt;<span class="hljs-number">6</span>), TX_EMPTY_TRIGGER|RCVR_TRIGGER);<br><br><span class="hljs-comment">/* Uart_SetIntEn */</span><br>setl_bits(UART_INT_EN, byIntMask);<br></code></pre></td></tr></table></figure>
-
-<p>UART232_Handler();</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">readl(UART_INT_EN) &amp; byIntMask;<br>readl(UART_INT_EN) &amp; byIntMask;<br>testl_bit(UART_LINE_STAT, DATA_READY_FLAG);<br>buffer[i] = readb(UART_RBUF);<br></code></pre></td></tr></table></figure>
-
-<p>uart_printf();</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">testl_bit(UART_LINE_STAT, BIT_5);<br>writel(UART_TBUF, byChar);<br></code></pre></td></tr></table></figure>
-
-
-
-<h1 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h1><p>cache spi<br>data spi<br>ssor spi<br>ssi spi</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c">DataSpi_FlashInit();<br>  DataSpiInit();<br>  DataSpiFlashJudge();<br>    DataSpiReadID();<br>      SCB_CleanInvalidateDCache_by_Addr();<br>      DataSpiStartTransfer();<br>        DataSpiDmaStart();<br>        DataSpiDmaCheckEnd();<br>  DataSpi_WriteWP();<br>    DataSpiWriteStatus();<br>  DataSpi_SetAutoMode();<br></code></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c">SensorSpiInitialization();<br>  g_tSnrAdapter.fp_SnrSpiCfg();<br>  Snrspi_Init(<span class="hljs-number">10</span>, SPI_MODE0);<br>g_tSnrAdapter.fp_SnrPwron();<br>SnrIntInit();<br>g_tSnrAdapter.fp_SnrInit();<br>  mafp_param_init();<br>    mafp_sensor_init();<br>    mafp_set_memory_addr();<br>    Gpio_ClrIntSts();<br></code></pre></td></tr></table></figure>
-
-
-
-<h1 id="I2C"><a href="#I2C" class="headerlink" title="I2C"></a>I2C</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs c">I2C0_Init();<br>  I2C0Disable();<br>  I2C0_ClkPadEn();<br><br><span class="hljs-comment">/*i2c master 读写*/</span><br>I2C0_MasterWrite();<br>  writel( I2C0_TAR, address );<br>  WaitTimeOut( I2C0_RAW_INTR_STAT, TX_EMPTY, <span class="hljs-number">1</span>, <span class="hljs-number">20</span>);<br>    writel_mask( I2C0_DATA_CMD, *data_p, I2C_STOP|I2C_DATA_MASK|I2C_WRITE_CMD_MASK);<br>  WaitTimeOut( I2C0_RAW_INTR_STAT, TX_EMPTY, <span class="hljs-number">1</span>, <span class="hljs-number">50</span>);<br>I2C0_MasterRead();<br>  writel( I2C0_TAR, address );<br>  writel_mask( I2C0_DATA_CMD, I2C_READ_CMD, I2C_READ_CMD);<br>  WaitTimeOut( I2C0_RAW_INTR_STAT, RX_FULL, <span class="hljs-number">1</span>, <span class="hljs-number">20</span>);<br>    (readl(I2C0_DATA_CMD))&amp; I2C_DATA_MASK;<br><br><span class="hljs-comment">/*i2c slave 读写*/</span><br>I2C0ProInterrupt0();<br>  I2C0_SlaveGetIntEn(I2C_SLAVE_READ_REQ) &amp;&amp; I2C0_SlaveGetIntSts(I2C_SLAVE_READ_REQ);<br>  I2C0_SlaveReceive();<br>    <span class="hljs-keyword">return</span> ((readl( I2C0_DATA_CMD))&amp;I2C_DATA_MASK);<br>  I2C0_SlaveClrIntSts(I2C_SLAVE_READ_REQ);<br><br>  I2C0_SlaveGetIntEn(I2C_SLAVE_WRITE_REQ) &amp;&amp; I2C0_SlaveGetIntSts(I2C_SLAVE_WRITE_REQ);<br>  I2C0_SlaveSend();<br>    readl(I2C0_CLR_TX_ABRT);<br>    writel_mask( I2C0_DATA_CMD, value, I2C_DATA_MASK);<br>  <br></code></pre></td></tr></table></figure>
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* I2C0_Init */</span><br>writel(I2C0_ENABLE, <span class="hljs-number">0</span>)<br>writel(I2C0_INTR_MASK, <span class="hljs-number">0</span>);<br><br>writel( I2C0_CON, IC_SLAVE_DISABLE | IC_RESTART_EN | MASTER_MODE | I2C_FAST_SPEED );<br>writel( I2C0_INTR_MASK, M_GEN_CALL);<br><br>writel(I2C0_RX_TL, <span class="hljs-number">0</span>);<br>writel(I2C0_TX_TL, <span class="hljs-number">0</span>);<br><br><span class="hljs-comment">/*  change frequency */</span><br>writel(I2C0_FS_SCL_HCNT, (U16)((<span class="hljs-type">float</span>)((dwI2cSpeed&gt;&gt;<span class="hljs-number">16</span>)&amp;<span class="hljs-number">0xffff</span>)/fMul));<br>writel(I2C0_FS_SCL_LCNT, (U16)((<span class="hljs-type">float</span>)(dwI2cSpeed&amp;<span class="hljs-number">0xffff</span>)/fMul));<br><br><span class="hljs-comment">/* change SDA Hold Time */</span><br>writel(I2C0_SDA_HOLD, (U16)((<span class="hljs-type">float</span>)(dwI2cSpeed&amp;<span class="hljs-number">0xffff</span>)/(fMul*<span class="hljs-number">3</span>)));<br><br>writel(I2C0_ENABLE, <span class="hljs-number">1</span> )<br></code></pre></td></tr></table></figure>
-
-
+<h3 id="消息预处理"><a href="#消息预处理" class="headerlink" title="消息预处理"></a>消息预处理</h3><p>对消息进行补码处理: 假设M的二进制编码长度为$l$位，首先在消息末尾补上一位”1”，然后再补上$k$个”0”, k为下列方程最小数。</p>
+<p>$$l+1+k \equiv 448\space mod\space512 $$ </p>
+<blockquote>
+<p>$\equiv$是同余符号，表示取余后相同</p>
+</blockquote>
+<p>最后还要补充64bits $l$即长度的二进制表示，形成512bits的倍数。</p>
+<p>将补码处理后的消息以512bit为单位分块: $M^1, M^2, …,M^N$, </p>
+<p>第i个消息块总共512bits又以32bits为单位分为16个消息块:$M_0^i, M_1^i,…,M_{15}^i$</p>
+<blockquote>
+<p>例如补充完消息为512bits，那么只有$M^1$大块，和其中的16小块。</p>
+</blockquote>
+<p>见参考链接对”abc”的补码过程。</p>
+<h3 id="摘要计算主循环"><a href="#摘要计算主循环" class="headerlink" title="摘要计算主循环"></a>摘要计算主循环</h3><p>$For\space i&#x3D;1\rightarrow N$</p>
+<p>用(i-1)个中间哈希对a,b,c,d,e,f,g,h初始化，当i&#x3D;1时，就使用初始化哈希常量</p>
+<p>$$a\leftarrow H_1^{i-1} \ b\leftarrow H_2^{i-1} \ …\h\leftarrow H_8^{i-1}$$</p>
+<p>应用SHA256压缩函数来更新a,b,c,…,h</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731145934.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731145958.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731150022.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="2-可逆加密"><a href="#2-可逆加密" class="headerlink" title="2. 可逆加密"></a>2. 可逆加密</h1><h2 id="2-1-对称加密"><a href="#2-1-对称加密" class="headerlink" title="2.1 对称加密"></a>2.1 对称加密</h2><h3 id="AES"><a href="#AES" class="headerlink" title="AES"></a>AES</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/78913397">https://zhuanlan.zhihu.com/p/78913397</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_28205153/article/details/55798628">https://blog.csdn.net/qq_28205153/article/details/55798628</a></p>
+<p>AES 是对称加密算法，也就是说加密和解密都是采用同一个的密钥。</p>
+<p>AES把明文分成一组一组，每次加密一组数据，直到加密完整个明文。AES标准规范中，分组长度只能是<strong>128位</strong>。密钥的长度可以使用<strong>128位</strong>、<strong>192位</strong>或<strong>256位</strong>。密钥的长度不同，推荐加密轮数也不同。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731173545.png" srcset="/img/loading.gif" lazyload></p>
+<p>下面展示的是明文和密钥长度都为128bits长度的AES。</p>
+<p>AES的整体结构如下图所示，其中的W[0,3]是指W[0]、W[1]、W[2]和W[3]串联组成的128位密钥。加密的第1轮到第9轮的轮函数一样，包括4个操作：字节代换、行位移、列混合和轮密钥加。<strong>最后一轮</strong>迭代不执行列混合。另外，在<strong>第一轮迭代之前</strong>，先将明文和原始密钥进行一次异或加密操作。</p>
+<h4 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h4><p>下面应该介绍的是ECB工作模式？</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230801141720.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="密钥加法层"><a href="#密钥加法层" class="headerlink" title="密钥加法层"></a><strong>密钥加法层</strong></h4><p>将一组明文和一组密钥进行异或操作。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731175508.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="字节代换层"><a href="#字节代换层" class="headerlink" title="字节代换层"></a><strong>字节代换层</strong></h4><p>把上面得到的矩阵每个字节的高4位作为行值，低4位作为列值，查找S盒对应的映射。相当于一个查表替换的操作。解密时用逆S盒。</p>
+<h4 id="行位移层"><a href="#行位移层" class="headerlink" title="行位移层"></a><strong>行位移层</strong></h4><p>加密：</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230801094130.png" srcset="/img/loading.gif" lazyload></p>
+<p>解密相反，第一行不变，第二行向右移动一个字节…</p>
+<h4 id="列混淆层"><a href="#列混淆层" class="headerlink" title="列混淆层"></a><strong>列混淆层</strong></h4><p>与下图中的正矩阵相乘，这里的矩阵乘法与普通的加减法不同。解密会乘不同的矩阵。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230801140325.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="密钥扩展"><a href="#密钥扩展" class="headerlink" title="密钥扩展"></a><strong>密钥扩展</strong></h4><p>下一轮aes计算的密钥W[4]<del>W[7] 由W[0]</del>W[3]生成。</p>
+<h3 id="工作模式"><a href="#工作模式" class="headerlink" title="工作模式"></a>工作模式</h3><h4 id="ECB"><a href="#ECB" class="headerlink" title="ECB"></a>ECB</h4><h4 id="CBC"><a href="#CBC" class="headerlink" title="CBC"></a>CBC</h4><h4 id="CTR"><a href="#CTR" class="headerlink" title="CTR"></a>CTR</h4><h4 id="CCM"><a href="#CCM" class="headerlink" title="CCM"></a>CCM</h4><h4 id="GCM"><a href="#GCM" class="headerlink" title="GCM"></a>GCM</h4><h2 id="2-2-非对称加密"><a href="#2-2-非对称加密" class="headerlink" title="2.2 非对称加密"></a>2.2 非对称加密</h2><h3 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h3><h3 id="ECC"><a href="#ECC" class="headerlink" title="ECC"></a>ECC</h3><p>椭圆加密曲线Elliptic curve cryptography</p>
+<h1 id="Hmac"><a href="#Hmac" class="headerlink" title="Hmac"></a>Hmac</h1><h1 id="CRC"><a href="#CRC" class="headerlink" title="CRC"></a>CRC</h1><h1 id="TRNG"><a href="#TRNG" class="headerlink" title="TRNG"></a>TRNG</h1>
                 
               </div>
             
@@ -360,34 +392,6 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/FingerPrint/" class="category-chain-item">FingerPrint</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/FingerPrint/">#FingerPrint</a>
-      
-    </div>
   
 </div>
 
@@ -399,7 +403,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/08/02/security/" title="">
+                      <a href="/2023/08/02/USB/DFU/" title="">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile"></span>
                         <span class="visible-mobile">上一篇</span>
@@ -409,8 +413,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/06/15/USB/usb%20driver/" title="linux usb driver">
-                        <span class="hidden-mobile">linux usb driver</span>
+                      <a href="/2023/06/19/FingerPrint/" title="FingerPrint">
+                        <span class="hidden-mobile">FingerPrint</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
