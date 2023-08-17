@@ -18,8 +18,8 @@
   
     <meta name="description" content="1. 非可逆加密1.1 SHA256https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;SHA-2 Pseudocode伪代码流程 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;94619052 概述对于任意长度的消息，SHA256都会产生一个256位的哈希值。  对消息进行补位处理，最终的长度是512位的倍数。 以512位为单位对消息进行分块为M1, M2, …, Mn。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Yucheng&#39;s Blog">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/08/02/security/index.html">
+<meta property="og:title" content="安全加密算法">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/08/15/security/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
 <meta property="og:description" content="1. 非可逆加密1.1 SHA256https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;SHA-2 Pseudocode伪代码流程 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;94619052 概述对于任意长度的消息，SHA256都会产生一个256位的哈希值。  对消息进行补位处理，最终的长度是512位的倍数。 以512位为单位对消息进行分块为M1, M2, …, Mn。">
 <meta property="og:locale" content="zh_CN">
@@ -31,9 +31,10 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731175508.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230801094130.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230801140325.png">
-<meta property="article:published_time" content="2023-08-02T06:25:37.486Z">
-<meta property="article:modified_time" content="2023-08-03T08:03:37.577Z">
+<meta property="article:published_time" content="2023-08-15T09:39:28.000Z">
+<meta property="article:modified_time" content="2023-08-17T09:40:43.170Z">
 <meta property="article:author" content="Yucheng Xiang">
+<meta property="article:tag" content="加密算法">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731145934.png">
   
@@ -41,7 +42,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Yucheng&#39;s Blog</title>
+  <title>安全加密算法 - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -235,7 +236,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle"></span>
+            <span id="subtitle">安全加密算法</span>
           
         </div>
 
@@ -246,8 +247,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-08-02 14:25" pubdate>
-          2023年8月2日 下午
+        <time datetime="2023-08-15 17:39" pubdate>
+          2023年8月15日 下午
         </time>
       </span>
     
@@ -315,12 +316,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">安全加密算法</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年8月3日 下午
+                    本文最后更新于：2023年8月17日 下午
                   
                 
               </p>
@@ -392,6 +393,34 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/">#加密算法</a>
+      
+    </div>
   
 </div>
 
@@ -403,9 +432,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/08/02/USB/DFU/" title="">
+                      <a href="/2023/08/17/%E6%95%B0%E5%AD%97%E8%AE%BE%E8%AE%A1%E4%B8%8E%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" title="数字设计和计算机体系结构笔记">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
+                        <span class="hidden-mobile">数字设计和计算机体系结构笔记</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -413,8 +442,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/06/19/FingerPrint/" title="FingerPrint">
-                        <span class="hidden-mobile">FingerPrint</span>
+                      <a href="/2023/08/02/USB/DFU/" title="">
+                        <span class="hidden-mobile"></span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
