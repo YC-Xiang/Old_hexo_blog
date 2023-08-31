@@ -35,7 +35,7 @@ memcpy(buffer+4, buf, 256); // 正常运行
 
 
 
-附上找到的memcpy实现，https://blog.popkx.com/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%90%E5%AD%97%E8%8A%82%E6%8B%B7%E8%B4%9D%E6%B2%A1%E6%9C%89memcpy%E5%87%BD%E6%95%B0%E5%BF%AB-%E5%AE%83%E4%BD%BF%E7%94%A8%E4%BA%86%E5%93%AA%E4%BA%9B%E6%8A%80/
+附上找到的memcpy C语言实现，https://blog.popkx.com/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%90%E5%AD%97%E8%8A%82%E6%8B%B7%E8%B4%9D%E6%B2%A1%E6%9C%89memcpy%E5%87%BD%E6%95%B0%E5%BF%AB-%E5%AE%83%E4%BD%BF%E7%94%A8%E4%BA%86%E5%93%AA%E4%BA%9B%E6%8A%80/
 
 ```c
 void aligned_memory_copy(void* dst, void* src, unsigned int bytes)
@@ -71,6 +71,10 @@ void aligned_memory_copy(void* dst, void* src, unsigned int bytes)
   }
 }
 ```
+
+# 总结
+
+假如指针不对齐，就去读写其中数据，x86 速度会慢些，而 ARM 可能直接崩掉。
 
 # Reference
 
