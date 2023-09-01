@@ -16,25 +16,24 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Job controljobs: lists the unfinished jobs associated with the current terminal session. fg + %num : num是jobs命令显示进程对应的序号。 bg+ %num: 让进程在后台从stopped-&gt;running。 ctrl + z: 让当前进程进入后台并suspend。 Tmuxtmux: o">
+    <meta name="description" content="工作中在ARMv8-M架构内核遇到如下问题： 首先定义了一个Char型数组, 1unsigned char buffer[1024];  调用了memcpy, 想把另一块数据拷贝到这块buffer第五个Bytes开始位置，即 123unsigned char buf[256];memcpy(buffer+5, (U32 *)0x40170000, 256); &#x2F;&#x2F; Hardfault，芯片rese">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Missing-semester_ch4_commandline_environment">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/02/07/Missing-semester-ch4-commandline-environment/index.html">
+<meta property="og:title" content="C语言解引用未对齐的指针引发硬件HardFault">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/08/31/Misc/C%E8%AF%AD%E8%A8%80%E6%9C%AA%E5%AF%B9%E9%BD%90%E8%AE%BF%E9%97%AE/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Job controljobs: lists the unfinished jobs associated with the current terminal session. fg + %num : num是jobs命令显示进程对应的序号。 bg+ %num: 让进程在后台从stopped-&gt;running。 ctrl + z: 让当前进程进入后台并suspend。 Tmuxtmux: o">
+<meta property="og:description" content="工作中在ARMv8-M架构内核遇到如下问题： 首先定义了一个Char型数组, 1unsigned char buffer[1024];  调用了memcpy, 想把另一块数据拷贝到这块buffer第五个Bytes开始位置，即 123unsigned char buf[256];memcpy(buffer+5, (U32 *)0x40170000, 256); &#x2F;&#x2F; Hardfault，芯片rese">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-02-07T07:02:48.000Z">
-<meta property="article:modified_time" content="2023-02-08T07:48:22.515Z">
+<meta property="article:published_time" content="2023-08-31T14:01:28.000Z">
+<meta property="article:modified_time" content="2023-09-01T06:05:57.974Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="Missing semester">
-<meta property="article:tag" content="tmux">
+<meta property="article:tag" content="Misc">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Missing-semester_ch4_commandline_environment - Yucheng&#39;s Blog</title>
+  <title>C语言解引用未对齐的指针引发硬件HardFault - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -228,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Missing-semester_ch4_commandline_environment</span>
+            <span id="subtitle">C语言解引用未对齐的指针引发硬件HardFault</span>
           
         </div>
 
@@ -239,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-07 15:02" pubdate>
-          2023年2月7日 下午
+        <time datetime="2023-08-31 22:01" pubdate>
+          2023年8月31日 晚上
         </time>
       </span>
     
@@ -251,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          787 words
+          1.5k words
         
       </span>
     
@@ -262,7 +261,7 @@
         
         
         
-          7 mins
+          13 mins
         
       </span>
     
@@ -308,12 +307,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Missing-semester_ch4_commandline_environment</h1>
+            <h1 style="display: none">C语言解引用未对齐的指针引发硬件HardFault</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年2月8日 下午
+                    本文最后更新于：2023年9月1日 下午
                   
                 
               </p>
@@ -321,31 +320,28 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Job-control"><a href="#Job-control" class="headerlink" title="Job control"></a>Job control</h1><p><code>jobs</code>: lists the unfinished jobs associated with the current terminal session.</p>
-<p><code>fg + %num </code>: <code>num</code>是<code>jobs</code>命令显示进程对应的序号。</p>
-<p><code>bg+ %num</code>: 让进程在后台从stopped-&gt;running。</p>
-<p><code>ctrl + z</code>: 让当前进程进入后台并suspend。</p>
-<h1 id="Tmux"><a href="#Tmux" class="headerlink" title="Tmux"></a>Tmux</h1><p><code>tmux</code>: open a new session.</p>
-<p><code>C-b %</code>: 左右分屏。</p>
-<p><code>C-b &quot;</code>: 上下分屏。</p>
-<p><code>C-b &lt;arrow key&gt;</code>:在panes间移动。</p>
-<p><code>exit</code> or hit <code>Ctrl-d</code>：退出当前pane。</p>
-<p><code>C-b c</code>: new window.</p>
-<p><code>C-b p</code>: previous window.</p>
-<p><code>C-b n</code>: next window.</p>
-<p><code>C-b &lt;number&gt;</code> : move to window n.</p>
-<p><code>tmux ls</code>: list sessions.</p>
-<p><code>tmux attach -t 0</code>: attach to 0 session.</p>
-<p><code>C-b ?</code>: help message.</p>
-<p><code>C-b z</code>: make a pane go full screen. Hit <code>C-b z</code> again to shrink it back to its previous size</p>
-<p><code>C-b C-&lt;arrow key&gt;</code>: Resize pane in direction of <arrow key></p>
-<p><code>C-b ,</code>: Rename the current window</p>
-<p><code>&lt;C-b&gt; [</code> Start scrollback. You can then press <code>&lt;space&gt;</code> to start a selection and <code>&lt;enter&gt;</code> to copy that selection.</p>
-<h2 id="my-configs"><a href="#my-configs" class="headerlink" title="my configs"></a>my configs</h2><p><code>C-b</code> -&gt; <code>C-a</code></p>
-<p><code>C-b %</code> -&gt; <code>C-a |</code></p>
-<p><code>C-b &quot;</code> -&gt; <code>C-a -</code></p>
-<p><code>C-b &lt;arrow key&gt;</code> -&gt; <code>alt &lt;arrow key&gt;</code></p>
-<p><a target="_blank" rel="noopener" href="https://missing.csail.mit.edu/2020/command-line/">more commands click this</a></p>
+                <p>工作中在ARMv8-M架构内核遇到如下问题：</p>
+<p>首先定义了一个Char型数组,</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> buffer[<span class="hljs-number">1024</span>];<br></code></pre></td></tr></table></figure>
+
+<p>调用了memcpy, 想把另一块数据拷贝到这块buffer<strong>第五个Bytes</strong>开始位置，即</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> buf[<span class="hljs-number">256</span>];<br><br><span class="hljs-built_in">memcpy</span>(buffer+<span class="hljs-number">5</span>, (U32 *)<span class="hljs-number">0x40170000</span>, <span class="hljs-number">256</span>); <span class="hljs-comment">// Hardfault，芯片reset</span><br></code></pre></td></tr></table></figure>
+
+<p>这时发生了硬件HardFault，另外发现如果拷贝到buffer第四个Bytes开始位置就不会出现HardFault。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-built_in">memcpy</span>(buffer+<span class="hljs-number">4</span>, (U32 *)<span class="hljs-number">0x40170000</span>, <span class="hljs-number">256</span>); <span class="hljs-comment">// 正常运行</span><br></code></pre></td></tr></table></figure>
+
+<p>并且如果拷贝源是buffer的话也不会有这个问题</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-built_in">memcpy</span>(buffer+<span class="hljs-number">5</span>, source_buffer, <span class="hljs-number">256</span>); <span class="hljs-comment">// 正常运行</span><br></code></pre></td></tr></table></figure>
+<p>还不清楚什么原因。</p>
+<p>附上找到的memcpy C语言实现，<a target="_blank" rel="noopener" href="https://blog.popkx.com/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%90%E5%AD%97%E8%8A%82%E6%8B%B7%E8%B4%9D%E6%B2%A1%E6%9C%89memcpy%E5%87%BD%E6%95%B0%E5%BF%AB-%E5%AE%83%E4%BD%BF%E7%94%A8%E4%BA%86%E5%93%AA%E4%BA%9B%E6%8A%80/">https://blog.popkx.com/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%90%E5%AD%97%E8%8A%82%E6%8B%B7%E8%B4%9D%E6%B2%A1%E6%9C%89memcpy%E5%87%BD%E6%95%B0%E5%BF%AB-%E5%AE%83%E4%BD%BF%E7%94%A8%E4%BA%86%E5%93%AA%E4%BA%9B%E6%8A%80/</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">aligned_memory_copy</span><span class="hljs-params">(<span class="hljs-type">void</span>* dst, <span class="hljs-type">void</span>* src, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> bytes)</span><br>&#123;<br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>* b_dst = (<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>*)dst;<br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>* b_src = (<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>*)src;<br><br>  <span class="hljs-comment">// Copy bytes to align source pointer</span><br>  <span class="hljs-keyword">while</span> ((b_src &amp; <span class="hljs-number">0x3</span>) != <span class="hljs-number">0</span>)<br>  &#123;<br>    *b_dst++ = *b_src++;<br>    bytes--;<br>  &#125;<br><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span>* w_dst = (<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span>*)b_dst;<br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span>* w_src = (<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span>*)b_src;<br>  <span class="hljs-keyword">while</span> (bytes &gt;= <span class="hljs-number">4</span>)<br>  &#123;<br>    *w_dst++ = *w_src++;<br>    bytes -= <span class="hljs-number">4</span>;<br>  &#125;<br><br>  <span class="hljs-comment">// Copy trailing bytes</span><br>  <span class="hljs-keyword">if</span> (bytes &gt; <span class="hljs-number">0</span>)<br>  &#123;<br>    b_dst = (<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>*)w_dst;<br>    b_src = (<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>*)w_src;<br>    <span class="hljs-keyword">while</span> (bytes &gt; <span class="hljs-number">0</span>)<br>    &#123;<br>      *b_dst++ = *b_src++;<br>      bytes--;<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>尝试了解引用不对齐的int指针，结果也是不正确的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> buffer[<span class="hljs-number">64</span>];<br><span class="hljs-built_in">memset</span>(buffer, <span class="hljs-number">0x5</span>, <span class="hljs-number">64</span>);<br><span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;value=%d\n&quot;</span>, *(U32 *)(buffer + <span class="hljs-number">1</span>)); <span class="hljs-comment">// 结果不正确, 为0x05050505</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>假如指针不对齐，就去读写其中数据，x86 速度会慢些，而 ARM 可能结果不正确，可能直接崩掉。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/320732761">https://www.zhihu.com/question/320732761</a></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/98650/what-is-the-strict-aliasing-rule">https://stackoverflow.com/questions/98650/what-is-the-strict-aliasing-rule</a></p>
 
                 
               </div>
@@ -354,13 +350,32 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Misc/" class="category-chain-item">Misc</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Missing-semester/">#Missing semester</a>
-      
-        <a href="/tags/tmux/">#tmux</a>
+        <a href="/tags/Misc/">#Misc</a>
       
     </div>
   
@@ -374,18 +389,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/21/linux_subsystem/PWM/" title="PWM Subsystem">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">PWM Subsystem</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/01/31/ICS/ICS2022-PA2/" title="ICS2022 PA2">
-                        <span class="hidden-mobile">ICS2022 PA2</span>
+                      <a href="/2023/08/17/%E6%95%B0%E5%AD%97%E8%AE%BE%E8%AE%A1%E4%B8%8E%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" title="数字设计和计算机体系结构笔记">
+                        <span class="hidden-mobile">数字设计和计算机体系结构笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
