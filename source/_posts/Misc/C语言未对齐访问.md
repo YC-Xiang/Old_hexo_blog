@@ -20,20 +20,21 @@ unsigned char buffer[1024];
 ```c
 unsigned char buf[256];
 
-memcpy(buffer+5, buf, 256); // Hardfault，芯片reset
+memcpy(buffer+5, (U32 *)0x40170000, 256); // Hardfault，芯片reset
 ```
 
 这时发生了硬件HardFault，另外发现如果拷贝到buffer第四个Bytes开始位置就不会出现HardFault。
 
 ```c
-memcpy(buffer+4, buf, 256); // 正常运行
+memcpy(buffer+4, (U32 *)0x40170000, 256); // 正常运行
 ```
 
-这时候猜测这个版本的memcpy会使用机器字长对齐(32位4 bytes)的方式来拷贝，而不是一个字节一个字节地拷贝。这样导致解引用不是4字节对齐的unsigned int指针，发生了C语言未定义的行为，导致HardFault。
+并且如果拷贝源是buffer的话也不会有这个问题
 
-但也应该一开始判断是否为4字节对齐，如果没对齐，先拷贝字节到4字对齐，再开始4字节拷贝啊。。要确认下公司使用的memcpy实现了。。
-
-
+```c
+memcpy(buffer+5, source_buffer, 256); // 正常运行
+```
+还不清楚什么原因。
 
 附上找到的memcpy C语言实现，https://blog.popkx.com/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%90%E5%AD%97%E8%8A%82%E6%8B%B7%E8%B4%9D%E6%B2%A1%E6%9C%89memcpy%E5%87%BD%E6%95%B0%E5%BF%AB-%E5%AE%83%E4%BD%BF%E7%94%A8%E4%BA%86%E5%93%AA%E4%BA%9B%E6%8A%80/
 
@@ -72,9 +73,16 @@ void aligned_memory_copy(void* dst, void* src, unsigned int bytes)
 }
 ```
 
+尝试了解引用不对齐的int指针，结果也是不正确的。
+```c
+unsigned char buffer[64];
+memset(buffer, 0x5, 64);
+printf("value=%d\n", *(U32 *)(buffer + 1)); // 结果不正确, 为0x05050505
+```
+
 # 总结
 
-假如指针不对齐，就去读写其中数据，x86 速度会慢些，而 ARM 可能直接崩掉。
+假如指针不对齐，就去读写其中数据，x86 速度会慢些，而 ARM 可能结果不正确，可能直接崩掉。
 
 # Reference
 
