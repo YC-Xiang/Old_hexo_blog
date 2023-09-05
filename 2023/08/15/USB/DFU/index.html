@@ -16,12 +16,12 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Device Firmware Upgrade 2. Overview四个阶段：  Enumeration device告知host具备的能力。通过Run-Time Descriptor中增加的DFU class-interface descriptor和functional descriptor实现。   Reconfiguration host和device同意初始固件升级。host会发送一次">
+    <meta name="description" content="2. Overview四个阶段：  Enumeration device告知host具备的能力。通过Run-Time Descriptor中增加的DFU class-interface descriptor和functional descriptor实现。   Reconfiguration host和device同意初始固件升级。host会发送一次USB reset，设备会exports DFU">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Yucheng&#39;s Blog">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/08/02/USB/DFU/index.html">
+<meta property="og:title" content="DFU(Device Firmware Upgrade)">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/08/15/USB/DFU/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Device Firmware Upgrade 2. Overview四个阶段：  Enumeration device告知host具备的能力。通过Run-Time Descriptor中增加的DFU class-interface descriptor和functional descriptor实现。   Reconfiguration host和device同意初始固件升级。host会发送一次">
+<meta property="og:description" content="2. Overview四个阶段：  Enumeration device告知host具备的能力。通过Run-Time Descriptor中增加的DFU class-interface descriptor和functional descriptor实现。   Reconfiguration host和device同意初始固件升级。host会发送一次USB reset，设备会exports DFU">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230802161808.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230802161942.png">
@@ -40,9 +40,10 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230803095811.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230803101116.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230803101542.png">
-<meta property="article:published_time" content="2023-08-02T08:05:13.767Z">
-<meta property="article:modified_time" content="2023-08-03T02:18:59.779Z">
+<meta property="article:published_time" content="2023-08-15T09:39:28.000Z">
+<meta property="article:modified_time" content="2023-09-05T07:18:13.072Z">
 <meta property="article:author" content="Yucheng Xiang">
+<meta property="article:tag" content="usb">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230802161808.png">
   
@@ -50,7 +51,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Yucheng&#39;s Blog</title>
+  <title>DFU(Device Firmware Upgrade) - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -244,7 +245,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle"></span>
+            <span id="subtitle">DFU(Device Firmware Upgrade)</span>
           
         </div>
 
@@ -255,8 +256,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-08-02 16:05" pubdate>
-          2023年8月2日 下午
+        <time datetime="2023-08-15 17:39" pubdate>
+          2023年8月15日 下午
         </time>
       </span>
     
@@ -324,12 +325,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">DFU(Device Firmware Upgrade)</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年8月3日 上午
+                    本文最后更新于：2023年9月5日 下午
                   
                 
               </p>
@@ -337,8 +338,7 @@
             
               <div class="markdown-body">
                 
-                <p>Device Firmware Upgrade</p>
-<h1 id="2-Overview"><a href="#2-Overview" class="headerlink" title="2. Overview"></a>2. Overview</h1><p>四个阶段：</p>
+                <h1 id="2-Overview"><a href="#2-Overview" class="headerlink" title="2. Overview"></a>2. Overview</h1><p>四个阶段：</p>
 <ul>
 <li>Enumeration<ul>
 <li>device告知host具备的能力。通过Run-Time Descriptor中增加的DFU class-interface descriptor和functional descriptor实现。</li>
@@ -432,6 +432,34 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/usb/" class="category-chain-item">usb</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/usb/">#usb</a>
+      
+    </div>
   
 </div>
 
