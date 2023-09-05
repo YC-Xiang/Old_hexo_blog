@@ -1,5 +1,11 @@
-Device Firmware Upgrade
-
+---
+title: DFU(Device Firmware Upgrade)
+date: 2023-08-15 17:39:28
+tags:
+- usb
+categories:
+- usb
+---
 # 2. Overview
 
 四个阶段：
