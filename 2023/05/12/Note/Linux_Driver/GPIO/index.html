@@ -1,0 +1,713 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yucheng Xiang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;41942876 push pull推挽输出 推挽输出的最大特点是可以真正能真正的输出高电平和低电平，在两种电平下都具有驱动能力。 open drain开漏输出 open source开集输出 这两种输出的原理和特性基本是类似的，区别在于一个是使用MOS管，其中的”漏”指的就是MOS管的漏极；另一个使用三极管，其中的”集”指的就是MOS三极">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GPIO Subsystem">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/05/12/Note/Linux_Driver/GPIO/index.html">
+<meta property="og:site_name" content="Yucheng&#39;s Blog">
+<meta property="og:description" content="https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;41942876 push pull推挽输出 推挽输出的最大特点是可以真正能真正的输出高电平和低电平，在两种电平下都具有驱动能力。 open drain开漏输出 open source开集输出 这两种输出的原理和特性基本是类似的，区别在于一个是使用MOS管，其中的”漏”指的就是MOS管的漏极；另一个使用三极管，其中的”集”指的就是MOS三极">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/gpio.png">
+<meta property="article:published_time" content="2023-05-12T02:19:00.000Z">
+<meta property="article:modified_time" content="2023-09-05T07:28:26.929Z">
+<meta property="article:author" content="Yucheng Xiang">
+<meta property="article:tag" content="Linux driver">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/gpio.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>GPIO Subsystem - Yucheng&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yc-xiang.github.io","root":"/","version":"1.9.4","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"C"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"ed5b2440a3a7651272e4681ae4ac17e2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?ed5b2440a3a7651272e4681ae4ac17e2";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>YC&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/homepage.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">GPIO Subsystem</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-12 10:19" pubdate>
+          2023年5月12日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          28 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> times
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">GPIO Subsystem</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年9月5日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/41942876">https://zhuanlan.zhihu.com/p/41942876</a></p>
+<p><strong>push pull推挽输出</strong></p>
+<p>推挽输出的最大特点是可以真正能真正的输出高电平和低电平，在两种电平下都具有驱动能力。</p>
+<p><strong>open drain开漏输出</strong></p>
+<p><strong>open source开集输出</strong></p>
+<p>这两种输出的原理和特性基本是类似的，区别在于一个是使用MOS管，其中的”漏”指的就是MOS管的漏极；另一个使用三极管，其中的”集”指的就是MOS三极管的集电极。这两者其实都是和推挽输出相对应的输出模式，由于使用MOS管的情况较多，很多时候就用”开漏输出”这个词代替了开漏输出和开集输出。</p>
+<p>开漏、开集输出最主要的特性就是高电平没有驱动能力，需要借助外部上拉电阻才能真正输出高电平。</p>
+<h1 id="Kernel-doc-General-Purpose-Input-x2F-Output-GPIO"><a href="#Kernel-doc-General-Purpose-Input-x2F-Output-GPIO" class="headerlink" title="Kernel doc: General Purpose Input&#x2F;Output (GPIO)"></a>Kernel doc: General Purpose Input&#x2F;Output (GPIO)</h1><h2 id="GPIO-Driver-Interface"><a href="#GPIO-Driver-Interface" class="headerlink" title="GPIO Driver Interface"></a>GPIO Driver Interface</h2><h3 id="Controller-Drivers-gpio-chip"><a href="#Controller-Drivers-gpio-chip" class="headerlink" title="Controller Drivers: gpio_chip"></a>Controller Drivers: gpio_chip</h3><p><code>struct gpio_chip</code> 抽象gpio controller。</p>
+<p><code>gpiochip_add_data()</code> or <code>devm_gpiochip_add_data()</code>接口用来注册gpio controller。<code>gpiochip_remove()</code>释放gpio controller。</p>
+<p><code>gpiochip_is_request()</code>在gpio controller driver中用于检测某个gpio是否被其他chip占用，没占用返回NULL，占用返回request时传入的string。</p>
+<h3 id="GPIO-electrical-configuration"><a href="#GPIO-electrical-configuration" class="headerlink" title="GPIO electrical configuration"></a>GPIO electrical configuration</h3><p>gpio_chip的<code>.set_config</code>回调用于设置：</p>
+<ul>
+<li>Debouncing</li>
+<li>Single-ended modes (open drain&#x2F;open source)</li>
+<li>Pull up and pull down resistor enablement</li>
+</ul>
+<p>这些属性可以在dts中指定，<code>include/dt-bindings/gpio/gpio.h</code> <code>GPIO_PUSH_PULL</code> <code>GPIO_LINE_OPEN_SOURCE</code> <code>GPIO_OPEN_DRAIN </code>…</p>
+<p>可以设置为<code>gpiochip_generic_config()</code>会调用到<code>pinctrl_gpio_set_config()</code>-&gt;<code>ops-&gt;pin_config_set</code></p>
+<h3 id="GPIO-drivers-providing-IRQs"><a href="#GPIO-drivers-providing-IRQs" class="headerlink" title="GPIO drivers providing IRQs"></a>GPIO drivers providing IRQs</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c">gpiod_to_irq(); <span class="hljs-comment">// 传入gpio_desc，返回gpio的irq number(软件映射的，不是irq hw id)</span><br>  gpio_chip_hwgpio();<br>    gc-&gt;to_irq();<br>      rts_gpio_to_irq();<br>        irq_linear_revmap();<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="Cascaded-GPIO-irqchips"><a href="#Cascaded-GPIO-irqchips" class="headerlink" title="Cascaded GPIO irqchips"></a>Cascaded GPIO irqchips</h4><ol>
+<li>CHAINED CASCADED GPIO IRQCHIPS：挺多soc上是这种做法，打开<code>CONFIG_GPIOLIB_IRQCHIP</code>设置girq-&gt;parent_handler。gpio controller注册过程中通过<strong>irq_set_chained_handler</strong>设置中断处理函数，因此在中断处理函数中需要chained_irq_enter，chained_irq_exit。相当于级联中断处理器的做法。</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">irqreturn_t</span> <span class="hljs-title function_">foo_gpio_irq</span><span class="hljs-params">(<span class="hljs-type">int</span> irq, <span class="hljs-type">void</span> *data)</span> <span class="hljs-comment">/// 中断处理函数</span><br>    <span class="hljs-title function_">chained_irq_enter</span><span class="hljs-params">(...)</span>;<br>    generic_handle_irq(...);<br>    chained_irq_exit(...);<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>GENERIC CHAINED GPIO IRQCHIPS：rts3917是这种做法，通过<strong>reuqest_irq</strong>进入的rts_irq_handler中断处理函数。发现的每一个gpio都进入generic_handle_irq，最后会到各自irq_desc中通过request_irq的中断处理函数。</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">irqreturn_t</span> <span class="hljs-title function_">rts_irq_handler</span><span class="hljs-params">(<span class="hljs-type">int</span> irq, <span class="hljs-type">void</span> *dev_id)</span><br>    <span class="hljs-keyword">for</span> each detected GPIO IRQ<br>        <span class="hljs-title function_">generic_handle_irq</span><span class="hljs-params">(...)</span>;<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>NESTED THREADED GPIO IRQCHIPS：gpio expander的做法，不深究。</li>
+</ol>
+<h3 id="Infrastructure-helpers-for-GPIO-irqchips"><a href="#Infrastructure-helpers-for-GPIO-irqchips" class="headerlink" title="Infrastructure helpers for GPIO irqchips"></a>Infrastructure helpers for GPIO irqchips</h3><p>GPIO子系统有针对中断的一套框架，Kconfig为<code>GPIOLIB_IRQCHIP</code>，rts没有用到就不分析了。可以看文档中具体的解释。</p>
+<p>注意一点，方法一：如果parent_handler赋值了<code>girq-&gt;parent_handler = ftgpio_gpio_irq_handler</code>应该就是上面<code>CHAINED CASCADED GPIO IRQCHIPS</code>的做法。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">gpiochip_add_data();<br>    gpiochip_add_data_with_key();<br>      gpiochip_add_irqchip();<br>        irq_set_chained_handler_and_data(gc-&gt;irq.parents[i], gc-&gt;irq.parent_handler, data);<br></code></pre></td></tr></table></figure>
+
+<p>方法二：<code>girq-&gt;parent_handler = NULL</code>，直接在driver中<code>devm_request_threaded_irq</code>对应<code>GENERIC CHAINED GPIO IRQCHIPS</code>的做法。</p>
+<h2 id="GPIO-Descriptor-Consumer-Interface"><a href="#GPIO-Descriptor-Consumer-Interface" class="headerlink" title="GPIO Descriptor Consumer Interface"></a>GPIO Descriptor Consumer Interface</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/gpio.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">struct</span> gpio_desc *<span class="hljs-title function_">gpiod_get</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *con_id, <span class="hljs-keyword">enum</span> gpiod_flags flags)</span>;<br><span class="hljs-keyword">struct</span> gpio_desc *<span class="hljs-title function_">gpiod_get_index</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *con_id, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> idx, <span class="hljs-keyword">enum</span> gpiod_flags flags)</span>;<br><span class="hljs-comment">// return NULL 如果没有request到GPIO</span><br><span class="hljs-keyword">struct</span> gpio_desc *<span class="hljs-title function_">gpiod_get_optional</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *con_id, <span class="hljs-keyword">enum</span> gpiod_flags flags)</span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="GPIO-Mappings"><a href="#GPIO-Mappings" class="headerlink" title="GPIO Mappings"></a>GPIO Mappings</h2><h3 id="device-tree"><a href="#device-tree" class="headerlink" title="device tree"></a>device tree</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c">foo_device &#123;<br>        compatible = <span class="hljs-string">&quot;acme,foo&quot;</span>;<br>        ...<br>        led-gpios = &lt;&amp;gpio <span class="hljs-number">15</span> GPIO_ACTIVE_HIGH&gt;, <span class="hljs-comment">/* red */</span><br>                    &lt;&amp;gpio <span class="hljs-number">16</span> GPIO_ACTIVE_HIGH&gt;, <span class="hljs-comment">/* green */</span><br>                    &lt;&amp;gpio <span class="hljs-number">17</span> GPIO_ACTIVE_HIGH&gt;; <span class="hljs-comment">/* blue */</span><br><br>        power-gpios = &lt;&amp;gpio <span class="hljs-number">1</span> GPIO_ACTIVE_LOW&gt;;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>对应</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">gpio_desc</span> *<span class="hljs-title">red</span>, *<span class="hljs-title">green</span>, *<span class="hljs-title">blue</span>, *<span class="hljs-title">power</span>;</span><br><br>red = gpiod_get_index(dev, <span class="hljs-string">&quot;led&quot;</span>, <span class="hljs-number">0</span>, GPIOD_OUT_HIGH);<br>green = gpiod_get_index(dev, <span class="hljs-string">&quot;led&quot;</span>, <span class="hljs-number">1</span>, GPIOD_OUT_HIGH);<br>blue = gpiod_get_index(dev, <span class="hljs-string">&quot;led&quot;</span>, <span class="hljs-number">2</span>, GPIOD_OUT_HIGH);<br><br>power = gpiod_get(dev, <span class="hljs-string">&quot;power&quot;</span>, GPIOD_OUT_HIGH);<br></code></pre></td></tr></table></figure>
+
+<p>gpiod_set_value设置的值是“逻辑值”，不一定等于物理值。</p>
+<h2 id="Sysfs接口"><a href="#Sysfs接口" class="headerlink" title="Sysfs接口"></a>Sysfs接口</h2><p>&#x2F;sys&#x2F;class&#x2F;gpio&#x2F;</p>
+<p>echo 19 &gt; export</p>
+<p>&#x2F;sys&#x2F;class&#x2F;gpio&#x2F;gpioN&#x2F;</p>
+<p>&#x2F;sys&#x2F;kernel&#x2F;debug&#x2F;gpio 可以看哪些gpio被申请了</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux-driver/">#Linux driver</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/05/15/Note/Linux_Driver/Uart/" title="Uart Subsystem">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Uart Subsystem</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/10/Note/Linux_Driver/CMA&amp;DMA/" title="CMA&amp;DMA">
+                        <span class="hidden-mobile">CMA&amp;DMA</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
