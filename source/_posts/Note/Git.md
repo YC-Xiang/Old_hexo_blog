@@ -8,6 +8,8 @@ header-img: img/homepage.jpg
 catalog: true
 tags:
     - git
+categories:
+- Notes
 sticky: 100
 ---
 

@@ -4,7 +4,7 @@ date: 2023-01-06 17:44:28
 tags:
 - RISC-V
 categories:
-- Notes
+- Book
 ---
 
 

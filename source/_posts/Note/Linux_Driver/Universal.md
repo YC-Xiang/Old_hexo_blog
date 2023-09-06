@@ -5,7 +5,6 @@ tags:
 - Linux driver
 categories:
 - Notes
-sticky: 99
 ---
 
 # NOT indexed

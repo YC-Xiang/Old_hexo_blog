@@ -4,7 +4,7 @@ date: 2023-01-09 17:13:28
 tags:
 - RISC-V
 categories:
-- Notes
+- Book
 ---
 
 ## 10.1 导言

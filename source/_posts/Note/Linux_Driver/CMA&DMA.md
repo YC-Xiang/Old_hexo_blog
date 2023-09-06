@@ -2,7 +2,7 @@
 title: CMA&DMA
 date: 2023-05-10 17:40:28
 tags:
-- Linux
+- Linux driver
 categories:
 - Notes
 ---

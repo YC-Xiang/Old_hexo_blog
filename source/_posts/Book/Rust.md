@@ -4,7 +4,7 @@ date: 2023-05-20 17:39:28
 tags:
 - Rust
 categories:
-- Notes
+- Book
 ---
 
 ## 1.2

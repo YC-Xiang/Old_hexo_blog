@@ -4,7 +4,7 @@ date: 2023-01-06 16:39:15
 tags:
 - RISC-V
 categories:
-- Notes
+- Book
 ---
 
 ## 1.2 模块化与增量型 ISA

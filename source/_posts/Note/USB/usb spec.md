@@ -4,7 +4,7 @@ date: 2023-06-15 17:38:28
 tags:
 - usb
 categories:
-- usb
+- Notes
 ---
 
 
