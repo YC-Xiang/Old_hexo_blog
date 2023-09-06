@@ -16,24 +16,26 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="工作中在ARMv8-M架构内核遇到如下问题： 首先定义了一个Char型数组, 1unsigned char buffer[1024];  调用了memcpy, 想把另一块数据拷贝到这块buffer第五个Bytes开始位置，即 123unsigned char buf[256];memcpy(buffer+5, (U32 *)0x40170000, 256); &#x2F;&#x2F; Hardfault，芯片rese">
+    <meta name="description" content="发现在一个.c文件中有一个初始化为非0的全局变量或静态变量，会使这整个文件中定义的全局变量或静态变量都由.bss段转化为.data段。 .data段的变量会在mcu boot阶段的clib会对这些变量做初始化，**.bss段**可以透过keilc的config如下图控制是否要跳过clib的初始化为0（目前我们的配置是把IRAM配置为不要初始化）这样的话，我们的芯片在suspend或sleep之后，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C语言解引用未对齐的指针引发硬件HardFault">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/08/31/Misc/C%E8%AF%AD%E8%A8%80%E6%9C%AA%E5%AF%B9%E9%BD%90%E8%AE%BF%E9%97%AE/index.html">
+<meta property="og:title" content="如何避免.bss变量转化成.data段变量">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/09/06/Misc/%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D.bss%E5%8F%98%E9%87%8F%E8%BD%AC%E5%8C%96%E6%88%90.data%E6%AE%B5%E5%8F%98%E9%87%8F/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="工作中在ARMv8-M架构内核遇到如下问题： 首先定义了一个Char型数组, 1unsigned char buffer[1024];  调用了memcpy, 想把另一块数据拷贝到这块buffer第五个Bytes开始位置，即 123unsigned char buf[256];memcpy(buffer+5, (U32 *)0x40170000, 256); &#x2F;&#x2F; Hardfault，芯片rese">
+<meta property="og:description" content="发现在一个.c文件中有一个初始化为非0的全局变量或静态变量，会使这整个文件中定义的全局变量或静态变量都由.bss段转化为.data段。 .data段的变量会在mcu boot阶段的clib会对这些变量做初始化，**.bss段**可以透过keilc的config如下图控制是否要跳过clib的初始化为0（目前我们的配置是把IRAM配置为不要初始化）这样的话，我们的芯片在suspend或sleep之后，">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-08-31T14:01:28.000Z">
-<meta property="article:modified_time" content="2023-09-05T07:28:26.906Z">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906141358.png">
+<meta property="article:published_time" content="2023-09-06T06:12:28.000Z">
+<meta property="article:modified_time" content="2023-09-06T06:34:14.769Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="Misc">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906141358.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>C语言解引用未对齐的指针引发硬件HardFault - Yucheng&#39;s Blog</title>
+  <title>如何避免.bss变量转化成.data段变量 - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +229,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">C语言解引用未对齐的指针引发硬件HardFault</span>
+            <span id="subtitle">如何避免.bss变量转化成.data段变量</span>
           
         </div>
 
@@ -238,8 +240,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-08-31 22:01" pubdate>
-          2023年8月31日 晚上
+        <time datetime="2023-09-06 14:12" pubdate>
+          2023年9月6日 下午
         </time>
       </span>
     
@@ -250,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k words
+          606 words
         
       </span>
     
@@ -261,7 +263,7 @@
         
         
         
-          13 mins
+          6 mins
         
       </span>
     
@@ -307,12 +309,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">C语言解引用未对齐的指针引发硬件HardFault</h1>
+            <h1 style="display: none">如何避免.bss变量转化成.data段变量</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月5日 下午
+                    本文最后更新于：2023年9月6日 下午
                   
                 
               </p>
@@ -320,28 +322,11 @@
             
               <div class="markdown-body">
                 
-                <p>工作中在ARMv8-M架构内核遇到如下问题：</p>
-<p>首先定义了一个Char型数组,</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> buffer[<span class="hljs-number">1024</span>];<br></code></pre></td></tr></table></figure>
-
-<p>调用了memcpy, 想把另一块数据拷贝到这块buffer<strong>第五个Bytes</strong>开始位置，即</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> buf[<span class="hljs-number">256</span>];<br><br><span class="hljs-built_in">memcpy</span>(buffer+<span class="hljs-number">5</span>, (U32 *)<span class="hljs-number">0x40170000</span>, <span class="hljs-number">256</span>); <span class="hljs-comment">// Hardfault，芯片reset</span><br></code></pre></td></tr></table></figure>
-
-<p>这时发生了硬件HardFault，另外发现如果拷贝到buffer第四个Bytes开始位置就不会出现HardFault。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-built_in">memcpy</span>(buffer+<span class="hljs-number">4</span>, (U32 *)<span class="hljs-number">0x40170000</span>, <span class="hljs-number">256</span>); <span class="hljs-comment">// 正常运行</span><br></code></pre></td></tr></table></figure>
-
-<p>并且如果拷贝源是buffer的话也不会有这个问题</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-built_in">memcpy</span>(buffer+<span class="hljs-number">5</span>, source_buffer, <span class="hljs-number">256</span>); <span class="hljs-comment">// 正常运行</span><br></code></pre></td></tr></table></figure>
-<p>还不清楚什么原因。</p>
-<p>附上找到的memcpy C语言实现，<a target="_blank" rel="noopener" href="https://blog.popkx.com/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%90%E5%AD%97%E8%8A%82%E6%8B%B7%E8%B4%9D%E6%B2%A1%E6%9C%89memcpy%E5%87%BD%E6%95%B0%E5%BF%AB-%E5%AE%83%E4%BD%BF%E7%94%A8%E4%BA%86%E5%93%AA%E4%BA%9B%E6%8A%80/">https://blog.popkx.com/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%90%E5%AD%97%E8%8A%82%E6%8B%B7%E8%B4%9D%E6%B2%A1%E6%9C%89memcpy%E5%87%BD%E6%95%B0%E5%BF%AB-%E5%AE%83%E4%BD%BF%E7%94%A8%E4%BA%86%E5%93%AA%E4%BA%9B%E6%8A%80/</a></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">aligned_memory_copy</span><span class="hljs-params">(<span class="hljs-type">void</span>* dst, <span class="hljs-type">void</span>* src, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> bytes)</span><br>&#123;<br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>* b_dst = (<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>*)dst;<br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>* b_src = (<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>*)src;<br><br>  <span class="hljs-comment">// Copy bytes to align source pointer</span><br>  <span class="hljs-keyword">while</span> ((b_src &amp; <span class="hljs-number">0x3</span>) != <span class="hljs-number">0</span>)<br>  &#123;<br>    *b_dst++ = *b_src++;<br>    bytes--;<br>  &#125;<br><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span>* w_dst = (<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span>*)b_dst;<br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span>* w_src = (<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span>*)b_src;<br>  <span class="hljs-keyword">while</span> (bytes &gt;= <span class="hljs-number">4</span>)<br>  &#123;<br>    *w_dst++ = *w_src++;<br>    bytes -= <span class="hljs-number">4</span>;<br>  &#125;<br><br>  <span class="hljs-comment">// Copy trailing bytes</span><br>  <span class="hljs-keyword">if</span> (bytes &gt; <span class="hljs-number">0</span>)<br>  &#123;<br>    b_dst = (<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>*)w_dst;<br>    b_src = (<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>*)w_src;<br>    <span class="hljs-keyword">while</span> (bytes &gt; <span class="hljs-number">0</span>)<br>    &#123;<br>      *b_dst++ = *b_src++;<br>      bytes--;<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>尝试了解引用不对齐的int指针，结果也是不正确的。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> buffer[<span class="hljs-number">64</span>];<br><span class="hljs-built_in">memset</span>(buffer, <span class="hljs-number">0x5</span>, <span class="hljs-number">64</span>);<br><span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;value=%d\n&quot;</span>, *(U32 *)(buffer + <span class="hljs-number">1</span>)); <span class="hljs-comment">// 结果不正确, 为0x05050505</span><br></code></pre></td></tr></table></figure>
-
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>假如指针不对齐，就去读写其中数据，x86 速度会慢些，而 ARM 可能结果不正确，可能直接崩掉。</p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/320732761">https://www.zhihu.com/question/320732761</a></p>
-<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/98650/what-is-the-strict-aliasing-rule">https://stackoverflow.com/questions/98650/what-is-the-strict-aliasing-rule</a></p>
+                <p>发现在一个.c文件中有一个初始化为非0的全局变量或静态变量，会使这整个文件中定义的全局变量或静态变量都由.bss段转化为.data段。</p>
+<p><strong>.data段</strong>的变量会在mcu boot阶段的clib会对这些变量做初始化，**.bss段**可以透过keilc的config如下图控制是否要跳过clib的初始化为0（目前我们的配置是把IRAM配置为不要初始化）<br><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906141358.png" srcset="/img/loading.gif" lazyload alt="skip bss init"><br>这样的话，我们的芯片在suspend或sleep之后，由于MCU做了power gating，resume起来后MCU重新上电，会重新从MCU boot那边开始跑，.data段的变量就无法保持suspend或sleep之前的值了，又被初始化成定义时候的值了，而.bss段就不会被初始化，可以保持之前的值。</p>
+<p>在我们目前usb产品的应用中，一般变量都是要保持suspend&#x2F;sleep之前的值，所以不能产生有.data段的变量<br>为了不产生.data段变量，我们要注意：</p>
+<p><strong>- 全局变量在定义的时候不能做初始化。</strong><br><strong>- 不要使用静态的局部变量。</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//错误示例：</span><br>U8 g_byGlobalVar = <span class="hljs-number">5</span>;<br><span class="hljs-comment">//正确示例：</span><br>U8 g_byGlobalVar;<br><span class="hljs-type">void</span> <span class="hljs-title function_">InitGlobalVars</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    <span class="hljs-keyword">if</span>(reset_status==RESET_FROM_POWER_ON)<br>        g_byGlobalVar=<span class="hljs-number">5</span>; <span class="hljs-comment">//InitGlobalVars()函数中做初始化</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -389,18 +374,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/09/06/Book/Cortex-M3%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/" title="Cortex-M3权威指南">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Cortex-M3权威指南</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/08/17/Book/%E6%95%B0%E5%AD%97%E8%AE%BE%E8%AE%A1%E4%B8%8E%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" title="数字设计和计算机体系结构笔记">
-                        <span class="hidden-mobile">数字设计和计算机体系结构笔记</span>
+                      <a href="/2023/09/06/Book/Cortex-M3%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/" title="Cortex-M3权威指南">
+                        <span class="hidden-mobile">Cortex-M3权威指南</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

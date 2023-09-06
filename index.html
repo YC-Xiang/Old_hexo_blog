@@ -319,6 +319,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/09/06/Misc/%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D.bss%E5%8F%98%E9%87%8F%E8%BD%AC%E5%8C%96%E6%88%90.data%E6%AE%B5%E5%8F%98%E9%87%8F/" target="_self">
+          如何避免.bss变量转化成.data段变量
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/06/Misc/%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D.bss%E5%8F%98%E9%87%8F%E8%BD%AC%E5%8C%96%E6%88%90.data%E6%AE%B5%E5%8F%98%E9%87%8F/" target="_self">
+        <div>
+          发现在一个.c文件中有一个初始化为非0的全局变量或静态变量，会使这整个文件中定义的全局变量或静态变量都由.bss段转化为.data段。 .data段的变量会在mcu boot阶段的clib会对这些变量做初始化，**.bss段**可以透过keilc的config如下图控制是否要跳过clib的初始化为0（目前我们的配置是把IRAM配置为不要初始化）这样的话，我们的芯片在suspend或sleep之后，
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-06 14:12" pubdate>
+              2023-09-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Misc/" class="category-chain-item">Misc</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Misc/">#Misc</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/09/06/Book/Cortex-M3%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/" target="_self">
           Cortex-M3权威指南
         </a>
@@ -327,7 +388,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/09/06/Book/Cortex-M3%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/" target="_self">
         <div>
-          
+          Reference 《Cortex-M3技术参考手册》（Cortex-M3 Technical Reference Manual, 简称Cortex-M3 TRM） 《ARMv7-M应用程序级架构参考手册》（ARMv7-M Application Level Architecture Reference Manual） 《ARMv7-M指令集手册》（ARMv7-M Architecture App
         </div>
       </a>
 
@@ -367,67 +428,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Book/">#Book</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/08/31/Misc/C%E8%AF%AD%E8%A8%80%E6%9C%AA%E5%AF%B9%E9%BD%90%E8%AE%BF%E9%97%AE/" target="_self">
-          C语言解引用未对齐的指针引发硬件HardFault
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/08/31/Misc/C%E8%AF%AD%E8%A8%80%E6%9C%AA%E5%AF%B9%E9%BD%90%E8%AE%BF%E9%97%AE/" target="_self">
-        <div>
-          工作中在ARMv8-M架构内核遇到如下问题： 首先定义了一个Char型数组, 1unsigned char buffer[1024];  调用了memcpy, 想把另一块数据拷贝到这块buffer第五个Bytes开始位置，即 123unsigned char buf[256];memcpy(buffer+5, (U32 *)0x40170000, 256); // Hardfault，芯片rese
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-08-31 22:01" pubdate>
-              2023-08-31
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Misc/" class="category-chain-item">Misc</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Misc/">#Misc</a>
             
           </div>
         
