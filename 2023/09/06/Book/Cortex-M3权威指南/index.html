@@ -16,12 +16,12 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Reference 《Cortex-M3技术参考手册》（Cortex-M3 Technical Reference Manual, 简称Cortex-M3 TRM） 《ARMv7-M应用程序级架构参考手册》（ARMv7-M Application Level Architecture Reference Manual） 《ARMv7-M指令集手册》（ARMv7-M Architecture App">
+    <meta name="description" content="Reference 《Cortex-M3权威指南》 《ARMv7-M Architecture Reference Manual》 《Cortex-M3技术参考手册》（Cortex-M3 Technical Reference Manual, 简称Cortex-M3 TRM） 《ARMv7-M应用程序级架构参考手册》（ARMv7-M Application Level Architecture R">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cortex-M3权威指南">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/09/06/Book/Cortex-M3%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Reference 《Cortex-M3技术参考手册》（Cortex-M3 Technical Reference Manual, 简称Cortex-M3 TRM） 《ARMv7-M应用程序级架构参考手册》（ARMv7-M Application Level Architecture Reference Manual） 《ARMv7-M指令集手册》（ARMv7-M Architecture App">
+<meta property="og:description" content="Reference 《Cortex-M3权威指南》 《ARMv7-M Architecture Reference Manual》 《Cortex-M3技术参考手册》（Cortex-M3 Technical Reference Manual, 简称Cortex-M3 TRM） 《ARMv7-M应用程序级架构参考手册》（ARMv7-M Application Level Architecture R">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906101830.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906104733.png">
@@ -29,8 +29,13 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906110236.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906104300.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906154110.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906162526.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101314.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101400.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101427.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101638.png">
 <meta property="article:published_time" content="2023-09-06T01:43:28.000Z">
-<meta property="article:modified_time" content="2023-09-06T07:41:23.828Z">
+<meta property="article:modified_time" content="2023-09-07T03:39:47.392Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="Book">
 <meta name="twitter:card" content="summary_large_image">
@@ -257,7 +262,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.5k words
+          4.2k words
         
       </span>
     
@@ -268,7 +273,7 @@
         
         
         
-          21 mins
+          35 mins
         
       </span>
     
@@ -319,7 +324,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月6日 下午
+                    本文最后更新于：2023年9月7日 中午
                   
                 
               </p>
@@ -328,14 +333,15 @@
               <div class="markdown-body">
                 
                 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li>《Cortex-M3权威指南》</li>
+<li>《ARMv7-M Architecture Reference Manual》</li>
 <li>《Cortex-M3技术参考手册》（Cortex-M3 Technical Reference Manual, 简称Cortex-M3 TRM）</li>
 <li>《ARMv7-M应用程序级架构参考手册》（ARMv7-M Application Level Architecture Reference Manual）</li>
 <li>《ARMv7-M指令集手册》（ARMv7-M Architecture Application Level Reference Manual(Ref2)）</li>
 </ul>
 <h2 id="Chapter1-介绍"><a href="#Chapter1-介绍" class="headerlink" title="Chapter1 介绍"></a>Chapter1 介绍</h2><p>Cortex－M3处理器（CM3）采用ARMv7-M架构，它包括<strong>所有的</strong>16位Thumb指令集和<strong>基本的</strong>32位Thumb-2指令集架构，Cortex-M3处理器<strong>不能</strong>执行ARM指令集。</p>
 <p>CM3的出现，还在ARM处理器中破天荒地支持了“非对齐数据访问支持”。</p>
-<h2 id="Chapter2-CM3概览"><a href="#Chapter2-CM3概览" class="headerlink" title="Chapter2 CM3概览"></a>Chapter2 CM3概览</h2><p>CM3采用了哈佛结构，拥有独立的指令总线和数据总线，可以让取指与数据访问并行不悖。</p>
-<h3 id="2-2-Registers"><a href="#2-2-Registers" class="headerlink" title="2.2 Registers"></a>2.2 Registers</h3><p>CM3有R0-R15，16个registers。R13作为堆栈指针SP。SP有两个，但在同一时刻只能有一个可以看到，这也就是所谓的“banked”寄存器。</p>
+<h2 id="Chapter2-CM3概览"><a href="#Chapter2-CM3概览" class="headerlink" title="Chapter2 CM3概览"></a>Chapter2 CM3概览</h2><h3 id="2-2-Registers"><a href="#2-2-Registers" class="headerlink" title="2.2 Registers"></a>2.2 Registers</h3><p>CM3有R0-R15，16个registers。R13作为堆栈指针SP。SP有两个，但在同一时刻只能有一个可以看到，这也就是所谓的“banked”寄存器。</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906101830.png" srcset="/img/loading.gif" lazyload alt="CM3 Registers"></p>
 <p>绝大多数16位Thumb指令只能访问R0-R7，而32位Thumb-2指令可以访问所有寄存器。</p>
 <p>Cortex-M3拥有两个堆栈指针，然而它们是banked，因此任一时刻只能使用其中的一个。</p>
@@ -351,14 +357,7 @@
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906104934.png" srcset="/img/loading.gif" lazyload alt="操作模式转换图"><br>用户级的程序不能简简单单地试图改写CONTROL寄存器就回到特权级，它必须先“申诉”：执行一条系统调用指令(SVC)。这会触发SVC异常，然后由异常服务例程（通常是操作系统的一部分）接管，如果批准了进入，则异常服务例程修改CONTROL寄存器，才能在用户级的线程模式下重新进入特权级。</p>
 <h3 id="2-5-存储器映射"><a href="#2-5-存储器映射" class="headerlink" title="2.5 存储器映射"></a>2.5 存储器映射</h3><p>总体来说，Cortex-M3支持4GB存储空间，如图2.6所示地被划分成若干区域。</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906110236.png" srcset="/img/loading.gif" lazyload alt="CM3存储器映射"><br>从图中可见，不像其它的ARM架构，它们的存储器映射由半导体厂家说了算，Cortex-M3预先定义好了“粗线条的”存储器映射。</p>
-<h3 id="2-6-总线接口"><a href="#2-6-总线接口" class="headerlink" title="2.6 总线接口"></a>2.6 总线接口</h3><p>Cortex-M3内部有若干个总线接口，以使CM3能同时取址和访内（访问内存），它们是：</p>
-<ul>
-<li>指令存储区总线（两条）Icode，Dcode。</li>
-<li>系统总线。</li>
-<li>私有外设总线。</li>
-</ul>
-<p>有两条代码存储区总线负责对代码存储区的访问，分别是I-Code总线和D-Code总线。前者用于取指，后者用于查表等操作。<br>系统总线用于访问内存和外设，覆盖的区域包括SRAM，片上外设，片外RAM，片外扩展设备，以及系统级存储区的部分空间。<br>私有外设总线负责一部分私有外设的访问，主要就是访问调试组件。它们也在系统级存储区。</p>
-<h3 id="2-9-中断和异常"><a href="#2-9-中断和异常" class="headerlink" title="2.9 中断和异常"></a>2.9 中断和异常</h3><p>11种系统异常+5个保留档位+240个外部中断。</p>
+<h3 id="2-6-总线接口"><a href="#2-6-总线接口" class="headerlink" title="2.6 总线接口"></a>2.6 总线接口</h3><h3 id="2-9-中断和异常"><a href="#2-9-中断和异常" class="headerlink" title="2.9 中断和异常"></a>2.9 中断和异常</h3><p>11种系统异常+5个保留档位+240个外部中断。</p>
 <table>
 <thead>
 <tr>
@@ -456,6 +455,9 @@
 <h3 id="2-10-调试支持"><a href="#2-10-调试支持" class="headerlink" title="2.10 调试支持"></a>2.10 调试支持</h3><p>Cortex-M3的调试系统基于ARM最新的CoreSight架构。不同于以往的ARM处理器，内核本身不再含有JTAG接口。取而代之的，是CPU提供称为“调试访问接口(DAP)”的总线接口。</p>
 <p>目前可用的DPs包括<strong>SWJ-DP</strong>(既支持传统的JTAG调试，也支持新的串行线调试协议SWD)，另一个<strong>SW-DP</strong>则去掉了对JTAG的支持。另外，也可以使用ARM CoreSignt产品家族的<strong>JTAG-DP</strong>模块。这下就有3个DPs可以选了，芯片制造商可以从中选择一个，以提供具体的调试接口（通常都是选SWJ-DP）。</p>
 <h2 id="Chpater3-CM3基础"><a href="#Chpater3-CM3基础" class="headerlink" title="Chpater3 CM3基础"></a>Chpater3 CM3基础</h2><p>PC: 读PC时返回的值是当前指令的地址+4。在分支时，无论是直接写PC的值还是使用分支指令，都必须保证加载到PC的数值是奇数（即LSB&#x3D;1），用以表明这是在Thumb状态下执行。</p>
+<blockquote>
+<p>可以在map文件中看到thumb code的地址lsb都是奇数。data地址不受影响。</p>
+</blockquote>
 <h3 id="3-2-特殊功能寄存器"><a href="#3-2-特殊功能寄存器" class="headerlink" title="3.2 特殊功能寄存器"></a>3.2 特殊功能寄存器</h3><p>Cortex-M3还在内核水平上搭载了若干特殊功能寄存器，包括<br><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906104300.png" srcset="/img/loading.gif" lazyload alt="Special function registers"></p>
 <p>它们只能被专用的MSR&#x2F;MRS指令访问</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs asm">MRS &lt;gp_reg&gt;, &lt;special_reg&gt;; 读特殊功能寄存器的值到通用寄存器<br>MSR &lt;special_reg&gt;, &lt;gp_reg&gt; ;写通用寄存器的值到特殊功能寄存器<br></code></pre></td></tr></table></figure>
@@ -466,6 +468,51 @@
 <li>执行PSR（EPSR）</li>
 </ul>
 <p>通过MRS&#x2F;MSR指令，这3个PSRs即可以单独访问，也可以组合访问（2个组合，3个组合都可以）。当使用三合一的方式访问时，应使用名字“xPSR”或者“PSR”。<br><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906154110.png" srcset="/img/loading.gif" lazyload alt="PSR"></p>
+<h4 id="3-2-2-中断屏蔽寄存器"><a href="#3-2-2-中断屏蔽寄存器" class="headerlink" title="3.2.2 中断屏蔽寄存器"></a>3.2.2 中断屏蔽寄存器</h4><ul>
+<li>PRIMASK - 这是个只有1 bit的寄存器。在它被置1后，就关掉所有可屏蔽的异常，只剩下NMI和Hardfault可以响应。</li>
+<li>FAULTMASK - 这是个只有1 bit的寄存器。当它置1时，只有NMI才能响应，所有其它的异常，甚至是Hardfault，也不能响应。</li>
+<li>BASEPRI - 这个寄存器最多有9位（由表达优先级的位数决定）。它定义了被屏蔽优先级的阈值。当它被设成某个值后，所有优先级号大于等于此值的中断都被关（优先级号越大，优先级越低）。</li>
+</ul>
+<p>要访问PRIMASK, FAULTMASK以及BASEPRI，同样要使用MRS&#x2F;MSR指令。</p>
+<h4 id="3-2-3-控制寄存器"><a href="#3-2-3-控制寄存器" class="headerlink" title="3.2.3 控制寄存器"></a>3.2.3 控制寄存器</h4><p>控制寄存器有两个用途，其一用于定义特权级别，其二用于选择当前使用哪个堆栈指针。<br>CONTROL[1]：0&#x3D;选择主堆栈指针MSP（复位后的缺省值），1&#x3D;选择进程堆栈指针PSP。<br>CONTROL[0]：0&#x3D;特权级的线程模式，1&#x3D;用户级的线程模式。</p>
+<h2 id="Chapter4-指令集"><a href="#Chapter4-指令集" class="headerlink" title="Chapter4 指令集"></a>Chapter4 指令集</h2><h2 id="Chapter5-存储器系统"><a href="#Chapter5-存储器系统" class="headerlink" title="Chapter5 存储器系统"></a>Chapter5 存储器系统</h2><h3 id="5-2-存储器映射"><a href="#5-2-存储器映射" class="headerlink" title="5.2 存储器映射"></a>5.2 存储器映射</h3><h3 id="5-3-存储器的各种访问属性"><a href="#5-3-存储器的各种访问属性" class="headerlink" title="5.3 存储器的各种访问属性"></a>5.3 存储器的各种访问属性</h3><ol>
+<li>代码区（0x0000_0000- 0x1FFF_FFFF）。该区是可以执行指令的，缓存属性为Write Through。在此区上的数据操作是通过D-Code?(<strong>此处存疑</strong>)，且在此区上的写操作是缓冲的。</li>
+<li>SRAM区（0x2000_0000 – 0x3FFF_FFFF）。此区用于片内SRAM，写操作是缓冲的write back&#x2F;write allocated，此区亦可以执行指令。</li>
+<li>片上外设区(0x4000_0000 – 0x5FFF_FFFF)。该区用于片上外设，因此是不可缓存的，也不可以在此区执行指令。</li>
+</ol>
+<h3 id="5-4-存储器的缺省访问许可"><a href="#5-4-存储器的缺省访问许可" class="headerlink" title="5.4 存储器的缺省访问许可"></a>5.4 存储器的缺省访问许可</h3><h3 id="5-5-位带操作"><a href="#5-5-位带操作" class="headerlink" title="5.5 位带操作"></a>5.5 位带操作</h3><h3 id="5-6-非对齐数据传送"><a href="#5-6-非对齐数据传送" class="headerlink" title="5.6 非对齐数据传送"></a>5.6 非对齐数据传送</h3><h3 id="5-7-互斥访问"><a href="#5-7-互斥访问" class="headerlink" title="5.7 互斥访问"></a>5.7 互斥访问</h3><h3 id="5-8-端模式"><a href="#5-8-端模式" class="headerlink" title="5.8 端模式"></a>5.8 端模式</h3><h2 id="Chapter-6-Cortex-M3-全貌"><a href="#Chapter-6-Cortex-M3-全貌" class="headerlink" title="Chapter 6 Cortex-M3 全貌"></a>Chapter 6 Cortex-M3 全貌</h2><h3 id="6-3-CM3的总线接口"><a href="#6-3-CM3的总线接口" class="headerlink" title="6.3 CM3的总线接口"></a>6.3 CM3的总线接口</h3><p>CM3采用了哈佛结构，拥有独立的指令总线和数据总线，可以让取指与数据访问并行不悖。<br><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906162526.png" srcset="/img/loading.gif" lazyload alt="CM3 架构"></p>
+<h4 id="6-3-1-I-Code-总线"><a href="#6-3-1-I-Code-总线" class="headerlink" title="6.3.1 I-Code 总线"></a>6.3.1 I-Code 总线</h4><p>I-Code的作用是取指令&amp;执行指令，只和指令有关，I-Code 总线是一条基于 AHB-Lite 总线协议的 32 位总线，负责在 0x0000_0000 – 0x1FFF_FFFF 之间的取指操作。</p>
+<blockquote>
+<p>从flash取指令</p>
+</blockquote>
+<h4 id="6-3-2-D-Code-总线"><a href="#6-3-2-D-Code-总线" class="headerlink" title="6.3.2 D-Code 总线"></a>6.3.2 D-Code 总线</h4><p>D-Code 的作用是对数据读写访问，只和数据有关，D-Code 总线也是一条基于 AHB-Lite 总线协议的 32 位总线，负责在 0x0000_0000 – 0x1FFF_FFFF（与I-Code相同）之间的数据访问操作。尽管 CM3 支持非对齐访问，但你绝不会在该总线上看到任何非对齐的地址，这是因为处理器的总线接口会把非对齐的数据传送都转换成对齐的数据传送。</p>
+<blockquote>
+<p>从flash存取数据</p>
+</blockquote>
+<h4 id="6-3-3-系统总线"><a href="#6-3-3-系统总线" class="headerlink" title="6.3.3 系统总线"></a>6.3.3 系统总线</h4><p>系统总线也是一条基于 AHB-Lite 总线协议的 32 位总线，负责在0x2000_0000 – 0xDFFF_FFFF和0xE010_0000 – 0xFFFF_FFFF之间的所有数据传送，取指和数据访问都算上。和D-Code总线一样，所有的数据传送都是对齐的。</p>
+<blockquote>
+<p>片上的SRAM一般都是由系统总线访问</p>
+</blockquote>
+<h4 id="6-3-4-外部私有外设总线"><a href="#6-3-4-外部私有外设总线" class="headerlink" title="6.3.4 外部私有外设总线"></a>6.3.4 外部私有外设总线</h4><h4 id="6-3-5-调试访问端口总线"><a href="#6-3-5-调试访问端口总线" class="headerlink" title="6.3.5 调试访问端口总线"></a>6.3.5 调试访问端口总线</h4><p>调试访问端口总线接口是一条基于“增强型 APB 规格”的 32 位总线，它专用于挂接调试接口，例如 SWJ-DP 和 SW-DP。</p>
+<h3 id="6-7-复位信号"><a href="#6-7-复位信号" class="headerlink" title="6.7 复位信号"></a>6.7 复位信号</h3><p>nPORESET上电复位：复位处理器核心和调试系统。<br>nSYSRESET系统复位：只复位处理器核心。<br>nTRST测试复位：只复位调试系统。</p>
+<h2 id="Chapter7-异常"><a href="#Chapter7-异常" class="headerlink" title="Chapter7 异常"></a>Chapter7 异常</h2><h3 id="7-5-Fault类异常"><a href="#7-5-Fault类异常" class="headerlink" title="7.5 Fault类异常"></a>7.5 Fault类异常</h3><h4 id="7-5-1-总线faults"><a href="#7-5-1-总线faults" class="headerlink" title="7.5.1 总线faults"></a>7.5.1 总线faults</h4><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101314.png" srcset="/img/loading.gif" lazyload alt="Bus faults"></p>
+<h4 id="7-5-2-存储器管理faults"><a href="#7-5-2-存储器管理faults" class="headerlink" title="7.5.2 存储器管理faults"></a>7.5.2 存储器管理faults</h4><ul>
+<li>访问了所有MPU regions覆盖范围之外的地址。</li>
+<li>访问了没有存储器与之对应的空地址。</li>
+<li>往只读region写数据。</li>
+<li>用户级下访问了只允许在特权级下访问的地址。</li>
+</ul>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101400.png" srcset="/img/loading.gif" lazyload alt="MemManage faults"></p>
+<h4 id="7-5-3-用法faults"><a href="#7-5-3-用法faults" class="headerlink" title="7.5.3 用法faults"></a>7.5.3 用法faults</h4><ul>
+<li>执行了协处理器指令。</li>
+<li>执行了未定义的指令。</li>
+<li>尝试进入ARM状态。</li>
+<li>无效的中断返回（LR中包含了无效&#x2F;错误的值）。</li>
+<li>使用多重加载&#x2F;存储指令时，地址没有对齐。</li>
+</ul>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101427.png" srcset="/img/loading.gif" lazyload alt="Usage faults"></p>
+<h4 id="7-5-4-Hardfaults"><a href="#7-5-4-Hardfaults" class="headerlink" title="7.5.4 Hardfaults"></a>7.5.4 Hardfaults</h4><p>Hardfault是上文讨论的Bus fault、MemManage fault以及Usage fault上访的结果。如果这些fault的服务例程无法执行，它们就会成为“硬伤”——上访（escalation）成Hardfault。如果不是由于取向量造成的，则Hardfault服务例程必须检查其它的fault状态寄存器，以最终决定是谁上访的。</p>
+<p>Hardfault状态寄存器（地址：0xE000_ED2C）<br><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101638.png" srcset="/img/loading.gif" lazyload alt="Hard Fault"></p>
 
                 
               </div>
