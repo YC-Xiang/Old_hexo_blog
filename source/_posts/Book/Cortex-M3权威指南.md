@@ -8,9 +8,12 @@ categories:
 ---
 ## Reference
 
+- 《Cortex-M3权威指南》
+- 《ARMv7-M Architecture Reference Manual》
 - 《Cortex-M3技术参考手册》（Cortex-M3 Technical Reference Manual, 简称Cortex-M3 TRM）
 - 《ARMv7-M应用程序级架构参考手册》（ARMv7-M Application Level Architecture Reference Manual）
 - 《ARMv7-M指令集手册》（ARMv7-M Architecture Application Level Reference Manual(Ref2)）
+
 
 ## Chapter1 介绍
 
@@ -19,8 +22,6 @@ Cortex－M3处理器（CM3）采用ARMv7-M架构，它包括**所有的**16位Th
 CM3的出现，还在ARM处理器中破天荒地支持了“非对齐数据访问支持”。
 
 ## Chapter2 CM3概览
-
-CM3采用了哈佛结构，拥有独立的指令总线和数据总线，可以让取指与数据访问并行不悖。
 
 ### 2.2 Registers
 
@@ -60,16 +61,6 @@ R15 PC: 指向当前的程序地址。如果修改它的值，就能改变程序
 
 ### 2.6 总线接口
 
-Cortex-M3内部有若干个总线接口，以使CM3能同时取址和访内（访问内存），它们是：
-
-- 指令存储区总线（两条）Icode，Dcode。
-- 系统总线。
-- 私有外设总线。
-
-有两条代码存储区总线负责对代码存储区的访问，分别是I-Code总线和D-Code总线。前者用于取指，后者用于查表等操作。
-系统总线用于访问内存和外设，覆盖的区域包括SRAM，片上外设，片外RAM，片外扩展设备，以及系统级存储区的部分空间。
-私有外设总线负责一部分私有外设的访问，主要就是访问调试组件。它们也在系统级存储区。
-
 ### 2.9 中断和异常
 
 11种系统异常+5个保留档位+240个外部中断。
@@ -99,6 +90,7 @@ Cortex-M3的调试系统基于ARM最新的CoreSight架构。不同于以往的AR
 ## Chpater3 CM3基础
 
 PC: 读PC时返回的值是当前指令的地址+4。在分支时，无论是直接写PC的值还是使用分支指令，都必须保证加载到PC的数值是奇数（即LSB=1），用以表明这是在Thumb状态下执行。
+> 可以在map文件中看到thumb code的地址lsb都是奇数。data地址不受影响。
 
 ### 3.2 特殊功能寄存器
 
@@ -120,3 +112,107 @@ MSR <special_reg>, <gp_reg> ;写通用寄存器的值到特殊功能寄存器
 
 通过MRS/MSR指令，这3个PSRs即可以单独访问，也可以组合访问（2个组合，3个组合都可以）。当使用三合一的方式访问时，应使用名字“xPSR”或者“PSR”。
 ![PSR](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906154110.png)
+
+#### 3.2.2 中断屏蔽寄存器
+
+- PRIMASK - 这是个只有1 bit的寄存器。在它被置1后，就关掉所有可屏蔽的异常，只剩下NMI和Hardfault可以响应。
+- FAULTMASK - 这是个只有1 bit的寄存器。当它置1时，只有NMI才能响应，所有其它的异常，甚至是Hardfault，也不能响应。
+- BASEPRI - 这个寄存器最多有9位（由表达优先级的位数决定）。它定义了被屏蔽优先级的阈值。当它被设成某个值后，所有优先级号大于等于此值的中断都被关（优先级号越大，优先级越低）。
+
+要访问PRIMASK, FAULTMASK以及BASEPRI，同样要使用MRS/MSR指令。
+
+#### 3.2.3 控制寄存器
+
+控制寄存器有两个用途，其一用于定义特权级别，其二用于选择当前使用哪个堆栈指针。
+CONTROL[1]：0=选择主堆栈指针MSP（复位后的缺省值），1=选择进程堆栈指针PSP。
+CONTROL[0]：0=特权级的线程模式，1=用户级的线程模式。
+
+## Chapter4 指令集
+
+## Chapter5 存储器系统
+
+### 5.2 存储器映射
+
+### 5.3 存储器的各种访问属性
+
+1. 代码区（0x0000_0000- 0x1FFF_FFFF）。该区是可以执行指令的，缓存属性为Write Through。在此区上的数据操作是通过D-Code?(**此处存疑**)，且在此区上的写操作是缓冲的。
+2. SRAM区（0x2000_0000 – 0x3FFF_FFFF）。此区用于片内SRAM，写操作是缓冲的write back/write allocated，此区亦可以执行指令。
+3. 片上外设区(0x4000_0000 – 0x5FFF_FFFF)。该区用于片上外设，因此是不可缓存的，也不可以在此区执行指令。
+
+### 5.4 存储器的缺省访问许可
+
+### 5.5 位带操作
+
+### 5.6 非对齐数据传送
+
+### 5.7 互斥访问
+
+### 5.8 端模式
+
+## Chapter 6 Cortex-M3 全貌
+
+### 6.3 CM3的总线接口
+
+CM3采用了哈佛结构，拥有独立的指令总线和数据总线，可以让取指与数据访问并行不悖。
+![CM3 架构](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906162526.png)
+
+#### 6.3.1 I-Code 总线
+
+I-Code的作用是取指令&执行指令，只和指令有关，I-Code 总线是一条基于 AHB-Lite 总线协议的 32 位总线，负责在 0x0000_0000 – 0x1FFF_FFFF 之间的取指操作。
+> 从flash取指令
+
+#### 6.3.2 D-Code 总线
+D-Code 的作用是对数据读写访问，只和数据有关，D-Code 总线也是一条基于 AHB-Lite 总线协议的 32 位总线，负责在 0x0000_0000 – 0x1FFF_FFFF（与I-Code相同）之间的数据访问操作。尽管 CM3 支持非对齐访问，但你绝不会在该总线上看到任何非对齐的地址，这是因为处理器的总线接口会把非对齐的数据传送都转换成对齐的数据传送。
+> 从flash存取数据
+
+#### 6.3.3 系统总线
+
+系统总线也是一条基于 AHB-Lite 总线协议的 32 位总线，负责在0x2000_0000 – 0xDFFF_FFFF和0xE010_0000 – 0xFFFF_FFFF之间的所有数据传送，取指和数据访问都算上。和D-Code总线一样，所有的数据传送都是对齐的。
+> 片上的SRAM一般都是由系统总线访问
+
+#### 6.3.4 外部私有外设总线
+
+#### 6.3.5 调试访问端口总线
+
+调试访问端口总线接口是一条基于“增强型 APB 规格”的 32 位总线，它专用于挂接调试接口，例如 SWJ-DP 和 SW-DP。
+
+### 6.7 复位信号
+
+nPORESET上电复位：复位处理器核心和调试系统。
+nSYSRESET系统复位：只复位处理器核心。
+nTRST测试复位：只复位调试系统。
+
+## Chapter7 异常
+
+### 7.5 Fault类异常
+
+#### 7.5.1 总线faults
+
+![Bus faults](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101314.png)
+
+#### 7.5.2 存储器管理faults
+
+- 访问了所有MPU regions覆盖范围之外的地址。
+- 访问了没有存储器与之对应的空地址。
+- 往只读region写数据。
+- 用户级下访问了只允许在特权级下访问的地址。
+
+![MemManage faults](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101400.png)
+
+#### 7.5.3 用法faults
+
+- 执行了协处理器指令。
+- 执行了未定义的指令。
+- 尝试进入ARM状态。
+- 无效的中断返回（LR中包含了无效/错误的值）。
+- 使用多重加载/存储指令时，地址没有对齐。
+
+![Usage faults](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101427.png)
+
+#### 7.5.4 Hardfaults
+
+Hardfault是上文讨论的Bus fault、MemManage fault以及Usage fault上访的结果。如果这些fault的服务例程无法执行，它们就会成为“硬伤”——上访（escalation）成Hardfault。如果不是由于取向量造成的，则Hardfault服务例程必须检查其它的fault状态寄存器，以最终决定是谁上访的。
+
+
+Hardfault状态寄存器（地址：0xE000_ED2C）
+![Hard Fault](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101638.png)
