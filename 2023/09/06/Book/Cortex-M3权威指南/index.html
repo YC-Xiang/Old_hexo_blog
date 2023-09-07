@@ -16,12 +16,12 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Reference 《Cortex-M3权威指南》 《ARMv7-M Architecture Reference Manual》 《Cortex-M3技术参考手册》（Cortex-M3 Technical Reference Manual, 简称Cortex-M3 TRM） 《ARMv7-M应用程序级架构参考手册》（ARMv7-M Application Level Architecture R">
+    <meta name="description" content="Reference 《Cortex-M3权威指南》 《ARMv7-M Architecture Reference Manual》 《Cortex-M3 Technical Reference Manual》  Chapter1 介绍Cortex－M3处理器（CM3）采用ARMv7-M架构，它包括所有的16位Thumb指令集和基本的32位Thumb-2指令集架构，Cortex-M3处理器不能执行A">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cortex-M3权威指南">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/09/06/Book/Cortex-M3%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Reference 《Cortex-M3权威指南》 《ARMv7-M Architecture Reference Manual》 《Cortex-M3技术参考手册》（Cortex-M3 Technical Reference Manual, 简称Cortex-M3 TRM） 《ARMv7-M应用程序级架构参考手册》（ARMv7-M Application Level Architecture R">
+<meta property="og:description" content="Reference 《Cortex-M3权威指南》 《ARMv7-M Architecture Reference Manual》 《Cortex-M3 Technical Reference Manual》  Chapter1 介绍Cortex－M3处理器（CM3）采用ARMv7-M架构，它包括所有的16位Thumb指令集和基本的32位Thumb-2指令集架构，Cortex-M3处理器不能执行A">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906101830.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906104733.png">
@@ -29,13 +29,15 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906110236.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906104300.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906154110.png">
+<meta property="og:image" content="https://yc-xiang.github.io/image.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906162526.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101314.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101400.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101427.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101638.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907142916.png">
 <meta property="article:published_time" content="2023-09-06T01:43:28.000Z">
-<meta property="article:modified_time" content="2023-09-07T03:39:47.392Z">
+<meta property="article:modified_time" content="2023-09-07T06:33:44.678Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="Book">
 <meta name="twitter:card" content="summary_large_image">
@@ -273,7 +275,7 @@
         
         
         
-          35 mins
+          36 mins
         
       </span>
     
@@ -324,7 +326,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月7日 中午
+                    本文最后更新于：2023年9月7日 下午
                   
                 
               </p>
@@ -335,9 +337,7 @@
                 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li>《Cortex-M3权威指南》</li>
 <li>《ARMv7-M Architecture Reference Manual》</li>
-<li>《Cortex-M3技术参考手册》（Cortex-M3 Technical Reference Manual, 简称Cortex-M3 TRM）</li>
-<li>《ARMv7-M应用程序级架构参考手册》（ARMv7-M Application Level Architecture Reference Manual）</li>
-<li>《ARMv7-M指令集手册》（ARMv7-M Architecture Application Level Reference Manual(Ref2)）</li>
+<li>《Cortex-M3 Technical Reference Manual》</li>
 </ul>
 <h2 id="Chapter1-介绍"><a href="#Chapter1-介绍" class="headerlink" title="Chapter1 介绍"></a>Chapter1 介绍</h2><p>Cortex－M3处理器（CM3）采用ARMv7-M架构，它包括<strong>所有的</strong>16位Thumb指令集和<strong>基本的</strong>32位Thumb-2指令集架构，Cortex-M3处理器<strong>不能</strong>执行ARM指令集。</p>
 <p>CM3的出现，还在ARM处理器中破天荒地支持了“非对齐数据访问支持”。</p>
@@ -468,6 +468,13 @@
 <li>执行PSR（EPSR）</li>
 </ul>
 <p>通过MRS&#x2F;MSR指令，这3个PSRs即可以单独访问，也可以组合访问（2个组合，3个组合都可以）。当使用三合一的方式访问时，应使用名字“xPSR”或者“PSR”。<br><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906154110.png" srcset="/img/loading.gif" lazyload alt="PSR"></p>
+<p>APSR:</p>
+<ul>
+<li>N: 负数标志</li>
+<li>Z: 0结果标志</li>
+<li>C: 进位&#x2F;错位标志</li>
+<li>V: 溢出标志</li>
+</ul>
 <h4 id="3-2-2-中断屏蔽寄存器"><a href="#3-2-2-中断屏蔽寄存器" class="headerlink" title="3.2.2 中断屏蔽寄存器"></a>3.2.2 中断屏蔽寄存器</h4><ul>
 <li>PRIMASK - 这是个只有1 bit的寄存器。在它被置1后，就关掉所有可屏蔽的异常，只剩下NMI和Hardfault可以响应。</li>
 <li>FAULTMASK - 这是个只有1 bit的寄存器。当它置1时，只有NMI才能响应，所有其它的异常，甚至是Hardfault，也不能响应。</li>
@@ -475,7 +482,12 @@
 </ul>
 <p>要访问PRIMASK, FAULTMASK以及BASEPRI，同样要使用MRS&#x2F;MSR指令。</p>
 <h4 id="3-2-3-控制寄存器"><a href="#3-2-3-控制寄存器" class="headerlink" title="3.2.3 控制寄存器"></a>3.2.3 控制寄存器</h4><p>控制寄存器有两个用途，其一用于定义特权级别，其二用于选择当前使用哪个堆栈指针。<br>CONTROL[1]：0&#x3D;选择主堆栈指针MSP（复位后的缺省值），1&#x3D;选择进程堆栈指针PSP。<br>CONTROL[0]：0&#x3D;特权级的线程模式，1&#x3D;用户级的线程模式。</p>
-<h2 id="Chapter4-指令集"><a href="#Chapter4-指令集" class="headerlink" title="Chapter4 指令集"></a>Chapter4 指令集</h2><h2 id="Chapter5-存储器系统"><a href="#Chapter5-存储器系统" class="headerlink" title="Chapter5 存储器系统"></a>Chapter5 存储器系统</h2><h3 id="5-2-存储器映射"><a href="#5-2-存储器映射" class="headerlink" title="5.2 存储器映射"></a>5.2 存储器映射</h3><h3 id="5-3-存储器的各种访问属性"><a href="#5-3-存储器的各种访问属性" class="headerlink" title="5.3 存储器的各种访问属性"></a>5.3 存储器的各种访问属性</h3><ol>
+<h2 id="Chapter4-指令集"><a href="#Chapter4-指令集" class="headerlink" title="Chapter4 指令集"></a>Chapter4 指令集</h2><p><strong>EQU</strong>：定义常数，常数定义必须顶格写。<br><code>Stack_Size      EQU     0x00006000</code><br>DCB：定义一串字节常数。<br>DCD：定义一串23位整数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs asm">MY_NUMBER<br>    DCD 0x12345678<br>HELLO_TEXT<br>    DCB ”Hello\n”,0<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-1-后缀的使用"><a href="#4-1-后缀的使用" class="headerlink" title="4.1 后缀的使用"></a>4.1 后缀的使用</h3><p><img src="/image.png" srcset="/img/loading.gif" lazyload alt="指令后缀"></p>
+<h3 id="4-2-指令集"><a href="#4-2-指令集" class="headerlink" title="4.2 指令集"></a>4.2 指令集</h3><p>详细指令见附录。</p>
+<h2 id="Chapter5-存储器系统"><a href="#Chapter5-存储器系统" class="headerlink" title="Chapter5 存储器系统"></a>Chapter5 存储器系统</h2><h3 id="5-2-存储器映射"><a href="#5-2-存储器映射" class="headerlink" title="5.2 存储器映射"></a>5.2 存储器映射</h3><h3 id="5-3-存储器的各种访问属性"><a href="#5-3-存储器的各种访问属性" class="headerlink" title="5.3 存储器的各种访问属性"></a>5.3 存储器的各种访问属性</h3><ol>
 <li>代码区（0x0000_0000- 0x1FFF_FFFF）。该区是可以执行指令的，缓存属性为Write Through。在此区上的数据操作是通过D-Code?(<strong>此处存疑</strong>)，且在此区上的写操作是缓冲的。</li>
 <li>SRAM区（0x2000_0000 – 0x3FFF_FFFF）。此区用于片内SRAM，写操作是缓冲的write back&#x2F;write allocated，此区亦可以执行指令。</li>
 <li>片上外设区(0x4000_0000 – 0x5FFF_FFFF)。该区用于片上外设，因此是不可缓存的，也不可以在此区执行指令。</li>
@@ -513,6 +525,8 @@
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101427.png" srcset="/img/loading.gif" lazyload alt="Usage faults"></p>
 <h4 id="7-5-4-Hardfaults"><a href="#7-5-4-Hardfaults" class="headerlink" title="7.5.4 Hardfaults"></a>7.5.4 Hardfaults</h4><p>Hardfault是上文讨论的Bus fault、MemManage fault以及Usage fault上访的结果。如果这些fault的服务例程无法执行，它们就会成为“硬伤”——上访（escalation）成Hardfault。如果不是由于取向量造成的，则Hardfault服务例程必须检查其它的fault状态寄存器，以最终决定是谁上访的。</p>
 <p>Hardfault状态寄存器（地址：0xE000_ED2C）<br><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101638.png" srcset="/img/loading.gif" lazyload alt="Hard Fault"></p>
+<h2 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907142916.png" srcset="/img/loading.gif" lazyload alt="ARMv7-M System"></p>
+<p><a target="_blank" rel="noopener" href="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/ARMv7-cheat-sheet.pdf">ARMv7-M Instrution Cheat sheet</a></p>
 
                 
               </div>
