@@ -10,10 +10,7 @@ categories:
 
 - 《Cortex-M3权威指南》
 - 《ARMv7-M Architecture Reference Manual》
-- 《Cortex-M3技术参考手册》（Cortex-M3 Technical Reference Manual, 简称Cortex-M3 TRM）
-- 《ARMv7-M应用程序级架构参考手册》（ARMv7-M Application Level Architecture Reference Manual）
-- 《ARMv7-M指令集手册》（ARMv7-M Architecture Application Level Reference Manual(Ref2)）
-
+- 《Cortex-M3 Technical Reference Manual》
 
 ## Chapter1 介绍
 
@@ -113,6 +110,13 @@ MSR <special_reg>, <gp_reg> ;写通用寄存器的值到特殊功能寄存器
 通过MRS/MSR指令，这3个PSRs即可以单独访问，也可以组合访问（2个组合，3个组合都可以）。当使用三合一的方式访问时，应使用名字“xPSR”或者“PSR”。
 ![PSR](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906154110.png)
 
+APSR:
+
+- N: 负数标志
+- Z: 0结果标志
+- C: 进位/错位标志
+- V: 溢出标志
+
 #### 3.2.2 中断屏蔽寄存器
 
 - PRIMASK - 这是个只有1 bit的寄存器。在它被置1后，就关掉所有可屏蔽的异常，只剩下NMI和Hardfault可以响应。
@@ -128,6 +132,26 @@ CONTROL[1]：0=选择主堆栈指针MSP（复位后的缺省值），1=选择进
 CONTROL[0]：0=特权级的线程模式，1=用户级的线程模式。
 
 ## Chapter4 指令集
+
+**EQU**：定义常数，常数定义必须顶格写。
+`Stack_Size      EQU     0x00006000`
+DCB：定义一串字节常数。
+DCD：定义一串23位整数。
+
+```asm
+MY_NUMBER
+    DCD 0x12345678
+HELLO_TEXT
+    DCB ”Hello\n”,0
+```
+
+### 4.1 后缀的使用
+
+![指令后缀](image.png)
+
+### 4.2 指令集
+
+详细指令见附录。
 
 ## Chapter5 存储器系统
 
@@ -162,6 +186,7 @@ I-Code的作用是取指令&执行指令，只和指令有关，I-Code 总线是
 > 从flash取指令
 
 #### 6.3.2 D-Code 总线
+
 D-Code 的作用是对数据读写访问，只和数据有关，D-Code 总线也是一条基于 AHB-Lite 总线协议的 32 位总线，负责在 0x0000_0000 – 0x1FFF_FFFF（与I-Code相同）之间的数据访问操作。尽管 CM3 支持非对齐访问，但你绝不会在该总线上看到任何非对齐的地址，这是因为处理器的总线接口会把非对齐的数据传送都转换成对齐的数据传送。
 > 从flash存取数据
 
@@ -213,6 +238,11 @@ nTRST测试复位：只复位调试系统。
 
 Hardfault是上文讨论的Bus fault、MemManage fault以及Usage fault上访的结果。如果这些fault的服务例程无法执行，它们就会成为“硬伤”——上访（escalation）成Hardfault。如果不是由于取向量造成的，则Hardfault服务例程必须检查其它的fault状态寄存器，以最终决定是谁上访的。
 
-
 Hardfault状态寄存器（地址：0xE000_ED2C）
 ![Hard Fault](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101638.png)
+
+## Appendix
+
+![ARMv7-M System](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907142916.png)
+
+[ARMv7-M Instrution Cheat sheet](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/ARMv7-cheat-sheet.pdf)
