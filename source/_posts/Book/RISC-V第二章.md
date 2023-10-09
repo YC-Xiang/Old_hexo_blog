@@ -15,8 +15,6 @@ categories:
 
 ![图2.1: RV32指令图示](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/RV32I%E6%8C%87%E4%BB%A4%E5%9B%BE%E7%A4%BA.png)
 
-
-
 ​用于寄存器-寄存器操作的R类型指令，用于短立即数和访存load操作的I型指令，用于访存store操作的S型指令，用于条件跳转操作的B类型指令，用于长立即数的U型指令和用于无条件跳转的J型指令。
 
 ![图2.2](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/RISC%E6%8C%87%E4%BB%A4%E6%A0%BC%E5%BC%8F.png)

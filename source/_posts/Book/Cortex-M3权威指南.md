@@ -244,5 +244,3 @@ Hardfault状态寄存器（地址：0xE000_ED2C）
 ## Appendix
 
 [ARMv7-M Instruction set and System registers](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/armv7.pdf)
-
-
