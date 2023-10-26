@@ -16,27 +16,24 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Phase_1mul-longlong.c中check 0xaeb1c2aa * 0xaeb1c2aa &#x3D; 0x19d29ab9db1a18e4LL 实现mulh指令遇到的一个问题： 由于src1和src2都是unsigned int，强制类型转换为long（零扩展），得到的是无符号相乘结果0x7736200d。 1234  &#x2F;&#x2F; 直接u32*u32会溢出，乘出来还是u32u32 src1 &#x3D; 0">
+    <meta name="description" content="RTFSC1234567891011121314151617# nemu&#x2F;scripts&#x2F;native.mkcompile_git:  $(call git_commit, &quot;compile NEMU&quot;)$(BINARY): compile_gitoverride ARGS ?&#x3D; --log&#x3D;$(BUILD_DIR)&#x2F;nemu-log.txtoverride ARGS +&#x3D; $">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ICS2022 PA2">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/01/31/Project/ICS/ICS2022-PA2/index.html">
+<meta property="og:title" content="ICS2022 PA1">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/01/10/Project/ICS/PA1/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Phase_1mul-longlong.c中check 0xaeb1c2aa * 0xaeb1c2aa &#x3D; 0x19d29ab9db1a18e4LL 实现mulh指令遇到的一个问题： 由于src1和src2都是unsigned int，强制类型转换为long（零扩展），得到的是无符号相乘结果0x7736200d。 1234  &#x2F;&#x2F; 直接u32*u32会溢出，乘出来还是u32u32 src1 &#x3D; 0">
+<meta property="og:description" content="RTFSC1234567891011121314151617# nemu&#x2F;scripts&#x2F;native.mkcompile_git:  $(call git_commit, &quot;compile NEMU&quot;)$(BINARY): compile_gitoverride ARGS ?&#x3D; --log&#x3D;$(BUILD_DIR)&#x2F;nemu-log.txtoverride ARGS +&#x3D; $">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230201173605.png">
-<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230201173534.png">
-<meta property="article:published_time" content="2023-01-31T06:24:23.000Z">
-<meta property="article:modified_time" content="2023-09-06T01:44:48.992Z">
+<meta property="article:published_time" content="2023-01-10T08:47:28.000Z">
+<meta property="article:modified_time" content="2023-10-26T09:57:04.981Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="ICS">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230201173605.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>ICS2022 PA2 - Yucheng&#39;s Blog</title>
+  <title>ICS2022 PA1 - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -230,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">ICS2022 PA2</span>
+            <span id="subtitle">ICS2022 PA1</span>
           
         </div>
 
@@ -241,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-01-31 14:24" pubdate>
-          2023年1月31日 下午
+        <time datetime="2023-01-10 16:47" pubdate>
+          2023年1月10日 下午
         </time>
       </span>
     
@@ -253,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          516 words
+          1.2k words
         
       </span>
     
@@ -264,7 +261,7 @@
         
         
         
-          5 mins
+          10 mins
         
       </span>
     
@@ -310,12 +307,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">ICS2022 PA2</h1>
+            <h1 style="display: none">ICS2022 PA1</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月6日 上午
+                    本文最后更新于：2023年10月26日 下午
                   
                 
               </p>
@@ -323,16 +320,26 @@
             
               <div class="markdown-body">
                 
-                <h2 id="Phase-1"><a href="#Phase-1" class="headerlink" title="Phase_1"></a>Phase_1</h2><p>mul-longlong.c中check <code>0xaeb1c2aa * 0xaeb1c2aa = 0x19d29ab9db1a18e4LL</code></p>
-<p>实现mulh指令遇到的一个问题：</p>
-<p>由于<code>src1</code>和<code>src2</code>都是<code>unsigned int</code>，强制类型转换为<code>long</code>（零扩展），得到的是无符号相乘结果<code>0x7736200d</code>。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">  <span class="hljs-comment">// 直接u32*u32会溢出，乘出来还是u32</span><br>u32 src1 = <span class="hljs-number">0xaeb1c2aa</span>;<br>u32 src2 = <span class="hljs-number">0xaeb1c2aa</span><br>INSTPAT(<span class="hljs-string">&quot;...&quot;</span>, mulh, R, R(dest) = (((<span class="hljs-type">long</span>)src1 * (<span class="hljs-type">long</span>)src2) &gt;&gt; <span class="hljs-number">32</span>));<br></code></pre></td></tr></table></figure>
+                <h1 id="RTFSC"><a href="#RTFSC" class="headerlink" title="RTFSC"></a>RTFSC</h1><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># nemu/scripts/native.mk</span><br><br><span class="hljs-section">compile_git:</span><br>  <span class="hljs-variable">$(<span class="hljs-built_in">call</span> git_commit, &quot;compile NEMU&quot;)</span><br><span class="hljs-variable">$(BINARY)</span>: compile_git<br><br><span class="hljs-keyword">override</span> ARGS ?= --log=<span class="hljs-variable">$(BUILD_DIR)</span>/nemu-log.txt<br><span class="hljs-keyword">override</span> ARGS += <span class="hljs-variable">$(ARGS_DIFF)</span> <span class="hljs-comment"># nemu/tools/difftest.mk中CONFIG_DIFFTEST未定义，所以ARGS_DIFF不存在</span><br><br>IMG ?=<br><br>NEMU_EXEC := <span class="hljs-variable">$(BINARY)</span> <span class="hljs-variable">$(ARGS)</span> <span class="hljs-variable">$(IMG)</span><br><br><span class="hljs-section">run: run-env</span><br>  <span class="hljs-variable">$(<span class="hljs-built_in">call</span> git_commit, &quot;run NEMU&quot;)</span><br>  <span class="hljs-variable">$(NEMU_EXEC)</span><br><br></code></pre></td></tr></table></figure>
 
-<p>先修改为<code>int</code>型，再改为<code>long</code>型（符号扩展）则可以顺利得到<code>0x19d29ab9</code>。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">INSTPAT(<span class="hljs-string">&quot;...&quot;</span>, mulh, R, R(dest) = (((<span class="hljs-type">long</span>)(<span class="hljs-type">int</span>)src1 * (<span class="hljs-type">long</span>)(<span class="hljs-type">int</span>)src2) &gt;&gt; <span class="hljs-number">32</span>));<br></code></pre></td></tr></table></figure>
-<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230201173605.png" srcset="/img/loading.gif" lazyload></div><div class="group-image-wrap"><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230201173534.png" srcset="/img/loading.gif" lazyload></div></div></div>
-
-<h2 id="Phase-2"><a href="#Phase-2" class="headerlink" title="Phase_2"></a>Phase_2</h2><h3 id="通过批处理模式运行NEMU"><a href="#通过批处理模式运行NEMU" class="headerlink" title="通过批处理模式运行NEMU"></a>通过批处理模式运行NEMU</h3><p><code>abstract-machine/scripts/platform/nemu.mk</code>中<code>NEMUFLAGS</code>加上<code>-b</code>，选择批处理模式，不用每次进入nemu都输入<code>c</code>。</p>
+<p>由makefile可知，输入<code>make run</code>启动nemu时，传递给<code>monitor.c parse_args(argc, argv)</code>的参数为<br><code>--log=$(BUILD_DIR)/nemu-log.txt</code></p>
+<h2 id="配置系统和项目构建"><a href="#配置系统和项目构建" class="headerlink" title="配置系统和项目构建"></a>配置系统和项目构建</h2><p>在<code>nemu</code>目录下执行<code>make menuconfig</code>,结果会保存至<code>nemu/.config</code></p>
+<p>生成</p>
+<p>可以被包含到C代码中的宏定义：<code>nemu/include/generated/autoconf.h</code></p>
+<p>可以被包含到Makefile中的变量定义：<code>nemu/include/config/auto.conf</code></p>
+<ul>
+<li><code>SRCS-y</code> - 参与编译的源文件的候选集合</li>
+<li><code>SRCS-BLACKLIST-y</code> - 不参与编译的源文件的黑名单集合</li>
+<li><code>DIRS-y</code> - 参与编译的目录集合, 该目录下的所有文件都会被加入到SRCS-y中</li>
+<li><code>DIRS-BLACKLIST-y</code> - 不参与编译的目录集合, 该目录下的所有文件都会被加入到SRCS-BLACKLIST-y中</li>
+</ul>
+<p>Makefile的编译规则在<code>nemu/scripts/build.mk</code>中定义。</p>
+<h1 id="基础设施"><a href="#基础设施" class="headerlink" title="基础设施"></a>基础设施</h1><p><code>char *strtok(char *str, const char *delim)</code> 分解字符串 str 为一组字符串，delim 为分隔符。</p>
+<p><code>atoi</code>函数：字符串数字转为int类型。</p>
+<p><code>strtol</code>函数：可以根据字符串数字为十进制&#x2F;十六进制…，并转化为<code>long int</code>。如<code>strtol(0xabc, NULL, 16)</code>。</p>
+<h1 id="表达式求值"><a href="#表达式求值" class="headerlink" title="表达式求值"></a>表达式求值</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/derkampf/article/details/70661551">regcomp() regexec() regfree()详解</a><br><code>int regcomp (regex_t *compiled, const char *pattern, int cflags)</code><br><code>int regexec (regex_t *compiled, char *string, size_t nmatch, regmatch_t matchptr [], int eflags)</code></p>
+<p>字符串中的转义需要两个<code>\\</code>,比如转义+号，<code>&quot;\\+&quot;</code><br><a target="_blank" rel="noopener" href="https://zh.javascript.info/regexp-escaping#newregexp">转义，特殊字符</a></p>
+<h2 id="一些字符串处理函数"><a href="#一些字符串处理函数" class="headerlink" title="一些字符串处理函数"></a>一些字符串处理函数</h2><p><code>strcat</code><br><code>strcmp</code><br><code>strstr</code></p>
 
                 
               </div>
@@ -380,9 +387,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/21/Note/Linux_Driver/PWM/" title="PWM Subsystem">
+                      <a href="/2023/01/11/reading/%E6%80%9D%E7%BB%B4%E7%9A%84%E4%B9%90%E8%B6%A3/" title="沉默的大多数">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">PWM Subsystem</span>
+                        <span class="hidden-mobile">沉默的大多数</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -390,8 +397,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/01/30/Note/Missing-semester/" title="Missing Semester of Computer Science">
-                        <span class="hidden-mobile">Missing Semester of Computer Science</span>
+                      <a href="/2023/01/09/Book/RISC-V%E7%AC%AC%E5%8D%81%E7%AB%A0/" title="">
+                        <span class="hidden-mobile"></span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

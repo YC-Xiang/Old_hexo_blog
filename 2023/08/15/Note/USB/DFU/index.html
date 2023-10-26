@@ -29,7 +29,6 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230802163409.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230802163417.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230802164728.png">
-<meta property="og:image" content="c:\Users\yucheng_xiang\AppData\Roaming\Typora\typora-user-images\image-20230802164737635.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230802165234.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230802165243.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230802170347.png">
@@ -41,7 +40,7 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230803101116.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230803101542.png">
 <meta property="article:published_time" content="2023-08-15T09:39:28.000Z">
-<meta property="article:modified_time" content="2023-09-11T03:06:30.685Z">
+<meta property="article:modified_time" content="2023-10-12T07:03:04.149Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="usb">
 <meta name="twitter:card" content="summary_large_image">
@@ -330,7 +329,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月11日 上午
+                    本文最后更新于：2023年10月12日 下午
                   
                 
               </p>
@@ -379,7 +378,6 @@
 <li>A single functional descriptor</li>
 </ul>
 <h3 id="DFU-Device-Descriptor"><a href="#DFU-Device-Descriptor" class="headerlink" title="DFU Device Descriptor"></a><strong>DFU Device Descriptor</strong></h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230802164728.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="C:\Users\yucheng_xiang\AppData\Roaming\Typora\typora-user-images\image-20230802164737635.png" srcset="/img/loading.gif" lazyload alt="image-20230802164737635"></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// rom code UsbDescCore_Rom.c</span><br>USBDevDesc_t USBDevDesc =<br>  &#123;<br>    <span class="hljs-keyword">sizeof</span>(USBDevDesc),		<span class="hljs-comment">// bLength:</span><br>    <span class="hljs-number">0x01</span>,					<span class="hljs-comment">// USB_DEVICE_DESCRIPTOR_TYPE,bDescriptorType:</span><br>    <span class="hljs-number">0x0201</span>,					<span class="hljs-comment">// bcdUSB version:NORM:0200H</span><br>    DEV_CLS_MULTI,			<span class="hljs-comment">// bDeviceClass:-&gt; This is a Multi-interface Function Code Device</span><br>    DEV_SUBCLS_COMMON,		<span class="hljs-comment">// bDeviceSubClass: -&gt; This is the Common Class Sub Class</span><br>    DEV_PROTOCOL_IAD,		<span class="hljs-comment">// bDeviceProtocol: -&gt; This is the Interface Association Descriptor protocol</span><br>    <span class="hljs-number">0x40</span>,					<span class="hljs-comment">// bMaxPacketSize0: = (64) Bytes</span><br>    ROM_RT_VID,				<span class="hljs-comment">// idVendor:    = Realtek Corp.</span><br>    ROM_RT_FP_PID,			<span class="hljs-comment">// idProduct:</span><br>    <span class="hljs-number">0x0001</span>,					<span class="hljs-comment">// FW_TRUNK_VERSION, //bcdDevice:1.00</span><br>    I_MANUFACTURER,			<span class="hljs-comment">// iManufacturer:</span><br>    I_PRODUCT,				<span class="hljs-comment">// iProduct:</span><br>    I_SERIALNUMBER,			<span class="hljs-comment">// iSerialNumber:</span><br>    <span class="hljs-number">0x01</span>					<span class="hljs-comment">// bNumConfigurations:</span><br>  &#125;;<br><br>  <span class="hljs-keyword">if</span>(IsDFUMode())<br>  &#123;<br>    <span class="hljs-comment">// USBDevDesc.bcdUSB = 0x0200;</span><br>    USBDevDesc.bDeviceClass    = <span class="hljs-number">0x00</span>;<br>    USBDevDesc.bDeviceSubClass = <span class="hljs-number">0x00</span>;<br>    USBDevDesc.bDeviceProtocol = <span class="hljs-number">0x00</span>;<br>    USBDevDesc.idProduct = <span class="hljs-number">0x5800</span>;<br>    <span class="hljs-keyword">if</span>(DevIdcfg.cfgDevId_en==<span class="hljs-number">1</span>)<br>    &#123;<br>      USBDevDesc.idVendor = DevIdcfg.dfu_idVendor;<br>      USBDevDesc.idProduct = DevIdcfg.dfu_idProduct;<br>      USBDevDesc.bcdDevice = DevIdcfg.dfu_bcdDevice;<br>    &#125;<br>  &#125;<br></code></pre></td></tr></table></figure>
 
 

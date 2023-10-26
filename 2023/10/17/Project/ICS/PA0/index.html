@@ -16,15 +16,15 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Legacygetopt_long函数 strtok函数：分割字符串 atoi函数：字符串数字转为int类型。 strtol函数：可以根据字符串数字为十进制&#x2F;十六进制…，并转化为long int。如strtol(0xabc, NULL, 16)。 打印unsigned int使用%u 1234567891011121314151617# nemu&#x2F;scripts&#x2F;native.mkcom">
+    <meta name="description" content="命令行工具VimCtagsCtags使用方法 Ubuntu:$ sudo apt-get update &amp;&amp; sudo apt-get install -y exuberant-ctags 创建~&#x2F;.ctags，描述要忽略的文件&#x2F;文件夹。进入source code根目录，运行ctags, 生成文件tags。 vim -t &lt;tags&gt; 从shell命">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ICS2022 PA1">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/01/10/Project/ICS/ICS2022%20PA1/index.html">
+<meta property="og:title" content="ICS2022 PA0">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/10/17/Project/ICS/PA0/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Legacygetopt_long函数 strtok函数：分割字符串 atoi函数：字符串数字转为int类型。 strtol函数：可以根据字符串数字为十进制&#x2F;十六进制…，并转化为long int。如strtol(0xabc, NULL, 16)。 打印unsigned int使用%u 1234567891011121314151617# nemu&#x2F;scripts&#x2F;native.mkcom">
+<meta property="og:description" content="命令行工具VimCtagsCtags使用方法 Ubuntu:$ sudo apt-get update &amp;&amp; sudo apt-get install -y exuberant-ctags 创建~&#x2F;.ctags，描述要忽略的文件&#x2F;文件夹。进入source code根目录，运行ctags, 生成文件tags。 vim -t &lt;tags&gt; 从shell命">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-01-10T08:47:28.000Z">
-<meta property="article:modified_time" content="2023-09-06T01:44:44.675Z">
+<meta property="article:published_time" content="2023-10-17T08:47:28.000Z">
+<meta property="article:modified_time" content="2023-10-18T08:31:38.311Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="ICS">
 <meta name="twitter:card" content="summary_large_image">
@@ -33,7 +33,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>ICS2022 PA1 - Yucheng&#39;s Blog</title>
+  <title>ICS2022 PA0 - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">ICS2022 PA1</span>
+            <span id="subtitle">ICS2022 PA0</span>
           
         </div>
 
@@ -238,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-01-10 16:47" pubdate>
-          2023年1月10日 下午
+        <time datetime="2023-10-17 16:47" pubdate>
+          2023年10月17日 下午
         </time>
       </span>
     
@@ -250,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k words
+          443 words
         
       </span>
     
@@ -261,7 +261,7 @@
         
         
         
-          12 mins
+          4 mins
         
       </span>
     
@@ -307,12 +307,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">ICS2022 PA1</h1>
+            <h1 style="display: none">ICS2022 PA0</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月6日 上午
+                    本文最后更新于：2023年10月18日 下午
                   
                 
               </p>
@@ -320,20 +320,10 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Legacy"><a href="#Legacy" class="headerlink" title="Legacy"></a>Legacy</h1><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/ae4ae0ef57bc">getopt_long函数</a></p>
-<p><code>strtok</code>函数：分割字符串</p>
-<p><code>atoi</code>函数：字符串数字转为int类型。</p>
-<p><code>strtol</code>函数：可以根据字符串数字为十进制&#x2F;十六进制…，并转化为<code>long int</code>。如<code>strtol(0xabc, NULL, 16)</code>。</p>
-<p>打印<code>unsigned int</code>使用<code>%u</code></p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># nemu/scripts/native.mk</span><br><br><span class="hljs-section">compile_git:</span><br>  <span class="hljs-variable">$(<span class="hljs-built_in">call</span> git_commit, &quot;compile NEMU&quot;)</span><br><span class="hljs-variable">$(BINARY)</span>: compile_git<br><br><span class="hljs-keyword">override</span> ARGS ?= --log=<span class="hljs-variable">$(BUILD_DIR)</span>/nemu-log.txt<br><span class="hljs-keyword">override</span> ARGS += <span class="hljs-variable">$(ARGS_DIFF)</span> <span class="hljs-comment"># nemu/tools/difftest.mk中CONFIG_DIFFTEST未定义，所以ARGS_DIFF不存在</span><br><br>IMG ?=<br><br>NEMU_EXEC := <span class="hljs-variable">$(BINARY)</span> <span class="hljs-variable">$(ARGS)</span> <span class="hljs-variable">$(IMG)</span><br><br><span class="hljs-section">run: run-env</span><br>  <span class="hljs-variable">$(<span class="hljs-built_in">call</span> git_commit, &quot;run NEMU&quot;)</span><br>  <span class="hljs-variable">$(NEMU_EXEC)</span><br><br></code></pre></td></tr></table></figure>
-
-<p>由makefile可知，输入<code>make run</code>启动nemu时，传递给<code>monitor.c parse_args(argc, argv)</code>的参数为<br><code>--log=$(BUILD_DIR)/nemu-log.txt</code></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span> &#123;<br>    init_monitor(argc, argv);<br>    parse_args(argc, argv);<br>      init_rand();<br>      init_log(log_file);<br>      init_mem(); <span class="hljs-comment">// 随机初始化内存</span><br>    init_isa();<br>      <span class="hljs-built_in">memcpy</span>(guest_to_host(RESET_VECTOR), img, <span class="hljs-keyword">sizeof</span>(img)); <span class="hljs-comment">//加载内置客户程序</span><br>      restart(); <span class="hljs-comment">// 初始化pc和0寄存器</span><br>      load_img();<br>    init_sdb();<br>    welcome();<br>    engine_start();<br>     sdb_mainloop();<br>        str = rl_gets(); <span class="hljs-comment">// 获取在(nemu)中输入的字符串</span><br>      <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(cmd, cmd_table[i].name) == <span class="hljs-number">0</span>) &#123; <span class="hljs-comment">// 根据输入的字符串调用不同的handler函数</span><br>        <span class="hljs-keyword">if</span> (cmd_table[i].handler(args) &lt; <span class="hljs-number">0</span>) &#123; <span class="hljs-keyword">return</span>; &#125;<br>      <span class="hljs-keyword">break</span>;<br>      cmd_c();<br>        cpu_exec();<br>          execute(n);<br>            exec_once(&amp;s, cpu.pc);<br>              isa_exec_once(s);<br>            trace_and_difftest(&amp;s, cpu.pc);<br>      cmd_q();<br>      cmd_si();<br>      cmd_info();<br>      cmd_x();<br>      cmd_help();<br>      &#125;<br></code></pre></td></tr></table></figure>
-
-<h1 id="RTFSC"><a href="#RTFSC" class="headerlink" title="RTFSC"></a>RTFSC</h1><h2 id="配置系统和项目构建"><a href="#配置系统和项目构建" class="headerlink" title="配置系统和项目构建"></a>配置系统和项目构建</h2><p>在<code>nemu</code>目录下执行<code>make menuconfig</code>,结果会保存至<code>nemu/.config</code></p>
-<p>生成</p>
-<p>可以被包含到C代码中的宏定义：<code>nemu/include/generated/autoconf.h</code></p>
-<p>可以被包含到Makefile中的变量定义：<code>nemu/include/config/auto.conf</code></p>
+                <h1 id="命令行工具"><a href="#命令行工具" class="headerlink" title="命令行工具"></a>命令行工具</h1><h1 id="Vim"><a href="#Vim" class="headerlink" title="Vim"></a>Vim</h1><h2 id="Ctags"><a href="#Ctags" class="headerlink" title="Ctags"></a>Ctags</h2><p><a target="_blank" rel="noopener" href="https://kulkarniamit.github.io/whatwhyhow/howto/use-vim-ctags.html">Ctags使用方法</a></p>
+<p>Ubuntu:<br><code>$ sudo apt-get update &amp;&amp; sudo apt-get install -y exuberant-ctags</code></p>
+<p>创建~&#x2F;.ctags，描述要忽略的文件&#x2F;文件夹。<br>进入source code根目录，运行<code>ctags</code>, 生成文件tags。</p>
+<p><code>vim -t &lt;tags&gt;</code> 从shell命令行跳转到tag的定义位置。<br><code>Ctrl ]</code> 跳转。<br><code>Ctrl T</code> 返回。<br><code>:tn</code> 跳转到下一个定义(如果有多个定义的话)。<br><code>:tp</code> 跳转到上一个定义(如果有多个定义的话)。<br><code>:tags</code> 列出tag stack。<br><code>:tags main</code> 跳转到指定tag，main。<br><code>:tags /^get</code> jumps to the tag that starts with “get”<br><code>:tag /Final$</code> jumps to the tag that ends with “Final”<br><code>:tag /norm</code> lists all the tags that contain “norm”, including “id_norm”</p>
 
                 
               </div>
@@ -381,18 +371,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/01/11/reading/%E6%80%9D%E7%BB%B4%E7%9A%84%E4%B9%90%E8%B6%A3/" title="沉默的大多数">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">沉默的大多数</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/01/09/Book/RISC-V%E7%AC%AC%E5%8D%81%E7%AB%A0/" title="">
-                        <span class="hidden-mobile"></span>
+                      <a href="/2023/09/12/Book/2023-09-12-I2C_spec/" title="I2C spec">
+                        <span class="hidden-mobile">I2C spec</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

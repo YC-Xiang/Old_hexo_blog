@@ -256,6 +256,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/05/08/Note/Linux_Driver/Time/" target="_self">
+          Time Subsystem
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/08/Note/Linux_Driver/Time/" target="_self">
+        <div>
+          CONFIG_GENERIC_CLOCKEVENTS：新的时间子系统 以下选项三选一： CONFIG_HZ_PERIODIC：无论何时，都启用用周期性的tick，即便是在系统idle的时候。 CONFIG_NO_HZ_IDLE：在系统idle的时候，停掉周期性tick。会同时enable NO_HZ_COMMON。 CONFIG_NO_HZ_FULL：即便在非idle的状态下，也就是说cpu上还运
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-05-08 17:00" pubdate>
+              2023-05-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Linux-driver/">#Linux driver</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/05/08/Note/Linux_Driver/Interrupt/" target="_self">
           Interrupt Subsystem
         </a>
@@ -317,15 +378,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/04/25/Project/rCore_uCore/uCore_Chapter1/" target="_self">
-          uCore_Chapter1 应用程序与基本执行环境
+        <a href="/2023/04/25/Project/rCore_uCore/uCore_Chapter2/" target="_self">
+          uCore_Chapter2 批处理系统
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/25/Project/rCore_uCore/uCore_Chapter1/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/25/Project/rCore_uCore/uCore_Chapter2/" target="_self">
         <div>
-          Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG=trace # 其他选项可以看Makefilemake clean # rm build/make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 退出 qemu 的方法 如果是正常推出，uC
+          123456make -C user clean # 在os目录，相当于cd user;make clean;cd ..make clean # 或者在user目录git checkout ch2make user BASE=1 CHAPTER=2make runmake test BASE=1 # make test 会完成　make user 和 make run 两个步骤（自动设置 CHAP
         </div>
       </a>
 
@@ -378,15 +439,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/04/25/Project/rCore_uCore/uCore_Chapter2/" target="_self">
-          uCore_Chapter2 批处理系统
+        <a href="/2023/04/25/Project/rCore_uCore/uCore_Chapter1/" target="_self">
+          uCore_Chapter1 应用程序与基本执行环境
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/25/Project/rCore_uCore/uCore_Chapter2/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/25/Project/rCore_uCore/uCore_Chapter1/" target="_self">
         <div>
-          123456make -C user clean # 在os目录，相当于cd user;make clean;cd ..make clean # 或者在user目录git checkout ch2make user BASE=1 CHAPTER=2make runmake test BASE=1 # make test 会完成　make user 和 make run 两个步骤（自动设置 CHAP
+          Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG=trace # 其他选项可以看Makefilemake clean # rm build/make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 退出 qemu 的方法 如果是正常推出，uC
         </div>
       </a>
 
@@ -683,13 +744,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/01/31/Project/ICS/ICS2022-PA2/" target="_self">
+        <a href="/2023/01/31/Project/ICS/PA2/" target="_self">
           ICS2022 PA2
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/31/Project/ICS/ICS2022-PA2/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/31/Project/ICS/PA2/" target="_self">
         <div>
           Phase_1mul-longlong.c中check 0xaeb1c2aa * 0xaeb1c2aa = 0x19d29ab9db1a18e4LL 实现mulh指令遇到的一个问题： 由于src1和src2都是unsigned int，强制类型转换为long（零扩展），得到的是无符号相乘结果0x7736200d。 1234  // 直接u32*u32会溢出，乘出来还是u32u32 src1 = 0
         </div>
@@ -792,67 +853,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Missing-semester/">#Missing semester</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/01/12/Note/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_self">
-          正则表达式
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/12/Note/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_self">
-        <div>
-          ReferencesRegexOne github正则表达式  TutorialsLesson 1 The 123s\d	any single digit character \D	any single non-digit character Lesson 2: The Dot.	any single character \.	period Lesson 3: Matching specific
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-01-12 17:39" pubdate>
-              2023-01-12
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E7%A4%BA%E5%BC%8F/">#正则表示式</a>
             
           </div>
         

@@ -16,13 +16,15 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="2 I2C-bus features Only two bus lines are required; a serial data line (SDA) and a serial clock line (SCL). It is a true multi-controller bus including collision detection and arbitration to preventda">
+    <meta name="description" content="ReferenceI2C 为什么要用开漏输出，而不能用推挽输出。  防止短路。两个push pull输出相连，如果一个输出高，一个输出低，会短路。 线与。开漏输出有一个输出端输出低，则整条线都为低，所有输出高才为高。  以上都是针对multiple masters多个输出端的，如果是single master config的话，推挽输出是否可以？ 2 I2C-bus features Only t">
 <meta property="og:type" content="article">
 <meta property="og:title" content="I2C spec">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/09/12/Book/2023-09-12-I2C_spec/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="2 I2C-bus features Only two bus lines are required; a serial data line (SDA) and a serial clock line (SCL). It is a true multi-controller bus including collision detection and arbitration to preventda">
+<meta property="og:description" content="ReferenceI2C 为什么要用开漏输出，而不能用推挽输出。  防止短路。两个push pull输出相连，如果一个输出高，一个输出低，会短路。 线与。开漏输出有一个输出端输出低，则整条线都为低，所有输出高才为高。  以上都是针对multiple masters多个输出端的，如果是single master config的话，推挽输出是否可以？ 2 I2C-bus features Only t">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.zhihu.com/question/534999506">
+<meta property="og:image" content="https://www.eet-china.com/mp/a87499.html">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230912171459.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230912173014.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230912173741.png">
@@ -31,11 +33,11 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230925094904.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230925094914.png">
 <meta property="article:published_time" content="2023-09-12T07:15:28.000Z">
-<meta property="article:modified_time" content="2023-09-25T01:49:20.760Z">
+<meta property="article:modified_time" content="2023-10-16T02:02:14.803Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="Spec">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230912171459.png">
+<meta name="twitter:image" content="https://www.zhihu.com/question/534999506">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -258,7 +260,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k words
+          1.7k words
         
       </span>
     
@@ -269,7 +271,7 @@
         
         
         
-          13 mins
+          15 mins
         
       </span>
     
@@ -320,7 +322,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月25日 上午
+                    本文最后更新于：2023年10月16日 上午
                   
                 
               </p>
@@ -328,7 +330,13 @@
             
               <div class="markdown-body">
                 
-                <h2 id="2-I2C-bus-features"><a href="#2-I2C-bus-features" class="headerlink" title="2 I2C-bus features"></a>2 I2C-bus features</h2><ul>
+                <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>I2C 为什么要用开漏输出，而不能用推挽输出。</p>
+<ol>
+<li>防止短路。两个push pull输出相连，如果一个输出高，一个输出低，会短路。</li>
+<li>线与。开漏输出有一个输出端输出低，则整条线都为低，所有输出高才为高。<br><img src="https://www.zhihu.com/question/534999506" srcset="/img/loading.gif" lazyload><br><img src="https://www.eet-china.com/mp/a87499.html" srcset="/img/loading.gif" lazyload></li>
+</ol>
+<p>以上都是针对multiple masters多个输出端的，如果是single master config的话，推挽输出是否可以？</p>
+<h2 id="2-I2C-bus-features"><a href="#2-I2C-bus-features" class="headerlink" title="2 I2C-bus features"></a>2 I2C-bus features</h2><ul>
 <li>Only two bus lines are required; a serial data line (SDA) and a serial clock line (SCL).</li>
 <li>It is a true multi-controller bus including collision detection and arbitration to prevent<br>data corruption if two or more controllers simultaneously initiate data transfer.</li>
 <li>Serial, 8-bit oriented, bidirectional data transfers can be made at up to 100 kbit&#x2F;s in the<br>Standard-mode, up to 400 kbit&#x2F;s in the Fast-mode, up to 1 Mbit&#x2F;s in Fast-mode Plus, or<br>up to 3.4 Mbit&#x2F;s in the High-speed mode.</li>
@@ -407,6 +415,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2023/10/17/Project/ICS/PA0/" title="ICS2022 PA0">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ICS2022 PA0</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
