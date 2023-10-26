@@ -317,13 +317,17 @@ to do
 
 ## Tmux
 
+~/.tmux.conf可修改tmux配置。
+
 `tmux`: open a new session.
 
-`C-b %`: 左右分屏。
+`C-b` -> `C-a`
 
-`C-b "`: 上下分屏。
+`C-b %`: 左右分屏。改为-> `C-a |`
 
-`C-b <arrow key>`:在panes间移动。
+`C-b "`: 上下分屏。-> `C-a -`
+
+`C-b <arrow key>`:在panes间移动。-> `alt + arrow`
 
 `exit` or hit `Ctrl-d`：退出当前pane。
 

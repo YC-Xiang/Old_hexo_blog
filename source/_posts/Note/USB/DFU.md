@@ -83,8 +83,6 @@ host和device一致同意执行DFU操作后，host会重新枚举设备。这时
 
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230802164728.png)
 
-![image-20230802164737635](C:\Users\yucheng_xiang\AppData\Roaming\Typora\typora-user-images\image-20230802164737635.png)
-
 ```c
 // rom code UsbDescCore_Rom.c
 USBDevDesc_t USBDevDesc =
