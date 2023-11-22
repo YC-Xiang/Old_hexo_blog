@@ -51,11 +51,6 @@ Makefile的编译规则在`nemu/scripts/build.mk`中定义。
 
 # 基础设施
 
-`char *strtok(char *str, const char *delim)` 分解字符串 str 为一组字符串，delim 为分隔符。
-
-`atoi`函数：字符串数字转为int类型。
-
-`strtol`函数：可以根据字符串数字为十进制/十六进制...，并转化为`long int`。如`strtol(0xabc, NULL, 16)`。
 
 # 表达式求值
 
@@ -71,3 +66,11 @@ Makefile的编译规则在`nemu/scripts/build.mk`中定义。
 `strcat`
 `strcmp`
 `strstr`
+`strtol`
+
+`char *strtok(char *str, const char *delim)` 分解字符串 str 为一组字符串，delim 为分隔符。
+
+`atoi`函数：十进制字符串数字转为int类型。
+
+`long int strtol(const char *str, char **endptr, int base)`：可以根据字符串数字为10进制/16进制...，转化为`long int`。如`strtol(0xabc, NULL, 16)`。
+base表示输入数字的进制，base为0表示自动判断输入的数字为8/10/16进制。

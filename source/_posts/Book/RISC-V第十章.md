@@ -1,5 +1,5 @@
 ---
-rtitle: RISC-V手册 第十章 RISC-V特权架构
+title: RISC-V手册 第十章 RISC-V特权架构
 date: 2023-01-09 17:13:28
 tags:
 - RISC-V
