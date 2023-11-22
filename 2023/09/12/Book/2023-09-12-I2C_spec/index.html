@@ -16,15 +16,13 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="ReferenceI2C 为什么要用开漏输出，而不能用推挽输出。  防止短路。两个push pull输出相连，如果一个输出高，一个输出低，会短路。 线与。开漏输出有一个输出端输出低，则整条线都为低，所有输出高才为高。  以上都是针对multiple masters多个输出端的，如果是single master config的话，推挽输出是否可以？ 2 I2C-bus features Only t">
+    <meta name="description" content="ReferenceI2C 为什么要用开漏输出，而不能用推挽输出。  防止短路。两个push pull输出相连，如果一个输出高，一个输出低，会短路。 线与。开漏输出有一个输出端输出低，则整条线都为低，所有输出高才为高。https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;534999506https:&#x2F;&#x2F;www.eet-china.com&#x2F;mp&#x2F;a87499.html  以上都是针对mult">
 <meta property="og:type" content="article">
 <meta property="og:title" content="I2C spec">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/09/12/Book/2023-09-12-I2C_spec/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="ReferenceI2C 为什么要用开漏输出，而不能用推挽输出。  防止短路。两个push pull输出相连，如果一个输出高，一个输出低，会短路。 线与。开漏输出有一个输出端输出低，则整条线都为低，所有输出高才为高。  以上都是针对multiple masters多个输出端的，如果是single master config的话，推挽输出是否可以？ 2 I2C-bus features Only t">
+<meta property="og:description" content="ReferenceI2C 为什么要用开漏输出，而不能用推挽输出。  防止短路。两个push pull输出相连，如果一个输出高，一个输出低，会短路。 线与。开漏输出有一个输出端输出低，则整条线都为低，所有输出高才为高。https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;534999506https:&#x2F;&#x2F;www.eet-china.com&#x2F;mp&#x2F;a87499.html  以上都是针对mult">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://www.zhihu.com/question/534999506">
-<meta property="og:image" content="https://www.eet-china.com/mp/a87499.html">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230912171459.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230912173014.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230912173741.png">
@@ -33,11 +31,11 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230925094904.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230925094914.png">
 <meta property="article:published_time" content="2023-09-12T07:15:28.000Z">
-<meta property="article:modified_time" content="2023-10-16T02:02:14.803Z">
+<meta property="article:modified_time" content="2023-11-17T03:00:44.028Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="Spec">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://www.zhihu.com/question/534999506">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230912171459.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -260,7 +258,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k words
+          1.9k words
         
       </span>
     
@@ -271,7 +269,7 @@
         
         
         
-          15 mins
+          16 mins
         
       </span>
     
@@ -322,7 +320,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年10月16日 上午
+                    本文最后更新于：2023年11月17日 上午
                   
                 
               </p>
@@ -333,7 +331,7 @@
                 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>I2C 为什么要用开漏输出，而不能用推挽输出。</p>
 <ol>
 <li>防止短路。两个push pull输出相连，如果一个输出高，一个输出低，会短路。</li>
-<li>线与。开漏输出有一个输出端输出低，则整条线都为低，所有输出高才为高。<br><img src="https://www.zhihu.com/question/534999506" srcset="/img/loading.gif" lazyload><br><img src="https://www.eet-china.com/mp/a87499.html" srcset="/img/loading.gif" lazyload></li>
+<li>线与。开漏输出有一个输出端输出低，则整条线都为低，所有输出高才为高。<br><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/534999506">https://www.zhihu.com/question/534999506</a><br><a target="_blank" rel="noopener" href="https://www.eet-china.com/mp/a87499.html">https://www.eet-china.com/mp/a87499.html</a></li>
 </ol>
 <p>以上都是针对multiple masters多个输出端的，如果是single master config的话，推挽输出是否可以？</p>
 <h2 id="2-I2C-bus-features"><a href="#2-I2C-bus-features" class="headerlink" title="2 I2C-bus features"></a>2 I2C-bus features</h2><ul>
@@ -369,6 +367,10 @@
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230925094846.png" srcset="/img/loading.gif" lazyload alt="Figure 11"></p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230925094904.png" srcset="/img/loading.gif" lazyload alt="Figure 12"></p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230925094914.png" srcset="/img/loading.gif" lazyload alt="Figure 13"></p>
+<p>0x3938700 1s</p>
+<p>0x3f000000  17.894s</p>
+<p>0xffffff</p>
+<p>进suspend前清掉flag，suspend时拉低sensor_cs，suspend起来读flag</p>
 
                 
               </div>

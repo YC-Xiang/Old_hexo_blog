@@ -24,7 +24,7 @@
 <meta property="og:description" content="Ch1 shell_scriptsfoo&#x3D;bar 变量定义&#x3D;左右不能加空格。 用&#39;分隔的字符串是字面值字符串，不会替换变量值，而用&quot;分隔的字符串会。 12345foo&#x3D;barecho &quot;$foo&quot;# prints barecho &amp;#x27;$foo&amp;#x27;# prints $foo  $0- Name of the script$1- to $9 - A">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-01-30T02:02:05.000Z">
-<meta property="article:modified_time" content="2023-10-17T08:29:49.857Z">
+<meta property="article:modified_time" content="2023-11-22T03:10:57.078Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="Missing semester">
 <meta name="twitter:card" content="summary_large_image">
@@ -312,7 +312,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年10月17日 下午
+                    本文最后更新于：2023年11月22日 上午
                   
                 
               </p>
@@ -320,7 +320,7 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Ch1-shell-scripts"><a href="#Ch1-shell-scripts" class="headerlink" title="Ch1 shell_scripts"></a>Ch1 shell_scripts</h1><p><code>foo=bar</code> 变量定义<code>=</code>左右不能加空格。</p>
+                <h2 id="Ch1-shell-scripts"><a href="#Ch1-shell-scripts" class="headerlink" title="Ch1 shell_scripts"></a>Ch1 shell_scripts</h2><p><code>foo=bar</code> 变量定义<code>=</code>左右不能加空格。</p>
 <p>用<code>&#39;</code>分隔的字符串是字面值字符串，不会替换变量值，而用<code>&quot;</code>分隔的字符串会。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">foo=bar<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$foo</span>&quot;</span><br><span class="hljs-comment"># prints bar</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;$foo&#x27;</span><br><span class="hljs-comment"># prints $foo</span><br></code></pre></td></tr></table></figure>
 
@@ -329,17 +329,26 @@
 <p><code>Command1 &amp;&amp; Command2</code> 如果Command1命令运行成功，则继续运行Command2命令。<br><code>Command1 || Command2</code> 如果Command1命令运行失败，则继续运行Command2命令。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-literal">false</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Oops, fail&quot;</span><br><span class="hljs-comment"># Oops, fail</span><br><br><span class="hljs-literal">true</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Will not be printed&quot;</span><br><span class="hljs-comment">#</span><br><br><span class="hljs-literal">true</span> &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Things went well&quot;</span><br><span class="hljs-comment"># Things went well</span><br><br><span class="hljs-literal">false</span> &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Will not be printed&quot;</span><br><span class="hljs-comment">#</span><br><br><span class="hljs-literal">true</span> ; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;This will always run&quot;</span><br><span class="hljs-comment"># This will always run</span><br><br><span class="hljs-literal">false</span> ; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;This will always run&quot;</span><br><span class="hljs-comment"># This will always run</span><br></code></pre></td></tr></table></figure>
 
-<p><strong>command substitution</strong><br><code>$(CMD)</code> will execute CMD, get the output of the command and substitute it in place.<br><code>for file in $(ls)</code> will first call ls and then iterate over those values.</p>
-<p><strong>process substitution</strong><br><code>&lt;(CMD)</code> will execute CMD and place the output in a temporary file and substitute the &lt;() with that file’s name.<br><code>diff &lt;(ls foo) &lt;(ls bar)</code> will show differences between files in dirs foo and bar.</p>
+<h3 id="command-substitution"><a href="#command-substitution" class="headerlink" title="command substitution"></a>command substitution</h3><p><code>$(CMD)</code> will execute CMD, get the output of the command and substitute it in place.<br><code>for file in $(ls)</code> will first call ls and then iterate over those values.</p>
+<h3 id="process-substitution"><a href="#process-substitution" class="headerlink" title="process substitution"></a>process substitution</h3><p><code>&lt;(CMD)</code> will execute CMD and place the output in a temporary file and substitute the &lt;() with that file’s name.<br><code>diff &lt;(ls foo) &lt;(ls bar)</code> will show differences between files in dirs foo and bar.</p>
 <p>Example:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Starting program at <span class="hljs-subst">$(date)</span>&quot;</span> <span class="hljs-comment"># Date will be substituted</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Running program <span class="hljs-variable">$0</span> with <span class="hljs-variable">$#</span> arguments with pid $$&quot;</span><br><br><span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> <span class="hljs-string">&quot;<span class="hljs-variable">$@</span>&quot;</span>; <span class="hljs-keyword">do</span><br>    grep foobar <span class="hljs-string">&quot;<span class="hljs-variable">$file</span>&quot;</span> &gt; /dev/null 2&gt; /dev/null <span class="hljs-comment"># 标准输出和标准错误都重定向到/dev/null</span><br>    <span class="hljs-comment"># When pattern is not found, grep has exit status 1</span><br>    <span class="hljs-comment"># We redirect STDOUT and STDERR to a null register since we do not care about them</span><br>    <span class="hljs-keyword">if</span> [[ $? -ne 0 ]]; <span class="hljs-keyword">then</span><br>        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;File <span class="hljs-variable">$file</span> does not have any foobar, adding one&quot;</span><br>        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;# foobar&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$file</span>&quot;</span><br>    <span class="hljs-keyword">fi</span><br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
+
 <div class="note note-info">
             <p>try to use double brackets [[ ]] in favor of simple brackets [ ]</p>
           </div>
 
-<h2 id="shell-globbing-Wildcards-替换单个字符-替换后面所有字符-Curly-braces"><a href="#shell-globbing-Wildcards-替换单个字符-替换后面所有字符-Curly-braces" class="headerlink" title="shell globbing- Wildcards  - ?替换单个字符  - *替换后面所有字符- Curly braces {}"></a><strong>shell globbing</strong><br>- Wildcards<br>  - <code>?</code>替换单个字符<br>  - <code>*</code>替换后面所有字符<br>- Curly braces <code>&#123;&#125;</code></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">convert image.&#123;png,jpg&#125;<br><span class="hljs-comment"># Will expand to</span><br>convert image.png image.jpg<br><br><span class="hljs-built_in">cp</span> /path/to/project/&#123;foo,bar,baz&#125;.sh /newpath<br><span class="hljs-comment"># Will expand to</span><br><span class="hljs-built_in">cp</span> /path/to/project/foo.sh /path/to/project/bar.sh /path/to/project/baz.sh /newpath<br><br><span class="hljs-comment"># Globbing techniques can also be combined</span><br><span class="hljs-built_in">mv</span> *&#123;.py,.sh&#125; folder<br><span class="hljs-comment"># Will move all *.py and *.sh files</span><br></code></pre></td></tr></table></figure>
+<h3 id="shell-globbing"><a href="#shell-globbing" class="headerlink" title="shell globbing"></a>shell globbing</h3><ul>
+<li>Wildcards<ul>
+<li><code>?</code>替换单个字符</li>
+<li><code>*</code>替换后面所有字符</li>
+</ul>
+</li>
+<li>Curly braces <code>&#123;&#125;</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">convert image.&#123;png,jpg&#125;<br><span class="hljs-comment"># Will expand to</span><br>convert image.png image.jpg<br><br><span class="hljs-built_in">cp</span> /path/to/project/&#123;foo,bar,baz&#125;.sh /newpath<br><span class="hljs-comment"># Will expand to</span><br><span class="hljs-built_in">cp</span> /path/to/project/foo.sh /path/to/project/bar.sh /path/to/project/baz.sh /newpath<br><br><span class="hljs-comment"># Globbing techniques can also be combined</span><br><span class="hljs-built_in">mv</span> *&#123;.py,.sh&#125; folder<br><span class="hljs-comment"># Will move all *.py and *.sh files</span><br></code></pre></td></tr></table></figure>
 
-<h1 id="Ch2-Vim"><a href="#Ch2-Vim" class="headerlink" title="Ch2 Vim"></a>Ch2 Vim</h1><h2 id="Modal-editing"><a href="#Modal-editing" class="headerlink" title="Modal editing"></a>Modal editing</h2><ul>
+<h2 id="Ch2-Vim"><a href="#Ch2-Vim" class="headerlink" title="Ch2 Vim"></a>Ch2 Vim</h2><h3 id="Modal-editing"><a href="#Modal-editing" class="headerlink" title="Modal editing"></a>Modal editing</h3><ul>
 <li><strong>Normal</strong>: for moving around a file and making edits</li>
 <li><strong>Insert</strong>: <code>i</code> for inserting text</li>
 <li><strong>Replace</strong>: <code>R</code> for replacing text</li>
@@ -347,7 +356,7 @@
 <li><strong>Command-line</strong>: <code>:</code> for running a command</li>
 </ul>
 <p><code>&lt;ESC&gt;</code>  switch from any mode back to <strong>Normal mode</strong>.</p>
-<h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><h3 id="Command-line"><a href="#Command-line" class="headerlink" title="Command-line"></a>Command-line</h3><ul>
+<h3 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h3><h4 id="Command-line"><a href="#Command-line" class="headerlink" title="Command-line"></a>Command-line</h4><ul>
 <li><code>:q</code> quit (close window)</li>
 <li><code>:w</code> save (“write”)</li>
 <li><code>:wq</code> save and quit</li>
@@ -359,7 +368,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="Vim’s-interface-is-a-programming-language"><a href="#Vim’s-interface-is-a-programming-language" class="headerlink" title="Vim’s interface is a programming language"></a>Vim’s interface is a programming language</h2><h3 id="Movement"><a href="#Movement" class="headerlink" title="Movement"></a>Movement</h3><p><strong>Movements in Vim are also called “nouns”.</strong></p>
+<h3 id="Vim’s-interface-is-a-programming-language"><a href="#Vim’s-interface-is-a-programming-language" class="headerlink" title="Vim’s interface is a programming language"></a>Vim’s interface is a programming language</h3><h4 id="Movement"><a href="#Movement" class="headerlink" title="Movement"></a>Movement</h4><p><strong>Movements in Vim are also called “nouns”.</strong></p>
 <ul>
 <li>Basic movement: <code>hjkl</code> (left, down, up, right)</li>
 <li>Words: <code>w</code> (next word), <code>b</code> (beginning of word), <code>e</code> (end of word)</li>
@@ -376,7 +385,7 @@
 </li>
 <li>Search: <code>/&#123;regex&#125;</code>, <code>n</code> &#x2F; <code>N</code> for navigating matches</li>
 </ul>
-<h3 id="Edits"><a href="#Edits" class="headerlink" title="Edits"></a>Edits</h3><p><strong>Vim’s editing commands are also called “verbs”</strong></p>
+<h4 id="Edits"><a href="#Edits" class="headerlink" title="Edits"></a>Edits</h4><p><strong>Vim’s editing commands are also called “verbs”</strong></p>
 <ul>
 <li><code>i</code> enter Insert mode</li>
 <li><code>o</code> &#x2F; <code>O</code> insert line below &#x2F; above</li>
@@ -399,13 +408,13 @@
 <li><code>p</code> to paste</li>
 <li>Lots more to learn: e.g. <code>~</code> flips the case of a character</li>
 </ul>
-<h3 id="Counts"><a href="#Counts" class="headerlink" title="Counts"></a>Counts</h3><p>You can combine <strong>nouns</strong> and <strong>verbs</strong> with a <strong>count</strong>, which will perform a given action a number of times.</p>
+<h4 id="Counts"><a href="#Counts" class="headerlink" title="Counts"></a>Counts</h4><p>You can combine <strong>nouns</strong> and <strong>verbs</strong> with a <strong>count</strong>, which will perform a given action a number of times.</p>
 <ul>
 <li><code>3w</code> move 3 words forward</li>
 <li><code>5j</code> move 5 lines down</li>
 <li><code>7dw</code> delete 7 words</li>
 </ul>
-<h3 id="Modifiers"><a href="#Modifiers" class="headerlink" title="Modifiers"></a>Modifiers</h3><p>You can use modifiers to change the meaning of a noun. Some modifiers are <code>i</code>, which means “inner” or “inside”, and <code>a</code>, which means “around”.</p>
+<h4 id="Modifiers"><a href="#Modifiers" class="headerlink" title="Modifiers"></a>Modifiers</h4><p>You can use modifiers to change the meaning of a noun. Some modifiers are <code>i</code>, which means “inner” or “inside”, and <code>a</code>, which means “around”.</p>
 <blockquote>
 <p>光标在括号中，<code>ci(</code>可以把括号内的内容替换并进入insert，类似<code>di(</code>也一样，相当于删除。<code>da(</code>连带括号一起删除。</p>
 <p>这里的<code>i</code>和<code>a</code>不是edit中的含义，而是<strong>inner</strong>和<strong>around</strong>的意思。</p>
@@ -415,9 +424,9 @@
 <li><code>ci[</code> change the contents inside the current pair of square brackets</li>
 <li><code>da&#39;</code> delete a single-quoted string, including the surrounding single quotes</li>
 </ul>
-<h2 id="Customizing-Vim"><a href="#Customizing-Vim" class="headerlink" title="Customizing Vim"></a>Customizing Vim</h2><p><a target="_blank" rel="noopener" href="https://github.com/YC-Xiang/dotfiles/blob/main/vim/.vimrc">my vim config</a></p>
-<h2 id="Extending-Vim"><a href="#Extending-Vim" class="headerlink" title="Extending Vim"></a>Extending Vim</h2><p>Vim 8.0 之后自带插件管理工具，只要create the directory <code>~/.vim/pack/vendor/start/</code>, and put plugins in there (e.g. via <code>git clone</code>). <code>vendor</code>目录名好像可以替换。</p>
-<h2 id="Advanced-Vim"><a href="#Advanced-Vim" class="headerlink" title="Advanced Vim"></a>Advanced Vim</h2><h3 id="Search-and-replace"><a href="#Search-and-replace" class="headerlink" title="Search and replace"></a>Search and replace</h3><p><code>:s</code> (substitute) command</p>
+<h3 id="Customizing-Vim"><a href="#Customizing-Vim" class="headerlink" title="Customizing Vim"></a>Customizing Vim</h3><p><a target="_blank" rel="noopener" href="https://github.com/YC-Xiang/dotfiles/blob/main/vim/.vimrc">my vim config</a></p>
+<h3 id="Extending-Vim"><a href="#Extending-Vim" class="headerlink" title="Extending Vim"></a>Extending Vim</h3><p>Vim 8.0 之后自带插件管理工具，只要create the directory <code>~/.vim/pack/vendor/start/</code>, and put plugins in there (e.g. via <code>git clone</code>). <code>vendor</code>目录名好像可以替换。</p>
+<h3 id="Advanced-Vim"><a href="#Advanced-Vim" class="headerlink" title="Advanced Vim"></a>Advanced Vim</h3><h4 id="Search-and-replace"><a href="#Search-and-replace" class="headerlink" title="Search and replace"></a>Search and replace</h4><p><code>:s</code> (substitute) command</p>
 <ul>
 <li><code>%s/foo/bar/g</code><ul>
 <li>replace foo with bar globally in file</li>
@@ -426,25 +435,25 @@
 </ul>
 </li>
 </ul>
-<h3 id="Multiple-windows"><a href="#Multiple-windows" class="headerlink" title="Multiple windows"></a>Multiple windows</h3><ul>
+<h4 id="Multiple-windows"><a href="#Multiple-windows" class="headerlink" title="Multiple windows"></a>Multiple windows</h4><ul>
 <li><code>:sp</code> &#x2F; <code>:vsp</code> to split windows</li>
 <li>Can have multiple views of the same buffer.</li>
 </ul>
-<h3 id="Macros"><a href="#Macros" class="headerlink" title="Macros"></a>Macros</h3><p>to do</p>
-<h2 id="Vimtutor"><a href="#Vimtutor" class="headerlink" title="Vimtutor"></a>Vimtutor</h2><h3 id="Lesson-1"><a href="#Lesson-1" class="headerlink" title="Lesson 1"></a>Lesson 1</h3><p><code>hjkl</code> 移动</p>
+<h4 id="Macros"><a href="#Macros" class="headerlink" title="Macros"></a>Macros</h4><p>to do</p>
+<h3 id="Vimtutor"><a href="#Vimtutor" class="headerlink" title="Vimtutor"></a>Vimtutor</h3><h4 id="Lesson-1"><a href="#Lesson-1" class="headerlink" title="Lesson 1"></a>Lesson 1</h4><p><code>hjkl</code> 移动</p>
 <p><code>x</code> 删除一个字符</p>
 <p><code>i</code> 输入</p>
 <p><code>a</code> append输入</p>
-<h3 id="Lesson-2"><a href="#Lesson-2" class="headerlink" title="Lesson 2"></a>Lesson 2</h3><p><code>dw</code> 删除一个单词</p>
+<h4 id="Lesson-2"><a href="#Lesson-2" class="headerlink" title="Lesson 2"></a>Lesson 2</h4><p><code>dw</code> 删除一个单词</p>
 <p><code>d$</code> 输出到行尾</p>
 <p><code>2w</code> <code>3b</code> <code>2e</code> 移动单词</p>
 <p><code>d2w</code> 删除两个单词</p>
 <p><code>dd</code> <code>2dd</code> 删除两行</p>
 <p><code>u</code> 撤销 <code>U</code> 返回一行的原始状态 <code>Ctrl r</code> 复原</p>
-<h3 id="Lesson-3"><a href="#Lesson-3" class="headerlink" title="Lesson 3"></a>Lesson 3</h3><p><code>dd</code> 之后的一行可以 <code>p</code> 粘贴</p>
+<h4 id="Lesson-3"><a href="#Lesson-3" class="headerlink" title="Lesson 3"></a>Lesson 3</h4><p><code>dd</code> 之后的一行可以 <code>p</code> 粘贴</p>
 <p><code>rx</code> 替换某个字符为<code>x</code></p>
 <p><code>ce</code> 删除光标后单词部分，并进入insert mode <code>c$</code> 输出光标到行尾，并进入insert mode</p>
-<h3 id="Lesson-4"><a href="#Lesson-4" class="headerlink" title="Lesson 4"></a>Lesson 4</h3><p><code>Ctrl g</code> 显示当前行状态 <code>G</code> 文件末尾 <code>gg</code> 文件开头</p>
+<h4 id="Lesson-4"><a href="#Lesson-4" class="headerlink" title="Lesson 4"></a>Lesson 4</h4><p><code>Ctrl g</code> 显示当前行状态 <code>G</code> 文件末尾 <code>gg</code> 文件开头</p>
 <p><code>/</code> 向后搜索 <code>?</code>向前搜索 <code>ctrl o</code> 返回 <code>ctrl i</code> 前进</p>
 <p><code>%</code> 跳转到对应匹配的<code>) ] &#125;</code></p>
 <p><code>s/thee/the/g</code> 替换一个<code>thee</code>成<code>the</code></p>
@@ -452,23 +461,23 @@
 <p><code>:%s/thee/the/g</code> 整个文件的<code>thee</code>替换成<code>the</code></p>
 <p><code>:%s/thee/the/gc</code> 整个文件的<code>thee</code>替换成<code>the</code>，每个替换会有命令提示</p>
 <p><code>:#,#s/thee/the/g</code> <code>#</code> 是替换的行范围</p>
-<h3 id="Lesson-5"><a href="#Lesson-5" class="headerlink" title="Lesson 5"></a>Lesson 5</h3><p><code>! + command</code> 执行外部命令</p>
+<h4 id="Lesson-5"><a href="#Lesson-5" class="headerlink" title="Lesson 5"></a>Lesson 5</h4><p><code>! + command</code> 执行外部命令</p>
 <p><code>:w FILENAME</code> 文件另存为</p>
 <p><code>v</code> 进入visual模式选中再 <code>:w FILENAME</code> 保存部分内容</p>
 <p><code>:r FILENAME</code> 将文件内容追加到光标下</p>
 <p><code>:r !ls</code> 将ls内容加到光标下</p>
-<h3 id="Lesson-6"><a href="#Lesson-6" class="headerlink" title="Lesson 6"></a>Lesson 6</h3><p><code>o</code> 光标下插入新行 <code>O</code>光标上插入新行</p>
+<h4 id="Lesson-6"><a href="#Lesson-6" class="headerlink" title="Lesson 6"></a>Lesson 6</h4><p><code>o</code> 光标下插入新行 <code>O</code>光标上插入新行</p>
 <p><code>R</code> replace mode</p>
 <p><code>2y</code> 复制两行</p>
 <p><code>:set ic</code> 接下来搜索大小写都会包括</p>
-<h3 id="Lesson-7"><a href="#Lesson-7" class="headerlink" title="Lesson 7"></a>Lesson 7</h3><p><code>:</code>接<code>ctrl d</code>可以自动显示命令</p>
+<h4 id="Lesson-7"><a href="#Lesson-7" class="headerlink" title="Lesson 7"></a>Lesson 7</h4><p><code>:</code>接<code>ctrl d</code>可以自动显示命令</p>
 <p>&#96;&#96;</p>
-<h2 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h2><p><a target="_blank" rel="noopener" href="https://vim-adventures.com/">Vim Adventures</a> is a game to learn Vim</p>
-<h1 id="Ch4-commandline-environment"><a href="#Ch4-commandline-environment" class="headerlink" title="Ch4 commandline_environment"></a>Ch4 commandline_environment</h1><h2 id="Job-control"><a href="#Job-control" class="headerlink" title="Job control"></a>Job control</h2><p><code>jobs</code>: lists the unfinished jobs associated with the current terminal session.</p>
+<h3 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h3><p><a target="_blank" rel="noopener" href="https://vim-adventures.com/">Vim Adventures</a> is a game to learn Vim</p>
+<h2 id="Ch4-commandline-environment"><a href="#Ch4-commandline-environment" class="headerlink" title="Ch4 commandline_environment"></a>Ch4 commandline_environment</h2><h3 id="Job-control"><a href="#Job-control" class="headerlink" title="Job control"></a>Job control</h3><p><code>jobs</code>: lists the unfinished jobs associated with the current terminal session.</p>
 <p><code>fg + %num </code>: <code>num</code>是<code>jobs</code>命令显示进程对应的序号。</p>
 <p><code>bg+ %num</code>: 让进程在后台从stopped-&gt;running。</p>
 <p><code>ctrl + z</code>: 让当前进程进入后台并suspend。</p>
-<h2 id="Tmux"><a href="#Tmux" class="headerlink" title="Tmux"></a>Tmux</h2><p>~&#x2F;.tmux.conf可修改tmux配置。</p>
+<h3 id="Tmux"><a href="#Tmux" class="headerlink" title="Tmux"></a>Tmux</h3><p>~&#x2F;.tmux.conf可修改tmux配置。</p>
 <p><code>tmux</code>: open a new session.</p>
 <p><code>C-b</code> -&gt; <code>C-a</code></p>
 <p><code>C-b %</code>: 左右分屏。改为-&gt; <code>C-a |</code></p>
@@ -486,7 +495,7 @@
 <p><code>C-b C-&lt;arrow key&gt;</code>: Resize pane in direction of <arrow key></p>
 <p><code>C-b ,</code>: Rename the current window</p>
 <p><code>&lt;C-b&gt; [</code> Start scrollback. You can then press <code>&lt;space&gt;</code> to start a selection and <code>&lt;enter&gt;</code> to copy that selection.</p>
-<h3 id="my-configs"><a href="#my-configs" class="headerlink" title="my configs"></a>my configs</h3><p><code>C-b</code> -&gt; <code>C-a</code></p>
+<h4 id="my-configs"><a href="#my-configs" class="headerlink" title="my configs"></a>my configs</h4><p><code>C-b</code> -&gt; <code>C-a</code></p>
 <p><code>C-b %</code> -&gt; <code>C-a |</code></p>
 <p><code>C-b &quot;</code> -&gt; <code>C-a -</code></p>
 <p><code>C-b &lt;arrow key&gt;</code> -&gt; <code>alt &lt;arrow key&gt;</code></p>
