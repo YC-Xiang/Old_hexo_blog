@@ -29,7 +29,7 @@ Method 2:
 <p class="note note-info">html</p>
 
 ```html
-<p class="note note-info">info</p>
+<p class="note note-info">html</p>
 ```
 Support various colors:
 <p class="note note-primary">primary</p>

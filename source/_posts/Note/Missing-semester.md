@@ -365,5 +365,3 @@ to do
 `C-b "` -> `C-a -`
 
 `C-b <arrow key>` -> `alt <arrow key>`
-
-[more commands click this](
