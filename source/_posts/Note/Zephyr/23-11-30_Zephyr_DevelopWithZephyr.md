@@ -4,7 +4,7 @@ date: 2023-11-30 14:17:28
 tags:
 - Zephyr
 categories:
-- Notes
+- Zephyr OS
 ---
 
 ## Developing with Zephyr
@@ -58,8 +58,56 @@ categories:
 ### Optimization
 
 检查ram，rom使用空间：
+
 ```shell
 west build -b reel_board samples/hello_world
 west build -t ram_report
 west build -t rom_report
 ```
+
+### West
+
+#### Workspace concepts
+
+##### configuration file
+
+`.west/config` 配置文件，定义了manifest repository等。
+
+##### manifest file
+
+`west.yml` 描述了管理的其他git仓库。可以用`manifest.file`覆盖。执行`west update`可以更新所有git仓库。
+
+### Built-in commands
+
+`west help`: 查看支持的命令。
+`west <command> -h`: for detailed help.
+`west update -r`: sync的时候会rebase local commits.
+`west compare`: compare the state of the workspace against the manifest.
+`west diff`
+`west status`
+`west forall -c <command>`: 对所有仓库执行某个shell命令。
+`west grep`
+`west list`: 所有project信息。
+`west manifest`: 管理manifest文件。
+
+### Workspaces
+
+#### Topologies supported
+
+- star topology, zephyr is the manifest repository
+- star topology, a Zephyr application is the manifest repository
+- forest topology, freestanding manifest repository
+
+### West Manifests
+
+[West Manifests yaml文件](https://docs.zephyrproject.org/latest/develop/west/manifest.html#)
+
+### Configuration
+
+[west config 提供的一些选项](https://docs.zephyrproject.org/latest/develop/west/config.html)
+
+- System: `/etc/westconfig`
+- Global: `~/.westconfig`
+- local: `<REPO_DIR>/.west/config`
+
+通过`west config --system/global/local`可以设置。

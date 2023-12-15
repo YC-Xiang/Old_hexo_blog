@@ -4,8 +4,20 @@ date: 2023-11-30 14:17:28
 tags:
 - Zephyr
 categories:
-- Notes
+- Zephyr OS
 ---
+
+```c
+struct device {
+      const char *name;
+      const void *config;
+      const void *api;
+      void * const data;
+};
+```
+`config`: 放地址映射，中断号等一些物理信息。
+`api`: 回调函数。
+`data`: 放reference counts, semaphores, scratch buffers等。
 
 ## Device-Specific API Extensions
 

@@ -31,6 +31,7 @@ Method 2:
 ```html
 <p class="note note-info">html</p>
 ```
+
 Support various colors:
 <p class="note note-primary">primary</p>
 <p class="note note-secondary">secondary</p>
@@ -45,11 +46,13 @@ Support various colors:
 {% label info @text %} {% label success @text %}
 
 ## Blockquotes
+
 > This is a blockquote with two paragraphs. This is first paragraph.
 >
->  This is second pragraph.Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+> This is second pragraph.Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
 
 ## List
+
 - red
 - green
 - blue
@@ -57,6 +60,7 @@ Support various colors:
 ## Task list
 
 Method 1：
+
 - [ ] a task list item
 - [x] completed
 
@@ -67,6 +71,7 @@ Method 2：
 [勾选框](https://hexo.fluid-dev.com/docs/guide/#tag-%E6%8F%92%E4%BB%B6)
 
 ## Code block
+
 ```ruby
 require 'redcarpet'
 markdown = Redcarpet.new("Hello World!")
@@ -94,6 +99,7 @@ Inline math:
 $\lim_{x \to \infty} \exp(-x) = 0$
 
 ## Table
+
 | First Header | Second Header |
 | ------------ | ------------- |
 | Content Cell | Content Cell  |
@@ -106,13 +112,16 @@ $\lim_{x \to \infty} \exp(-x) = 0$
 | zebra stripes |    are neat     |            $1 |
 
 ## Footnotes
+
 这是一句话[^1]
 [^1]: 这是对应的脚注
 
 ## Horizontal Rules
+
 ---
 
 ## Mermaid
+
 <p class="note note-warning">需要在front-matter中指定mermaid：true</p>
 ```mermaid
 classDiagram
@@ -132,12 +141,15 @@ Class08 <--> C2: Cool label
 ```
 
 ## Links
+
 This is [Baidu](http://www.baidu.com "Baidu") inline link.
 
 ### Internal Links
+
 [Internal link](#Tags)
 
 ### Reference Links
+
 看起来和Links的区别就是可以在文章其他地方定义链接
 
 This is [Baidu][id] reference-style link.
@@ -145,16 +157,19 @@ This is [Baidu][id] reference-style link.
 [id]: http://www.baidu.com/  "Optional Title Here"
 
 ## URLs
+
 直接放网址的方式：
 
 <https://yc-xiang.github.io/>
 
 ## Images
+
 <div align="center">
 <img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git1.png" width="50%">
 </div>
 
 **Method 1**: html
+
 ```html
 <div align="center">
 <img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git1.png" width="50%">
@@ -177,12 +192,14 @@ This is [Baidu][id] reference-style link.
 {% endgi %}
 
 ## Misc
+
 ~~Mistaken text~~ <u>underline</u>
 **Bold** *italic*
 
 <!-- This is some comments -->
 
 ## Emoji
+
 :smile:
 :dog:
 
@@ -193,13 +210,16 @@ This is [Baidu][id] reference-style link.
 空行：`<br />`
 
 ## typora快捷键
+
 - 表格：`ctrl+t`
 - 选中一整行：`ctrl+l`
 - 选中单词：`ctrl+d`
 - 插入图片：`ctrl+shift+i`
 - 插入链接：`ctrl + k`
 - 代码行: ctrl + shift + \`
+
 ## Reference
+
 [Hexo Fluid 用户手册](https://hexo.fluid-dev.com/docs/guide/)
 
 <br />

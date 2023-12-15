@@ -4,7 +4,7 @@ date: 2023-05-12 10:19:00
 tags:
 - Linux driver
 categories:
-- Notes
+- Linux driver
 ---
 
 https://zhuanlan.zhihu.com/p/41942876

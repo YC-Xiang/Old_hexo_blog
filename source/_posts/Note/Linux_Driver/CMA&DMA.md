@@ -4,7 +4,7 @@ date: 2023-05-10 17:40:28
 tags:
 - Linux driver
 categories:
-- Notes
+- Linux driver
 ---
 
 # Reserved-memory

@@ -4,7 +4,7 @@ date: 2023-04-19 14:10:28
 tags:
 - U-Boot
 categories:
-- Notes
+- Misc
 ---
 
 # Uboot编译流程

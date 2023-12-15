@@ -4,7 +4,7 @@ date: 2023-05-19 22:25:00
 tags:
 - Linux driver
 categories:
-- Notes
+- Linux driver
 ---
 
 # NOT indexed
@@ -35,7 +35,7 @@ container_of(ptr, type, member)
 // type:表示结构体类型 struct xxx
 // member:表示结构体中的成员 yyy
 // 返回结构体的首地址
-        
+
 /**
  * list_for_each_entry	-	iterate over list of given type
  * @pos:	the type * to use as a loop cursor. pos中的list_head被加入了第二个成员head中
