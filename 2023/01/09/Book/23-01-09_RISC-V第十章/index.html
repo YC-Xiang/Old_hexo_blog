@@ -16,26 +16,30 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="ReferencesRegexOne github正则表达式  需要转义的特殊字符：* . ? + $ ^ [ ] ( ) &amp;#123; &amp;#125; | \ TutorialsLesson 1 The 123s\d	any single digit character \D	any single non-digit character Lesson 2: The Dot.	any single">
+    <meta name="description" content="10.1 导言到目前为止，本书主要关注RISC-V 对通用计算的支持：我们引入的所有指令都在用户模式（User mode 应用程序的代码在此模式下运行）下可用。本章介绍两种新的权限模式：运行最可信的代码的机器模式（machine mode），以及为Linux，FreeBSD 和Windows 等操作系统提供支持的监管者模式（supervisor mode）。 图10.1是RISC-V 特权指令的图">
 <meta property="og:type" content="article">
-<meta property="og:title" content="正则表达式">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/01/12/Note/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
+<meta property="og:title" content="RISC-V手册 第十章 RISC-V特权架构">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/01/09/Book/23-01-09_RISC-V%E7%AC%AC%E5%8D%81%E7%AB%A0/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="ReferencesRegexOne github正则表达式  需要转义的特殊字符：* . ? + $ ^ [ ] ( ) &amp;#123; &amp;#125; | \ TutorialsLesson 1 The 123s\d	any single digit character \D	any single non-digit character Lesson 2: The Dot.	any single">
+<meta property="og:description" content="10.1 导言到目前为止，本书主要关注RISC-V 对通用计算的支持：我们引入的所有指令都在用户模式（User mode 应用程序的代码在此模式下运行）下可用。本章介绍两种新的权限模式：运行最可信的代码的机器模式（machine mode），以及为Linux，FreeBSD 和Windows 等操作系统提供支持的监管者模式（supervisor mode）。 图10.1是RISC-V 特权指令的图">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230112170412.png">
-<meta property="article:published_time" content="2023-01-12T09:39:28.000Z">
-<meta property="article:modified_time" content="2023-10-27T03:20:55.557Z">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/10.1.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/10.3.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/10.4.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/10.5.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/10.6.png">
+<meta property="article:published_time" content="2023-01-09T09:13:28.000Z">
+<meta property="article:modified_time" content="2023-11-22T03:12:05.241Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="正则表示式">
+<meta property="article:tag" content="RISC-V">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230112170412.png">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/10.1.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>正则表达式 - Yucheng&#39;s Blog</title>
+  <title>RISC-V手册 第十章 RISC-V特权架构 - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +233,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">正则表达式</span>
+            <span id="subtitle">RISC-V手册 第十章 RISC-V特权架构</span>
           
         </div>
 
@@ -240,8 +244,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-01-12 17:39" pubdate>
-          2023年1月12日 下午
+        <time datetime="2023-01-09 17:13" pubdate>
+          2023年1月9日 下午
         </time>
       </span>
     
@@ -252,7 +256,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k words
+          3.2k words
         
       </span>
     
@@ -263,7 +267,7 @@
         
         
         
-          11 mins
+          27 mins
         
       </span>
     
@@ -309,12 +313,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">正则表达式</h1>
+            <h1 style="display: none">RISC-V手册 第十章 RISC-V特权架构</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年10月27日 上午
+                    本文最后更新于：2023年11月22日 上午
                   
                 
               </p>
@@ -322,76 +326,66 @@
             
               <div class="markdown-body">
                 
-                <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p><a target="_blank" rel="noopener" href="https://regexone.com/">RegexOne</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/ziishaned/learn-regex/blob/master/translations/README-cn.md">github正则表达式</a></p>
-<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/20230112170412.png" srcset="/img/loading.gif" lazyload></p>
-<p>需要转义的特殊字符：<br><code>* . ? + $ ^ [ ] ( ) &#123; &#125; | \</code></p>
-<h1 id="Tutorials"><a href="#Tutorials" class="headerlink" title="Tutorials"></a>Tutorials</h1><h2 id="Lesson-1-The-123s"><a href="#Lesson-1-The-123s" class="headerlink" title="Lesson 1 The 123s"></a>Lesson 1 The 123s</h2><p><code>\d</code>	any single digit character</p>
-<p><code>\D</code>	any single non-digit character</p>
-<h2 id="Lesson-2-The-Dot"><a href="#Lesson-2-The-Dot" class="headerlink" title="Lesson 2: The Dot"></a>Lesson 2: The Dot</h2><p><code>.</code>	any single character</p>
-<p><code>\.</code>	period</p>
-<h2 id="Lesson-3-Matching-specific-characters"><a href="#Lesson-3-Matching-specific-characters" class="headerlink" title="Lesson 3: Matching specific characters"></a>Lesson 3: Matching specific characters</h2><p><code>[abc]</code>	only a, b, c single character</p>
-<h2 id="Lesson-4-Excluding-specific-characters"><a href="#Lesson-4-Excluding-specific-characters" class="headerlink" title="Lesson 4: Excluding specific characters"></a>Lesson 4: Excluding specific characters</h2><p><code>[^abc]</code>	not a, b or c</p>
-<h2 id="Lesson-5-Character-ranges"><a href="#Lesson-5-Character-ranges" class="headerlink" title="Lesson 5: Character ranges"></a>Lesson 5: Character ranges</h2><p><code>[a-z]</code>	characters a to z</p>
-<p><code>[0-9]</code>	number 0 to 9</p>
-<p><code>\w</code>	字母，数字，下划线。等价于<code>[A-Za-z0-9_]</code></p>
-<p><code>\W</code>	等价于<code>\[^A-Za-z0-9_]</code></p>
-<h2 id="Lesson-6-Catching-some-zzz’s"><a href="#Lesson-6-Catching-some-zzz’s" class="headerlink" title="Lesson 6: Catching some zzz’s"></a>Lesson 6: Catching some zzz’s</h2><p><code>&#123;m&#125;</code>		m repetitions</p>
-<p><code>&#123;m, n&#125;</code>	m to n repetitions</p>
-<p>Examples:</p>
-<p><code>w&#123;3&#125;</code> (three w)</p>
-<p><code>[wxy]&#123;5&#125;</code> (five characters, each of which can be a w, x, or y)</p>
-<h2 id="Lesson-7-Mr-Kleene-Mr-Kleene"><a href="#Lesson-7-Mr-Kleene-Mr-Kleene" class="headerlink" title="Lesson 7: Mr. Kleene, Mr. Kleene"></a>Lesson 7: Mr. Kleene, Mr. Kleene</h2><p><code>*</code> 	<strong>zero</strong> or more repetitions *前的字符可以重复0次或者更多次</p>
-<p><code>+</code>	<strong>one</strong> or more repetitions +前的字符可以重复1次或者更多次</p>
-<p>Match	<code>aaaabcc</code></p>
-<p>Match	<code>aabbbbc</code></p>
-<p>Match	<code>aacc</code></p>
-<p>Skip		<code>a</code></p>
-<p>answer: <code>aa+b*c+</code></p>
-<h2 id="Lesson-8-Characters-optional"><a href="#Lesson-8-Characters-optional" class="headerlink" title="Lesson 8: Characters optional"></a>Lesson 8: Characters optional</h2><p><code>?</code>	optional character ?前的字符可以出现0次或者1次</p>
-<p><code>ab?c</code> will match either the strings “<code>abc</code>“ or “<code>ac</code>“</p>
-<h2 id="Lesson-9-All-this-whitespace"><a href="#Lesson-9-All-this-whitespace" class="headerlink" title="Lesson 9: All this whitespace"></a>Lesson 9: All this whitespace</h2><p><code>\s</code>	代替any whitespace 包括space, tab(\t), new line(\n), return(\r)</p>
-<p><code>\S</code>	相反</p>
-<h2 id="Lesson-10-Starting-and-ending"><a href="#Lesson-10-Starting-and-ending" class="headerlink" title="Lesson 10: Starting and ending"></a>Lesson 10: Starting and ending</h2><p><code>^...$</code>	starts and ends</p>
-<p><code>^Mission: successful$</code>	文本必须以Mission: 开头, successful结尾</p>
-<h2 id="Lesson-11-Match-groups"><a href="#Lesson-11-Match-groups" class="headerlink" title="Lesson 11: Match groups"></a>Lesson 11: Match groups</h2><p><code>(...)</code>	capture group</p>
-<p><code>(a(bc))</code>	capture sub-group</p>
-<p><code>(.*)</code>	capture all</p>
-<h2 id="Lesson-14-It’s-all-conditional"><a href="#Lesson-14-It’s-all-conditional" class="headerlink" title="Lesson 14: It’s all conditional"></a>Lesson 14: It’s all conditional</h2><p><code>(abc|def)</code>	matches abc or def</p>
-<h1 id="Problems"><a href="#Problems" class="headerlink" title="Problems"></a>Problems</h1><h2 id="Problem-1-Matching-a-decimal-numbers"><a href="#Problem-1-Matching-a-decimal-numbers" class="headerlink" title="Problem 1: Matching a decimal numbers"></a>Problem 1: Matching a decimal numbers</h2><table>
-<thead>
-<tr>
-<th>Task</th>
-<th>Text</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Match</td>
-<td>3.14529</td>
-</tr>
-<tr>
-<td>Match</td>
-<td>-255.34</td>
-</tr>
-<tr>
-<td>Match</td>
-<td>128</td>
-</tr>
-<tr>
-<td>Match</td>
-<td>1.9e10</td>
-</tr>
-<tr>
-<td>Match</td>
-<td>123,340.00</td>
-</tr>
-<tr>
-<td>Skip</td>
-<td>720p</td>
-</tr>
-</tbody></table>
-<p>answer:<code>^-?\d+(,\d+)*(\.\d+(e\d+)?)?$</code></p>
-<h2 id="Problem-2-Matching-phone-numbers"><a href="#Problem-2-Matching-phone-numbers" class="headerlink" title="Problem 2: Matching phone numbers"></a>Problem 2: Matching phone numbers</h2><p>后面还有很多problems</p>
+                <h2 id="10-1-导言"><a href="#10-1-导言" class="headerlink" title="10.1 导言"></a>10.1 导言</h2><p>到目前为止，本书主要关注RISC-V 对通用计算的支持：我们引入的所有指令都在用户模式（User mode 应用程序的代码在此模式下运行）下可用。本章介绍两种新的权限模式：运行最可信的代码的机器模式（machine mode），以及为Linux，FreeBSD 和Windows 等操作系统提供支持的监管者模式（supervisor mode）。</p>
+<p>图10.1是RISC-V 特权指令的图形表示，图10.2列出了这些指令的操作码。显然，特权架构添加的指令非常少。作为替代，几个新的控制状态寄存器（CSR）显示了附加的功能。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/10.1.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="10-2-简单嵌入式系统的机器模式"><a href="#10-2-简单嵌入式系统的机器模式" class="headerlink" title="10.2 简单嵌入式系统的机器模式"></a>10.2 简单嵌入式系统的机器模式</h2><p>机器模式（缩写为M模式， M-mode）是 RISC-V中（hart hardware thread，硬件线程）可以执行的最高权限模式。程）可以执行的最高权限模式。在M模式下运行的hart对内存，I&#x2F;O和一些对于启动和配置系统来说必要的底层功能有着完全的使用权。因此它是唯一所有标准RISC-V处理器都必须实现的权限模式。实际上简单的 RISC-V微控制器仅支持 M模式。</p>
+<p>机器模式最重要的特性是拦截和处理异常的能力。RISC-V将异常分为两类。一类是同步异常。另一类是中断，它是与指令流异步的外部事件，比如鼠标的单击。</p>
+<p>在 M模式运行期间可能发生的同步异常有五种：</p>
+<ul>
+<li><p>访问错误异常：当物理内存的地址不支持访问类型时发生（例如尝试写入 ROM）。</p>
+</li>
+<li><p>断点异常：在执行 ebreak指令，或者地址或数据与调试触发器匹配时发生。</p>
+</li>
+<li><p>环境调用异常：在执行 ecall指令时发生。</p>
+</li>
+<li><p>非法指令异常：在译码阶段发现无效操作码时发生。</p>
+</li>
+<li><p>非对齐地址异常：在有效地址不能被访问大小整除时发生，例如地址为0x12的amoadd.w。</p>
+</li>
+</ul>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/10.3.png" srcset="/img/loading.gif" lazyload></p>
+<p>有三种标准的中断源：软件、时钟和外部来源。软件中断通过向内存映射寄存器中存数来触发。</p>
+<h2 id="10-3-机器模式下的异常处理"><a href="#10-3-机器模式下的异常处理" class="headerlink" title="10.3 机器模式下的异常处理"></a>10.3 机器模式下的异常处理</h2><p>八个控制状态寄存器（CSR）是机器模式下异常处理的必要部分：</p>
+<ul>
+<li>mtvec (Machine Trap Vector) 它保存发生异常时处理器需要跳转到的地址。</li>
+<li>mepc (Machine Exception PC) 它指向发生异常的指令。</li>
+<li>mcause (Machine Exception Cause) 它指示发生异常的种类。</li>
+<li>mie (Machine Interrupt Enable) 它指出处理器目前能处理和必须忽略的中断。</li>
+<li>mip (Machine Interrupt Pending) 它列出目前正准备处理的中断。</li>
+<li>mtval (Machine Trap Value) 它保存了陷入 trap 的附加信息：地址例外中出错的地址、发生非法指令例外的指令本身，对于其他异常，它的值为 0。</li>
+<li>mscratch (Machine Scratch) 它暂时存放一个字大小的数据。</li>
+<li>mstatus (Machine Status) 它保存全局中断使能，以及许多其他的状态，如图10.4所示。</li>
+</ul>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/10.4.png" srcset="/img/loading.gif" lazyload></p>
+<p>处理器在M模式下运行时，只有在全局中断使能位mstatus.MIE置1时才会产生中断。此外，每个中断在控制状态寄存器mie中都有自己的使能位。这些位在mie中的位置对应于图10.3中的中断代码。例如，mie[7]对应于M模式中的时钟中断。控制状态寄存器mip具有相同的布局，并且它指示当前待处理的中断。。将所有三个控制状态寄存器合在一起考虑，如果 mstatus.MIE &#x3D; 1，mie[7] &#x3D; 1，且 mip[7] &#x3D; 1，则可以处理机器的时钟中断。</p>
+<p>当一个hart发生异常时，硬件自动经历如下的状态转换：</p>
+<div class="note note-info">
+            <p>hart是硬件线程 (hardware thread) 的缩略形式 。我们用该术语将它们与大多数程序员熟悉的软件线程区分开来。软件线程在 harts上进行分时复用。大多数处理器核都只有一个hart。</p>
+          </div>
+
+<ul>
+<li><p>异常指令的PC被保存在mepc中，PC被设置为 mtvec。（对于同步异常， mepc指向导致异常的指令；对于中断，它指向中断处理后应该恢复执行的位置。）</p>
+</li>
+<li><p>根据异常来源设置 mcause（如图 10.3所示），并将 mtval设置为出错的地址或者其它适用于特定异常的信息字。</p>
+</li>
+<li><p>把控制状态寄存器 mstatus中的 MIE位置零以禁用中断，并把先前的 MIE值保留到 MPIE中。</p>
+</li>
+<li><p>发生异常之前的权限模式保留在mstatus的MPP域中，再把权限模式更改为M。图 10.5显示了MPP域的编码（如果处理器仅实现M模式，则有效地跳过这个步骤）。</p>
+</li>
+</ul>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/10.5.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>为避免覆盖整数寄存器中的内容，中断处理程序先在最开始用mscratch和整数寄存器（例如 a0）中的值交换。通常，软件会让 mscratch包含指向附加临时内存空间的指针，处理程序用该指针来保存其主体中将会用到的整数寄存器。在主体执行之后，中断程序会恢复它保存到内存中的寄存器，然后再次使用 mscratch和 a0交换，将两个寄存器恢复到它们在发生异常之前的值。最后，处理程序用 mret指令（ M模式特有的指令）返回。 mret将 PC设置为mepc，通过将mstatus的 MPIE域复制到MIE来恢复之前的中断使能设置，并将权限模式设置为 mstatus的MPP域中的值。这基本是前一段中描述的逆操作。</p>
+<p>图10.6展示了遵循此模式的基本时钟中断处理程序的 RISC-V汇编代码。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/10.6.png" srcset="/img/loading.gif" lazyload></p>
+<p>除了上面介绍的mret指令之外，M模式还提供了另外一条指令：wfi (Wait For Interrupt)。 wfi通 知处理器目前没有任何有用的工作，所有它应该进入低功耗模式，直到任何使能有效的中断等待处理，即 mie&amp;mip≠0。</p>
+<div class="note note-info">
+            <p>操作 CSR 的指令在 RISC-V 的 <code>Zicsr</code> 扩展模块中定义。包括伪指令在内，共有以下 7 种操作类型：</p><ol><li><code>csrr</code>，读取一个 CSR 的值到通用寄存器。如：<code>csrr t0, mstatus</code>，读取 <code>mstatus</code> 的值到 <code>t0</code> 中。</li><li><code>csrw</code>，把一个通用寄存器中的值写入 CSR 中。如：<code>csrw mstatus, t0</code>，将 <code>t0</code> 的值写入 <code>mstatus</code>。</li><li><code>csrs</code>，把 CSR 中指定的 bit 置 1。如：<code>csrsi mstatus, (1 &lt;&lt; 2)</code>，将 <code>mstatus</code> 的右起第 3 位置 1。</li><li><code>csrc</code>，把 CSR 中指定的 bit 置 0。如：<code>csrci mstatus, (1 &lt;&lt; 2)</code>，将 <code>mstatus</code> 的右起第 3 位置 0。</li><li><code>csrrw</code>，读取一个 CSR 的值到通用寄存器，然后把另一个值写入该 CSR。如：<code>csrrw t0, mstatus, t0</code>，将 <code>mstatus</code> 的值与 <code>t0</code> 的值交换。</li><li><code>csrrs</code>，读取一个 CSR 的值到通用寄存器，然后把该 CSR 中指定的 bit 置 1。</li><li><code>csrrc</code>，读取一个 CSR 的值到通用寄存器，然后把该 CSR 中指定的 bit 置 0。</li></ol>
+          </div>
+
+<h2 id="10-5-现代操作系统的监管者模式"><a href="#10-5-现代操作系统的监管者模式" class="headerlink" title="10.5 现代操作系统的监管者模式"></a>10.5 现代操作系统的监管者模式</h2><p>更复杂的 RISC-V处理器用和几乎所有通用架构相同的方式处理这些问题：使用基于页面的虚拟内存。这个功能构成了监管者模式（S模式）的核心，这是一种可选的权限模式，旨在支持现代类Unix操作系统，如Linux。S模式比 U模式权限更高，但比M模式低。与U模式一样，S模式下运行的软件不能使用M模式的CSR和指令，并且受到PMP的限制。</p>
+<p>mideleg（Machine Interrupt Delegation），机器中断委托 CSR控制将哪些中断委托给S模式。与mip和mie一样，mideleg中的每个位对应于图10.3中相同的异常。例如，mideleg[5]对应于S模式的时钟中断，如果把它置位，S模式的时钟中断将会移交S模式的异常处理程序，而不是M模式的异常处理程序。</p>
+<p>委托给S模式的任何中断都可以被S模式的软件屏蔽。sie (Supervisor Interrupt enable) 和sip (Superivisor Interrupt pending) CSR是S模式的控制状态寄存器。他们是mie和mip的子集。它们有着和M模式下相同的布局，但在sie和sip中只有与由mideleg委托的中断对应的位才能读写。那些没有被委派的中断对应的位始终为零。</p>
 
                 
               </div>
@@ -410,7 +404,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  <a href="/categories/Book/" class="category-chain-item">Book</a>
   
   
 
@@ -425,7 +419,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E7%A4%BA%E5%BC%8F/">#正则表示式</a>
+        <a href="/tags/RISC-V/">#RISC-V</a>
       
     </div>
   
@@ -439,9 +433,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/01/30/Note/Missing-semester/" title="Missing Semester of Computer Science">
+                      <a href="/2023/01/10/Project/ICS/PA1/" title="ICS2022 PA1">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Missing Semester of Computer Science</span>
+                        <span class="hidden-mobile">ICS2022 PA1</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -449,8 +443,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/01/11/reading/%E6%80%9D%E7%BB%B4%E7%9A%84%E4%B9%90%E8%B6%A3/" title="沉默的大多数">
-                        <span class="hidden-mobile">沉默的大多数</span>
+                      <a href="/2023/01/06/Book/23-01-06_RISC-V%E7%AC%AC%E4%B8%89%E5%9B%9B%E7%AB%A0/" title="RISC-V手册 第三、四章 RISC-V汇编语言，乘法和除法指令">
+                        <span class="hidden-mobile">RISC-V手册 第三、四章 RISC-V汇编语言，乘法和除法指令</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

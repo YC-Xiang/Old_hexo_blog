@@ -16,32 +16,33 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="ReferenceI2C 为什么要用开漏输出，而不能用推挽输出。  防止短路。两个push pull输出相连，如果一个输出高，一个输出低，会短路。 线与。开漏输出有一个输出端输出低，则整条线都为低，所有输出高才为高。https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;534999506https:&#x2F;&#x2F;www.eet-china.com&#x2F;mp&#x2F;a87499.html  以上都是针对mult">
+    <meta name="description" content="1. 非可逆加密1.1 SHA256https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;SHA-2 Pseudocode伪代码流程 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;94619052 概述对于任意长度的消息，SHA256都会产生一个256位的哈希值。  对消息进行补位处理，最终的长度是512位的倍数。 以512位为单位对消息进行分块为M1, M2, …, Mn。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="I2C spec">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/09/12/Book/2023-09-12-I2C_spec/index.html">
+<meta property="og:title" content="安全加密算法">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/08/15/Note/23-08-15_security/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="ReferenceI2C 为什么要用开漏输出，而不能用推挽输出。  防止短路。两个push pull输出相连，如果一个输出高，一个输出低，会短路。 线与。开漏输出有一个输出端输出低，则整条线都为低，所有输出高才为高。https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;534999506https:&#x2F;&#x2F;www.eet-china.com&#x2F;mp&#x2F;a87499.html  以上都是针对mult">
+<meta property="og:description" content="1. 非可逆加密1.1 SHA256https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;SHA-2 Pseudocode伪代码流程 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;94619052 概述对于任意长度的消息，SHA256都会产生一个256位的哈希值。  对消息进行补位处理，最终的长度是512位的倍数。 以512位为单位对消息进行分块为M1, M2, …, Mn。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230912171459.png">
-<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230912173014.png">
-<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230912173741.png">
-<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230912174117.png">
-<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230925094846.png">
-<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230925094904.png">
-<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230925094914.png">
-<meta property="article:published_time" content="2023-09-12T07:15:28.000Z">
-<meta property="article:modified_time" content="2023-11-17T03:00:44.028Z">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731145934.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731145958.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731150022.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731173545.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230801141720.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731175508.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230801094130.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230801140325.png">
+<meta property="article:published_time" content="2023-08-15T09:39:28.000Z">
+<meta property="article:modified_time" content="2023-09-05T07:28:26.951Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="Spec">
+<meta property="article:tag" content="加密算法">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230912171459.png">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731145934.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>I2C spec - Yucheng&#39;s Blog</title>
+  <title>安全加密算法 - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -235,7 +236,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">I2C spec</span>
+            <span id="subtitle">安全加密算法</span>
           
         </div>
 
@@ -246,8 +247,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-09-12 15:15" pubdate>
-          2023年9月12日 下午
+        <time datetime="2023-08-15 17:39" pubdate>
+          2023年8月15日 下午
         </time>
       </span>
     
@@ -269,7 +270,7 @@
         
         
         
-          16 mins
+          17 mins
         
       </span>
     
@@ -315,12 +316,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">I2C spec</h1>
+            <h1 style="display: none">安全加密算法</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年11月17日 上午
+                    本文最后更新于：2023年9月5日 下午
                   
                 
               </p>
@@ -328,50 +329,63 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>I2C 为什么要用开漏输出，而不能用推挽输出。</p>
-<ol>
-<li>防止短路。两个push pull输出相连，如果一个输出高，一个输出低，会短路。</li>
-<li>线与。开漏输出有一个输出端输出低，则整条线都为低，所有输出高才为高。<br><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/534999506">https://www.zhihu.com/question/534999506</a><br><a target="_blank" rel="noopener" href="https://www.eet-china.com/mp/a87499.html">https://www.eet-china.com/mp/a87499.html</a></li>
-</ol>
-<p>以上都是针对multiple masters多个输出端的，如果是single master config的话，推挽输出是否可以？</p>
-<h2 id="2-I2C-bus-features"><a href="#2-I2C-bus-features" class="headerlink" title="2 I2C-bus features"></a>2 I2C-bus features</h2><ul>
-<li>Only two bus lines are required; a serial data line (SDA) and a serial clock line (SCL).</li>
-<li>It is a true multi-controller bus including collision detection and arbitration to prevent<br>data corruption if two or more controllers simultaneously initiate data transfer.</li>
-<li>Serial, 8-bit oriented, bidirectional data transfers can be made at up to 100 kbit&#x2F;s in the<br>Standard-mode, up to 400 kbit&#x2F;s in the Fast-mode, up to 1 Mbit&#x2F;s in Fast-mode Plus, or<br>up to 3.4 Mbit&#x2F;s in the High-speed mode.</li>
-<li>Serial, 8-bit oriented, unidirectional data transfers up to 5 Mbit&#x2F;s in Ultra Fast-mode</li>
-</ul>
-<h2 id="3-The-I2C-bus-protocol"><a href="#3-The-I2C-bus-protocol" class="headerlink" title="3 The I2C-bus protocol"></a>3 The I2C-bus protocol</h2><h3 id="3-1-Standard-mode-Fast-mode-and-Fast-mode-Plus-I2C-bus-protocols"><a href="#3-1-Standard-mode-Fast-mode-and-Fast-mode-Plus-I2C-bus-protocols" class="headerlink" title="3.1 Standard-mode, Fast-mode and Fast-mode Plus I2C-bus protocols"></a>3.1 Standard-mode, Fast-mode and Fast-mode Plus I2C-bus protocols</h3><p>Each device is recognized by a unique address and can operate as either a transmitter or receiver, depending on the function of the device.</p>
-<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230912171459.png" srcset="/img/loading.gif" lazyload alt="I2C-bus"></p>
-<h4 id="3-1-1-SDA-and-SCL-signals"><a href="#3-1-1-SDA-and-SCL-signals" class="headerlink" title="3.1.1 SDA and SCL signals"></a>3.1.1 SDA and SCL signals</h4><p>开漏或者开集输出来实现线与的功能, 即一个controller把bus拉低, bus就呈现低电平状态。</p>
-<h4 id="3-1-2-SDA-and-SCL-logic-levels"><a href="#3-1-2-SDA-and-SCL-logic-levels" class="headerlink" title="3.1.2 SDA and SCL logic levels"></a>3.1.2 SDA and SCL logic levels</h4><p>$V_{IL}&#x3D;0.3V_{DD}$<br>$V_{IH}&#x3D;0.7V_{DD}$</p>
-<h4 id="3-1-3-Data-validity"><a href="#3-1-3-Data-validity" class="headerlink" title="3.1.3 Data validity"></a>3.1.3 Data validity</h4><p>SCL HIGH，SDA stable<br>SCL LOW，SDA change</p>
-<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230912173014.png" srcset="/img/loading.gif" lazyload alt="Bit Transfer"></p>
-<h4 id="3-1-4-START-and-STOP-conditions"><a href="#3-1-4-START-and-STOP-conditions" class="headerlink" title="3.1.4 START and STOP conditions"></a>3.1.4 START and STOP conditions</h4><p>START和STOP都是由controller产生的。</p>
+                <h1 id="1-非可逆加密"><a href="#1-非可逆加密" class="headerlink" title="1. 非可逆加密"></a>1. 非可逆加密</h1><h2 id="1-1-SHA256"><a href="#1-1-SHA256" class="headerlink" title="1.1 SHA256"></a>1.1 SHA256</h2><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/SHA-2">https://en.wikipedia.org/wiki/SHA-2</a> Pseudocode伪代码流程</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/94619052">https://zhuanlan.zhihu.com/p/94619052</a></p>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>对于任意长度的消息，SHA256都会产生一个<strong>256位</strong>的哈希值。</p>
 <ul>
-<li>A HIGH to LOW transition on the SDA line while SCL is HIGH defines a <strong>START</strong> condition.</li>
-<li>A LOW to HIGH transition on the SDA line while SCL is HIGH defines a <strong>STOP</strong> condition.</li>
+<li>对消息进行补位处理，最终的长度是<strong>512位的倍数</strong>。</li>
+<li>以512位为单位对消息进行分块为M1, M2, …, Mn。</li>
 </ul>
-<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230912173741.png" srcset="/img/loading.gif" lazyload alt="START and STOP conditions"></p>
-<h4 id="3-1-5-Byte-format"><a href="#3-1-5-Byte-format" class="headerlink" title="3.1.5 Byte format"></a>3.1.5 Byte format</h4><p>8bits接一个Ack。<br>MSB传输。<br>如果target需要处理其他事情比如中断，target可以把SCL拉低，让controller进入wait state。</p>
-<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230912174117.png" srcset="/img/loading.gif" lazyload alt="Data transfer"></p>
-<h3 id="3-1-6-Acknowledge-ACK-and-Not-Acknowledge-NACK"><a href="#3-1-6-Acknowledge-ACK-and-Not-Acknowledge-NACK" class="headerlink" title="3.1.6 Acknowledge (ACK) and Not Acknowledge (NACK)"></a>3.1.6 Acknowledge (ACK) and Not Acknowledge (NACK)</h3><p>第九个bit低电平表示ACK，高电平表示NACK。</p>
-<p>产生NACK的原因有：</p>
-<ul>
-<li>controller发送的目标address没有receiver应答。</li>
-<li>receiver在处理real-time function，比如中断等，没来得及应答。</li>
-<li>receiver收到了不能理解的data or command。</li>
-<li>receiver不能再收data了。</li>
-</ul>
-<h3 id="3-1-7-Clock-synchronization"><a href="#3-1-7-Clock-synchronization" class="headerlink" title="3.1.7 Clock synchronization"></a>3.1.7 Clock synchronization</h3><p>Single controller system不用考虑。</p>
-<h3 id="3-1-10-Target-address-and-R-x2F-W-bit"><a href="#3-1-10-Target-address-and-R-x2F-W-bit" class="headerlink" title="3.1.10 Target address and R&#x2F;W bit"></a>3.1.10 Target address and R&#x2F;W bit</h3><p>START 信号后会跟7bits地址, 第8 bit为R&#x2F;W, 0-&gt;write, 1-&gt;read。</p>
-<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230925094846.png" srcset="/img/loading.gif" lazyload alt="Figure 11"></p>
-<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230925094904.png" srcset="/img/loading.gif" lazyload alt="Figure 12"></p>
-<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230925094914.png" srcset="/img/loading.gif" lazyload alt="Figure 13"></p>
-<p>0x3938700 1s</p>
-<p>0x3f000000  17.894s</p>
-<p>0xffffff</p>
-<p>进suspend前清掉flag，suspend时拉低sensor_cs，suspend起来读flag</p>
+<p>消息区块将进行逐个处理：从一个固定的初始哈希$H^{0}$开始，进行以下序列计算：</p>
+<p>$H^{(i)}&#x3D;H^{(i-1)}+C_{M^{i}}(H^{(i-1)})$</p>
+<p>C是SHA256压缩函数，+是mod $2^{32}$加法，相加后对$2^{32}$取余。</p>
+<h3 id="常量初始化"><a href="#常量初始化" class="headerlink" title="常量初始化"></a>常量初始化</h3><blockquote>
+<p>code中的iv向量即初始化哈希</p>
+</blockquote>
+<p>初始哈希值$H^0$取自然数前八个素数(2, 3, 5, 7, 11, 13, 19)的平方根的小数部分。并且取前面的32位。</p>
+<p>比如根号2的小数部分为0.414213562373095048约等于$6<em>16^{-1}+a</em>16^{-2}+0*16^{-3}…$</p>
+<p>$H^{0}$对应0x6a09e667</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> SHA256_DIGEST_SIZE</span><br><span class="hljs-type">const</span> U8 g_cbySha256IV[SHA256_DIGEST_SIZE]=<br>&#123;<br>  <span class="hljs-number">0x6A</span>, <span class="hljs-number">0x09</span>, <span class="hljs-number">0xE6</span>, <span class="hljs-number">0x67</span>,<br>  <span class="hljs-number">0xBB</span>, <span class="hljs-number">0x67</span>, <span class="hljs-number">0xAE</span>, <span class="hljs-number">0x85</span>,<br>  <span class="hljs-number">0x3C</span>, <span class="hljs-number">0x6E</span>, <span class="hljs-number">0xF3</span>, <span class="hljs-number">0x72</span>,<br>  <span class="hljs-number">0xA5</span>, <span class="hljs-number">0x4F</span>, <span class="hljs-number">0xF5</span>, <span class="hljs-number">0x3A</span>,<br>  <span class="hljs-number">0x51</span>, <span class="hljs-number">0x0E</span>, <span class="hljs-number">0x52</span>, <span class="hljs-number">0x7F</span>,<br>  <span class="hljs-number">0x9B</span>, <span class="hljs-number">0x05</span>, <span class="hljs-number">0x68</span>, <span class="hljs-number">0x8C</span>,<br>  <span class="hljs-number">0x1F</span>, <span class="hljs-number">0x83</span>, <span class="hljs-number">0xD9</span>, <span class="hljs-number">0xAB</span>,<br>  <span class="hljs-number">0x5B</span>, <span class="hljs-number">0xE0</span>, <span class="hljs-number">0xCD</span>, <span class="hljs-number">0x19</span><br>&#125;;<br></code></pre></td></tr></table></figure>
 
+<h3 id="消息预处理"><a href="#消息预处理" class="headerlink" title="消息预处理"></a>消息预处理</h3><p>对消息进行补码处理: 假设M的二进制编码长度为$l$位，首先在消息末尾补上一位”1”，然后再补上$k$个”0”, k为下列方程最小数。</p>
+<p>$$l+1+k \equiv 448\space mod\space512 $$ </p>
+<blockquote>
+<p>$\equiv$是同余符号，表示取余后相同</p>
+</blockquote>
+<p>最后还要补充64bits $l$即长度的二进制表示，形成512bits的倍数。</p>
+<p>将补码处理后的消息以512bit为单位分块: $M^1, M^2, …,M^N$, </p>
+<p>第i个消息块总共512bits又以32bits为单位分为16个消息块:$M_0^i, M_1^i,…,M_{15}^i$</p>
+<blockquote>
+<p>例如补充完消息为512bits，那么只有$M^1$大块，和其中的16小块。</p>
+</blockquote>
+<p>见参考链接对”abc”的补码过程。</p>
+<h3 id="摘要计算主循环"><a href="#摘要计算主循环" class="headerlink" title="摘要计算主循环"></a>摘要计算主循环</h3><p>$For\space i&#x3D;1\rightarrow N$</p>
+<p>用(i-1)个中间哈希对a,b,c,d,e,f,g,h初始化，当i&#x3D;1时，就使用初始化哈希常量</p>
+<p>$$a\leftarrow H_1^{i-1} \ b\leftarrow H_2^{i-1} \ …\h\leftarrow H_8^{i-1}$$</p>
+<p>应用SHA256压缩函数来更新a,b,c,…,h</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731145934.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731145958.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731150022.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="2-可逆加密"><a href="#2-可逆加密" class="headerlink" title="2. 可逆加密"></a>2. 可逆加密</h1><h2 id="2-1-对称加密"><a href="#2-1-对称加密" class="headerlink" title="2.1 对称加密"></a>2.1 对称加密</h2><h3 id="AES"><a href="#AES" class="headerlink" title="AES"></a>AES</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/78913397">https://zhuanlan.zhihu.com/p/78913397</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_28205153/article/details/55798628">https://blog.csdn.net/qq_28205153/article/details/55798628</a></p>
+<p>AES 是对称加密算法，也就是说加密和解密都是采用同一个的密钥。</p>
+<p>AES把明文分成一组一组，每次加密一组数据，直到加密完整个明文。AES标准规范中，分组长度只能是<strong>128位</strong>。密钥的长度可以使用<strong>128位</strong>、<strong>192位</strong>或<strong>256位</strong>。密钥的长度不同，推荐加密轮数也不同。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731173545.png" srcset="/img/loading.gif" lazyload></p>
+<p>下面展示的是明文和密钥长度都为128bits长度的AES。</p>
+<p>AES的整体结构如下图所示，其中的W[0,3]是指W[0]、W[1]、W[2]和W[3]串联组成的128位密钥。加密的第1轮到第9轮的轮函数一样，包括4个操作：字节代换、行位移、列混合和轮密钥加。<strong>最后一轮</strong>迭代不执行列混合。另外，在<strong>第一轮迭代之前</strong>，先将明文和原始密钥进行一次异或加密操作。</p>
+<h4 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h4><p>下面应该介绍的是ECB工作模式？</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230801141720.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="密钥加法层"><a href="#密钥加法层" class="headerlink" title="密钥加法层"></a><strong>密钥加法层</strong></h4><p>将一组明文和一组密钥进行异或操作。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731175508.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="字节代换层"><a href="#字节代换层" class="headerlink" title="字节代换层"></a><strong>字节代换层</strong></h4><p>把上面得到的矩阵每个字节的高4位作为行值，低4位作为列值，查找S盒对应的映射。相当于一个查表替换的操作。解密时用逆S盒。</p>
+<h4 id="行位移层"><a href="#行位移层" class="headerlink" title="行位移层"></a><strong>行位移层</strong></h4><p>加密：</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230801094130.png" srcset="/img/loading.gif" lazyload></p>
+<p>解密相反，第一行不变，第二行向右移动一个字节…</p>
+<h4 id="列混淆层"><a href="#列混淆层" class="headerlink" title="列混淆层"></a><strong>列混淆层</strong></h4><p>与下图中的正矩阵相乘，这里的矩阵乘法与普通的加减法不同。解密会乘不同的矩阵。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230801140325.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="密钥扩展"><a href="#密钥扩展" class="headerlink" title="密钥扩展"></a><strong>密钥扩展</strong></h4><p>下一轮aes计算的密钥W[4]<del>W[7] 由W[0]</del>W[3]生成。</p>
+<h3 id="工作模式"><a href="#工作模式" class="headerlink" title="工作模式"></a>工作模式</h3><h4 id="ECB"><a href="#ECB" class="headerlink" title="ECB"></a>ECB</h4><h4 id="CBC"><a href="#CBC" class="headerlink" title="CBC"></a>CBC</h4><h4 id="CTR"><a href="#CTR" class="headerlink" title="CTR"></a>CTR</h4><h4 id="CCM"><a href="#CCM" class="headerlink" title="CCM"></a>CCM</h4><h4 id="GCM"><a href="#GCM" class="headerlink" title="GCM"></a>GCM</h4><h2 id="2-2-非对称加密"><a href="#2-2-非对称加密" class="headerlink" title="2.2 非对称加密"></a>2.2 非对称加密</h2><h3 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h3><h3 id="ECC"><a href="#ECC" class="headerlink" title="ECC"></a>ECC</h3><p>椭圆加密曲线Elliptic curve cryptography</p>
+<h1 id="Hmac"><a href="#Hmac" class="headerlink" title="Hmac"></a>Hmac</h1><h1 id="CRC"><a href="#CRC" class="headerlink" title="CRC"></a>CRC</h1><h1 id="TRNG"><a href="#TRNG" class="headerlink" title="TRNG"></a>TRNG</h1>
                 
               </div>
             
@@ -389,7 +403,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Book/" class="category-chain-item">Book</a>
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
   
   
 
@@ -404,7 +418,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Spec/">#Spec</a>
+        <a href="/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/">#加密算法</a>
       
     </div>
   
@@ -418,9 +432,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/10/17/Project/ICS/PA0/" title="ICS2022 PA0">
+                      <a href="/2023/09/06/Book/23-09-06_Cortex-M3%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/" title="Cortex-M3权威指南">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">ICS2022 PA0</span>
+                        <span class="hidden-mobile">Cortex-M3权威指南</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -428,8 +442,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/09/06/Misc/%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D.bss%E5%8F%98%E9%87%8F%E8%BD%AC%E5%8C%96%E6%88%90.data%E6%AE%B5%E5%8F%98%E9%87%8F/" title="如何避免.bss变量转化成.data段变量">
-                        <span class="hidden-mobile">如何避免.bss变量转化成.data段变量</span>
+                      <a href="/2023/08/15/Note/USB/DFU/" title="DFU(Device Firmware Upgrade)">
+                        <span class="hidden-mobile">DFU(Device Firmware Upgrade)</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

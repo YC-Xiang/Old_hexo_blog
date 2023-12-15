@@ -24,7 +24,7 @@
 <meta property="og:description" content="&#x2F;sys&#x2F;kernel&#x2F;debug&#x2F;pinctrl 其他驱动调用pinctrl子系统： 12345678910111213141516171819202122#include &lt;linux&#x2F;pinctrl&#x2F;consumer.h&gt;static struct pinctrl *xxx_pinctrl;struct pinctrl_state *def">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-10T01:26:47.000Z">
-<meta property="article:modified_time" content="2023-09-05T07:28:26.942Z">
+<meta property="article:modified_time" content="2023-12-15T09:44:42.733Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="Linux driver">
 <meta name="twitter:card" content="summary_large_image">
@@ -312,7 +312,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月5日 下午
+                    本文最后更新于：2023年12月15日 下午
                   
                 
               </p>
@@ -322,7 +322,7 @@
                 
                 <p>&#x2F;sys&#x2F;kernel&#x2F;debug&#x2F;pinctrl</p>
 <p>其他驱动调用pinctrl子系统：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;linux/pinctrl/consumer.h&gt;</span></span><br><br><span class="hljs-type">static</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl</span> *<span class="hljs-title">xxx_pinctrl</span>;</span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_state</span> *<span class="hljs-title">default_state</span> =</span> <span class="hljs-literal">NULL</span>;<br><br><span class="hljs-comment">// dts</span><br>pinctrl<span class="hljs-number">-0</span> = &lt;&amp;state1&gt;<br><br>pinctrl<span class="hljs-number">-1</span> = &lt;&amp;state2&gt;<br><br><span class="hljs-number">1.</span> <span class="hljs-comment">/* 获取pin control state holder 的句柄 */</span><br>    <br>    pinctrl = devm_pinctrl_get(dev);<br>    <br><span class="hljs-number">2.</span> <span class="hljs-comment">/* 得到名字为state1和state2对应的pin state */</span><br>    <br>    **<span class="hljs-class"><span class="hljs-keyword">struct</span>** <span class="hljs-title">pinctrl_state</span> * <span class="hljs-title">turnon_tes</span> =</span> pinctrl_lookup_state(pinctrl, <span class="hljs-string">&quot;state1&quot;</span>);<br>    <br>    **<span class="hljs-class"><span class="hljs-keyword">struct</span>** <span class="hljs-title">pinctrl_state</span> * <span class="hljs-title">turnoff_tes</span> =</span> pinctrl_lookup_state(pinctrl, <span class="hljs-string">&quot;state2&quot;</span>);<br>    <br><span class="hljs-number">3.</span> pinctrl_select_state(pinctrl, turnon_tes)。<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;linux/pinctrl/consumer.h&gt;</span></span><br><br><span class="hljs-type">static</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl</span> *<span class="hljs-title">xxx_pinctrl</span>;</span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_state</span> *<span class="hljs-title">default_state</span> =</span> <span class="hljs-literal">NULL</span>;<br><br><span class="hljs-comment">// dts</span><br>pinctrl<span class="hljs-number">-0</span> = &lt;&amp;state1&gt;<br><br>pinctrl<span class="hljs-number">-1</span> = &lt;&amp;state2&gt;<br><br><span class="hljs-number">1.</span> <span class="hljs-comment">/* 获取pin control state holder 的句柄 */</span><br><br>    pinctrl = devm_pinctrl_get(dev);<br><br><span class="hljs-number">2.</span> <span class="hljs-comment">/* 得到名字为state1和state2对应的pin state */</span><br><br>    **<span class="hljs-class"><span class="hljs-keyword">struct</span>** <span class="hljs-title">pinctrl_state</span> * <span class="hljs-title">turnon_tes</span> =</span> pinctrl_lookup_state(pinctrl, <span class="hljs-string">&quot;state1&quot;</span>);<br><br>    **<span class="hljs-class"><span class="hljs-keyword">struct</span>** <span class="hljs-title">pinctrl_state</span> * <span class="hljs-title">turnoff_tes</span> =</span> pinctrl_lookup_state(pinctrl, <span class="hljs-string">&quot;state2&quot;</span>);<br><br><span class="hljs-number">3.</span> pinctrl_select_state(pinctrl, turnon_tes)。<br></code></pre></td></tr></table></figure>
 
 
 
@@ -354,7 +354,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
   
   
 
@@ -393,7 +393,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/08/Note/GDB/" title="GDB">
+                      <a href="/2023/05/08/Note/23-05-08_GDB/" title="GDB">
                         <span class="hidden-mobile">GDB</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>

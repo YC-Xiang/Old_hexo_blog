@@ -256,67 +256,6 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/05/17/Project/rCore_uCore/uCore_Chapter3/" target="_self">
-          uCore_Chapter3 多道程序与分时多任务
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/17/Project/rCore_uCore/uCore_Chapter3/" target="_self">
-        <div>
-          分时多任务系统与抢占式调度RISC-V架构中断以内核所在的 S 特权级为例，中断屏蔽相应的 CSR 有 sstatus 和 sie 。sstatus 的 sie 为 S 特权级的中断使能，能够同时控制三种中断，如果将其清零则会将它们全部屏蔽。即使 sstatus.sie 置 1 ，还要看 sie 这个 CSR，它的三个字段 ssie/stie/seie 分别控制 S 特权级的软件中断、时钟中断和外
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-05-17 20:20" pubdate>
-              2023-05-17
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Project/" class="category-chain-item">Project</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/uCore/">#uCore</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
         <a href="/2023/05/15/Note/Linux_Driver/Uart/" target="_self">
           Uart Subsystem
         </a>
@@ -349,7 +288,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
   
   
 
@@ -532,7 +471,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
   
   
 
@@ -561,13 +500,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/05/08/Note/GDB/" target="_self">
+        <a href="/2023/05/08/Note/23-05-08_GDB/" target="_self">
           GDB
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/08/Note/GDB/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/08/Note/23-05-08_GDB/" target="_self">
         <div>
           to do
         </div>
@@ -654,7 +593,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
   
   
 
@@ -715,7 +654,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
   
   
 
@@ -731,6 +670,67 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Linux-driver/">#Linux driver</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/04/25/Project/rCore_uCore/uCore_Chapter1/" target="_self">
+          uCore_Chapter1 应用程序与基本执行环境
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/25/Project/rCore_uCore/uCore_Chapter1/" target="_self">
+        <div>
+          Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG=trace # 其他选项可以看Makefilemake clean # rm build/make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 退出 qemu 的方法 如果是正常推出，uC
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-04-25 23:11" pubdate>
+              2023-04-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/uCore/">#uCore</a>
             
           </div>
         
@@ -805,15 +805,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/04/25/Project/rCore_uCore/uCore_Chapter1/" target="_self">
-          uCore_Chapter1 应用程序与基本执行环境
+        <a href="/2023/04/19/Misc/U-Boot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" target="_self">
+          U-Boot启动流程
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/25/Project/rCore_uCore/uCore_Chapter1/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/19/Misc/U-Boot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" target="_self">
         <div>
-          Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG=trace # 其他选项可以看Makefilemake clean # rm build/make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 退出 qemu 的方法 如果是正常推出，uC
+          Uboot编译流程https://blog.csdn.net/ooonebook/article/details/53000893 编译生成的文件：   具体可以参考Uboot Makefile u-boot Makefile12345678910111213141516171819202122232425262728293031323334353637u-boot.cfg: $(Q)$(MAKE
         </div>
       </a>
 
@@ -821,8 +821,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2023-04-25 23:11" pubdate>
-              2023-04-25
+            <time datetime="2023-04-19 14:10" pubdate>
+              2023-04-19
             </time>
           </div>
         
@@ -837,7 +837,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  <a href="/categories/Misc/" class="category-chain-item">Misc</a>
   
   
 
@@ -852,7 +852,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/uCore/">#uCore</a>
+              <a href="/tags/U-Boot/">#U-Boot</a>
             
           </div>
         
