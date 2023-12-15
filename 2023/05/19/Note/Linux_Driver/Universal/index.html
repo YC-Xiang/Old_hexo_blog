@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230524150950.png">
 <meta property="article:published_time" content="2023-05-19T14:25:00.000Z">
-<meta property="article:modified_time" content="2023-09-06T01:51:21.066Z">
+<meta property="article:modified_time" content="2023-12-15T09:37:04.528Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="Linux driver">
 <meta name="twitter:card" content="summary_large_image">
@@ -314,7 +314,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月6日 上午
+                    本文最后更新于：2023年12月15日 下午
                   
                 
               </p>
@@ -328,7 +328,7 @@
 <p>linux5.4: void __iomem *devm_platform_ioremap_resource(struct platform_device *pdev, unsigned int index)</p>
 <p>相当于platform_get_resource + devm_request_mem_region <strong>+</strong> devm_ioremap</p>
 <p>linux链表相关操作：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> list_entry(ptr, type, member) \ <span class="hljs-comment">/// list_entry作用和container_of相同</span></span><br>  container_of(ptr, type, member)<br><br>container_of(ptr, type, member)<br><br><span class="hljs-comment">// ptr:表示结构体中member的地址h(已知的)</span><br><span class="hljs-comment">// type:表示结构体类型 struct xxx</span><br><span class="hljs-comment">// member:表示结构体中的成员 yyy</span><br><span class="hljs-comment">// 返回结构体的首地址</span><br>        <br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * list_for_each_entry  -	iterate over list of given type</span><br><span class="hljs-comment"> * @pos:  the type * to use as a loop cursor. pos中的list_head被加入了第二个成员head中</span><br><span class="hljs-comment"> * @head:  the head for your list. 要循环的链表</span><br><span class="hljs-comment"> * @member:  the name of the list_head within the struct. pos中的list_head链表对象</span><br><span class="hljs-comment"> */</span><br>list_for_each_entry(pos, head, member)<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> list_entry(ptr, type, member) \ <span class="hljs-comment">/// list_entry作用和container_of相同</span></span><br>  container_of(ptr, type, member)<br><br>container_of(ptr, type, member)<br><br><span class="hljs-comment">// ptr:表示结构体中member的地址h(已知的)</span><br><span class="hljs-comment">// type:表示结构体类型 struct xxx</span><br><span class="hljs-comment">// member:表示结构体中的成员 yyy</span><br><span class="hljs-comment">// 返回结构体的首地址</span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * list_for_each_entry  -	iterate over list of given type</span><br><span class="hljs-comment"> * @pos:  the type * to use as a loop cursor. pos中的list_head被加入了第二个成员head中</span><br><span class="hljs-comment"> * @head:  the head for your list. 要循环的链表</span><br><span class="hljs-comment"> * @member:  the name of the list_head within the struct. pos中的list_head链表对象</span><br><span class="hljs-comment"> */</span><br>list_for_each_entry(pos, head, member)<br></code></pre></td></tr></table></figure>
 
 
 
@@ -363,7 +363,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
   
   
 

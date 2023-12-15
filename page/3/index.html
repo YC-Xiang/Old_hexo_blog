@@ -256,6 +256,372 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/05/17/Project/rCore_uCore/uCore_Chapter3/" target="_self">
+          uCore_Chapter3 多道程序与分时多任务
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/17/Project/rCore_uCore/uCore_Chapter3/" target="_self">
+        <div>
+          分时多任务系统与抢占式调度RISC-V架构中断以内核所在的 S 特权级为例，中断屏蔽相应的 CSR 有 sstatus 和 sie 。sstatus 的 sie 为 S 特权级的中断使能，能够同时控制三种中断，如果将其清零则会将它们全部屏蔽。即使 sstatus.sie 置 1 ，还要看 sie 这个 CSR，它的三个字段 ssie/stie/seie 分别控制 S 特权级的软件中断、时钟中断和外
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-05-17 20:20" pubdate>
+              2023-05-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/uCore/">#uCore</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/05/15/Note/Linux_Driver/Uart/" target="_self">
+          Uart Subsystem
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/15/Note/Linux_Driver/Uart/" target="_self">
+        <div>
+          Referencehttps://www.kernel.org/doc/Documentation/serial/driver Introduction波特率115200，bps每秒传输的bit数。 每一位1&#x2F;115200秒，传输1byte需要10位（start, data, stop）,那么每秒能传11520byte。 115200，8n1。8:data，n:校验位不用，1：停止位。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-05-15 22:25" pubdate>
+              2023-05-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Linux-driver/">#Linux driver</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/05/12/Note/Linux_Driver/GPIO/" target="_self">
+          GPIO Subsystem
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/12/Note/Linux_Driver/GPIO/" target="_self">
+        <div>
+          https://zhuanlan.zhihu.com/p/41942876 push pull推挽输出 推挽输出的最大特点是可以真正能真正的输出高电平和低电平，在两种电平下都具有驱动能力。 open drain开漏输出 open source开集输出 这两种输出的原理和特性基本是类似的，区别在于一个是使用MOS管，其中的”漏”指的就是MOS管的漏极；另一个使用三极管，其中的”集”指的就是MOS三极
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-05-12 10:19" pubdate>
+              2023-05-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Linux-driver/">#Linux driver</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/05/10/Note/Linux_Driver/CMA&amp;DMA/" target="_self">
+          CMA&amp;DMA
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/10/Note/Linux_Driver/CMA&amp;DMA/" target="_self">
+        <div>
+          Reserved-memory参考：http://www.wowotech.net/memory_management/cma.html https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841683/Linux+Reserved+Memory?view=blog &#x2F;Documentation&#x2F;devicetree&
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-05-10 17:40" pubdate>
+              2023-05-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Linux-driver/">#Linux driver</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/05/10/Note/Linux_Driver/pinctrl/" target="_self">
+          Pinctrl Subsystem
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/10/Note/Linux_Driver/pinctrl/" target="_self">
+        <div>
+          &#x2F;sys&#x2F;kernel&#x2F;debug&#x2F;pinctrl 其他驱动调用pinctrl子系统： 12345678910111213141516171819202122#include &lt;linux/pinctrl/consumer.h&gt;static struct pinctrl *xxx_pinctrl;struct pinctrl_state *def
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-05-10 09:26" pubdate>
+              2023-05-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Linux-driver/">#Linux driver</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/05/08/Note/GDB/" target="_self">
+          GDB
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/08/Note/GDB/" target="_self">
+        <div>
+          to do
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-05-08 18:00" pubdate>
+              2023-05-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/GDB/">#GDB</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/05/08/Note/Linux_Driver/Time/" target="_self">
           Time Subsystem
         </a>
@@ -378,67 +744,6 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/04/25/Project/rCore_uCore/uCore_Chapter1/" target="_self">
-          uCore_Chapter1 应用程序与基本执行环境
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/25/Project/rCore_uCore/uCore_Chapter1/" target="_self">
-        <div>
-          Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG=trace # 其他选项可以看Makefilemake clean # rm build/make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 退出 qemu 的方法 如果是正常推出，uC
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-04-25 23:11" pubdate>
-              2023-04-25
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Project/" class="category-chain-item">Project</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/uCore/">#uCore</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
         <a href="/2023/04/25/Project/rCore_uCore/uCore_Chapter2/" target="_self">
           uCore_Chapter2 批处理系统
         </a>
@@ -500,15 +805,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/04/19/Note/U-Boot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" target="_self">
-          U-Boot启动流程
+        <a href="/2023/04/25/Project/rCore_uCore/uCore_Chapter1/" target="_self">
+          uCore_Chapter1 应用程序与基本执行环境
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/19/Note/U-Boot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/25/Project/rCore_uCore/uCore_Chapter1/" target="_self">
         <div>
-          Uboot编译流程https://blog.csdn.net/ooonebook/article/details/53000893 编译生成的文件：   具体可以参考Uboot Makefile u-boot Makefile12345678910111213141516171819202122232425262728293031323334353637u-boot.cfg: $(Q)$(MAKE
+          Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG=trace # 其他选项可以看Makefilemake clean # rm build/make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 退出 qemu 的方法 如果是正常推出，uC
         </div>
       </a>
 
@@ -516,252 +821,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2023-04-19 14:10" pubdate>
-              2023-04-19
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/U-Boot/">#U-Boot</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/04/13/Note/Linux_Driver/I2C/" target="_self">
-          I2C Subsystem
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/13/Note/Linux_Driver/I2C/" target="_self">
-        <div>
-          用户层测试指令12345678910111213# 检测当前系统有几组i2c总线i2cdetect -l# 查看i2c-0接口上的设备i2cdetect -y -a 0 # Force scanning of non-regular addressesi2cdetect -y -r 0# 读取指定设备的全部寄存器的值i2cdump -f -y 0 0x68# 读取指定i2c设备的某个寄存器的值，如
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-04-13 17:40" pubdate>
-              2023-04-13
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Linux-driver/">#Linux driver</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/04/13/Note/Buildroot/" target="_self">
-          Buildroot
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/13/Note/Buildroot/" target="_self">
-        <div>
-          Notes./lanuch 最终的操作是 12cd sdk_3921/buildroot-dist # 进入buildroot目录make BR2_EXTERNAL=sdk_3921/platform/ O=sdk3921/out/rts3923_fpga/ rts3923_fpga_defconfig    12345678local.mk # BR2_PACKAGE_OVERRIDE_FILE
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-04-13 17:39" pubdate>
-              2023-04-13
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Buildroot/">#Buildroot</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/03/21/Note/Linux_Driver/PWM/" target="_self">
-          PWM Subsystem
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/21/Note/Linux_Driver/PWM/" target="_self">
-        <div>
-          PWM 子系统PWM原理 利用微处理器的数字输出来对模拟电路进行控制的一种非常有效的技术，其本质是一种对模拟信号电平进行数字编码的方法。在嵌入式设备中，PWM多用于控制马达、LED、振动器等模拟器件。  脉冲周期（T），单位是时间，ns, us ,ms。 脉冲频率（f），单位是赫兹（Hz），与脉冲周期成倒数关系，f&#x3D;1&#x2F;T。 脉冲宽度（W），简称“脉宽”，是脉冲高电平持续的时间
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-03-21 16:00" pubdate>
-              2023-03-21
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Linux-driver/">#Linux driver</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/01/31/Project/ICS/PA2/" target="_self">
-          ICS2022 PA2
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/31/Project/ICS/PA2/" target="_self">
-        <div>
-          Phase_1mul-longlong.c中check 0xaeb1c2aa * 0xaeb1c2aa = 0x19d29ab9db1a18e4LL 实现mulh指令遇到的一个问题： 由于src1和src2都是unsigned int，强制类型转换为long（零扩展），得到的是无符号相乘结果0x7736200d。 1234  // 直接u32*u32会溢出，乘出来还是u32u32 src1 = 0
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-01-31 14:24" pubdate>
-              2023-01-31
+            <time datetime="2023-04-25 23:11" pubdate>
+              2023-04-25
             </time>
           </div>
         
@@ -791,68 +852,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/ICS/">#ICS</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/01/30/Note/Missing-semester/" target="_self">
-          Missing Semester of Computer Science
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/30/Note/Missing-semester/" target="_self">
-        <div>
-          Ch1 shell_scriptsfoo=bar 变量定义=左右不能加空格。 用&#39;分隔的字符串是字面值字符串，不会替换变量值，而用&quot;分隔的字符串会。 12345foo=barecho &quot;$foo&quot;# prints barecho &#x27;$foo&#x27;# prints $foo  $0- Name of the script$1- to $9 - A
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-01-30 10:02" pubdate>
-              2023-01-30
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Missing-semester/">#Missing semester</a>
+              <a href="/tags/uCore/">#uCore</a>
             
           </div>
         
@@ -864,7 +864,7 @@
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
