@@ -4,7 +4,7 @@ date: 2023-05-08 16:00:00
 tags:
 - Linux driver
 categories:
-- Notes
+- Linux driver
 ---
 
 # IRQ domain

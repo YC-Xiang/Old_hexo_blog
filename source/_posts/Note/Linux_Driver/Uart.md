@@ -4,7 +4,7 @@ date: 2023-05-15 22:25:00
 tags:
 - Linux driver
 categories:
-- Notes
+- Linux driver
 ---
 
 # Reference
@@ -198,7 +198,7 @@ p->line = id;
 p->set_termios = NULL;
 port->type = PORT_16550A;
 up->capabilities = UART_CAP_FIFO;
-    
+
 dw8250_probe();
 	dw8250_quirks();
     serial8250_register_8250_port();

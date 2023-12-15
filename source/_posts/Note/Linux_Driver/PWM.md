@@ -4,7 +4,7 @@ date: 2023-03-21 16:00:00
 tags:
 - Linux driver
 categories:
-- Notes
+- Linux driver
 ---
 
 # PWM 子系统

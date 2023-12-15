@@ -4,7 +4,7 @@ date: 2023-05-08 17:00:00
 tags:
 - Linux driver
 categories:
-- Notes
+- Linux driver
 ---
 
 CONFIG_GENERIC_CLOCKEVENTS：新的时间子系统

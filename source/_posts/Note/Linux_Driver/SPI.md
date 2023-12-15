@@ -4,7 +4,7 @@ date: 2023-05-22 17:40:28
 tags:
 - Linux driver
 categories:
-- Notes
+- Linux driver
 ---
 
 # 1. SPI协议介绍

@@ -1,5 +1,5 @@
 ---
-title: Zephyr -- Device Tree
+title: Zephyr -- I2C framework
 date: 2023-12-15 14:06:28
 tags:
 - Zephyr

@@ -15,6 +15,7 @@ struct device {
       void * const data;
 };
 ```
+
 `config`: 放地址映射，中断号等一些物理信息。
 `api`: 回调函数。
 `data`: 放reference counts, semaphores, scratch buffers等。
