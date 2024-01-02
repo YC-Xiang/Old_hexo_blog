@@ -16,15 +16,15 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Developing with ZephyrGetting Started Guide设置Python虚拟环境 python3 -m venv ~&#x2F;zephyrproject&#x2F;.venv source ~&#x2F;zephyrproject&#x2F;.venv&#x2F;bin&#x2F;activate deactive 退出虚拟环境。 Remember to activate the virtual environment ev">
+    <meta name="description" content="Getting Started Guide设置Python虚拟环境 python3 -m venv ~&#x2F;zephyrproject&#x2F;.venv source ~&#x2F;zephyrproject&#x2F;.venv&#x2F;bin&#x2F;activate deactive 退出虚拟环境。 Remember to activate the virtual environment every time you start wor">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Zephyr -- Develop with Zephyr">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/11/30/Note/Zephyr/23-11-30_Zephyr_DevelopWithZephyr/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Developing with ZephyrGetting Started Guide设置Python虚拟环境 python3 -m venv ~&#x2F;zephyrproject&#x2F;.venv source ~&#x2F;zephyrproject&#x2F;.venv&#x2F;bin&#x2F;activate deactive 退出虚拟环境。 Remember to activate the virtual environment ev">
+<meta property="og:description" content="Getting Started Guide设置Python虚拟环境 python3 -m venv ~&#x2F;zephyrproject&#x2F;.venv source ~&#x2F;zephyrproject&#x2F;.venv&#x2F;bin&#x2F;activate deactive 退出虚拟环境。 Remember to activate the virtual environment every time you start wor">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-11-30T06:17:28.000Z">
-<meta property="article:modified_time" content="2023-12-15T06:05:56.483Z">
+<meta property="article:modified_time" content="2023-12-25T07:26:32.687Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="Zephyr">
 <meta name="twitter:card" content="summary_large_image">
@@ -250,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.1k words
+          2.3k words
         
       </span>
     
@@ -261,7 +261,7 @@
         
         
         
-          18 mins
+          19 mins
         
       </span>
     
@@ -312,7 +312,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年12月15日 下午
+                    本文最后更新于：2023年12月25日 下午
                   
                 
               </p>
@@ -320,36 +320,41 @@
             
               <div class="markdown-body">
                 
-                <h2 id="Developing-with-Zephyr"><a href="#Developing-with-Zephyr" class="headerlink" title="Developing with Zephyr"></a>Developing with Zephyr</h2><h3 id="Getting-Started-Guide"><a href="#Getting-Started-Guide" class="headerlink" title="Getting Started Guide"></a>Getting Started Guide</h3><p>设置Python虚拟环境</p>
+                <h2 id="Getting-Started-Guide"><a href="#Getting-Started-Guide" class="headerlink" title="Getting Started Guide"></a>Getting Started Guide</h2><p>设置Python虚拟环境</p>
 <p><code>python3 -m venv ~/zephyrproject/.venv</code></p>
 <p><code>source ~/zephyrproject/.venv/bin/activate</code></p>
 <p><code>deactive</code> 退出虚拟环境。</p>
 <p class="note note-info">Remember to activate the virtual environment every time you start working.</p>
 
-<h3 id="Environment-Variables"><a href="#Environment-Variables" class="headerlink" title="Environment Variables"></a>Environment Variables</h3><p>创建zephyr专属的环境变量，<code>touch ~/.zephyrrc</code>, <code>export MY_VARIABLE=foo</code>。<br>进入zephyr repository，执行<code>source zephyr-env.sh</code></p>
-<h3 id="Application-Development"><a href="#Application-Development" class="headerlink" title="Application Development"></a>Application Development</h3><h4 id="Important-Build-System-Variables"><a href="#Important-Build-System-Variables" class="headerlink" title="Important Build System Variables"></a>Important Build System Variables</h4><p>变量<code>BOARD</code> <code>CONF_FILE</code> <code>DTC_OVERLAY_FILE</code>，有三种传入方法：</p>
+<h2 id="Environment-Variables"><a href="#Environment-Variables" class="headerlink" title="Environment Variables"></a>Environment Variables</h2><p>创建zephyr专属的环境变量，<code>touch ~/.zephyrrc</code>, <code>export MY_VARIABLE=foo</code>。<br>进入zephyr repository，执行<code>source zephyr-env.sh</code></p>
+<h2 id="Application-Development"><a href="#Application-Development" class="headerlink" title="Application Development"></a>Application Development</h2><p>通常app目录位于<code>zephyrproject/app</code></p>
+<p>app目录的结构通常为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">&lt;app&gt;<br>├── CMakeLists.txt<br>├── app.overlay<br>├── prj.conf<br>├── VERSION<br>└── src<br>    └── main.c<br></code></pre></td></tr></table></figure>
+
+<p><code>CMakeLists.txt</code>: 编译APP的入口。<br><code>app.overlay</code>: 设备树overlay。<br><code>prj.conf</code>: Kconfig overlay。<br><code>VERSION</code>: Version信息。<br><code>src</code>: 源码目录。</p>
+<h3 id="Important-Build-System-Variables"><a href="#Important-Build-System-Variables" class="headerlink" title="Important Build System Variables"></a>Important Build System Variables</h3><p>变量<code>BOARD</code> <code>CONF_FILE</code> <code>DTC_OVERLAY_FILE</code>，有三种传入方法：</p>
 <ul>
 <li><code>west build</code> 或 <code>cmake</code> 传入 <code>-D</code>，有多个overlay文件可以用分号隔开<code>file1.overlay;file2_overlay</code>。</li>
 <li>环境变量<code>.zephyrrc</code> <code>.bashrc</code></li>
 <li><code>set (&lt;VARIABLE&gt; &lt;VALUE&gt;)</code> in <code>CMakeLists.txt</code></li>
 </ul>
 <p><code>ZEPHYR_BASE</code>: <code>find_package(Zephyr)</code> 会自动设置为一个Cmake variable。或者通过环境变量设置。<br><code>BOARD</code>: 选择开发板。<br><code>CONF_FILE</code>: Kconfig配置文件。<br><code>EXTRA_CONF_FILE</code>: 覆盖的Kconfig配置文件。<br><code>SHIELD</code>:<br><code>ZEPHYR_MODULES</code>:<br><code>EXTRA_ZEPHYR_MODULES</code>:</p>
-<h4 id="Building-an-Application"><a href="#Building-an-Application" class="headerlink" title="Building an Application"></a>Building an Application</h4><p><code>west build -b &lt;board&gt; samples/hello_world</code>: 编译。<br><code>west build -b &lt;board&gt;@&lt;revision&gt;</code>: 指定版本。<br><code>west build -t clean</code>：build clean, <code>.config</code>不会删除。<br><code>west build -t pristine</code>: build目录下全部清空。<br><code>west flash</code>: 将可执行文件烧进主板。每次执行west flash，app都会rebuild and flash again。<br><code>west build -t run</code>: 当选择的board是qemu_x86&#x2F;qemu_cortex_m3，可以直接在qemu中run。每次执行west run，app都会rebuild and run again。</p>
+<h3 id="Building-an-Application"><a href="#Building-an-Application" class="headerlink" title="Building an Application"></a>Building an Application</h3><p><code>west build -b &lt;board&gt; samples/hello_world</code>: 编译。<br><code>west build -b &lt;board&gt;@&lt;revision&gt;</code>: 指定版本。<br><code>west build -t clean</code>：build clean, <code>.config</code>不会删除。<br><code>west build -t pristine</code>: build目录下全部清空。<br><code>west flash</code>: 将可执行文件烧进主板。每次执行west flash，app都会rebuild and flash again。<br><code>west build -t run</code>: 当选择的board是qemu_x86&#x2F;qemu_cortex_m3，可以直接在qemu中run。每次执行west run，app都会rebuild and run again。</p>
 <p class="note note-info">Linux下run target will use the SDK’s QEMU binary by default.通过修改`QEMU_BIN_PATH`可以替换为自己下载的QEMU版本</p>
 
-<h3 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h3><p>检查ram，rom使用空间：</p>
+<h2 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h2><p>检查ram，rom使用空间：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">west build -b reel_board samples/hello_world<br>west build -t ram_report<br>west build -t rom_report<br></code></pre></td></tr></table></figure>
 
-<h3 id="West"><a href="#West" class="headerlink" title="West"></a>West</h3><h4 id="Workspace-concepts"><a href="#Workspace-concepts" class="headerlink" title="Workspace concepts"></a>Workspace concepts</h4><h5 id="configuration-file"><a href="#configuration-file" class="headerlink" title="configuration file"></a>configuration file</h5><p><code>.west/config</code> 配置文件，定义了manifest repository等。</p>
-<h5 id="manifest-file"><a href="#manifest-file" class="headerlink" title="manifest file"></a>manifest file</h5><p><code>west.yml</code> 描述了管理的其他git仓库。可以用<code>manifest.file</code>覆盖。执行<code>west update</code>可以更新所有git仓库。</p>
-<h3 id="Built-in-commands"><a href="#Built-in-commands" class="headerlink" title="Built-in commands"></a>Built-in commands</h3><p><code>west help</code>: 查看支持的命令。<br><code>west &lt;command&gt; -h</code>: for detailed help.<br><code>west update -r</code>: sync的时候会rebase local commits.<br><code>west compare</code>: compare the state of the workspace against the manifest.<br><code>west diff</code><br><code>west status</code><br><code>west forall -c &lt;command&gt;</code>: 对所有仓库执行某个shell命令。<br><code>west grep</code><br><code>west list</code>: 所有project信息。<br><code>west manifest</code>: 管理manifest文件。</p>
-<h3 id="Workspaces"><a href="#Workspaces" class="headerlink" title="Workspaces"></a>Workspaces</h3><h4 id="Topologies-supported"><a href="#Topologies-supported" class="headerlink" title="Topologies supported"></a>Topologies supported</h4><ul>
+<h2 id="West"><a href="#West" class="headerlink" title="West"></a>West</h2><h3 id="Workspace-concepts"><a href="#Workspace-concepts" class="headerlink" title="Workspace concepts"></a>Workspace concepts</h3><h4 id="configuration-file"><a href="#configuration-file" class="headerlink" title="configuration file"></a>configuration file</h4><p><code>.west/config</code> 配置文件，定义了manifest repository等。</p>
+<h4 id="manifest-file"><a href="#manifest-file" class="headerlink" title="manifest file"></a>manifest file</h4><p><code>west.yml</code> 描述了管理的其他git仓库。可以用<code>manifest.file</code>覆盖。执行<code>west update</code>可以更新所有git仓库。</p>
+<h2 id="Built-in-commands"><a href="#Built-in-commands" class="headerlink" title="Built-in commands"></a>Built-in commands</h2><p><code>west help</code>: 查看支持的命令。<br><code>west &lt;command&gt; -h</code>: for detailed help.<br><code>west update -r</code>: sync的时候会rebase local commits.<br><code>west compare</code>: compare the state of the workspace against the manifest.<br><code>west diff</code><br><code>west status</code><br><code>west forall -c &lt;command&gt;</code>: 对所有仓库执行某个shell命令。<br><code>west grep</code><br><code>west list</code>: 所有project信息。<br><code>west manifest</code>: 管理manifest文件。</p>
+<h2 id="Workspaces"><a href="#Workspaces" class="headerlink" title="Workspaces"></a>Workspaces</h2><h3 id="Topologies-supported"><a href="#Topologies-supported" class="headerlink" title="Topologies supported"></a>Topologies supported</h3><ul>
 <li>star topology, zephyr is the manifest repository</li>
 <li>star topology, a Zephyr application is the manifest repository</li>
 <li>forest topology, freestanding manifest repository</li>
 </ul>
-<h3 id="West-Manifests"><a href="#West-Manifests" class="headerlink" title="West Manifests"></a>West Manifests</h3><p><a target="_blank" rel="noopener" href="https://docs.zephyrproject.org/latest/develop/west/manifest.html#">West Manifests yaml文件</a></p>
-<h3 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h3><p><a target="_blank" rel="noopener" href="https://docs.zephyrproject.org/latest/develop/west/config.html">west config 提供的一些选项</a></p>
+<h2 id="West-Manifests"><a href="#West-Manifests" class="headerlink" title="West Manifests"></a>West Manifests</h2><p><a target="_blank" rel="noopener" href="https://docs.zephyrproject.org/latest/develop/west/manifest.html#">West Manifests yaml文件</a></p>
+<h2 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h2><p><a target="_blank" rel="noopener" href="https://docs.zephyrproject.org/latest/develop/west/config.html">west config 提供的一些选项</a></p>
 <ul>
 <li>System: <code>/etc/westconfig</code></li>
 <li>Global: <code>~/.westconfig</code></li>
@@ -403,9 +408,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/12/05/Note/Zephyr/23-12-05_Zephyr_BuildAndConfiguration/" title="Zephyr -- Build and Configuration Systems">
+                      <a href="/2023/11/30/Note/Zephyr/23-12-01_Zephyr_DeviceDriverModel/" title="Zephyr -- Device Drvier Model">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Zephyr -- Build and Configuration Systems</span>
+                        <span class="hidden-mobile">Zephyr -- Device Drvier Model</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -413,8 +418,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/11/30/Note/Zephyr/23-12-01_Zephyr_DeviceDriverModel/" title="Zephyr -- Device Drvier Model">
-                        <span class="hidden-mobile">Zephyr -- Device Drvier Model</span>
+                      <a href="/2023/10/17/Project/ICS/PA0/" title="ICS2022 PA0">
+                        <span class="hidden-mobile">ICS2022 PA0</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
