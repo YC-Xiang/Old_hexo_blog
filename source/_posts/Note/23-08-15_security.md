@@ -5,6 +5,7 @@ tags:
 - 加密算法
 categories:
 - Notes
+hide: true
 ---
 
 # 1. 非可逆加密
@@ -57,13 +58,13 @@ const U8 g_cbySha256IV[SHA256_DIGEST_SIZE]=
 
 对消息进行补码处理: 假设M的二进制编码长度为$l$位，首先在消息末尾补上一位"1"，然后再补上$k$个"0", k为下列方程最小数。
 
-$$l+1+k \equiv 448\space mod\space512 $$ 
+$$l+1+k \equiv 448\space mod\space512 $$
 
 > $\equiv$是同余符号，表示取余后相同
 
 最后还要补充64bits $l$即长度的二进制表示，形成512bits的倍数。
 
-将补码处理后的消息以512bit为单位分块: $M^1, M^2, ...,M^N$, 
+将补码处理后的消息以512bit为单位分块: $M^1, M^2, ...,M^N$,
 
 第i个消息块总共512bits又以32bits为单位分为16个消息块:$M_0^i, M_1^i,...,M_{15}^i$
 

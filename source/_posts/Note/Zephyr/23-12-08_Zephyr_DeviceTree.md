@@ -118,6 +118,8 @@ By chosen node:
 By parent/child:
 `DT_PARENT()`, `DT_CHILD()`
 
+`DT_COMPAT_GET_ANY_STATUS_OKAY(compat)` 根据compatible找到任意status为ok的对应节点。
+
 e.g.
 
 ```c

@@ -7,9 +7,7 @@ categories:
 - Zephyr OS
 ---
 
-## Developing with Zephyr
-
-### Getting Started Guide
+## Getting Started Guide
 
 设置Python虚拟环境
 
@@ -21,14 +19,34 @@ categories:
 
 <p class="note note-info">Remember to activate the virtual environment every time you start working.</p>
 
-### Environment Variables
+## Environment Variables
 
 创建zephyr专属的环境变量，`touch ~/.zephyrrc`, `export MY_VARIABLE=foo`。
 进入zephyr repository，执行`source zephyr-env.sh`
 
-### Application Development
+## Application Development
 
-#### Important Build System Variables
+通常app目录位于`zephyrproject/app`
+
+app目录的结构通常为：
+
+```c
+<app>
+├── CMakeLists.txt
+├── app.overlay
+├── prj.conf
+├── VERSION
+└── src
+    └── main.c
+```
+
+`CMakeLists.txt`: 编译APP的入口。
+`app.overlay`: 设备树overlay。
+`prj.conf`: Kconfig overlay。
+`VERSION`: Version信息。
+`src`: 源码目录。
+
+### Important Build System Variables
 
 变量`BOARD` `CONF_FILE` `DTC_OVERLAY_FILE`，有三种传入方法：
 
@@ -44,7 +62,7 @@ categories:
 `ZEPHYR_MODULES`:
 `EXTRA_ZEPHYR_MODULES`:
 
-#### Building an Application
+### Building an Application
 
 `west build -b <board> samples/hello_world`: 编译。
 `west build -b <board>@<revision>`: 指定版本。
@@ -55,7 +73,7 @@ categories:
 
 <p class="note note-info">Linux下run target will use the SDK’s QEMU binary by default.通过修改`QEMU_BIN_PATH`可以替换为自己下载的QEMU版本</p>
 
-### Optimization
+## Optimization
 
 检查ram，rom使用空间：
 
@@ -65,19 +83,19 @@ west build -t ram_report
 west build -t rom_report
 ```
 
-### West
+## West
 
-#### Workspace concepts
+### Workspace concepts
 
-##### configuration file
+#### configuration file
 
 `.west/config` 配置文件，定义了manifest repository等。
 
-##### manifest file
+#### manifest file
 
 `west.yml` 描述了管理的其他git仓库。可以用`manifest.file`覆盖。执行`west update`可以更新所有git仓库。
 
-### Built-in commands
+## Built-in commands
 
 `west help`: 查看支持的命令。
 `west <command> -h`: for detailed help.
@@ -90,19 +108,19 @@ west build -t rom_report
 `west list`: 所有project信息。
 `west manifest`: 管理manifest文件。
 
-### Workspaces
+## Workspaces
 
-#### Topologies supported
+### Topologies supported
 
 - star topology, zephyr is the manifest repository
 - star topology, a Zephyr application is the manifest repository
 - forest topology, freestanding manifest repository
 
-### West Manifests
+## West Manifests
 
 [West Manifests yaml文件](https://docs.zephyrproject.org/latest/develop/west/manifest.html#)
 
-### Configuration
+## Configuration
 
 [west config 提供的一些选项](https://docs.zephyrproject.org/latest/develop/west/config.html)
 
