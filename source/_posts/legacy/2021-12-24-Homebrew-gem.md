@@ -1,6 +1,6 @@
 ---
 layout:     post   				    # 使用的布局（不需要改）
-title:      mac Homebrew和gem下载源修改 				# 标题 
+title:      mac Homebrew和gem下载源修改 				# 标题
 subtitle:    #副标题
 date:       2021-12-24 				# 时间
 author:     YC-Xiang 						# 作者
@@ -12,26 +12,17 @@ categories:
 - Legacy
 ---
 
-mac环境
-# Homebrew下载源修改:
+## Homebrew下载源修改
+
+https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/
+
 ```shell
-# 替换brew.git:
-$ cd "$(brew --repo)"
-# 中国科大:
-$ git remote set-url origin https://mirrors.ustc.edu.cn/brew.git
-
-# 替换homebrew-core.git:
-$ cd "$(brew --repo)/Library/Taps/homebrew/homebrew-core"
-# 中国科大:
-$ git remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git
-
-# 替换homebrew-bottles:
-# 中国科大:
-$ echo 'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles' >> ~/.zshrc
-$ source ~/.zshrc
-
-# 应用生效:
-$ brew update
+export HOMEBREW_INSTALL_FROM_API=1
+export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
+export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"
+export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
+export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
+export HOMEBREW_PIP_INDEX_URL="https://pypi.tuna.tsinghua.edu.cn/simple"
 ```
 
 # Gem下载源修改：
