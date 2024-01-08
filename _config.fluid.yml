@@ -1,0 +1,18 @@
+
+post:
+  comments:
+    enable: true
+    type: giscus
+
+giscus:
+  repo: YC-Xiang/YC-Xiang.github.io
+  repo-id: R_kgDOIuQ8yA # should be repo-id in fluid theme not repo_id. see giscus.ejs https://blog.csdn.net/weixin_43699108/article/details/130912642
+  category: Announcements
+  category-id: DIC_kwDOIuQ8yM4CcRjS # should be category-id
+  mapping: title
+  reactions_enabled: 1
+  emit_metadata: 0
+  input-position: top
+  theme: light
+  lang: zh-CN
+  loading: lazy

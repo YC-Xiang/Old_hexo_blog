@@ -50,11 +50,11 @@ exit(MAGIC);
 
 uservec
 	usertrap(); // ld t0, 16(a0) jr t0
-		r_scause(); 
+		r_scause();
 			csrr %0, scause // 应用层调用了ecall指令，所以scause自动被设置为8
 		syscall();
 			//在uservec中应用层传入eid到寄存器a7,这里读a7来判断是什么system call
-			id = trapframe->a7; 
+			id = trapframe->a7;
 		usertrapret(); // 这里回到第九行一样，循环，执行第二个应用程序
 ```
 

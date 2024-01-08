@@ -7,7 +7,7 @@ categories:
 - Project
 ---
 
-# RTFSC
+## RTFSC
 
 ```makefile
 # nemu/scripts/native.mk
