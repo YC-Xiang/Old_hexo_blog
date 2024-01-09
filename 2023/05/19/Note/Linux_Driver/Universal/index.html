@@ -16,12 +16,12 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="NOT indexedinclude &lt;asm&#x2F;xxx.h&gt; 先找arch&#x2F;xxx&#x2F;include&#x2F;xxx.h，没有的话就找&#x2F;include&#x2F;asm-generic&#x2F;xxx.h 从dts中获取regs地址并映射到virtual address: linux5.10: void __iomem *devm_platfo">
+    <meta name="description" content="NOT indexedinclude &lt;asm&#x2F;xxx.h&gt; 先找arch&#x2F;xxx&#x2F;include&#x2F;xxx.h，没有的话就找&#x2F;include&#x2F;asm-generic&#x2F;xxx.h 从dts中获取regs地址并映射到virtual address: linux5.10: void __iomem *devm_platform_get_and_ioremap_resource(struct">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux Driver Common Essentials">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/05/19/Note/Linux_Driver/Universal/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="NOT indexedinclude &lt;asm&#x2F;xxx.h&gt; 先找arch&#x2F;xxx&#x2F;include&#x2F;xxx.h，没有的话就找&#x2F;include&#x2F;asm-generic&#x2F;xxx.h 从dts中获取regs地址并映射到virtual address: linux5.10: void __iomem *devm_platfo">
+<meta property="og:description" content="NOT indexedinclude &lt;asm&#x2F;xxx.h&gt; 先找arch&#x2F;xxx&#x2F;include&#x2F;xxx.h，没有的话就找&#x2F;include&#x2F;asm-generic&#x2F;xxx.h 从dts中获取regs地址并映射到virtual address: linux5.10: void __iomem *devm_platform_get_and_ioremap_resource(struct">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230524150950.png">
 <meta property="article:published_time" content="2023-05-19T14:25:00.000Z">
@@ -114,7 +114,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -252,7 +254,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k words
+          1.6k words
         
       </span>
     
@@ -263,7 +265,7 @@
         
         
         
-          15 mins
+          14 mins
         
       </span>
     
@@ -322,13 +324,13 @@
             
               <div class="markdown-body">
                 
-                <h1 id="NOT-indexed"><a href="#NOT-indexed" class="headerlink" title="NOT indexed"></a>NOT indexed</h1><p>include &lt;asm&#x2F;xxx.h&gt; 先找arch&#x2F;xxx&#x2F;include&#x2F;xxx.h，没有的话就找&#x2F;include&#x2F;asm-generic&#x2F;xxx.h</p>
+                <h1 id="NOT-indexed"><a href="#NOT-indexed" class="headerlink" title="NOT indexed"></a>NOT indexed</h1><p>include &lt;asm/xxx.h&gt; 先找arch/xxx/include/xxx.h，没有的话就找/include/asm-generic/xxx.h</p>
 <p>从dts中获取regs地址并映射到virtual address:</p>
 <p>linux5.10: void __iomem *devm_platform_get_and_ioremap_resource(struct platform_device *pdev, unsigned int index, struct resource **res)</p>
 <p>linux5.4: void __iomem *devm_platform_ioremap_resource(struct platform_device *pdev, unsigned int index)</p>
 <p>相当于platform_get_resource + devm_request_mem_region <strong>+</strong> devm_ioremap</p>
 <p>linux链表相关操作：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> list_entry(ptr, type, member) \ <span class="hljs-comment">/// list_entry作用和container_of相同</span></span><br>  container_of(ptr, type, member)<br><br>container_of(ptr, type, member)<br><br><span class="hljs-comment">// ptr:表示结构体中member的地址h(已知的)</span><br><span class="hljs-comment">// type:表示结构体类型 struct xxx</span><br><span class="hljs-comment">// member:表示结构体中的成员 yyy</span><br><span class="hljs-comment">// 返回结构体的首地址</span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * list_for_each_entry  -	iterate over list of given type</span><br><span class="hljs-comment"> * @pos:  the type * to use as a loop cursor. pos中的list_head被加入了第二个成员head中</span><br><span class="hljs-comment"> * @head:  the head for your list. 要循环的链表</span><br><span class="hljs-comment"> * @member:  the name of the list_head within the struct. pos中的list_head链表对象</span><br><span class="hljs-comment"> */</span><br>list_for_each_entry(pos, head, member)<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> list_entry(ptr, type, member) \ <span class="hljs-comment">/// list_entry作用和container_of相同</span></span><br>  container_of(ptr, type, member)<br><br>container_of(ptr, type, member)<br><br><span class="hljs-comment">// ptr:表示结构体中member的地址h(已知的)</span><br><span class="hljs-comment">// type:表示结构体类型 struct xxx</span><br><span class="hljs-comment">// member:表示结构体中的成员 yyy</span><br><span class="hljs-comment">// 返回结构体的首地址</span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * list_for_each_entry  -	iterate over list of given type</span><br><span class="hljs-comment"> * @pos:  the type * to use as a loop cursor. pos中的list_head被加入了第二个成员head中</span><br><span class="hljs-comment"> * @head:  the head for your list. 要循环的链表</span><br><span class="hljs-comment"> * @member:  the name of the list_head within the struct. pos中的list_head链表对象</span><br><span class="hljs-comment"> */</span><br>list_for_each_entry(pos, head, member)<br></code></pre></td></tr></tbody></table></figure>
 
 
 
@@ -341,10 +343,10 @@
 </ul>
 <p><strong>module_init()</strong></p>
 <p>本质是device_initcall。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> module_init(x)  __initcall(x);</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> __initcall(fn) device_initcall(fn)</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> module_init(x)  __initcall(x);</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> __initcall(fn) device_initcall(fn)</span><br></code></pre></td></tr></tbody></table></figure>
 
 <p>kernel的<code>System.map</code>可以查看符号文件，其中<code>__initcall6_start</code>后的顺序就对应<code>device_initcall</code>的驱动加载顺序。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> pure_initcall(fn)    __define_initcall(fn, 0)</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> core_initcall(fn)    __define_initcall(fn, 1)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> postcore_initcall(fn)    __define_initcall(fn, 2)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> arch_initcall(fn)    __define_initcall(fn, 3)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> subsys_initcall(fn)    __define_initcall(fn, 4)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> fs_initcall(fn)      __define_initcall(fn, 5)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> rootfs_initcall(fn)    __define_initcall(fn, rootfs)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> device_initcall(fn)    __define_initcall(fn, 6)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> late_initcall(fn)    __define_initcall(fn, 7)</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> pure_initcall(fn)    __define_initcall(fn, 0)</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> core_initcall(fn)    __define_initcall(fn, 1)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> postcore_initcall(fn)    __define_initcall(fn, 2)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> arch_initcall(fn)    __define_initcall(fn, 3)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> subsys_initcall(fn)    __define_initcall(fn, 4)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> fs_initcall(fn)      __define_initcall(fn, 5)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> rootfs_initcall(fn)    __define_initcall(fn, rootfs)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> device_initcall(fn)    __define_initcall(fn, 6)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> late_initcall(fn)    __define_initcall(fn, 7)</span><br></code></pre></td></tr></tbody></table></figure>
 
                 
               </div>
@@ -414,6 +416,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

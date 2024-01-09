@@ -16,12 +16,12 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Ch1 shell_scriptsfoo&#x3D;bar 变量定义&#x3D;左右不能加空格。 用&#39;分隔的字符串是字面值字符串，不会替换变量值，而用&quot;分隔的字符串会。 12345foo&#x3D;barecho &quot;$foo&quot;# prints barecho &amp;#x27;$foo&amp;#x27;# prints $foo  $0- Name of the script$1- to $9 - A">
+    <meta name="description" content="Ch1 shell_scriptsfoo&#x3D;bar 变量定义&#x3D;左右不能加空格。 用&#39;分隔的字符串是字面值字符串，不会替换变量值，而用&quot;分隔的字符串会。 12345foo&#x3D;barecho &quot;$foo&quot;# prints barecho &#39;$foo&#39;# prints $foo  $0- Name of the script$1- to $9 - Arguments to the script. $1 is">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Missing Semester of Computer Science">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/01/30/Note/23-01-30_Missing-semester/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Ch1 shell_scriptsfoo&#x3D;bar 变量定义&#x3D;左右不能加空格。 用&#39;分隔的字符串是字面值字符串，不会替换变量值，而用&quot;分隔的字符串会。 12345foo&#x3D;barecho &quot;$foo&quot;# prints barecho &amp;#x27;$foo&amp;#x27;# prints $foo  $0- Name of the script$1- to $9 - A">
+<meta property="og:description" content="Ch1 shell_scriptsfoo&#x3D;bar 变量定义&#x3D;左右不能加空格。 用&#39;分隔的字符串是字面值字符串，不会替换变量值，而用&quot;分隔的字符串会。 12345foo&#x3D;barecho &quot;$foo&quot;# prints barecho &#39;$foo&#39;# prints $foo  $0- Name of the script$1- to $9 - Arguments to the script. $1 is">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-01-30T02:02:05.000Z">
 <meta property="article:modified_time" content="2023-12-15T09:38:29.880Z">
@@ -112,7 +112,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -250,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k words
+          2.4k words
         
       </span>
     
@@ -261,7 +263,7 @@
         
         
         
-          22 mins
+          21 mins
         
       </span>
     
@@ -321,18 +323,18 @@
               <div class="markdown-body">
                 
                 <h2 id="Ch1-shell-scripts"><a href="#Ch1-shell-scripts" class="headerlink" title="Ch1 shell_scripts"></a>Ch1 shell_scripts</h2><p><code>foo=bar</code> 变量定义<code>=</code>左右不能加空格。</p>
-<p>用<code>&#39;</code>分隔的字符串是字面值字符串，不会替换变量值，而用<code>&quot;</code>分隔的字符串会。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">foo=bar<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$foo</span>&quot;</span><br><span class="hljs-comment"># prints bar</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;$foo&#x27;</span><br><span class="hljs-comment"># prints $foo</span><br></code></pre></td></tr></table></figure>
+<p>用<code>'</code>分隔的字符串是字面值字符串，不会替换变量值，而用<code>"</code>分隔的字符串会。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">foo=bar<br><span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$foo</span>"</span><br><span class="hljs-comment"># prints bar</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">'$foo'</span><br><span class="hljs-comment"># prints $foo</span><br></code></pre></td></tr></tbody></table></figure>
 
 <p><code>$0</code>- Name of the script<br><code>$1</code>- to $9 - Arguments to the script. $1 is the first argument and so on.<br><code>$@</code>- All the arguments<br><code>$#</code>- Number of arguments<br><code>$?</code>- Return code of the previous command<br><code>$$</code>- Process identification number (PID) for the current script<br><code>!!</code>- Entire last command, including arguments. A common pattern is to execute a command only for it to fail due to missing permissions; you can quickly re-execute the command with sudo by doing <code>sudo !!</code><br><code>$_</code>- Last argument from the last command. If you are in an interactive shell, you can also quickly get this value by typing Esc followed by <code>.</code> or <code>Alt+.</code></p>
 <p>The <code>true</code> program will always have a 0 return code and the <code>false</code> command will always have a 1 return code.</p>
 <p><code>Command1 &amp;&amp; Command2</code> 如果Command1命令运行成功，则继续运行Command2命令。<br><code>Command1 || Command2</code> 如果Command1命令运行失败，则继续运行Command2命令。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-literal">false</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Oops, fail&quot;</span><br><span class="hljs-comment"># Oops, fail</span><br><br><span class="hljs-literal">true</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Will not be printed&quot;</span><br><span class="hljs-comment">#</span><br><br><span class="hljs-literal">true</span> &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Things went well&quot;</span><br><span class="hljs-comment"># Things went well</span><br><br><span class="hljs-literal">false</span> &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Will not be printed&quot;</span><br><span class="hljs-comment">#</span><br><br><span class="hljs-literal">true</span> ; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;This will always run&quot;</span><br><span class="hljs-comment"># This will always run</span><br><br><span class="hljs-literal">false</span> ; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;This will always run&quot;</span><br><span class="hljs-comment"># This will always run</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-literal">false</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"Oops, fail"</span><br><span class="hljs-comment"># Oops, fail</span><br><br><span class="hljs-literal">true</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"Will not be printed"</span><br><span class="hljs-comment">#</span><br><br><span class="hljs-literal">true</span> &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">"Things went well"</span><br><span class="hljs-comment"># Things went well</span><br><br><span class="hljs-literal">false</span> &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">"Will not be printed"</span><br><span class="hljs-comment">#</span><br><br><span class="hljs-literal">true</span> ; <span class="hljs-built_in">echo</span> <span class="hljs-string">"This will always run"</span><br><span class="hljs-comment"># This will always run</span><br><br><span class="hljs-literal">false</span> ; <span class="hljs-built_in">echo</span> <span class="hljs-string">"This will always run"</span><br><span class="hljs-comment"># This will always run</span><br></code></pre></td></tr></tbody></table></figure>
 
 <h3 id="command-substitution"><a href="#command-substitution" class="headerlink" title="command substitution"></a>command substitution</h3><p><code>$(CMD)</code> will execute CMD, get the output of the command and substitute it in place.<br><code>for file in $(ls)</code> will first call ls and then iterate over those values.</p>
 <h3 id="process-substitution"><a href="#process-substitution" class="headerlink" title="process substitution"></a>process substitution</h3><p><code>&lt;(CMD)</code> will execute CMD and place the output in a temporary file and substitute the &lt;() with that file’s name.<br><code>diff &lt;(ls foo) &lt;(ls bar)</code> will show differences between files in dirs foo and bar.</p>
 <p>Example:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Starting program at <span class="hljs-subst">$(date)</span>&quot;</span> <span class="hljs-comment"># Date will be substituted</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Running program <span class="hljs-variable">$0</span> with <span class="hljs-variable">$#</span> arguments with pid $$&quot;</span><br><br><span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> <span class="hljs-string">&quot;<span class="hljs-variable">$@</span>&quot;</span>; <span class="hljs-keyword">do</span><br>    grep foobar <span class="hljs-string">&quot;<span class="hljs-variable">$file</span>&quot;</span> &gt; /dev/null 2&gt; /dev/null <span class="hljs-comment"># 标准输出和标准错误都重定向到/dev/null</span><br>    <span class="hljs-comment"># When pattern is not found, grep has exit status 1</span><br>    <span class="hljs-comment"># We redirect STDOUT and STDERR to a null register since we do not care about them</span><br>    <span class="hljs-keyword">if</span> [[ $? -ne 0 ]]; <span class="hljs-keyword">then</span><br>        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;File <span class="hljs-variable">$file</span> does not have any foobar, adding one&quot;</span><br>        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;# foobar&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$file</span>&quot;</span><br>    <span class="hljs-keyword">fi</span><br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">"Starting program at <span class="hljs-subst">$(date)</span>"</span> <span class="hljs-comment"># Date will be substituted</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">"Running program <span class="hljs-variable">$0</span> with <span class="hljs-variable">$#</span> arguments with pid $$"</span><br><br><span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> <span class="hljs-string">"<span class="hljs-variable">$@</span>"</span>; <span class="hljs-keyword">do</span><br>    grep foobar <span class="hljs-string">"<span class="hljs-variable">$file</span>"</span> &gt; /dev/null 2&gt; /dev/null <span class="hljs-comment"># 标准输出和标准错误都重定向到/dev/null</span><br>    <span class="hljs-comment"># When pattern is not found, grep has exit status 1</span><br>    <span class="hljs-comment"># We redirect STDOUT and STDERR to a null register since we do not care about them</span><br>    <span class="hljs-keyword">if</span> [[ $? -ne 0 ]]; <span class="hljs-keyword">then</span><br>        <span class="hljs-built_in">echo</span> <span class="hljs-string">"File <span class="hljs-variable">$file</span> does not have any foobar, adding one"</span><br>        <span class="hljs-built_in">echo</span> <span class="hljs-string">"# foobar"</span> &gt;&gt; <span class="hljs-string">"<span class="hljs-variable">$file</span>"</span><br>    <span class="hljs-keyword">fi</span><br><span class="hljs-keyword">done</span><br></code></pre></td></tr></tbody></table></figure>
 
 <div class="note note-info">
             <p>try to use double brackets [[ ]] in favor of simple brackets [ ]</p>
@@ -344,9 +346,9 @@
 <li><code>*</code>替换后面所有字符</li>
 </ul>
 </li>
-<li>Curly braces <code>&#123;&#125;</code></li>
+<li>Curly braces <code>{}</code></li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">convert image.&#123;png,jpg&#125;<br><span class="hljs-comment"># Will expand to</span><br>convert image.png image.jpg<br><br><span class="hljs-built_in">cp</span> /path/to/project/&#123;foo,bar,baz&#125;.sh /newpath<br><span class="hljs-comment"># Will expand to</span><br><span class="hljs-built_in">cp</span> /path/to/project/foo.sh /path/to/project/bar.sh /path/to/project/baz.sh /newpath<br><br><span class="hljs-comment"># Globbing techniques can also be combined</span><br><span class="hljs-built_in">mv</span> *&#123;.py,.sh&#125; folder<br><span class="hljs-comment"># Will move all *.py and *.sh files</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">convert image.{png,jpg}<br><span class="hljs-comment"># Will expand to</span><br>convert image.png image.jpg<br><br><span class="hljs-built_in">cp</span> /path/to/project/{foo,bar,baz}.sh /newpath<br><span class="hljs-comment"># Will expand to</span><br><span class="hljs-built_in">cp</span> /path/to/project/foo.sh /path/to/project/bar.sh /path/to/project/baz.sh /newpath<br><br><span class="hljs-comment"># Globbing techniques can also be combined</span><br><span class="hljs-built_in">mv</span> *{.py,.sh} folder<br><span class="hljs-comment"># Will move all *.py and *.sh files</span><br></code></pre></td></tr></tbody></table></figure>
 
 <h2 id="Ch4-commandline-environment"><a href="#Ch4-commandline-environment" class="headerlink" title="Ch4 commandline_environment"></a>Ch4 commandline_environment</h2><h3 id="Job-control"><a href="#Job-control" class="headerlink" title="Job control"></a>Job control</h3><p><code>jobs</code>: lists the unfinished jobs associated with the current terminal session.</p>
 <p><code>fg + %num </code>: <code>num</code>是<code>jobs</code>命令显示进程对应的序号。</p>
@@ -421,6 +423,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

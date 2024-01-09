@@ -114,7 +114,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -252,7 +254,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          606 words
+          591 words
         
       </span>
     
@@ -263,7 +265,7 @@
         
         
         
-          6 mins
+          5 mins
         
       </span>
     
@@ -324,9 +326,9 @@
                 
                 <p>发现在一个.c文件中有一个初始化为非0的全局变量或静态变量，会使这整个文件中定义的全局变量或静态变量都由.bss段转化为.data段。</p>
 <p><strong>.data段</strong>的变量会在mcu boot阶段的clib会对这些变量做初始化，**.bss段**可以透过keilc的config如下图控制是否要跳过clib的初始化为0（目前我们的配置是把IRAM配置为不要初始化）<br><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906141358.png" srcset="/img/loading.gif" lazyload alt="skip bss init"><br>这样的话，我们的芯片在suspend或sleep之后，由于MCU做了power gating，resume起来后MCU重新上电，会重新从MCU boot那边开始跑，.data段的变量就无法保持suspend或sleep之前的值了，又被初始化成定义时候的值了，而.bss段就不会被初始化，可以保持之前的值。</p>
-<p>在我们目前usb产品的应用中，一般变量都是要保持suspend&#x2F;sleep之前的值，所以不能产生有.data段的变量<br>为了不产生.data段变量，我们要注意：</p>
+<p>在我们目前usb产品的应用中，一般变量都是要保持suspend/sleep之前的值，所以不能产生有.data段的变量<br>为了不产生.data段变量，我们要注意：</p>
 <p><strong>- 全局变量在定义的时候不能做初始化。</strong><br><strong>- 不要使用静态的局部变量。</strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//错误示例：</span><br>U8 g_byGlobalVar = <span class="hljs-number">5</span>;<br><span class="hljs-comment">//正确示例：</span><br>U8 g_byGlobalVar;<br><span class="hljs-type">void</span> <span class="hljs-title function_">InitGlobalVars</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    <span class="hljs-keyword">if</span>(reset_status==RESET_FROM_POWER_ON)<br>        g_byGlobalVar=<span class="hljs-number">5</span>; <span class="hljs-comment">//InitGlobalVars()函数中做初始化</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//错误示例：</span><br>U8 g_byGlobalVar = <span class="hljs-number">5</span>;<br><span class="hljs-comment">//正确示例：</span><br>U8 g_byGlobalVar;<br><span class="hljs-type">void</span> <span class="hljs-title function_">InitGlobalVars</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>{<br>    <span class="hljs-keyword">if</span>(reset_status==RESET_FROM_POWER_ON)<br>        g_byGlobalVar=<span class="hljs-number">5</span>; <span class="hljs-comment">//InitGlobalVars()函数中做初始化</span><br>}<br></code></pre></td></tr></tbody></table></figure>
 
                 
               </div>
@@ -396,6 +398,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

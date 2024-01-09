@@ -125,7 +125,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -274,7 +276,7 @@
         
         
         
-          36 mins
+          35 mins
         
       </span>
     
@@ -368,8 +370,8 @@
 </thead>
 <tbody><tr>
 <td>0</td>
-<td>N&#x2F;A</td>
-<td>N&#x2F;A</td>
+<td>N/A</td>
+<td>N/A</td>
 <td>没有异常在运行</td>
 </tr>
 <tr>
@@ -411,8 +413,8 @@
 <tr>
 <td>7-10</td>
 <td>保留</td>
-<td>N&#x2F;A</td>
-<td>N&#x2F;A</td>
+<td>N/A</td>
+<td>N/A</td>
 </tr>
 <tr>
 <td>11</td>
@@ -429,8 +431,8 @@
 <tr>
 <td>13</td>
 <td>保留</td>
-<td>N&#x2F;A</td>
-<td>N&#x2F;A</td>
+<td>N/A</td>
+<td>N/A</td>
 </tr>
 <tr>
 <td>14</td>
@@ -453,25 +455,25 @@
 </tbody></table>
 <h3 id="2-10-调试支持"><a href="#2-10-调试支持" class="headerlink" title="2.10 调试支持"></a>2.10 调试支持</h3><p>Cortex-M3的调试系统基于ARM最新的CoreSight架构。不同于以往的ARM处理器，内核本身不再含有JTAG接口。取而代之的，是CPU提供称为“调试访问接口(DAP)”的总线接口。</p>
 <p>目前可用的DPs包括<strong>SWJ-DP</strong>(既支持传统的JTAG调试，也支持新的串行线调试协议SWD)，另一个<strong>SW-DP</strong>则去掉了对JTAG的支持。另外，也可以使用ARM CoreSignt产品家族的<strong>JTAG-DP</strong>模块。这下就有3个DPs可以选了，芯片制造商可以从中选择一个，以提供具体的调试接口（通常都是选SWJ-DP）。</p>
-<h2 id="Chpater3-CM3基础"><a href="#Chpater3-CM3基础" class="headerlink" title="Chpater3 CM3基础"></a>Chpater3 CM3基础</h2><p>PC: 读PC时返回的值是当前指令的地址+4。在分支时，无论是直接写PC的值还是使用分支指令，都必须保证加载到PC的数值是奇数（即LSB&#x3D;1），用以表明这是在Thumb状态下执行。</p>
+<h2 id="Chpater3-CM3基础"><a href="#Chpater3-CM3基础" class="headerlink" title="Chpater3 CM3基础"></a>Chpater3 CM3基础</h2><p>PC: 读PC时返回的值是当前指令的地址+4。在分支时，无论是直接写PC的值还是使用分支指令，都必须保证加载到PC的数值是奇数（即LSB=1），用以表明这是在Thumb状态下执行。</p>
 <blockquote>
 <p>可以在map文件中看到thumb code的地址lsb都是奇数。data地址不受影响。</p>
 </blockquote>
 <h3 id="3-2-特殊功能寄存器"><a href="#3-2-特殊功能寄存器" class="headerlink" title="3.2 特殊功能寄存器"></a>3.2 特殊功能寄存器</h3><p>Cortex-M3还在内核水平上搭载了若干特殊功能寄存器，包括<br><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906104300.png" srcset="/img/loading.gif" lazyload alt="Special function registers"></p>
-<p>它们只能被专用的MSR&#x2F;MRS指令访问</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs asm">MRS &lt;gp_reg&gt;, &lt;special_reg&gt;; 读特殊功能寄存器的值到通用寄存器<br>MSR &lt;special_reg&gt;, &lt;gp_reg&gt; ;写通用寄存器的值到特殊功能寄存器<br></code></pre></td></tr></table></figure>
+<p>它们只能被专用的MSR/MRS指令访问</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs asm">MRS &lt;gp_reg&gt;, &lt;special_reg&gt;; 读特殊功能寄存器的值到通用寄存器<br>MSR &lt;special_reg&gt;, &lt;gp_reg&gt; ;写通用寄存器的值到特殊功能寄存器<br></code></pre></td></tr></tbody></table></figure>
 
 <h4 id="3-2-1-程序状态寄存器"><a href="#3-2-1-程序状态寄存器" class="headerlink" title="3.2.1 程序状态寄存器"></a>3.2.1 程序状态寄存器</h4><ul>
 <li>应用程序PSR（APSR）</li>
 <li>中断号PSR（IPSR）</li>
 <li>执行PSR（EPSR）</li>
 </ul>
-<p>通过MRS&#x2F;MSR指令，这3个PSRs即可以单独访问，也可以组合访问（2个组合，3个组合都可以）。当使用三合一的方式访问时，应使用名字“xPSR”或者“PSR”。<br><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906154110.png" srcset="/img/loading.gif" lazyload alt="PSR"></p>
+<p>通过MRS/MSR指令，这3个PSRs即可以单独访问，也可以组合访问（2个组合，3个组合都可以）。当使用三合一的方式访问时，应使用名字“xPSR”或者“PSR”。<br><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906154110.png" srcset="/img/loading.gif" lazyload alt="PSR"></p>
 <p>APSR:</p>
 <ul>
 <li>N: 负数标志</li>
 <li>Z: 0结果标志</li>
-<li>C: 进位&#x2F;错位标志</li>
+<li>C: 进位/错位标志</li>
 <li>V: 溢出标志</li>
 </ul>
 <h4 id="3-2-2-中断屏蔽寄存器"><a href="#3-2-2-中断屏蔽寄存器" class="headerlink" title="3.2.2 中断屏蔽寄存器"></a>3.2.2 中断屏蔽寄存器</h4><ul>
@@ -479,16 +481,16 @@
 <li>FAULTMASK - 这是个只有1 bit的寄存器。当它置1时，只有NMI才能响应，所有其它的异常，甚至是Hardfault，也不能响应。</li>
 <li>BASEPRI - 这个寄存器最多有9位（由表达优先级的位数决定）。它定义了被屏蔽优先级的阈值。当它被设成某个值后，所有优先级号大于等于此值的中断都被关（优先级号越大，优先级越低）。</li>
 </ul>
-<p>要访问PRIMASK, FAULTMASK以及BASEPRI，同样要使用MRS&#x2F;MSR指令。</p>
-<h4 id="3-2-3-控制寄存器"><a href="#3-2-3-控制寄存器" class="headerlink" title="3.2.3 控制寄存器"></a>3.2.3 控制寄存器</h4><p>控制寄存器有两个用途，其一用于定义特权级别，其二用于选择当前使用哪个堆栈指针。<br>CONTROL[1]：0&#x3D;选择主堆栈指针MSP（复位后的缺省值），1&#x3D;选择进程堆栈指针PSP。<br>CONTROL[0]：0&#x3D;特权级的线程模式，1&#x3D;用户级的线程模式。</p>
+<p>要访问PRIMASK, FAULTMASK以及BASEPRI，同样要使用MRS/MSR指令。</p>
+<h4 id="3-2-3-控制寄存器"><a href="#3-2-3-控制寄存器" class="headerlink" title="3.2.3 控制寄存器"></a>3.2.3 控制寄存器</h4><p>控制寄存器有两个用途，其一用于定义特权级别，其二用于选择当前使用哪个堆栈指针。<br>CONTROL[1]：0=选择主堆栈指针MSP（复位后的缺省值），1=选择进程堆栈指针PSP。<br>CONTROL[0]：0=特权级的线程模式，1=用户级的线程模式。</p>
 <h2 id="Chapter4-指令集"><a href="#Chapter4-指令集" class="headerlink" title="Chapter4 指令集"></a>Chapter4 指令集</h2><p><strong>EQU</strong>：定义常数，常数定义必须顶格写。<br><code>Stack_Size      EQU     0x00006000</code><br>DCB：定义一串字节常数。<br>DCD：定义一串23位整数。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs asm">MY_NUMBER<br>    DCD 0x12345678<br>HELLO_TEXT<br>    DCB ”Hello\n”,0<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs asm">MY_NUMBER<br>    DCD 0x12345678<br>HELLO_TEXT<br>    DCB ”Hello\n”,0<br></code></pre></td></tr></tbody></table></figure>
 
 <h3 id="4-1-后缀的使用"><a href="#4-1-后缀的使用" class="headerlink" title="4.1 后缀的使用"></a>4.1 后缀的使用</h3><p><img src="/image.png" srcset="/img/loading.gif" lazyload alt="指令后缀"></p>
 <h3 id="4-2-指令集"><a href="#4-2-指令集" class="headerlink" title="4.2 指令集"></a>4.2 指令集</h3><p>详细指令见附录。</p>
 <h2 id="Chapter5-存储器系统"><a href="#Chapter5-存储器系统" class="headerlink" title="Chapter5 存储器系统"></a>Chapter5 存储器系统</h2><h3 id="5-2-存储器映射"><a href="#5-2-存储器映射" class="headerlink" title="5.2 存储器映射"></a>5.2 存储器映射</h3><h3 id="5-3-存储器的各种访问属性"><a href="#5-3-存储器的各种访问属性" class="headerlink" title="5.3 存储器的各种访问属性"></a>5.3 存储器的各种访问属性</h3><ol>
 <li>代码区（0x0000_0000- 0x1FFF_FFFF）。该区是可以执行指令的，缓存属性为Write Through。在此区上的数据操作是通过D-Code?(<strong>此处存疑</strong>)，且在此区上的写操作是缓冲的。</li>
-<li>SRAM区（0x2000_0000 – 0x3FFF_FFFF）。此区用于片内SRAM，写操作是缓冲的write back&#x2F;write allocated，此区亦可以执行指令。</li>
+<li>SRAM区（0x2000_0000 – 0x3FFF_FFFF）。此区用于片内SRAM，写操作是缓冲的write back/write allocated，此区亦可以执行指令。</li>
 <li>片上外设区(0x4000_0000 – 0x5FFF_FFFF)。该区用于片上外设，因此是不可缓存的，也不可以在此区执行指令。</li>
 </ol>
 <h3 id="5-4-存储器的缺省访问许可"><a href="#5-4-存储器的缺省访问许可" class="headerlink" title="5.4 存储器的缺省访问许可"></a>5.4 存储器的缺省访问许可</h3><h3 id="5-5-位带操作"><a href="#5-5-位带操作" class="headerlink" title="5.5 位带操作"></a>5.5 位带操作</h3><h3 id="5-6-非对齐数据传送"><a href="#5-6-非对齐数据传送" class="headerlink" title="5.6 非对齐数据传送"></a>5.6 非对齐数据传送</h3><h3 id="5-7-互斥访问"><a href="#5-7-互斥访问" class="headerlink" title="5.7 互斥访问"></a>5.7 互斥访问</h3><h3 id="5-8-端模式"><a href="#5-8-端模式" class="headerlink" title="5.8 端模式"></a>5.8 端模式</h3><h2 id="Chapter-6-Cortex-M3-全貌"><a href="#Chapter-6-Cortex-M3-全貌" class="headerlink" title="Chapter 6 Cortex-M3 全貌"></a>Chapter 6 Cortex-M3 全貌</h2><h3 id="6-3-CM3的总线接口"><a href="#6-3-CM3的总线接口" class="headerlink" title="6.3 CM3的总线接口"></a>6.3 CM3的总线接口</h3><p>CM3采用了哈佛结构，拥有独立的指令总线和数据总线，可以让取指与数据访问并行不悖。<br><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230906162526.png" srcset="/img/loading.gif" lazyload alt="CM3 架构"></p>
@@ -518,8 +520,8 @@
 <li>执行了协处理器指令。</li>
 <li>执行了未定义的指令。</li>
 <li>尝试进入ARM状态。</li>
-<li>无效的中断返回（LR中包含了无效&#x2F;错误的值）。</li>
-<li>使用多重加载&#x2F;存储指令时，地址没有对齐。</li>
+<li>无效的中断返回（LR中包含了无效/错误的值）。</li>
+<li>使用多重加载/存储指令时，地址没有对齐。</li>
 </ul>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230907101427.png" srcset="/img/loading.gif" lazyload alt="Usage faults"></p>
 <h4 id="7-5-4-Hardfaults"><a href="#7-5-4-Hardfaults" class="headerlink" title="7.5.4 Hardfaults"></a>7.5.4 Hardfaults</h4><p>Hardfault是上文讨论的Bus fault、MemManage fault以及Usage fault上访的结果。如果这些fault的服务例程无法执行，它们就会成为“硬伤”——上访（escalation）成Hardfault。如果不是由于取向量造成的，则Hardfault服务例程必须检查其它的fault状态寄存器，以最终决定是谁上访的。</p>
@@ -594,6 +596,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

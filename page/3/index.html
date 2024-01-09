@@ -103,7 +103,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -256,6 +258,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/05/22/Note/Linux_Driver/SPI/" target="_self">
+          Spi Subsystem
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/22/Note/Linux_Driver/SPI/" target="_self">
+        <div>
+          1. SPI协议介绍CPOL:表示SPICLK的初始电平，0为低电平，1为高电平 CPHA:表示相位，即第一个还是第二个时钟沿采样数据，0为第一个时钟沿，1为第二个时钟沿    CPOL CPHA 模式 含义    0 0 0 SPICLK初始电平为低电平，在第一个时钟沿采样数据   0 1 1 SPICLK初始电平为低电平，在第二个时钟沿采样数据   1 0 2 SPICLK初始电平为高电平，在
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-05-22 17:40" pubdate>
+              2023-05-22
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Linux-driver/">#Linux driver</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/05/20/Book/23_05-20_Rust/" target="_self">
           Rust
         </a>
@@ -325,7 +388,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/05/19/Note/Linux_Driver/Universal/" target="_self">
         <div>
-          NOT indexedinclude &lt;asm&#x2F;xxx.h&gt; 先找arch&#x2F;xxx&#x2F;include&#x2F;xxx.h，没有的话就找&#x2F;include&#x2F;asm-generic&#x2F;xxx.h 从dts中获取regs地址并映射到virtual address: linux5.10: void __iomem *devm_platfo
+          NOT indexedinclude &lt;asm/xxx.h&gt; 先找arch/xxx/include/xxx.h，没有的话就找/include/asm-generic/xxx.h 从dts中获取regs地址并映射到virtual address: linux5.10: void __iomem *devm_platform_get_and_ioremap_resource(struct
         </div>
       </a>
 
@@ -447,7 +510,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/05/15/Note/Linux_Driver/Uart/" target="_self">
         <div>
-          Referencehttps://www.kernel.org/doc/Documentation/serial/driver Introduction波特率115200，bps每秒传输的bit数。 每一位1&#x2F;115200秒，传输1byte需要10位（start, data, stop）,那么每秒能传11520byte。 115200，8n1。8:data，n:校验位不用，1：停止位。
+          Referencehttps://www.kernel.org/doc/Documentation/serial/driver Introduction波特率115200，bps每秒传输的bit数。 每一位1/115200秒，传输1byte需要10位（start, data, stop）,那么每秒能传11520byte。 115200，8n1。8:data，n:校验位不用，1：停止位。  TTY体
         </div>
       </a>
 
@@ -569,7 +632,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/05/10/Note/Linux_Driver/CMA&amp;DMA/" target="_self">
         <div>
-          Reserved-memory参考：http://www.wowotech.net/memory_management/cma.html https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841683/Linux+Reserved+Memory?view=blog &#x2F;Documentation&#x2F;devicetree&
+          Reserved-memory参考：http://www.wowotech.net/memory_management/cma.html https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841683/Linux+Reserved+Memory?view=blog /Documentation/devicetree/bindings/r
         </div>
       </a>
 
@@ -630,7 +693,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/05/10/Note/Linux_Driver/pinctrl/" target="_self">
         <div>
-          &#x2F;sys&#x2F;kernel&#x2F;debug&#x2F;pinctrl 其他驱动调用pinctrl子系统： 12345678910111213141516171819202122#include &lt;linux/pinctrl/consumer.h&gt;static struct pinctrl *xxx_pinctrl;struct pinctrl_state *def
+          /sys/kernel/debug/pinctrl 其他驱动调用pinctrl子系统： 12345678910111213141516171819202122#include &lt;linux/pinctrl/consumer.h&gt;static struct pinctrl *xxx_pinctrl;struct pinctrl_state *default_state = NULL;//
         </div>
       </a>
 
@@ -670,6 +733,67 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Linux-driver/">#Linux driver</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/05/08/Note/23-05-08_GDB/" target="_self">
+          GDB
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/08/Note/23-05-08_GDB/" target="_self">
+        <div>
+          Steppingstep(s)/stepi(si) + &lt;n&gt;: 执行n行c/assembly 代码, 会跳进函数。next(n)/nexti(ni) + &lt;n&gt;: 执行n行c/assembly 代码，不会跳进函数。 Runningcontinue(c): run code 直到遇到breakpoint。finish: run code直到当前函数return。advanc
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-05-08 18:00" pubdate>
+              2023-05-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/GDB/">#GDB</a>
             
           </div>
         
@@ -738,133 +862,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/05/08/Note/Linux_Driver/Interrupt/" target="_self">
-          Interrupt Subsystem
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/08/Note/Linux_Driver/Interrupt/" target="_self">
-        <div>
-          IRQ domainhttp://www.wowotech.net/linux_kenrel/irq-domain.html 1. 向系统注册irq domaininterrupt controller初始化的过程中，注册irq domain irq_domain_add_linear(struct device_node *of_node, unsigned int size, const st
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-05-08 16:00" pubdate>
-              2023-05-08
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Linux-driver/">#Linux driver</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/04/25/Project/rCore_uCore/uCore_Chapter2/" target="_self">
-          uCore_Chapter2 批处理系统
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/25/Project/rCore_uCore/uCore_Chapter2/" target="_self">
-        <div>
-          123456make -C user clean # 在os目录，相当于cd user;make clean;cd ..make clean # 或者在user目录git checkout ch2make user BASE=1 CHAPTER=2make runmake test BASE=1 # make test 会完成　make user 和 make run 两个步骤（自动设置 CHAP
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-04-25 23:11" pubdate>
-              2023-04-25
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Project/" class="category-chain-item">Project</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/uCore/">#uCore</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><a class="page-number" href="/page/6/#board">6</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

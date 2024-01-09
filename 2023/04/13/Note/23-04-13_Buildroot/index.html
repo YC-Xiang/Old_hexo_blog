@@ -115,7 +115,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -253,7 +255,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5k words
+          4.8k words
         
       </span>
     
@@ -264,7 +266,7 @@
         
         
         
-          42 mins
+          41 mins
         
       </span>
     
@@ -324,11 +326,11 @@
               <div class="markdown-body">
                 
                 <h1 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h1><p><code>./lanuch</code> 最终的操作是</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd sdk_3921/buildroot-dist # 进入buildroot目录<br>make BR2_EXTERNAL=sdk_3921/platform/ O=sdk3921/out/rts3923_fpga/ rts3923_fpga_defconfig<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd sdk_3921/buildroot-dist # 进入buildroot目录<br>make BR2_EXTERNAL=sdk_3921/platform/ O=sdk3921/out/rts3923_fpga/ rts3923_fpga_defconfig<br></code></pre></td></tr></tbody></table></figure>
 
 
 
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs makefile">local.mk <span class="hljs-comment"># BR2_PACKAGE_OVERRIDE_FILE 在platform/configs中定义</span><br>external.mk<br>    <span class="hljs-keyword">include</span> common.mk<br>      <span class="hljs-keyword">include</span> package/*/*/*.mk<br>      <span class="hljs-keyword">include</span> package/*/*.mk<br>    <span class="hljs-keyword">include</span> package/*/*/src.mki<br>    <span class="hljs-keyword">include</span> package/*/*/gen.mki<br>    <span class="hljs-keyword">include</span> post_pkg.mk<br></code></pre></td></tr></table></figure>
+<figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs makefile">local.mk <span class="hljs-comment"># BR2_PACKAGE_OVERRIDE_FILE 在platform/configs中定义</span><br>external.mk<br>    <span class="hljs-keyword">include</span> common.mk<br>      <span class="hljs-keyword">include</span> package/*/*/*.mk<br>      <span class="hljs-keyword">include</span> package/*/*.mk<br>    <span class="hljs-keyword">include</span> package/*/*/src.mki<br>    <span class="hljs-keyword">include</span> package/*/*/gen.mki<br>    <span class="hljs-keyword">include</span> post_pkg.mk<br></code></pre></td></tr></tbody></table></figure>
 
 
 
@@ -339,13 +341,13 @@
 <p><code>make rr</code>: Reconstruct rootfs</p>
 <p><code>make rp</code>: Rebuild external packages</p>
 <h2 id="Managing-the-build-and-the-configuration"><a href="#Managing-the-build-and-the-configuration" class="headerlink" title="Managing the build and the configuration"></a>Managing the build and the configuration</h2><h3 id="Out-of-tree-build"><a href="#Out-of-tree-build" class="headerlink" title="Out of tree build"></a>Out of tree build</h3><p>在<code>buildroot Makefile</code>中有</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-keyword">ifeq</span> (<span class="hljs-variable">$(O)</span>,<span class="hljs-variable">$(CURDIR)</span>/output)<br>CONFIG_DIR := <span class="hljs-variable">$(CURDIR)</span><br>NEED_WRAPPER =<br><span class="hljs-keyword">else</span><br>CONFIG_DIR := <span class="hljs-variable">$(O)</span><br>NEED_WRAPPER = y<br><span class="hljs-keyword">endif</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-keyword">ifeq</span> (<span class="hljs-variable">$(O)</span>,<span class="hljs-variable">$(CURDIR)</span>/output)<br>CONFIG_DIR := <span class="hljs-variable">$(CURDIR)</span><br>NEED_WRAPPER =<br><span class="hljs-keyword">else</span><br>CONFIG_DIR := <span class="hljs-variable">$(O)</span><br>NEED_WRAPPER = y<br><span class="hljs-keyword">endif</span><br></code></pre></td></tr></tbody></table></figure>
 
 <p>可以看出，如果<code>O != buildroot_dist/output</code>, <code>CONFIG_DIR = sdk3921/out/rts3923_fpga/ </code></p>
 <p>在<code>CONFIG_DIR</code>目录下，保存着<code>.config</code>配置文件。</p>
-<h3 id="Other-building-tips"><a href="#Other-building-tips" class="headerlink" title="Other building tips"></a>Other building tips</h3><p>Cleaning all the build output, but keeping the configuration file(删除build&#x2F;):</p>
+<h3 id="Other-building-tips"><a href="#Other-building-tips" class="headerlink" title="Other building tips"></a>Other building tips</h3><p>Cleaning all the build output, but keeping the configuration file(删除build/):</p>
 <p><code>make clean</code></p>
-<p>Cleaning everything, including the configuration file, and downloaded file if at the<br>default location (相当于删除了build&#x2F;和.config一系列配置文件，需要重新make menuconfig):</p>
+<p>Cleaning everything, including the configuration file, and downloaded file if at the<br>default location (相当于删除了build/和.config一系列配置文件，需要重新make menuconfig):</p>
 <p><code>make distclean</code></p>
 <h2 id="Buildroot-source-and-build-trees"><a href="#Buildroot-source-and-build-trees" class="headerlink" title="Buildroot source and build trees"></a>Buildroot source and build trees</h2><h3 id="Build-tree"><a href="#Build-tree" class="headerlink" title="Build tree"></a>Build tree</h3><ul>
 <li><code>output/</code>对应<code>BASE_DIR</code></li>
@@ -383,34 +385,34 @@
 <p><code>make &lt;pkg&gt;-dirclean</code>, completely remove the package source code directory. The next make invocation will fully rebuild this package. 相当于直接删除<code>build/&lt;pkg&gt;</code></p>
 <p><code>make &lt;pkg&gt;-rebuild</code>, force to re-execute the build and installation steps of the package.</p>
 <p><code>make &lt;pkg&gt;-reconfigure</code>, force to re-execute the configure, build and installation steps of the package.</p>
-<h1 id="legacy"><a href="#legacy" class="headerlink" title="legacy"></a>legacy</h1><h2 id="添加自己的软件包"><a href="#添加自己的软件包" class="headerlink" title="添加自己的软件包"></a>添加自己的软件包</h2><h3 id="添加package-x2F-Config-in入口"><a href="#添加package-x2F-Config-in入口" class="headerlink" title="添加package&#x2F;Config.in入口"></a>添加package&#x2F;Config.in入口</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kufds">config BR2_PACKAGE_HELLOWORLD<br>bool &quot;helloworld&quot;<br>help<br>  This is a demo to add myown(fuzidage) package.<br></code></pre></td></tr></table></figure>
+<h1 id="legacy"><a href="#legacy" class="headerlink" title="legacy"></a>legacy</h1><h2 id="添加自己的软件包"><a href="#添加自己的软件包" class="headerlink" title="添加自己的软件包"></a>添加自己的软件包</h2><h3 id="添加package-x2F-Config-in入口"><a href="#添加package-x2F-Config-in入口" class="headerlink" title="添加package/Config.in入口"></a>添加package/Config.in入口</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kufds">config BR2_PACKAGE_HELLOWORLD<br>bool "helloworld"<br>help<br>  This is a demo to add myown(fuzidage) package.<br></code></pre></td></tr></tbody></table></figure>
 
 <h3 id="配置APP对应的Config-in和mk文件"><a href="#配置APP对应的Config-in和mk文件" class="headerlink" title="配置APP对应的Config.in和mk文件"></a>配置APP对应的Config.in和mk文件</h3><p>在package中新增目录helloworld，并在里面添加Config.in和helloworld.mk<br><strong>Config.in</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs fdsf">config BR2_PACKAGE_HELLOWORLD<br>bool &quot;helloworld&quot;<br>help<br>  This is a demo to add myown(fuzidage) package.<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs fdsf">config BR2_PACKAGE_HELLOWORLD<br>bool "helloworld"<br>help<br>  This is a demo to add myown(fuzidage) package.<br></code></pre></td></tr></tbody></table></figure>
 
 <p><strong>helloworld.mk</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dfsdf">HELLOWORLD_VERSION:= 1.0.0<br>HELLOWORLD_SITE:= $(BR2_EXTERNAL)/source/ipcam/helloworld<br>HELLOWORLD_SITE_METHOD:=local<br>HELLOWORLD_INSTALL_TARGET:=YES<br><br>$(eval $(cmake-package))<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dfsdf">HELLOWORLD_VERSION:= 1.0.0<br>HELLOWORLD_SITE:= $(BR2_EXTERNAL)/source/ipcam/helloworld<br>HELLOWORLD_SITE_METHOD:=local<br>HELLOWORLD_INSTALL_TARGET:=YES<br><br>$(eval $(cmake-package))<br><br></code></pre></td></tr></tbody></table></figure>
 
 <h2 id="如何重新编译软件包"><a href="#如何重新编译软件包" class="headerlink" title="如何重新编译软件包"></a>如何重新编译软件包</h2><p>经过第一次完整编译后，如果我们需要对源码包重新配置，我们不能直接在buildroot上的根目录下直接make，buildroot是不知道你已经对源码进行重新配置，它只会将第一次编译出来的文件，再次打包成根文件系统镜像文件。</p>
 <p>那么可以通过以下2种方式重新编译：</p>
 <p><strong>1. 直接删除源码包,然后make all</strong></p>
-<p>例如我们要重新编译helloworld，那么可以直接删除output&#x2F;build&#x2F;helloworld目录，那么当你make的时候，就会自动从dl文件夹下，解压缩源码包，并重新安装。这种效率偏低</p>
+<p>例如我们要重新编译helloworld，那么可以直接删除output/build/helloworld目录，那么当你make的时候，就会自动从dl文件夹下，解压缩源码包，并重新安装。这种效率偏低</p>
 <p><strong>2. 进行xxx-rebuild,然后make all</strong></p>
-<p>也是以helloworld为例子，我们直接输入make helloworld-rebuild，即可对build&#x2F;helloworld&#x2F;目录进行重新编译，然后还要进行make all(或者make helloworld)</p>
+<p>也是以helloworld为例子，我们直接输入make helloworld-rebuild，即可对build/helloworld/目录进行重新编译，然后还要进行make all(或者make helloworld)</p>
 <h2 id="Config-in-语法"><a href="#Config-in-语法" class="headerlink" title="Config.in 语法"></a>Config.in 语法</h2><p>用Kconfig语言编写，用来配置packages</p>
 <p>必须以<code>BR2_PACKAGE_&lt;PACKAGE&gt;</code>开头</p>
 <p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gxwbwcmsauj30i303zt8t.jpg" srcset="/img/loading.gif" lazyload></p>
 <p>Config.in 是层级结构<code>package/&lt;pkg&gt;/Config.in</code>都被包含在<code>package/Config.in</code></p>
-<h3 id="menu-x2F-endmenu"><a href="#menu-x2F-endmenu" class="headerlink" title="menu&#x2F;endmenu"></a>menu&#x2F;endmenu</h3><p>menuconfig中层级目录由<code>menu</code>来嵌套定义</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs kbuild">menu &quot;Base System&quot;<br>source &quot;$BR2_EXTERNAL_platform_PATH/package/example/Config.in&quot;<br>source &quot;$BR2_EXTERNAL_platform_PATH/package/fstools/Config.in&quot;<br>endmenu<br><br>menu &quot;Test Package&quot;<br>source &quot;$BR2_EXTERNAL_platform_PATH/package/foobar/Config.in&quot;<br>endmenu<br><br>// Test Package在Base System下一级目录<br>menu &quot;Base System&quot;<br>menu &quot;Test Package&quot;<br>endmenu<br>endmenu<br></code></pre></td></tr></table></figure>
+<h3 id="menu-x2F-endmenu"><a href="#menu-x2F-endmenu" class="headerlink" title="menu/endmenu"></a>menu/endmenu</h3><p>menuconfig中层级目录由<code>menu</code>来嵌套定义</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs kbuild">menu "Base System"<br>source "$BR2_EXTERNAL_platform_PATH/package/example/Config.in"<br>source "$BR2_EXTERNAL_platform_PATH/package/fstools/Config.in"<br>endmenu<br><br>menu "Test Package"<br>source "$BR2_EXTERNAL_platform_PATH/package/foobar/Config.in"<br>endmenu<br><br>// Test Package在Base System下一级目录<br>menu "Base System"<br>menu "Test Package"<br>endmenu<br>endmenu<br></code></pre></td></tr></tbody></table></figure>
 
-<h3 id="if-x2F-endif"><a href="#if-x2F-endif" class="headerlink" title="if&#x2F;endif"></a>if&#x2F;endif</h3><h3 id="choice-x2F-endchoice"><a href="#choice-x2F-endchoice" class="headerlink" title="choice&#x2F;endchoice"></a>choice&#x2F;endchoice</h3><h3 id="select、depends-on"><a href="#select、depends-on" class="headerlink" title="select、depends on"></a>select、depends on</h3><p>select是一种自动依赖，如果A select B，只要A被enable，B就会被enable，而且不可unselected</p>
+<h3 id="if-x2F-endif"><a href="#if-x2F-endif" class="headerlink" title="if/endif"></a>if/endif</h3><h3 id="choice-x2F-endchoice"><a href="#choice-x2F-endchoice" class="headerlink" title="choice/endchoice"></a>choice/endchoice</h3><h3 id="select、depends-on"><a href="#select、depends-on" class="headerlink" title="select、depends on"></a>select、depends on</h3><p>select是一种自动依赖，如果A select B，只要A被enable，B就会被enable，而且不可unselected</p>
 <p>depends on是一种用户定义的依赖，如果A depends on B, A只有在B被enable后才可见</p>
 <ul>
 <li><code>make \&lt;pkg\&gt;-show-depend</code>: 查看pkg依赖的包</li>
 <li><code>make \&lt;pkg\&gt;-show-rdepend</code>: 查看依赖pkg的包</li>
 </ul>
-<h2 id="mk文件"><a href="#mk文件" class="headerlink" title=".mk文件"></a>.mk文件</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">xxx_SITE_METHOD</span> = local<br><span class="hljs-attr">xxx_SITE</span> = 本地源码库地址<br><br><span class="hljs-attr">xxx_SITE_METHOD</span> = remote<br><span class="hljs-attr">xxx_SITE</span> = 远程URL<br></code></pre></td></tr></table></figure>
+<h2 id="mk文件"><a href="#mk文件" class="headerlink" title=".mk文件"></a>.mk文件</h2><figure class="highlight ini"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">xxx_SITE_METHOD</span> = local<br><span class="hljs-attr">xxx_SITE</span> = 本地源码库地址<br><br><span class="hljs-attr">xxx_SITE_METHOD</span> = remote<br><span class="hljs-attr">xxx_SITE</span> = 远程URL<br></code></pre></td></tr></tbody></table></figure>
 
 <p>Packages可以被安装到不同目录：</p>
 <ul>
@@ -422,7 +424,7 @@
 <ul>
 <li><code>&lt;pkg&gt;_INSTALL_TARGET</code> , defaults to <code>YES</code>. If <code>YES</code>, then <code>&lt;pkg&gt;_INSTALL_TARGET_CMDS</code> will be called </li>
 <li><code>&lt;pkg&gt;_INSTALL_STAGING</code> , defaults to <code>NO</code>. If <code>YES</code>, then <code>&lt;pkg&gt;_INSTALL_STAGING_CMDS</code> will be called </li>
-<li><code>&lt;pkg&gt;_INSTALL_IMAGES</code> , defaults to <code>NO</code>. If <code>YES</code>, then <code>&lt;pkg&gt;_INSTALL_IMAGES_CMDS</code> will be called <br/><br/></li>
+<li><code>&lt;pkg&gt;_INSTALL_IMAGES</code> , defaults to <code>NO</code>. If <code>YES</code>, then <code>&lt;pkg&gt;_INSTALL_IMAGES_CMDS</code> will be called <br><br></li>
 <li>Application Package一般只要安装到target</li>
 <li>Shared library动态库必须安装到target与staging</li>
 <li>header-based library和static-only library静态库只安装到staging</li>
@@ -501,6 +503,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

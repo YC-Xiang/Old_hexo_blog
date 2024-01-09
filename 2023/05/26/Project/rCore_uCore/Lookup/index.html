@@ -16,12 +16,12 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="CSRs参考riscv-privileged-20211203.pdf sstatus SPP: 在进入S mode之前hart处于什么mode。用户态trap进入S mode，SPP被设置为0，其他情况为1。如果SPP为0，执行SRET后，返回U mode。如果SPP为1，执行SRET后，返回S mode。随后SPP置0。 SIE: 1开启&#x2F;0关闭 S mode的所有中断 in S m">
+    <meta name="description" content="CSRs参考riscv-privileged-20211203.pdf sstatus SPP: 在进入S mode之前hart处于什么mode。用户态trap进入S mode，SPP被设置为0，其他情况为1。如果SPP为0，执行SRET后，返回U mode。如果SPP为1，执行SRET后，返回S mode。随后SPP置0。 SIE: 1开启&#x2F;0关闭 S mode的所有中断 in S mode。在">
 <meta property="og:type" content="article">
 <meta property="og:title" content="risc-v Lookup">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/05/26/Project/rCore_uCore/Lookup/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="CSRs参考riscv-privileged-20211203.pdf sstatus SPP: 在进入S mode之前hart处于什么mode。用户态trap进入S mode，SPP被设置为0，其他情况为1。如果SPP为0，执行SRET后，返回U mode。如果SPP为1，执行SRET后，返回S mode。随后SPP置0。 SIE: 1开启&#x2F;0关闭 S mode的所有中断 in S m">
+<meta property="og:description" content="CSRs参考riscv-privileged-20211203.pdf sstatus SPP: 在进入S mode之前hart处于什么mode。用户态trap进入S mode，SPP被设置为0，其他情况为1。如果SPP为0，执行SRET后，返回U mode。如果SPP为1，执行SRET后，返回S mode。随后SPP置0。 SIE: 1开启&#x2F;0关闭 S mode的所有中断 in S mode。在">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230526094557.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230526104414.png">
@@ -119,7 +119,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -257,7 +259,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k words
+          1.7k words
         
       </span>
     
@@ -330,18 +332,18 @@
                 <h1 id="CSRs"><a href="#CSRs" class="headerlink" title="CSRs"></a>CSRs</h1><p>参考riscv-privileged-20211203.pdf</p>
 <h3 id="sstatus"><a href="#sstatus" class="headerlink" title="sstatus"></a><strong>sstatus</strong></h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230526094557.png" srcset="/img/loading.gif" lazyload></p>
 <p><strong>SPP</strong>: 在进入S mode之前hart处于什么mode。<br>用户态trap进入S mode，SPP被设置为0，其他情况为1。<br>如果SPP为0，执行SRET后，返回U mode。如果SPP为1，执行SRET后，返回S mode。随后SPP置0。</p>
-<p><strong>SIE</strong>: 1开启&#x2F;0关闭 S mode的所有中断 in S mode。<br>在U mode时，SIE被忽略，S mode 的中断都是打开的。</p>
+<p><strong>SIE</strong>: 1开启/0关闭 S mode的所有中断 in S mode。<br>在U mode时，SIE被忽略，S mode 的中断都是打开的。</p>
 <p><strong>SPIE</strong>: 当trap进入S mode，SIE会置0禁止S mode所有中断，SIE的旧值会保存到SPIE中。<br>执行SRET后，SIE被设置为SPIE中之前保存的旧值，SPIE置1。</p>
-<h3 id="stvec"><a href="#stvec" class="headerlink" title="stvec"></a><strong>stvec</strong></h3><p>Supervisor Trap Vector Base Address Register, <strong>保存S mode异常&#x2F;中断的跳转地址。</strong></p>
+<h3 id="stvec"><a href="#stvec" class="headerlink" title="stvec"></a><strong>stvec</strong></h3><p>Supervisor Trap Vector Base Address Register, <strong>保存S mode异常/中断的跳转地址。</strong></p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230526104414.png" srcset="/img/loading.gif" lazyload></p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230526104502.png" srcset="/img/loading.gif" lazyload></p>
 <p>MODE为0，直接跳转到BASE；MODE为1，跳转到BASE + cause * 4。</p>
 <p>在linux entry.S中的做法为直接设置stvec为handle_exception地址，地址的后两位肯定是4bytes对齐的，所以为00。跳转到handle_exception后，分开处理中断、系统调用、异常。根据异常cause再跳转到不同的异常处理函数。</p>
-<h3 id="SIP-SIE"><a href="#SIP-SIE" class="headerlink" title="SIP SIE"></a><strong>SIP SIE</strong></h3><p>Supervisor Interrupt pending&#x2F;enable Registers</p>
+<h3 id="SIP-SIE"><a href="#SIP-SIE" class="headerlink" title="SIP SIE"></a><strong>SIP SIE</strong></h3><p>Supervisor Interrupt pending/enable Registers</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230526111246.png" srcset="/img/loading.gif" lazyload></p>
 <ol>
 <li>SIP中断挂起（待处理的中断）和SIE中断使能。每一位代表的中断与scause中的为每个中断分配的异常码一致。</li>
-<li>当sstatus.SIE&#x3D;1, SIP[x]&#x3D;1, SIE[x]&#x3D;1，表示系统能够处理某个中断。</li>
+<li>当sstatus.SIE=1, SIP[x]=1, SIE[x]=1，表示系统能够处理某个中断。</li>
 <li>SIP中有的位是只读的，不能通过直接写0来清除：<ol>
 <li>SEIP is read-only in sip, and is set and cleared by the <strong>execution environment</strong>, typically through a <strong>platform-specific interrupt controller</strong>.</li>
 <li>STIP is read-only in sip, and is set and cleared by the <strong>execution environment</strong>.</li>
@@ -353,17 +355,17 @@
 <li>优先级：SEI&gt;SSI&gt;STI。</li>
 </ol>
 <h3 id="scounteren"><a href="#scounteren" class="headerlink" title="scounteren"></a>scounteren</h3><h3 id="sscratch"><a href="#sscratch" class="headerlink" title="sscratch"></a>sscratch</h3><h3 id="sepc"><a href="#sepc" class="headerlink" title="sepc"></a>sepc</h3><p>Supervisor Exception Program Counter.</p>
-<p>当trap发生时，sepc<strong>保存发生中断&#x2F;异常指令的虚拟地址</strong>。</p>
+<p>当trap发生时，sepc<strong>保存发生中断/异常指令的虚拟地址</strong>。</p>
 <p>如果需要返回到sepc后一条指令，就需要在sret之前修改sepc的值。</p>
 <p>对于同步异常，sepc指向导致异常的指令；对于中断，它指向中断处理后应该恢复执行的位置。</p>
-<h3 id="scause"><a href="#scause" class="headerlink" title="scause"></a>scause</h3><p><strong>保存发生中断&#x2F;异常指令的事件</strong>。</p>
+<h3 id="scause"><a href="#scause" class="headerlink" title="scause"></a>scause</h3><p><strong>保存发生中断/异常指令的事件</strong>。</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230601170420.png" srcset="/img/loading.gif" lazyload></p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230601170540.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="stval"><a href="#stval" class="headerlink" title="stval"></a>stval</h3><p>kernel中<code>/ptrace.h pt_regs中的badaddr</code>就是stval。发生kernel panic会打印出badaddr(stval)。</p>
 <ul>
-<li><p>当instruction fetch&#x2F;load&#x2F;store时发生breakpoint(3), address-misaligned, access-fault, page-fault，stval会保存导致错误的虚拟地址。</p>
+<li><p>当instruction fetch/load/store时发生breakpoint(3), address-misaligned, access-fault, page-fault，stval会保存导致错误的虚拟地址。</p>
 </li>
-<li><p>当发生不对齐load&#x2F;store导致的access-fault&#x2F;page-fault, stval包含导致故障访问的虚拟地址。</p>
+<li><p>当发生不对齐load/store导致的access-fault/page-fault, stval包含导致故障访问的虚拟地址。</p>
 </li>
 <li><p>当发生instruction access-fault(1) or page-fault(12)，stval保存导致故障的指令的虚拟地址，此时sepc也会指向指令的开始地址。</p>
 </li>
@@ -441,6 +443,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

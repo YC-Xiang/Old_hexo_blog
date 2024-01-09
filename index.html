@@ -103,7 +103,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -319,15 +321,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/12/28/Project/6.S801_XV6/XV6_Chapter1/" target="_self">
-          XV6 Book notes
+        <a href="/2023/12/30/Project/xv6/xv6_lab1/" target="_self">
+          xv6_lab1 Unix utilities
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/12/28/Project/6.S801_XV6/XV6_Chapter1/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/12/30/Project/xv6/xv6_lab1/" target="_self">
         <div>
-          XV6 实现的所有系统调用： 123456789101112131415161718192021int fork() //Create a process, return child’s PID.void exit(int status) //Terminate the current process; status reported to wait(). No return.int wait(i
+          Ctrl-p 打印进程。Ctrl-a x 退出qemu。 make grade 检查所有lab得分。./grade-lab-util sleep or make GRADEFLAGS=sleep grade 检查某一项作业得分。
         </div>
       </a>
 
@@ -335,8 +337,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2023-12-28 09:28" pubdate>
-              2023-12-28
+            <time datetime="2023-12-30 22:56" pubdate>
+              2023-12-30
             </time>
           </div>
         
@@ -366,7 +368,68 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/XV6/">#XV6</a>
+              <a href="/tags/xv6/">#xv6</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/12/30/Project/xv6/xv6_chapter1/" target="_self">
+          xv6_chapter1 Operating system interfaces
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/12/30/Project/xv6/xv6_chapter1/" target="_self">
+        <div>
+          XV6 实现的所有系统调用： 123456789101112131415161718192021int fork() //Create a process, return child’s PID.void exit(int status) //Terminate the current process; status reported to wait(). No return.int wait(i
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-12-30 15:12" pubdate>
+              2023-12-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/xv6/">#xv6</a>
             
           </div>
         
@@ -632,7 +695,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/12/13/Note/23-12-13_Vim/" target="_self">
         <div>
-          BasicCommand-line :e &#123;name of file&#125; open file for editing :ls show open buffers :help &#123;topic&#125; open help :help :w opens help for the :w command :help w opens help for the w movement
+          BasicCommand-line :e {name of file} open file for editing :ls show open buffers :help {topic} open help :help :w opens help for the :w command :help w opens help for the w movement    MovementMovement
         </div>
       </a>
 
@@ -801,72 +864,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/11/30/Note/Zephyr/23-12-01_Zephyr_DeviceDriverModel/" target="_self">
-          Zephyr -- Device Drvier Model
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/11/30/Note/Zephyr/23-12-01_Zephyr_DeviceDriverModel/" target="_self">
-        <div>
-          123456struct device &#123;      const char *name;      const void *config;      const void *api;      void * const data;&#125;;  config: 放地址映射，中断号等一些物理信息。api: 回调函数。data: 放reference counts, semaphores,
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-11-30 14:17" pubdate>
-              2023-11-30
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Zephyr/">#Zephyr</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#board">6</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

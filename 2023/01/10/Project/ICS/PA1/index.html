@@ -16,15 +16,15 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="RTFSC1234567891011121314151617# nemu&#x2F;scripts&#x2F;native.mkcompile_git:  $(call git_commit, &quot;compile NEMU&quot;)$(BINARY): compile_gitoverride ARGS ?&#x3D; --log&#x3D;$(BUILD_DIR)&#x2F;nemu-log.txtoverride ARGS +&#x3D; $">
+    <meta name="description" content="RTFSC1234567891011121314151617# nemu&#x2F;scripts&#x2F;native.mkcompile_git:  $(call git_commit, &quot;compile NEMU&quot;)$(BINARY): compile_gitoverride ARGS ?&#x3D; --log&#x3D;$(BUILD_DIR)&#x2F;nemu-log.txtoverride ARGS +&#x3D; $(ARGS_DIFF">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ICS2022 PA1">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/01/10/Project/ICS/PA1/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="RTFSC1234567891011121314151617# nemu&#x2F;scripts&#x2F;native.mkcompile_git:  $(call git_commit, &quot;compile NEMU&quot;)$(BINARY): compile_gitoverride ARGS ?&#x3D; --log&#x3D;$(BUILD_DIR)&#x2F;nemu-log.txtoverride ARGS +&#x3D; $">
+<meta property="og:description" content="RTFSC1234567891011121314151617# nemu&#x2F;scripts&#x2F;native.mkcompile_git:  $(call git_commit, &quot;compile NEMU&quot;)$(BINARY): compile_gitoverride ARGS ?&#x3D; --log&#x3D;$(BUILD_DIR)&#x2F;nemu-log.txtoverride ARGS +&#x3D; $(ARGS_DIFF">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-01-10T08:47:28.000Z">
-<meta property="article:modified_time" content="2023-10-27T02:16:10.445Z">
+<meta property="article:modified_time" content="2024-01-09T01:07:05.340Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="ICS">
 <meta name="twitter:card" content="summary_large_image">
@@ -112,7 +112,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -250,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k words
+          1.2k words
         
       </span>
     
@@ -312,7 +314,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年10月27日 上午
+                    本文最后更新于：2024年1月9日 上午
                   
                 
               </p>
@@ -320,7 +322,7 @@
             
               <div class="markdown-body">
                 
-                <h1 id="RTFSC"><a href="#RTFSC" class="headerlink" title="RTFSC"></a>RTFSC</h1><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># nemu/scripts/native.mk</span><br><br><span class="hljs-section">compile_git:</span><br>  <span class="hljs-variable">$(<span class="hljs-built_in">call</span> git_commit, &quot;compile NEMU&quot;)</span><br><span class="hljs-variable">$(BINARY)</span>: compile_git<br><br><span class="hljs-keyword">override</span> ARGS ?= --log=<span class="hljs-variable">$(BUILD_DIR)</span>/nemu-log.txt<br><span class="hljs-keyword">override</span> ARGS += <span class="hljs-variable">$(ARGS_DIFF)</span> <span class="hljs-comment"># nemu/tools/difftest.mk中CONFIG_DIFFTEST未定义，所以ARGS_DIFF不存在</span><br><br>IMG ?=<br><br>NEMU_EXEC := <span class="hljs-variable">$(BINARY)</span> <span class="hljs-variable">$(ARGS)</span> <span class="hljs-variable">$(IMG)</span><br><br><span class="hljs-section">run: run-env</span><br>  <span class="hljs-variable">$(<span class="hljs-built_in">call</span> git_commit, &quot;run NEMU&quot;)</span><br>  <span class="hljs-variable">$(NEMU_EXEC)</span><br><br></code></pre></td></tr></table></figure>
+                <h2 id="RTFSC"><a href="#RTFSC" class="headerlink" title="RTFSC"></a>RTFSC</h2><figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># nemu/scripts/native.mk</span><br><br><span class="hljs-section">compile_git:</span><br>  <span class="hljs-variable">$(<span class="hljs-built_in">call</span> git_commit, "compile NEMU")</span><br><span class="hljs-variable">$(BINARY)</span>: compile_git<br><br><span class="hljs-keyword">override</span> ARGS ?= --log=<span class="hljs-variable">$(BUILD_DIR)</span>/nemu-log.txt<br><span class="hljs-keyword">override</span> ARGS += <span class="hljs-variable">$(ARGS_DIFF)</span> <span class="hljs-comment"># nemu/tools/difftest.mk中CONFIG_DIFFTEST未定义，所以ARGS_DIFF不存在</span><br><br>IMG ?=<br><br>NEMU_EXEC := <span class="hljs-variable">$(BINARY)</span> <span class="hljs-variable">$(ARGS)</span> <span class="hljs-variable">$(IMG)</span><br><br><span class="hljs-section">run: run-env</span><br>  <span class="hljs-variable">$(<span class="hljs-built_in">call</span> git_commit, "run NEMU")</span><br>  <span class="hljs-variable">$(NEMU_EXEC)</span><br><br></code></pre></td></tr></tbody></table></figure>
 
 <p>由makefile可知，输入<code>make run</code>启动nemu时，传递给<code>monitor.c parse_args(argc, argv)</code>的参数为<br><code>--log=$(BUILD_DIR)/nemu-log.txt</code></p>
 <h2 id="配置系统和项目构建"><a href="#配置系统和项目构建" class="headerlink" title="配置系统和项目构建"></a>配置系统和项目构建</h2><p>在<code>nemu</code>目录下执行<code>make menuconfig</code>,结果会保存至<code>nemu/.config</code></p>
@@ -335,11 +337,11 @@
 </ul>
 <p>Makefile的编译规则在<code>nemu/scripts/build.mk</code>中定义。</p>
 <h1 id="基础设施"><a href="#基础设施" class="headerlink" title="基础设施"></a>基础设施</h1><h1 id="表达式求值"><a href="#表达式求值" class="headerlink" title="表达式求值"></a>表达式求值</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/derkampf/article/details/70661551">regcomp() regexec() regfree()详解</a><br><code>int regcomp (regex_t *compiled, const char *pattern, int cflags)</code><br><code>int regexec (regex_t *compiled, char *string, size_t nmatch, regmatch_t matchptr [], int eflags)</code></p>
-<p>字符串中的转义需要两个<code>\\</code>,比如转义+号，<code>&quot;\\+&quot;</code><br><a target="_blank" rel="noopener" href="https://zh.javascript.info/regexp-escaping#newregexp">转义，特殊字符</a></p>
+<p>字符串中的转义需要两个<code>\\</code>,比如转义+号，<code>"\\+"</code><br><a target="_blank" rel="noopener" href="https://zh.javascript.info/regexp-escaping#newregexp">转义，特殊字符</a></p>
 <h2 id="一些字符串处理函数"><a href="#一些字符串处理函数" class="headerlink" title="一些字符串处理函数"></a>一些字符串处理函数</h2><p><code>strcat</code><br><code>strcmp</code><br><code>strstr</code><br><code>strtol</code></p>
 <p><code>char *strtok(char *str, const char *delim)</code> 分解字符串 str 为一组字符串，delim 为分隔符。</p>
 <p><code>atoi</code>函数：十进制字符串数字转为int类型。</p>
-<p><code>long int strtol(const char *str, char **endptr, int base)</code>：可以根据字符串数字为10进制&#x2F;16进制…，转化为<code>long int</code>。如<code>strtol(0xabc, NULL, 16)</code>。<br>base表示输入数字的进制，base为0表示自动判断输入的数字为8&#x2F;10&#x2F;16进制。</p>
+<p><code>long int strtol(const char *str, char **endptr, int base)</code>：可以根据字符串数字为10进制/16进制…，转化为<code>long int</code>。如<code>strtol(0xabc, NULL, 16)</code>。<br>base表示输入数字的进制，base为0表示自动判断输入的数字为8/10/16进制。</p>
 
                 
               </div>
@@ -409,6 +411,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

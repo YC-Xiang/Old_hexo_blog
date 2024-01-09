@@ -112,7 +112,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -250,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k words
+          1.6k words
         
       </span>
     
@@ -261,7 +263,7 @@
         
         
         
-          15 mins
+          14 mins
         
       </span>
     
@@ -335,7 +337,7 @@
 <h3 id="Implementation-Detail-实现细节"><a href="#Implementation-Detail-实现细节" class="headerlink" title="Implementation Detail 实现细节"></a>Implementation Detail 实现细节</h3><p><code>scripts/build/gencalls.py</code>会把parse到的system calls放进<code>/build/include/generated/syscall_list.h</code>中。以<code>K_SYSCALL_</code>前缀加上API。</p>
 <p>所有可以调用的system calls被保存在<code>syscall_dispatch.c</code>中的<code>_k_syscall_table</code>中。</p>
 <p>system calls的API实现被保存在了<code>/build/include/generated/syscalls/xxx.h</code> 这些文件被<code>/include/xxx.h</code>文件最后include进去，完成函数的定义。e.g</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// include/i2c.h</span><br>__syscall <span class="hljs-type">int</span> <span class="hljs-title function_">i2c_configure</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">uint32_t</span> dev_config)</span>; <span class="hljs-comment">//声明</span><br><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">z_impl_i2c_configure</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *dev,</span><br><span class="hljs-params">               <span class="hljs-type">uint32_t</span> dev_config)</span><br>&#123;<br>  <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_driver_api</span> *<span class="hljs-title">api</span> =</span><br>    (<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> i2c_driver_api *)dev-&gt;api;<br><br>  <span class="hljs-keyword">return</span> api-&gt;configure(dev, dev_config);<br>&#125;<br><span class="hljs-comment">//...</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;syscalls/i2c.h&gt;</span></span><br><br><span class="hljs-comment">// build/include/generated/syscalls/i2c.h</span><br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> <span class="hljs-title function_">z_impl_i2c_configure</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device * dev, <span class="hljs-type">uint32_t</span> dev_config)</span>;<br><br>__pinned_func<br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">i2c_configure</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device * dev, <span class="hljs-type">uint32_t</span> dev_config)</span><br>&#123;<br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> CONFIG_USERSPACE</span><br>        <span class="hljs-keyword">if</span> (z_syscall_trap()) &#123;<br>                <span class="hljs-class"><span class="hljs-keyword">union</span> &#123;</span> <span class="hljs-type">uintptr_t</span> x; <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">device</span> * <span class="hljs-title">val</span>;</span> &#125; parm0 = &#123; .val = dev &#125;;<br>                <span class="hljs-class"><span class="hljs-keyword">union</span> &#123;</span> <span class="hljs-type">uintptr_t</span> x; <span class="hljs-type">uint32_t</span> val; &#125; parm1 = &#123; .val = dev_config &#125;;<br>                <span class="hljs-keyword">return</span> (<span class="hljs-type">int</span>) arch_syscall_invoke2(parm0.x, parm1.x, K_SYSCALL_I2C_CONFIGURE);<br>        &#125;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>        compiler_barrier();<br>        <span class="hljs-keyword">return</span> z_impl_i2c_configure(dev, dev_config);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// include/i2c.h</span><br>__syscall <span class="hljs-type">int</span> <span class="hljs-title function_">i2c_configure</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">uint32_t</span> dev_config)</span>; <span class="hljs-comment">//声明</span><br><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">z_impl_i2c_configure</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *dev,</span><br><span class="hljs-params">               <span class="hljs-type">uint32_t</span> dev_config)</span><br>{<br>  <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_driver_api</span> *<span class="hljs-title">api</span> =</span><br>    (<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> i2c_driver_api *)dev-&gt;api;<br><br>  <span class="hljs-keyword">return</span> api-&gt;configure(dev, dev_config);<br>}<br><span class="hljs-comment">//...</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;syscalls/i2c.h&gt;</span></span><br><br><span class="hljs-comment">// build/include/generated/syscalls/i2c.h</span><br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> <span class="hljs-title function_">z_impl_i2c_configure</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device * dev, <span class="hljs-type">uint32_t</span> dev_config)</span>;<br><br>__pinned_func<br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">i2c_configure</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device * dev, <span class="hljs-type">uint32_t</span> dev_config)</span><br>{<br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> CONFIG_USERSPACE</span><br>        <span class="hljs-keyword">if</span> (z_syscall_trap()) {<br>                <span class="hljs-class"><span class="hljs-keyword">union</span> {</span> <span class="hljs-type">uintptr_t</span> x; <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">device</span> * <span class="hljs-title">val</span>;</span> } parm0 = { .val = dev };<br>                <span class="hljs-class"><span class="hljs-keyword">union</span> {</span> <span class="hljs-type">uintptr_t</span> x; <span class="hljs-type">uint32_t</span> val; } parm1 = { .val = dev_config };<br>                <span class="hljs-keyword">return</span> (<span class="hljs-type">int</span>) arch_syscall_invoke2(parm0.x, parm1.x, K_SYSCALL_I2C_CONFIGURE);<br>        }<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>        compiler_barrier();<br>        <span class="hljs-keyword">return</span> z_impl_i2c_configure(dev, dev_config);<br>}<br><br></code></pre></td></tr></tbody></table></figure>
 
                 
               </div>
@@ -405,6 +407,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

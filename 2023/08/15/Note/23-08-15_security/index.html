@@ -121,7 +121,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -270,7 +272,7 @@
         
         
         
-          17 mins
+          16 mins
         
       </span>
     
@@ -337,7 +339,7 @@
 <li>以512位为单位对消息进行分块为M1, M2, …, Mn。</li>
 </ul>
 <p>消息区块将进行逐个处理：从一个固定的初始哈希$H^{0}$开始，进行以下序列计算：</p>
-<p>$H^{(i)}&#x3D;H^{(i-1)}+C_{M^{i}}(H^{(i-1)})$</p>
+<p>$H^{(i)}=H^{(i-1)}+C_{M^{i}}(H^{(i-1)})$</p>
 <p>C是SHA256压缩函数，+是mod $2^{32}$加法，相加后对$2^{32}$取余。</p>
 <h3 id="常量初始化"><a href="#常量初始化" class="headerlink" title="常量初始化"></a>常量初始化</h3><blockquote>
 <p>code中的iv向量即初始化哈希</p>
@@ -345,7 +347,7 @@
 <p>初始哈希值$H^0$取自然数前八个素数(2, 3, 5, 7, 11, 13, 19)的平方根的小数部分。并且取前面的32位。</p>
 <p>比如根号2的小数部分为0.414213562373095048约等于$6<em>16^{-1}+a</em>16^{-2}+0*16^{-3}…$</p>
 <p>$H^{0}$对应0x6a09e667</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> SHA256_DIGEST_SIZE</span><br><span class="hljs-type">const</span> U8 g_cbySha256IV[SHA256_DIGEST_SIZE]=<br>&#123;<br>  <span class="hljs-number">0x6A</span>, <span class="hljs-number">0x09</span>, <span class="hljs-number">0xE6</span>, <span class="hljs-number">0x67</span>,<br>  <span class="hljs-number">0xBB</span>, <span class="hljs-number">0x67</span>, <span class="hljs-number">0xAE</span>, <span class="hljs-number">0x85</span>,<br>  <span class="hljs-number">0x3C</span>, <span class="hljs-number">0x6E</span>, <span class="hljs-number">0xF3</span>, <span class="hljs-number">0x72</span>,<br>  <span class="hljs-number">0xA5</span>, <span class="hljs-number">0x4F</span>, <span class="hljs-number">0xF5</span>, <span class="hljs-number">0x3A</span>,<br>  <span class="hljs-number">0x51</span>, <span class="hljs-number">0x0E</span>, <span class="hljs-number">0x52</span>, <span class="hljs-number">0x7F</span>,<br>  <span class="hljs-number">0x9B</span>, <span class="hljs-number">0x05</span>, <span class="hljs-number">0x68</span>, <span class="hljs-number">0x8C</span>,<br>  <span class="hljs-number">0x1F</span>, <span class="hljs-number">0x83</span>, <span class="hljs-number">0xD9</span>, <span class="hljs-number">0xAB</span>,<br>  <span class="hljs-number">0x5B</span>, <span class="hljs-number">0xE0</span>, <span class="hljs-number">0xCD</span>, <span class="hljs-number">0x19</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> SHA256_DIGEST_SIZE</span><br><span class="hljs-type">const</span> U8 g_cbySha256IV[SHA256_DIGEST_SIZE]=<br>{<br>  <span class="hljs-number">0x6A</span>, <span class="hljs-number">0x09</span>, <span class="hljs-number">0xE6</span>, <span class="hljs-number">0x67</span>,<br>  <span class="hljs-number">0xBB</span>, <span class="hljs-number">0x67</span>, <span class="hljs-number">0xAE</span>, <span class="hljs-number">0x85</span>,<br>  <span class="hljs-number">0x3C</span>, <span class="hljs-number">0x6E</span>, <span class="hljs-number">0xF3</span>, <span class="hljs-number">0x72</span>,<br>  <span class="hljs-number">0xA5</span>, <span class="hljs-number">0x4F</span>, <span class="hljs-number">0xF5</span>, <span class="hljs-number">0x3A</span>,<br>  <span class="hljs-number">0x51</span>, <span class="hljs-number">0x0E</span>, <span class="hljs-number">0x52</span>, <span class="hljs-number">0x7F</span>,<br>  <span class="hljs-number">0x9B</span>, <span class="hljs-number">0x05</span>, <span class="hljs-number">0x68</span>, <span class="hljs-number">0x8C</span>,<br>  <span class="hljs-number">0x1F</span>, <span class="hljs-number">0x83</span>, <span class="hljs-number">0xD9</span>, <span class="hljs-number">0xAB</span>,<br>  <span class="hljs-number">0x5B</span>, <span class="hljs-number">0xE0</span>, <span class="hljs-number">0xCD</span>, <span class="hljs-number">0x19</span><br>};<br></code></pre></td></tr></tbody></table></figure>
 
 <h3 id="消息预处理"><a href="#消息预处理" class="headerlink" title="消息预处理"></a>消息预处理</h3><p>对消息进行补码处理: 假设M的二进制编码长度为$l$位，首先在消息末尾补上一位”1”，然后再补上$k$个”0”, k为下列方程最小数。</p>
 <p>$$l+1+k \equiv 448\space mod\space512 $$</p>
@@ -359,8 +361,8 @@
 <p>例如补充完消息为512bits，那么只有$M^1$大块，和其中的16小块。</p>
 </blockquote>
 <p>见参考链接对”abc”的补码过程。</p>
-<h3 id="摘要计算主循环"><a href="#摘要计算主循环" class="headerlink" title="摘要计算主循环"></a>摘要计算主循环</h3><p>$For\space i&#x3D;1\rightarrow N$</p>
-<p>用(i-1)个中间哈希对a,b,c,d,e,f,g,h初始化，当i&#x3D;1时，就使用初始化哈希常量</p>
+<h3 id="摘要计算主循环"><a href="#摘要计算主循环" class="headerlink" title="摘要计算主循环"></a>摘要计算主循环</h3><p>$For\space i=1\rightarrow N$</p>
+<p>用(i-1)个中间哈希对a,b,c,d,e,f,g,h初始化，当i=1时，就使用初始化哈希常量</p>
 <p>$$a\leftarrow H_1^{i-1} \ b\leftarrow H_2^{i-1} \ …\h\leftarrow H_8^{i-1}$$</p>
 <p>应用SHA256压缩函数来更新a,b,c,…,h</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230731145934.png" srcset="/img/loading.gif" lazyload></p>
@@ -431,6 +433,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

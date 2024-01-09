@@ -161,7 +161,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -299,7 +301,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.9k words
+          5.8k words
         
       </span>
     
@@ -380,10 +382,10 @@
 <p>USB OTG中增加了一种MINI USB接头，使用5条线，比标准USB多一条身份识别线。</p>
 <p>USB协议规定，设备在未配置前，可以从Vbus最多获取100mA电流，配置之后，最多可以获得500mA电流。Vbus是5V的电压。</p>
 <p>枚举就是从设备读取各种描述符信息。</p>
-<p>Control transfer：低速8字节，高速64字节，全速8&#x2F;16&#x2F;32&#x2F;64字节。</p>
+<p>Control transfer：低速8字节，高速64字节，全速8/16/32/64字节。</p>
 <p>Isochronous Transfer：全速1023字节，高速1024字节，低速不支持。</p>
 <p>Interrupt Transfer：低速上限8字节，全速上限64字节，高速上限1024字节。</p>
-<p>Bulk transfer：高速512字节，全速8&#x2F;16&#x2F;32&#x2F;64字节，低速不支持。</p>
+<p>Bulk transfer：高速512字节，全速8/16/32/64字节，低速不支持。</p>
 <h1 id="Chapter3-Background"><a href="#Chapter3-Background" class="headerlink" title="Chapter3 Background"></a>Chapter3 Background</h1><p>USB 接口可用于连接多达 127 种外设。</p>
 <h1 id="Chapter4-Architectural-Overview"><a href="#Chapter4-Architectural-Overview" class="headerlink" title="Chapter4 Architectural Overview"></a>Chapter4 Architectural Overview</h1><h3 id="4-1-1-Bus-Topology-总线拓扑"><a href="#4-1-1-Bus-Topology-总线拓扑" class="headerlink" title="4.1.1 Bus Topology 总线拓扑"></a>4.1.1 Bus Topology 总线拓扑</h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230606134650.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
@@ -406,7 +408,7 @@
 <h1 id="Chapter5-USB-Data-Flow-Model"><a href="#Chapter5-USB-Data-Flow-Model" class="headerlink" title="Chapter5 USB Data Flow Model"></a>Chapter5 USB Data Flow Model</h1><h3 id="5-3-1-Device-Endpoints"><a href="#5-3-1-Device-Endpoints" class="headerlink" title="5.3.1 Device Endpoints"></a>5.3.1 Device Endpoints</h3><p>Endpoint 只支持一种方向的数据流通，input or output。除endpoint0，input+output。</p>
 <p>endpoint 描述的内容有：</p>
 <ul>
-<li>总线访问频率&#x2F;延迟要求</li>
+<li>总线访问频率/延迟要求</li>
 <li>带宽要求</li>
 <li>endpoint number</li>
 <li>Error handling</li>
@@ -429,20 +431,20 @@
 <p>高速设备D+, D-各有Rs 45Ω的下拉电阻，用来消除反射信号：</p>
 <p>当断开高速设备后，Hub发出信号，得到的反射信号无法衰减，Hub监测到这些信号后就知道高速设备已经断开。对应上图的Rs和Disconnection Envelope Detector。当差分信号线的幅值超过<strong>625mV</strong>，意味着断开。</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607094320.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="7-1-5-1-Low-x2F-Full-speed-Device-Speed-Identification"><a href="#7-1-5-1-Low-x2F-Full-speed-Device-Speed-Identification" class="headerlink" title="7.1.5.1 Low-&#x2F;Full-speed Device Speed Identification"></a>7.1.5.1 Low-&#x2F;Full-speed Device Speed Identification</h4><p>Full&#x2F;High-speed device D+ 上有1.5k Rpu上拉。</p>
+<h4 id="7-1-5-1-Low-x2F-Full-speed-Device-Speed-Identification"><a href="#7-1-5-1-Low-x2F-Full-speed-Device-Speed-Identification" class="headerlink" title="7.1.5.1 Low-/Full-speed Device Speed Identification"></a>7.1.5.1 Low-/Full-speed Device Speed Identification</h4><p>Full/High-speed device D+ 上有1.5k Rpu上拉。</p>
 <p>Low-speed device D- 上有1.5k Rpu上拉。</p>
 <p>用于attach时区分不同速率的设备。</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607101850.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="7-1-7-Signaling-levels"><a href="#7-1-7-Signaling-levels" class="headerlink" title="7.1.7 Signaling levels"></a>7.1.7 Signaling levels</h3><h4 id="7-1-7-1-Low-x2F-Full-speed-Signaling-Levels"><a href="#7-1-7-1-Low-x2F-Full-speed-Signaling-Levels" class="headerlink" title="7.1.7.1 Low-&#x2F;Full-speed Signaling Levels"></a>7.1.7.1 Low-&#x2F;Full-speed Signaling Levels</h4><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607103019.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="7-1-7-Signaling-levels"><a href="#7-1-7-Signaling-levels" class="headerlink" title="7.1.7 Signaling levels"></a>7.1.7 Signaling levels</h3><h4 id="7-1-7-1-Low-x2F-Full-speed-Signaling-Levels"><a href="#7-1-7-1-Low-x2F-Full-speed-Signaling-Levels" class="headerlink" title="7.1.7.1 Low-/Full-speed Signaling Levels"></a>7.1.7.1 Low-/Full-speed Signaling Levels</h4><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607103019.png" srcset="/img/loading.gif" lazyload></p>
 <h4 id="7-1-7-2-High-speed-Signaling-Levels"><a href="#7-1-7-2-High-speed-Signaling-Levels" class="headerlink" title="7.1.7.2 High-speed Signaling Levels"></a>7.1.7.2 High-speed Signaling Levels</h4><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607104959.png" srcset="/img/loading.gif" lazyload></p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607105059.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="7-1-7-4-Data-Signaling"><a href="#7-1-7-4-Data-Signaling" class="headerlink" title="7.1.7.4 Data Signaling"></a>7.1.7.4 Data Signaling</h4><h5 id="7-1-7-4-1-Low-x2F-Full-Speed-Signaling"><a href="#7-1-7-4-1-Low-x2F-Full-Speed-Signaling" class="headerlink" title="7.1.7.4.1 Low-&#x2F;Full-Speed Signaling"></a>7.1.7.4.1 Low-&#x2F;Full-Speed Signaling</h5><p>SOP：Start Of Packet，Hub驱动D+、D-这两条线路从Idle状态变为K状态。SOP中的K状态就是SYNC信号的第1位数据，SYNC格式为3对KJ外加2个K。</p>
+<h4 id="7-1-7-4-Data-Signaling"><a href="#7-1-7-4-Data-Signaling" class="headerlink" title="7.1.7.4 Data Signaling"></a>7.1.7.4 Data Signaling</h4><h5 id="7-1-7-4-1-Low-x2F-Full-Speed-Signaling"><a href="#7-1-7-4-1-Low-x2F-Full-Speed-Signaling" class="headerlink" title="7.1.7.4.1 Low-/Full-Speed Signaling"></a>7.1.7.4.1 Low-/Full-Speed Signaling</h5><p>SOP：Start Of Packet，Hub驱动D+、D-这两条线路从Idle状态变为K状态。SOP中的K状态就是SYNC信号的第1位数据，SYNC格式为3对KJ外加2个K。</p>
 <p>EOP：End Of Packet，由数据的发送方发出EOP，数据发送方驱动D+、D-这两条线路，先设为SE0状态并维持2位时间，再设置为J状态并维持1位时间，最后D+、D-变为高阻状态，这时由线路的上下拉电阻使得总线进入Idle状态。</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607112911.png" srcset="/img/loading.gif" lazyload></p>
 <h5 id="7-1-7-4-2-High-speed-Signaling"><a href="#7-1-7-4-2-High-speed-Signaling" class="headerlink" title="7.1.7.4.2 High-speed Signaling"></a>7.1.7.4.2 High-speed Signaling</h5><h4 id="7-1-7-5-Reset"><a href="#7-1-7-5-Reset" class="headerlink" title="7.1.7.5 Reset"></a>7.1.7.5 Reset</h4><h4 id="7-1-7-6-Suspend"><a href="#7-1-7-6-Suspend" class="headerlink" title="7.1.7.6 Suspend"></a>7.1.7.6 Suspend</h4><h4 id="7-1-7-7-Resume"><a href="#7-1-7-7-Resume" class="headerlink" title="7.1.7.7 Resume"></a>7.1.7.7 Resume</h4><h3 id="7-1-8-Data-encoding-数据编码"><a href="#7-1-8-Data-encoding-数据编码" class="headerlink" title="7.1.8 Data encoding 数据编码"></a>7.1.8 Data encoding 数据编码</h3><p>NRZI编码，电平信号不变表示1，跳变表示0。</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607112056.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="7-1-9-Bit-Stuffing-位填充"><a href="#7-1-9-Bit-Stuffing-位填充" class="headerlink" title="7.1.9 Bit Stuffing 位填充"></a>7.1.9 Bit Stuffing 位填充</h3><p>连续传送6个1后，会填充一个0强制翻转信号。</p>
-<h1 id="Chapter8-Protocol-Layer"><a href="#Chapter8-Protocol-Layer" class="headerlink" title="Chapter8 Protocol Layer"></a>Chapter8 Protocol Layer</h1><h2 id="8-2-SYNC-field"><a href="#8-2-SYNC-field" class="headerlink" title="8.2 SYNC field"></a>8.2 SYNC field</h2><p>对于低速&#x2F;全速设备，SYNC信号是8位数据(从做到右是00000001)；对于高速设备，SYNC信号是32位数据(从左到右是00000000000000000000000000000001)。使用NRZI编码时，前面每个”0”都对应一个跳变。</p>
+<h1 id="Chapter8-Protocol-Layer"><a href="#Chapter8-Protocol-Layer" class="headerlink" title="Chapter8 Protocol Layer"></a>Chapter8 Protocol Layer</h1><h2 id="8-2-SYNC-field"><a href="#8-2-SYNC-field" class="headerlink" title="8.2 SYNC field"></a>8.2 SYNC field</h2><p>对于低速/全速设备，SYNC信号是8位数据(从做到右是00000001)；对于高速设备，SYNC信号是32位数据(从左到右是00000000000000000000000000000001)。使用NRZI编码时，前面每个”0”都对应一个跳变。</p>
 <p>同步域这样可以用来同步主机端和设备端的数据时钟。</p>
 <h2 id="8-3-Packet-Field-Formats"><a href="#8-3-Packet-Field-Formats" class="headerlink" title="8.3 Packet Field Formats"></a>8.3 Packet Field Formats</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230607150914.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="8-3-1-PID"><a href="#8-3-1-PID" class="headerlink" title="8.3.1 PID"></a>8.3.1 PID</h3><p>PID表示了包的类型。</p>
@@ -517,8 +519,8 @@
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608142617.png" srcset="/img/loading.gif" lazyload></p>
 <p>数据包类型在DATA0和DATA1之间切换。</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608141406.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="8-5-3-Control-Transfer"><a href="#8-5-3-Control-Transfer" class="headerlink" title="8.5.3 Control Transfer"></a>8.5.3 Control Transfer</h3><p>Control 是transfer而不是transaction的原因是，control transfer由多个事务(transaction)组成。包括SETUP stage（SETUP事务），data stage（1个或者多个IN&#x2F;OUT事务），status stage（1个IN事务）。Data Stage是可选的。</p>
-<p>而Bulk&#x2F;interrupt&#x2F;isochronous transfer都是由对应的单独一个Bulk&#x2F;interrupt&#x2F;isochronous transaction组成。</p>
+<h3 id="8-5-3-Control-Transfer"><a href="#8-5-3-Control-Transfer" class="headerlink" title="8.5.3 Control Transfer"></a>8.5.3 Control Transfer</h3><p>Control 是transfer而不是transaction的原因是，control transfer由多个事务(transaction)组成。包括SETUP stage（SETUP事务），data stage（1个或者多个IN/OUT事务），status stage（1个IN事务）。Data Stage是可选的。</p>
+<p>而Bulk/interrupt/isochronous transfer都是由对应的单独一个Bulk/interrupt/isochronous transaction组成。</p>
 <p>下图为SETUP事务流程，Setup Stage必须是DATA0。如果device端正确收到SETUP data, 回复ACK握手包。如果数据错误丢弃数据并且不发送握手包。</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230608142906.png" srcset="/img/loading.gif" lazyload></p>
 <p>对应下图的<strong>Setup Stage</strong>。</p>
@@ -537,7 +539,7 @@
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230609174140.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="9-3-USB-Device-Requests"><a href="#9-3-USB-Device-Requests" class="headerlink" title="9.3 USB Device Requests"></a>9.3 USB Device Requests</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230612145851.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
-<li><p>bmRequestType：区分方向，type，device&#x2F;interface&#x2F;endpoint。</p>
+<li><p>bmRequestType：区分方向，type，device/interface/endpoint。</p>
 </li>
 <li><p>bRequest: 具体的事件，只定义了bmRequestType D[6:5]为Standard的情况。</p>
 </li>
@@ -655,6 +657,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

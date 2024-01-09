@@ -114,7 +114,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -252,7 +254,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.1k words
+          2.9k words
         
       </span>
     
@@ -263,7 +265,7 @@
         
         
         
-          26 mins
+          25 mins
         
       </span>
     
@@ -360,8 +362,8 @@
 </tbody></table>
 <p>我们常用的是模式0和模式3，因为它们都是在上升沿采样数据，不用去在乎时钟的初始电平是什么，只要在上升沿采集数据就行。</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230522180216.png" srcset="/img/loading.gif" lazyload></p>
-<h1 id="2-SPI-driver"><a href="#2-SPI-driver" class="headerlink" title="2. SPI driver"></a>2. SPI driver</h1><h2 id="2-2-spi-controller"><a href="#2-2-spi-controller" class="headerlink" title="2.2 spi_controller"></a>2.2 spi_controller</h2><p>include&#x2F;linux&#x2F;spi.h</p>
-<h2 id="2-3-spi-device"><a href="#2-3-spi-device" class="headerlink" title="2.3 spi_device"></a>2.3 spi_device</h2><p>include&#x2F;linux&#x2F;spi.h</p>
+<h1 id="2-SPI-driver"><a href="#2-SPI-driver" class="headerlink" title="2. SPI driver"></a>2. SPI driver</h1><h2 id="2-2-spi-controller"><a href="#2-2-spi-controller" class="headerlink" title="2.2 spi_controller"></a>2.2 spi_controller</h2><p>include/linux/spi.h</p>
+<h2 id="2-3-spi-device"><a href="#2-3-spi-device" class="headerlink" title="2.3 spi_device"></a>2.3 spi_device</h2><p>include/linux/spi.h</p>
 <h2 id="2-4-spi-transfer、spi-message"><a href="#2-4-spi-transfer、spi-message" class="headerlink" title="2.4 spi_transfer、spi_message"></a>2.4 spi_transfer、spi_message</h2><p>在SPI子系统中，用spi_transfer结构体描述一个传输，用spi_message管理整个传输。可以构造多个spi_transfer结构体，把它们放入一个spi_message里面。</p>
 <p>SPI传输时，发出N个字节，就可以同时得到N个字节。</p>
 <ul>
@@ -400,7 +402,7 @@
 <li>spi-tx-delay-us：单位是毫秒，表示每次写传输后要延时多久</li>
 </ul>
 <p>示例：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c">spi@f00 &#123;<br>    <span class="hljs-meta">#address-cells = <span class="hljs-string">&lt;1&gt;</span>;</span><br>    <span class="hljs-meta">#size-cells = <span class="hljs-string">&lt;0&gt;</span>;</span><br>    compatible = <span class="hljs-string">&quot;fsl,mpc5200b-spi&quot;</span>,<span class="hljs-string">&quot;fsl,mpc5200-spi&quot;</span>;<br>    reg = &lt;<span class="hljs-number">0xf00</span> <span class="hljs-number">0x20</span>&gt;;<br>    interrupts = &lt;<span class="hljs-number">2</span> <span class="hljs-number">13</span> <span class="hljs-number">0</span> <span class="hljs-number">2</span> <span class="hljs-number">14</span> <span class="hljs-number">0</span>&gt;;<br>    interrupt-parent = &lt;&amp;mpc5200_pic&gt;;<br><br>    ethernet-<span class="hljs-keyword">switch</span>@<span class="hljs-number">0</span> &#123;<br>      compatible = <span class="hljs-string">&quot;micrel,ks8995m&quot;</span>;<br>      spi-max-frequency = &lt;<span class="hljs-number">1000000</span>&gt;;<br>      reg = &lt;<span class="hljs-number">0</span>&gt;;<br>    &#125;;<br><br>    codec@<span class="hljs-number">1</span> &#123;<br>      compatible = <span class="hljs-string">&quot;ti,tlv320aic26&quot;</span>;<br>      spi-max-frequency = &lt;<span class="hljs-number">100000</span>&gt;;<br>      reg = &lt;<span class="hljs-number">1</span>&gt;;<br>    &#125;;<br>  &#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c">spi@f00 {<br>    <span class="hljs-meta">#address-cells = <span class="hljs-string">&lt;1&gt;</span>;</span><br>    <span class="hljs-meta">#size-cells = <span class="hljs-string">&lt;0&gt;</span>;</span><br>    compatible = <span class="hljs-string">"fsl,mpc5200b-spi"</span>,<span class="hljs-string">"fsl,mpc5200-spi"</span>;<br>    reg = &lt;<span class="hljs-number">0xf00</span> <span class="hljs-number">0x20</span>&gt;;<br>    interrupts = &lt;<span class="hljs-number">2</span> <span class="hljs-number">13</span> <span class="hljs-number">0</span> <span class="hljs-number">2</span> <span class="hljs-number">14</span> <span class="hljs-number">0</span>&gt;;<br>    interrupt-parent = &lt;&amp;mpc5200_pic&gt;;<br><br>    ethernet-<span class="hljs-keyword">switch</span>@<span class="hljs-number">0</span> {<br>      compatible = <span class="hljs-string">"micrel,ks8995m"</span>;<br>      spi-max-frequency = &lt;<span class="hljs-number">1000000</span>&gt;;<br>      reg = &lt;<span class="hljs-number">0</span>&gt;;<br>    };<br><br>    codec@<span class="hljs-number">1</span> {<br>      compatible = <span class="hljs-string">"ti,tlv320aic26"</span>;<br>      spi-max-frequency = &lt;<span class="hljs-number">100000</span>&gt;;<br>      reg = &lt;<span class="hljs-number">1</span>&gt;;<br>    };<br>  };<br></code></pre></td></tr></tbody></table></figure>
 
 <h1 id="4-spidev的使用-SPI用户态API"><a href="#4-spidev的使用-SPI用户态API" class="headerlink" title="4. spidev的使用(SPI用户态API)"></a>4. spidev的使用(SPI用户态API)</h1><ul>
 <li>内核驱动：<code>drivers\spi\spidev.c</code></li>
@@ -408,11 +410,11 @@
 <li>内核文档：<code>Documentation\spi\spidev</code></li>
 </ul>
 <h2 id="4-1-spidev驱动程序分析"><a href="#4-1-spidev驱动程序分析" class="headerlink" title="4.1 spidev驱动程序分析"></a>4.1 spidev驱动程序分析</h2><p>内核驱动：<code>drivers\spi\spidev.c</code></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c">spidev_write();<br>  spidev_sync_write();<br>    spidev_sync();<br><br>spidev_read();<br>  spidev_sync_read();<br>    spidev_sync();<br><br>spidev_ioctl();<br><span class="hljs-comment">// 在应用层通过ioctl(fd, SPI_IOC_MESSAGE(x), xfer) 来调用，进行spi传输. 参考spidev_fdx.c</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c">spidev_write();<br>  spidev_sync_write();<br>    spidev_sync();<br><br>spidev_read();<br>  spidev_sync_read();<br>    spidev_sync();<br><br>spidev_ioctl();<br><span class="hljs-comment">// 在应用层通过ioctl(fd, SPI_IOC_MESSAGE(x), xfer) 来调用，进行spi传输. 参考spidev_fdx.c</span><br></code></pre></td></tr></tbody></table></figure>
 
 <h2 id="4-2-spidev应用程序分析"><a href="#4-2-spidev应用程序分析" class="headerlink" title="4.2 spidev应用程序分析"></a>4.2 spidev应用程序分析</h2><p>内核提供的测试程序：<code>tools\spi\spidev_fdx.c</code></p>
 <p>使用方法：</p>
-<p>spidev_fdx [-h] [-m N] [-r N] &#x2F;dev&#x2F;spidevB.D</p>
+<p>spidev_fdx [-h] [-m N] [-r N] /dev/spidevB.D</p>
 <p>h: 打印用法</p>
 <p>m N：先写1个字节0xaa，再读N个字节，<strong>注意：</strong>不是同时写同时读</p>
 <p>r N：读N个字节</p>
@@ -421,9 +423,9 @@
 <p>但是spidev有2个缺点：</p>
 <ul>
 <li>不支持中断</li>
-<li>只支持同步操作，不支持异步操作：就是read&#x2F;write&#x2F;ioctl这些函数只能执行完毕才可返回</li>
+<li>只支持同步操作，不支持异步操作：就是read/write/ioctl这些函数只能执行完毕才可返回</li>
 </ul>
-<h3 id="5-1-SPI传输接口函数"><a href="#5-1-SPI传输接口函数" class="headerlink" title="5.1 SPI传输接口函数"></a>5.1 SPI传输接口函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c">/include/linux/spi/spi.h<br><span class="hljs-comment">// 简易函数</span><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">spi_write</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *buf, <span class="hljs-type">size_t</span> len)</span>;<br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">spi_read</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, <span class="hljs-type">void</span> *buf, <span class="hljs-type">size_t</span> len)</span>;<br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> <span class="hljs-title function_">spi_write_then_read</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *txbuf, <span class="hljs-type">unsigned</span> n_tx, <span class="hljs-type">void</span> *rxbuf, <span class="hljs-type">unsigned</span> n_rx)</span>;<br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">ssize_t</span> <span class="hljs-title function_">spi_w8r8</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, u8 cmd)</span>;<br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">ssize_t</span> <span class="hljs-title function_">spi_w8r16</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, u8 cmd)</span>;<br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">ssize_t</span> <span class="hljs-title function_">spi_w8r16be</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, u8 cmd)</span>;<br><br><span class="hljs-comment">// 复杂函数</span><br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> <span class="hljs-title function_">spi_async</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, <span class="hljs-keyword">struct</span> spi_message *message)</span>;<br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> <span class="hljs-title function_">spi_sync</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, <span class="hljs-keyword">struct</span> spi_message *message)</span>;<br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">spi_sync_transfer</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, <span class="hljs-keyword">struct</span> spi_transfer *xfers, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> num_xfers)</span>;<br></code></pre></td></tr></table></figure>
+<h3 id="5-1-SPI传输接口函数"><a href="#5-1-SPI传输接口函数" class="headerlink" title="5.1 SPI传输接口函数"></a>5.1 SPI传输接口函数</h3><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c">/include/linux/spi/spi.h<br><span class="hljs-comment">// 简易函数</span><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">spi_write</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *buf, <span class="hljs-type">size_t</span> len)</span>;<br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">spi_read</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, <span class="hljs-type">void</span> *buf, <span class="hljs-type">size_t</span> len)</span>;<br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> <span class="hljs-title function_">spi_write_then_read</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *txbuf, <span class="hljs-type">unsigned</span> n_tx, <span class="hljs-type">void</span> *rxbuf, <span class="hljs-type">unsigned</span> n_rx)</span>;<br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">ssize_t</span> <span class="hljs-title function_">spi_w8r8</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, u8 cmd)</span>;<br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">ssize_t</span> <span class="hljs-title function_">spi_w8r16</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, u8 cmd)</span>;<br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">ssize_t</span> <span class="hljs-title function_">spi_w8r16be</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, u8 cmd)</span>;<br><br><span class="hljs-comment">// 复杂函数</span><br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> <span class="hljs-title function_">spi_async</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, <span class="hljs-keyword">struct</span> spi_message *message)</span>;<br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> <span class="hljs-title function_">spi_sync</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, <span class="hljs-keyword">struct</span> spi_message *message)</span>;<br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">spi_sync_transfer</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> spi_device *spi, <span class="hljs-keyword">struct</span> spi_transfer *xfers, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> num_xfers)</span>;<br></code></pre></td></tr></tbody></table></figure>
 
                 
               </div>
@@ -493,6 +495,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

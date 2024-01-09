@@ -114,7 +114,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -252,7 +254,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.3k words
+          3.2k words
         
       </span>
     
@@ -263,7 +265,7 @@
         
         
         
-          28 mins
+          27 mins
         
       </span>
     
@@ -329,50 +331,50 @@
 <p><strong>open source开集输出</strong></p>
 <p>这两种输出的原理和特性基本是类似的，区别在于一个是使用MOS管，其中的”漏”指的就是MOS管的漏极；另一个使用三极管，其中的”集”指的就是MOS三极管的集电极。这两者其实都是和推挽输出相对应的输出模式，由于使用MOS管的情况较多，很多时候就用”开漏输出”这个词代替了开漏输出和开集输出。</p>
 <p>开漏、开集输出最主要的特性就是高电平没有驱动能力，需要借助外部上拉电阻才能真正输出高电平。</p>
-<h1 id="Kernel-doc-General-Purpose-Input-x2F-Output-GPIO"><a href="#Kernel-doc-General-Purpose-Input-x2F-Output-GPIO" class="headerlink" title="Kernel doc: General Purpose Input&#x2F;Output (GPIO)"></a>Kernel doc: General Purpose Input&#x2F;Output (GPIO)</h1><h2 id="GPIO-Driver-Interface"><a href="#GPIO-Driver-Interface" class="headerlink" title="GPIO Driver Interface"></a>GPIO Driver Interface</h2><h3 id="Controller-Drivers-gpio-chip"><a href="#Controller-Drivers-gpio-chip" class="headerlink" title="Controller Drivers: gpio_chip"></a>Controller Drivers: gpio_chip</h3><p><code>struct gpio_chip</code> 抽象gpio controller。</p>
+<h1 id="Kernel-doc-General-Purpose-Input-x2F-Output-GPIO"><a href="#Kernel-doc-General-Purpose-Input-x2F-Output-GPIO" class="headerlink" title="Kernel doc: General Purpose Input/Output (GPIO)"></a>Kernel doc: General Purpose Input/Output (GPIO)</h1><h2 id="GPIO-Driver-Interface"><a href="#GPIO-Driver-Interface" class="headerlink" title="GPIO Driver Interface"></a>GPIO Driver Interface</h2><h3 id="Controller-Drivers-gpio-chip"><a href="#Controller-Drivers-gpio-chip" class="headerlink" title="Controller Drivers: gpio_chip"></a>Controller Drivers: gpio_chip</h3><p><code>struct gpio_chip</code> 抽象gpio controller。</p>
 <p><code>gpiochip_add_data()</code> or <code>devm_gpiochip_add_data()</code>接口用来注册gpio controller。<code>gpiochip_remove()</code>释放gpio controller。</p>
 <p><code>gpiochip_is_request()</code>在gpio controller driver中用于检测某个gpio是否被其他chip占用，没占用返回NULL，占用返回request时传入的string。</p>
 <h3 id="GPIO-electrical-configuration"><a href="#GPIO-electrical-configuration" class="headerlink" title="GPIO electrical configuration"></a>GPIO electrical configuration</h3><p>gpio_chip的<code>.set_config</code>回调用于设置：</p>
 <ul>
 <li>Debouncing</li>
-<li>Single-ended modes (open drain&#x2F;open source)</li>
+<li>Single-ended modes (open drain/open source)</li>
 <li>Pull up and pull down resistor enablement</li>
 </ul>
 <p>这些属性可以在dts中指定，<code>include/dt-bindings/gpio/gpio.h</code> <code>GPIO_PUSH_PULL</code> <code>GPIO_LINE_OPEN_SOURCE</code> <code>GPIO_OPEN_DRAIN </code>…</p>
 <p>可以设置为<code>gpiochip_generic_config()</code>会调用到<code>pinctrl_gpio_set_config()</code>-&gt;<code>ops-&gt;pin_config_set</code></p>
-<h3 id="GPIO-drivers-providing-IRQs"><a href="#GPIO-drivers-providing-IRQs" class="headerlink" title="GPIO drivers providing IRQs"></a>GPIO drivers providing IRQs</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c">gpiod_to_irq(); <span class="hljs-comment">// 传入gpio_desc，返回gpio的irq number(软件映射的，不是irq hw id)</span><br>  gpio_chip_hwgpio();<br>    gc-&gt;to_irq();<br>      rts_gpio_to_irq();<br>        irq_linear_revmap();<br><br></code></pre></td></tr></table></figure>
+<h3 id="GPIO-drivers-providing-IRQs"><a href="#GPIO-drivers-providing-IRQs" class="headerlink" title="GPIO drivers providing IRQs"></a>GPIO drivers providing IRQs</h3><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c">gpiod_to_irq(); <span class="hljs-comment">// 传入gpio_desc，返回gpio的irq number(软件映射的，不是irq hw id)</span><br>  gpio_chip_hwgpio();<br>    gc-&gt;to_irq();<br>      rts_gpio_to_irq();<br>        irq_linear_revmap();<br><br></code></pre></td></tr></tbody></table></figure>
 
 <h4 id="Cascaded-GPIO-irqchips"><a href="#Cascaded-GPIO-irqchips" class="headerlink" title="Cascaded GPIO irqchips"></a>Cascaded GPIO irqchips</h4><ol>
 <li>CHAINED CASCADED GPIO IRQCHIPS：挺多soc上是这种做法，打开<code>CONFIG_GPIOLIB_IRQCHIP</code>设置girq-&gt;parent_handler。gpio controller注册过程中通过<strong>irq_set_chained_handler</strong>设置中断处理函数，因此在中断处理函数中需要chained_irq_enter，chained_irq_exit。相当于级联中断处理器的做法。</li>
 </ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">irqreturn_t</span> <span class="hljs-title function_">foo_gpio_irq</span><span class="hljs-params">(<span class="hljs-type">int</span> irq, <span class="hljs-type">void</span> *data)</span> <span class="hljs-comment">/// 中断处理函数</span><br>    <span class="hljs-title function_">chained_irq_enter</span><span class="hljs-params">(...)</span>;<br>    generic_handle_irq(...);<br>    chained_irq_exit(...);<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">irqreturn_t</span> <span class="hljs-title function_">foo_gpio_irq</span><span class="hljs-params">(<span class="hljs-type">int</span> irq, <span class="hljs-type">void</span> *data)</span> <span class="hljs-comment">/// 中断处理函数</span><br>    <span class="hljs-title function_">chained_irq_enter</span><span class="hljs-params">(...)</span>;<br>    generic_handle_irq(...);<br>    chained_irq_exit(...);<br></code></pre></td></tr></tbody></table></figure>
 
 <ol start="2">
 <li>GENERIC CHAINED GPIO IRQCHIPS：rts3917是这种做法，通过<strong>reuqest_irq</strong>进入的rts_irq_handler中断处理函数。发现的每一个gpio都进入generic_handle_irq，最后会到各自irq_desc中通过request_irq的中断处理函数。</li>
 </ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">irqreturn_t</span> <span class="hljs-title function_">rts_irq_handler</span><span class="hljs-params">(<span class="hljs-type">int</span> irq, <span class="hljs-type">void</span> *dev_id)</span><br>    <span class="hljs-keyword">for</span> each detected GPIO IRQ<br>        <span class="hljs-title function_">generic_handle_irq</span><span class="hljs-params">(...)</span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">irqreturn_t</span> <span class="hljs-title function_">rts_irq_handler</span><span class="hljs-params">(<span class="hljs-type">int</span> irq, <span class="hljs-type">void</span> *dev_id)</span><br>    <span class="hljs-keyword">for</span> each detected GPIO IRQ<br>        <span class="hljs-title function_">generic_handle_irq</span><span class="hljs-params">(...)</span>;<br></code></pre></td></tr></tbody></table></figure>
 
 <ol start="3">
 <li>NESTED THREADED GPIO IRQCHIPS：gpio expander的做法，不深究。</li>
 </ol>
 <h3 id="Infrastructure-helpers-for-GPIO-irqchips"><a href="#Infrastructure-helpers-for-GPIO-irqchips" class="headerlink" title="Infrastructure helpers for GPIO irqchips"></a>Infrastructure helpers for GPIO irqchips</h3><p>GPIO子系统有针对中断的一套框架，Kconfig为<code>GPIOLIB_IRQCHIP</code>，rts没有用到就不分析了。可以看文档中具体的解释。</p>
 <p>注意一点，方法一：如果parent_handler赋值了<code>girq-&gt;parent_handler = ftgpio_gpio_irq_handler</code>应该就是上面<code>CHAINED CASCADED GPIO IRQCHIPS</code>的做法。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">gpiochip_add_data();<br>    gpiochip_add_data_with_key();<br>      gpiochip_add_irqchip();<br>        irq_set_chained_handler_and_data(gc-&gt;irq.parents[i], gc-&gt;irq.parent_handler, data);<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">gpiochip_add_data();<br>    gpiochip_add_data_with_key();<br>      gpiochip_add_irqchip();<br>        irq_set_chained_handler_and_data(gc-&gt;irq.parents[i], gc-&gt;irq.parent_handler, data);<br></code></pre></td></tr></tbody></table></figure>
 
 <p>方法二：<code>girq-&gt;parent_handler = NULL</code>，直接在driver中<code>devm_request_threaded_irq</code>对应<code>GENERIC CHAINED GPIO IRQCHIPS</code>的做法。</p>
 <h2 id="GPIO-Descriptor-Consumer-Interface"><a href="#GPIO-Descriptor-Consumer-Interface" class="headerlink" title="GPIO Descriptor Consumer Interface"></a>GPIO Descriptor Consumer Interface</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/gpio.png" srcset="/img/loading.gif" lazyload></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">struct</span> gpio_desc *<span class="hljs-title function_">gpiod_get</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *con_id, <span class="hljs-keyword">enum</span> gpiod_flags flags)</span>;<br><span class="hljs-keyword">struct</span> gpio_desc *<span class="hljs-title function_">gpiod_get_index</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *con_id, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> idx, <span class="hljs-keyword">enum</span> gpiod_flags flags)</span>;<br><span class="hljs-comment">// return NULL 如果没有request到GPIO</span><br><span class="hljs-keyword">struct</span> gpio_desc *<span class="hljs-title function_">gpiod_get_optional</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *con_id, <span class="hljs-keyword">enum</span> gpiod_flags flags)</span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">struct</span> gpio_desc *<span class="hljs-title function_">gpiod_get</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *con_id, <span class="hljs-keyword">enum</span> gpiod_flags flags)</span>;<br><span class="hljs-keyword">struct</span> gpio_desc *<span class="hljs-title function_">gpiod_get_index</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *con_id, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> idx, <span class="hljs-keyword">enum</span> gpiod_flags flags)</span>;<br><span class="hljs-comment">// return NULL 如果没有request到GPIO</span><br><span class="hljs-keyword">struct</span> gpio_desc *<span class="hljs-title function_">gpiod_get_optional</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *con_id, <span class="hljs-keyword">enum</span> gpiod_flags flags)</span>;<br></code></pre></td></tr></tbody></table></figure>
 
-<h2 id="GPIO-Mappings"><a href="#GPIO-Mappings" class="headerlink" title="GPIO Mappings"></a>GPIO Mappings</h2><h3 id="device-tree"><a href="#device-tree" class="headerlink" title="device tree"></a>device tree</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c">foo_device &#123;<br>        compatible = <span class="hljs-string">&quot;acme,foo&quot;</span>;<br>        ...<br>        led-gpios = &lt;&amp;gpio <span class="hljs-number">15</span> GPIO_ACTIVE_HIGH&gt;, <span class="hljs-comment">/* red */</span><br>                    &lt;&amp;gpio <span class="hljs-number">16</span> GPIO_ACTIVE_HIGH&gt;, <span class="hljs-comment">/* green */</span><br>                    &lt;&amp;gpio <span class="hljs-number">17</span> GPIO_ACTIVE_HIGH&gt;; <span class="hljs-comment">/* blue */</span><br><br>        power-gpios = &lt;&amp;gpio <span class="hljs-number">1</span> GPIO_ACTIVE_LOW&gt;;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h2 id="GPIO-Mappings"><a href="#GPIO-Mappings" class="headerlink" title="GPIO Mappings"></a>GPIO Mappings</h2><h3 id="device-tree"><a href="#device-tree" class="headerlink" title="device tree"></a>device tree</h3><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c">foo_device {<br>        compatible = <span class="hljs-string">"acme,foo"</span>;<br>        ...<br>        led-gpios = &lt;&amp;gpio <span class="hljs-number">15</span> GPIO_ACTIVE_HIGH&gt;, <span class="hljs-comment">/* red */</span><br>                    &lt;&amp;gpio <span class="hljs-number">16</span> GPIO_ACTIVE_HIGH&gt;, <span class="hljs-comment">/* green */</span><br>                    &lt;&amp;gpio <span class="hljs-number">17</span> GPIO_ACTIVE_HIGH&gt;; <span class="hljs-comment">/* blue */</span><br><br>        power-gpios = &lt;&amp;gpio <span class="hljs-number">1</span> GPIO_ACTIVE_LOW&gt;;<br>};<br></code></pre></td></tr></tbody></table></figure>
 
 <p>对应</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">gpio_desc</span> *<span class="hljs-title">red</span>, *<span class="hljs-title">green</span>, *<span class="hljs-title">blue</span>, *<span class="hljs-title">power</span>;</span><br><br>red = gpiod_get_index(dev, <span class="hljs-string">&quot;led&quot;</span>, <span class="hljs-number">0</span>, GPIOD_OUT_HIGH);<br>green = gpiod_get_index(dev, <span class="hljs-string">&quot;led&quot;</span>, <span class="hljs-number">1</span>, GPIOD_OUT_HIGH);<br>blue = gpiod_get_index(dev, <span class="hljs-string">&quot;led&quot;</span>, <span class="hljs-number">2</span>, GPIOD_OUT_HIGH);<br><br>power = gpiod_get(dev, <span class="hljs-string">&quot;power&quot;</span>, GPIOD_OUT_HIGH);<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">gpio_desc</span> *<span class="hljs-title">red</span>, *<span class="hljs-title">green</span>, *<span class="hljs-title">blue</span>, *<span class="hljs-title">power</span>;</span><br><br>red = gpiod_get_index(dev, <span class="hljs-string">"led"</span>, <span class="hljs-number">0</span>, GPIOD_OUT_HIGH);<br>green = gpiod_get_index(dev, <span class="hljs-string">"led"</span>, <span class="hljs-number">1</span>, GPIOD_OUT_HIGH);<br>blue = gpiod_get_index(dev, <span class="hljs-string">"led"</span>, <span class="hljs-number">2</span>, GPIOD_OUT_HIGH);<br><br>power = gpiod_get(dev, <span class="hljs-string">"power"</span>, GPIOD_OUT_HIGH);<br></code></pre></td></tr></tbody></table></figure>
 
 <p>gpiod_set_value设置的值是“逻辑值”，不一定等于物理值。</p>
-<h2 id="Sysfs接口"><a href="#Sysfs接口" class="headerlink" title="Sysfs接口"></a>Sysfs接口</h2><p>&#x2F;sys&#x2F;class&#x2F;gpio&#x2F;</p>
+<h2 id="Sysfs接口"><a href="#Sysfs接口" class="headerlink" title="Sysfs接口"></a>Sysfs接口</h2><p>/sys/class/gpio/</p>
 <p>echo 19 &gt; export</p>
-<p>&#x2F;sys&#x2F;class&#x2F;gpio&#x2F;gpioN&#x2F;</p>
-<p>&#x2F;sys&#x2F;kernel&#x2F;debug&#x2F;gpio 可以看哪些gpio被申请了</p>
+<p>/sys/class/gpio/gpioN/</p>
+<p>/sys/kernel/debug/gpio 可以看哪些gpio被申请了</p>
 
                 
               </div>
@@ -442,6 +444,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

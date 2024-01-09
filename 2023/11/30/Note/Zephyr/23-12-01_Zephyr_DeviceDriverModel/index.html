@@ -16,12 +16,12 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="123456struct device &amp;#123;      const char *name;      const void *config;      const void *api;      void * const data;&amp;#125;;  config: 放地址映射，中断号等一些物理信息。api: 回调函数。data: 放reference counts, semaphores,">
+    <meta name="description" content="123456struct device {      const char *name;      const void *config;      const void *api;      void * const data;};  config: 放地址映射，中断号等一些物理信息。api: 回调函数。data: 放reference counts, semaphores, scratch b">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Zephyr -- Device Drvier Model">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/11/30/Note/Zephyr/23-12-01_Zephyr_DeviceDriverModel/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="123456struct device &amp;#123;      const char *name;      const void *config;      const void *api;      void * const data;&amp;#125;;  config: 放地址映射，中断号等一些物理信息。api: 回调函数。data: 放reference counts, semaphores,">
+<meta property="og:description" content="123456struct device {      const char *name;      const void *config;      const void *api;      void * const data;};  config: 放地址映射，中断号等一些物理信息。api: 回调函数。data: 放reference counts, semaphores, scratch b">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-11-30T06:17:28.000Z">
 <meta property="article:modified_time" content="2023-12-15T09:45:52.853Z">
@@ -112,7 +112,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -250,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          313 words
+          303 words
         
       </span>
     
@@ -320,7 +322,7 @@
             
               <div class="markdown-body">
                 
-                <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">device</span> &#123;</span><br>      <span class="hljs-type">const</span> <span class="hljs-type">char</span> *name;<br>      <span class="hljs-type">const</span> <span class="hljs-type">void</span> *config;<br>      <span class="hljs-type">const</span> <span class="hljs-type">void</span> *api;<br>      <span class="hljs-type">void</span> * <span class="hljs-type">const</span> data;<br>&#125;;<br></code></pre></td></tr></table></figure>
+                <figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">device</span> {</span><br>      <span class="hljs-type">const</span> <span class="hljs-type">char</span> *name;<br>      <span class="hljs-type">const</span> <span class="hljs-type">void</span> *config;<br>      <span class="hljs-type">const</span> <span class="hljs-type">void</span> *api;<br>      <span class="hljs-type">void</span> * <span class="hljs-type">const</span> data;<br>};<br></code></pre></td></tr></tbody></table></figure>
 
 <p><code>config</code>: 放地址映射，中断号等一些物理信息。<br><code>api</code>: 回调函数。<br><code>data</code>: 放reference counts, semaphores, scratch buffers等。</p>
 <h2 id="Device-Specific-API-Extensions"><a href="#Device-Specific-API-Extensions" class="headerlink" title="Device-Specific API Extensions"></a>Device-Specific API Extensions</h2><p>标准driver api没法实现的功能。</p>
@@ -372,9 +374,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/12/05/Note/Zephyr/23-12-05_Zephyr_BuildAndConfiguration/" title="Zephyr -- Build and Configuration Systems">
+                      <a href="/2023/11/30/Note/Zephyr/23-11-30_Zephyr_DevelopWithZephyr/" title="Zephyr -- Develop with Zephyr">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Zephyr -- Build and Configuration Systems</span>
+                        <span class="hidden-mobile">Zephyr -- Develop with Zephyr</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -382,8 +384,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/11/30/Note/Zephyr/23-11-30_Zephyr_DevelopWithZephyr/" title="Zephyr -- Develop with Zephyr">
-                        <span class="hidden-mobile">Zephyr -- Develop with Zephyr</span>
+                      <a href="/2023/10/17/Project/ICS/PA0/" title="ICS2022 PA0">
+                        <span class="hidden-mobile">ICS2022 PA0</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -394,6 +396,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

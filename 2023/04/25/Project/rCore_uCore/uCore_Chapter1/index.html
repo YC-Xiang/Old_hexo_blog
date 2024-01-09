@@ -112,7 +112,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -320,17 +322,17 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">make build # 仅编译<br>make run # 编译+运行qemu<br>make run LOG=trace # 其他选项可以看Makefile<br>make clean # rm build/<br>make debug # 编译+运行gdb调试<br></code></pre></td></tr></table></figure>
+                <h1 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h1><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">make build # 仅编译<br>make run # 编译+运行qemu<br>make run LOG=trace # 其他选项可以看Makefile<br>make clean # rm build/<br>make debug # 编译+运行gdb调试<br></code></pre></td></tr></tbody></table></figure>
 
 <p>每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。</p>
 <p><strong>退出 qemu 的方法</strong></p>
 <p>如果是正常推出，uCore 会自动关闭 qemu，但如果 os 跑飞了，我们不能通过 <code>Ctrl + C</code> 来推出。此时可以先按下 <code>Ctrl+A</code> ，再按下 <code>X</code> 来退出 Qemu。</p>
-<h1 id="ch1"><a href="#ch1" class="headerlink" title="ch1"></a>ch1</h1><h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// entry.S</span><br>_entry<br>    la sp, boot_stack_top <span class="hljs-comment">//设置堆栈</span><br>    call main<br><span class="hljs-comment">// main.c</span><br>  clean_bss();<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;hello wrold!\n&quot;</span>);<br>    consputc();<br>      console_putchar(<span class="hljs-type">int</span> c);<br>        sbi_call(SBI_CONSOLE_PUTCHAR, c, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
+<h1 id="ch1"><a href="#ch1" class="headerlink" title="ch1"></a>ch1</h1><h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// entry.S</span><br>_entry<br>    la sp, boot_stack_top <span class="hljs-comment">//设置堆栈</span><br>    call main<br><span class="hljs-comment">// main.c</span><br>  clean_bss();<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"hello wrold!\n"</span>);<br>    consputc();<br>      console_putchar(<span class="hljs-type">int</span> c);<br>        sbi_call(SBI_CONSOLE_PUTCHAR, c, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br></code></pre></td></tr></tbody></table></figure>
 
 <p class="note note-danger">怎么用gdb调试？`file kernel`然后？</p>
 
 <h2 id="Makefile流程分析"><a href="#Makefile流程分析" class="headerlink" title="Makefile流程分析"></a>Makefile流程分析</h2><p>根据<code>make run </code>打印的信息：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">riscv64-unknown-elf-gcc -Wall -Werror -O -fno-omit-frame-pointer -ggdb -MD -mcmodel=medany -ffreestanding -fno-common -nostdlib -mno-relax -Ios -fno-stack-protector -D LOG_LEVEL_ERROR  -fno-pie -no-pie -c os/console.c -o build/os/console.o<br>... # 编译所有的.c文件成.o文件<br>riscv64-unknown-elf-ld -z max-page-size=4096 -T os/kernel.ld -o build/kernel build/os/console.o build/os/main.o build/os/sbi.o build/os/printf.o  build/os/entry.o build/os/link_app.o # 链接<br>riscv64-unknown-elf-objdump -S build/kernel &gt; build/kernel.asm<br>riscv64-unknown-elf-objdump -t build/kernel | sed &#x27;1,/SYMBOL TABLE/d; s/ .* / /; /^$/d&#x27; &gt; build/kernel.sym<br>Build kernel done<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">riscv64-unknown-elf-gcc -Wall -Werror -O -fno-omit-frame-pointer -ggdb -MD -mcmodel=medany -ffreestanding -fno-common -nostdlib -mno-relax -Ios -fno-stack-protector -D LOG_LEVEL_ERROR  -fno-pie -no-pie -c os/console.c -o build/os/console.o<br>... # 编译所有的.c文件成.o文件<br>riscv64-unknown-elf-ld -z max-page-size=4096 -T os/kernel.ld -o build/kernel build/os/console.o build/os/main.o build/os/sbi.o build/os/printf.o  build/os/entry.o build/os/link_app.o # 链接<br>riscv64-unknown-elf-objdump -S build/kernel &gt; build/kernel.asm<br>riscv64-unknown-elf-objdump -t build/kernel | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' &gt; build/kernel.sym<br>Build kernel done<br></code></pre></td></tr></tbody></table></figure>
 
 <p>比较熟悉的是<code>objdump -d</code> <code>objdump -D</code>将所有段都反汇编，而<code>-d</code>应该仅反汇编代码段。</p>
 <p><code>objdump -S</code>是在-d的基础上，代码段反汇编的同时，将反汇编代码与源代码交替显示，编译时需要使用<code>-g</code>参数，即需要调试信息。</p>
@@ -404,6 +406,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

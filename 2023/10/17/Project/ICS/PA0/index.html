@@ -16,15 +16,15 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="项宇承">
+    <meta name="description" content="1. 环境配置1.1 虚拟机安装网络选择桥接网络，复制物理状态 1.2 软件安装1234567891011apt-get install vim # vimapt-get install openssh-server # sshapt-get install build-essential    # build-essential packages, include binary utilitie">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ICS2022 PA0">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/10/17/Project/ICS/PA0/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="项宇承">
+<meta property="og:description" content="1. 环境配置1.1 虚拟机安装网络选择桥接网络，复制物理状态 1.2 软件安装1234567891011apt-get install vim # vimapt-get install openssh-server # sshapt-get install build-essential    # build-essential packages, include binary utilitie">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-17T08:47:28.000Z">
-<meta property="article:modified_time" content="2023-12-14T03:13:20.396Z">
+<meta property="article:modified_time" content="2024-01-09T01:07:05.340Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="ICS">
 <meta name="twitter:card" content="summary_large_image">
@@ -112,7 +112,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -250,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 words
+          1.4k words
         
       </span>
     
@@ -261,7 +263,7 @@
         
         
         
-          1 mins
+          12 mins
         
       </span>
     
@@ -312,7 +314,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年12月14日 上午
+                    本文最后更新于：2024年1月9日 上午
                   
                 
               </p>
@@ -320,7 +322,19 @@
             
               <div class="markdown-body">
                 
-                
+                <h2 id="1-环境配置"><a href="#1-环境配置" class="headerlink" title="1. 环境配置"></a>1. 环境配置</h2><h3 id="1-1-虚拟机安装"><a href="#1-1-虚拟机安装" class="headerlink" title="1.1 虚拟机安装"></a>1.1 虚拟机安装</h3><p>网络选择桥接网络，复制物理状态</p>
+<h3 id="1-2-软件安装"><a href="#1-2-软件安装" class="headerlink" title="1.2 软件安装"></a>1.2 软件安装</h3><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">apt-get install vim # vim<br>apt-get install openssh-server # ssh<br><br>apt-get install build-essential    # build-essential packages, include binary utilities, gcc, make, and so on<br>apt-get install man                # on-line reference manual<br>apt-get install gcc-doc            # on-line reference manual for gcc<br>apt-get install gdb                # GNU debugger<br>apt-get install git                # revision control system<br>apt-get install libreadline-dev    # a library used later<br>apt-get install libsdl2-dev        # a library used later<br>apt-get install llvm llvm-dev      # llvm project, which contains libraries used later<br></code></pre></td></tr></tbody></table></figure>
+
+<p>安装<code>build essential</code>会出现<code>g++-11 : Depends: gcc-11-base (= 11.2.0-19ubuntu1) but 11.4.0-1ubuntu1~22.04 is to be installed</code>错误。可能是ubuntu版本问题。</p>
+<p>解决方法:使用aptitude来处理版本依赖问题。</p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">apt-get install aptitude<br>aptitude install build-essential<br>...<br></code></pre></td></tr></tbody></table></figure>
+
+<p>安装完成后，进入<code>nemu</code>目录，执行<code>make menuconfig</code> -&gt; <code>make</code>又报错:<br><code>make[1]: bison: No such file or directory</code><br>直接安装<code>sudo apt-get install bison</code> -&gt; <code>make clean</code> -&gt; <code>make</code> 又又报错：<br><code>make[1]: flex: No such file or directory</code><br>继续安装<code>sudo apt-get install flex</code>，终于成功运行。</p>
+<h2 id="1-3-配置git"><a href="#1-3-配置git" class="headerlink" title="1.3 配置git"></a>1.3 配置git</h2><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">git config --global user.name "221220000-Zhang San" # your student ID and name<br>git config --global user.email "zhangsan@foo.com"   # your email<br>git config --global core.editor vim                 # your favorite editor<br>git config --global color.ui true<br></code></pre></td></tr></tbody></table></figure>
+
+<h2 id="1-4-配置ssh"><a href="#1-4-配置ssh" class="headerlink" title="1.4 配置ssh"></a>1.4 配置ssh</h2><p><a target="_blank" rel="noopener" href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">生成ssh密钥</a>，并上传公钥至github setting:</p>
+<h2 id="More-Exploration"><a href="#More-Exploration" class="headerlink" title="More Exploration"></a>More Exploration</h2><p>熟悉一些常用的命令行工具, 并强迫自己在日常操作中使用它们<br>文件检索 - <code>cat</code>, <code>more</code>, <code>less</code>, <code>head</code>, <code>tail</code>, <code>file</code>, <code>find</code><br>输入输出控制 - 重定向, 管道, <code>tee</code>, <code>xargs</code><br>文本处理 - <code>grep</code>, <code>awk</code>, <code>sed</code>, <code>sort</code>, <code>wc</code>, <code>uniq</code>, <code>cut</code>, <code>tr</code><br>正则表达式<br>系统监控 - <code>jobs</code>, <code>ps</code>, <code>top</code>, <code>kill</code>, <code>free</code>, <code>dmesg</code>, <code>lsof</code><br>上述工具覆盖了程序员绝大部分的需求<br>可以先从简单的尝试开始, 用得多就记住了, 记不住就man</p>
+
                 
               </div>
             
@@ -367,9 +381,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/11/30/Note/Zephyr/23-11-30_Zephyr_DevelopWithZephyr/" title="Zephyr -- Develop with Zephyr">
+                      <a href="/2023/11/30/Note/Zephyr/23-12-01_Zephyr_DeviceDriverModel/" title="Zephyr -- Device Drvier Model">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Zephyr -- Develop with Zephyr</span>
+                        <span class="hidden-mobile">Zephyr -- Device Drvier Model</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -389,6 +403,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

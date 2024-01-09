@@ -1,0 +1,882 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="YC-Xiang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="123456789101112objdump -h # 显示段结构objdump -s # 将所有段以16进制打印出来objdump -d # 反汇编objdump -D # 反汇编更多信息objdump -t # 查看符号objdump -R # 查看目标文件重定位表readelf -S # 显示段结构readelf -h # 查看文件头readelf -s # 查看符号表readelf -l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="程序员的自我修养学习笔记">
+<meta property="og:url" content="https://yc-xiang.github.io/2022/01/27/Book/22-01-27_%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB/index.html">
+<meta property="og:site_name" content="Yucheng&#39;s Blog">
+<meta property="og:description" content="123456789101112objdump -h # 显示段结构objdump -s # 将所有段以16进制打印出来objdump -d # 反汇编objdump -D # 反汇编更多信息objdump -t # 查看符号objdump -R # 查看目标文件重定位表readelf -S # 显示段结构readelf -h # 查看文件头readelf -s # 查看符号表readelf -l">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230530212643.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230531212159.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230602161011.png">
+<meta property="article:published_time" content="2022-01-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-09T01:07:05.340Z">
+<meta property="article:author" content="Yucheng Xiang">
+<meta property="article:tag" content="Book">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230530212643.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>程序员的自我修养学习笔记 - Yucheng&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yc-xiang.github.io","root":"/","version":"1.9.4","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"C"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"ed5b2440a3a7651272e4681ae4ac17e2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?ed5b2440a3a7651272e4681ae4ac17e2";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>YC&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/homepage.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">程序员的自我修养学习笔记</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-01-27 00:00" pubdate>
+          2022年1月27日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          27 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> times
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">程序员的自我修养学习笔记</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2024年1月9日 上午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">objdump -h # 显示段结构<br>objdump -s # 将所有段以16进制打印出来<br>objdump -d # 反汇编<br>objdump -D # 反汇编更多信息<br>objdump -t # 查看符号<br>objdump -R # 查看目标文件重定位表<br><br>readelf -S # 显示段结构<br>readelf -h # 查看文件头<br>readelf -s # 查看符号表<br>readelf -l # 查看ELF加载时的Segment<br>readelf -d<br></code></pre></td></tr></tbody></table></figure>
+
+
+
+<h1 id="第二章-编译和链接"><a href="#第二章-编译和链接" class="headerlink" title="第二章 编译和链接"></a>第二章 编译和链接</h1><h3 id="2-1-1-预处理"><a href="#2-1-1-预处理" class="headerlink" title="2.1.1 预处理"></a>2.1.1 预处理</h3><p>gcc –E hello.c –o hello.i</p>
+<ul>
+<li>展开宏定义</li>
+<li>处理预编译指令 “#if”、“#ifdef”等等</li>
+<li>处理 “#include ”预编译指令</li>
+<li>删除注释</li>
+<li>添加行号和文件名标识</li>
+<li>保留所有的 #pragma 编译器指令</li>
+</ul>
+<h3 id="2-1-2-编译"><a href="#2-1-2-编译" class="headerlink" title="2.1.2 编译"></a>2.1.2 编译</h3><p>编译：gcc –S hello.i –o hello.s</p>
+<p>预编译+编译：gcc –S hello.c –o hello.s</p>
+<h3 id="2-1-3-汇编"><a href="#2-1-3-汇编" class="headerlink" title="2.1.3 汇编"></a>2.1.3 汇编</h3><p>汇编：gcc –c hello.c –o hello.o</p>
+<p>-c表示只编译不链接。</p>
+<h3 id="2-1-4-链接"><a href="#2-1-4-链接" class="headerlink" title="2.1.4 链接"></a>2.1.4 链接</h3><h1 id="第三章-目标文件里有什么"><a href="#第三章-目标文件里有什么" class="headerlink" title="第三章 目标文件里有什么"></a>第三章 目标文件里有什么</h1><h2 id="3-1-目标文件的格式"><a href="#3-1-目标文件的格式" class="headerlink" title="3.1 目标文件的格式"></a>3.1 目标文件的格式</h2><ul>
+<li>可重定位文件 .o, .a</li>
+<li>可执行文件</li>
+<li>共享目标文件 .so</li>
+<li>核心转储文件</li>
+</ul>
+<p><code>file</code> 命令可以查看文件格式</p>
+<h2 id="3-3-挖掘SimpleSection-o"><a href="#3-3-挖掘SimpleSection-o" class="headerlink" title="3.3 挖掘SimpleSection.o"></a>3.3 挖掘SimpleSection.o</h2><p>查看obj文件内部的段表：</p>
+<p><code>objdump -h SimpleSection.o</code> (只显示关键的段)</p>
+<p><code>readelf -S SimpleSection.o</code> (显示所有段)</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230530212643.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><p>CONTENTS: 表示该段在文件中存在。可以看到.bss没有CONTENTS，说明在ELF文件中其实不存在，在加载到虚拟地址空间时才会分配空间。</p>
+</li>
+<li><p>ALLOC: 表示该段在进程空间需要分配空间。</p>
+</li>
+<li><p>WRITE: 该段在进程空间可写。</p>
+</li>
+</ul>
+<p><code>objdump -s SimpleSection.o</code></p>
+<p><code>objdump -d SimpleSection.o</code></p>
+<p>or<code> objdump -s -d SimpleSection.o</code></p>
+<p>-s参数：将所有段内容以16进制方式打印出来</p>
+<p>-d参数：将所有包含指令的段反汇编</p>
+<p>size命令用来查看ELF文件的代码段、数据段、BSS段的长度</p>
+<p><code>size u-boot</code></p>
+<p><strong>自定义段</strong>：</p>
+<p>在全局变量或函数之前加上“__ attribute__((section(“name”))) ”属性就可以把相应的变量或函数放到以“ name ”作为段名的段中。</p>
+<p><code>__attribute__((section("FOO"))) int global = 42;</code></p>
+<p><code>__attribute__((section("BAR"))) void foo()</code></p>
+<h2 id="3-4-ELF文件结构描述"><a href="#3-4-ELF文件结构描述" class="headerlink" title="3.4 ELF文件结构描述"></a>3.4 ELF文件结构描述</h2><p>查看ELF文件头：</p>
+<p><code>readelf -h u-boot</code></p>
+<table>
+<thead>
+<tr>
+<th>ELF Header</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.text</td>
+</tr>
+<tr>
+<td>.data</td>
+</tr>
+<tr>
+<td>.bss</td>
+</tr>
+<tr>
+<td>…other sections</td>
+</tr>
+<tr>
+<td>Section header Table段表</td>
+</tr>
+<tr>
+<td>.strtab(String tables)字符串表，保存字符串。</td>
+</tr>
+<tr>
+<td>.symtab(Symbol tables)符号表，保存变量和函数的地址。</td>
+</tr>
+<tr>
+<td>.shstrtab(Section string tables)段名表，保存段表的段名。</td>
+</tr>
+</tbody></table>
+<h3 id="3-4-1-文件头"><a href="#3-4-1-文件头" class="headerlink" title="3.4.1 文件头"></a><strong>3.4.1 文件头</strong></h3><p>/usr/include/elf.h</p>
+<h3 id="3-4-2-段表"><a href="#3-4-2-段表" class="headerlink" title="3.4.2 段表"></a><strong>3.4.2 段表</strong></h3><p>/usr/include/elf.h</p>
+<p>段表位置可以通过readelf -h 查看elf文件头的start of section headers获得。</p>
+<p>readelf输出的结果就是ELF文件段表的内容。以<code>ELF32_Shdr</code>为结构体的数组。数组元素的个数等于段的个数。</p>
+<h3 id="3-4-3-重定位表"><a href="#3-4-3-重定位表" class="headerlink" title="3.4.3 重定位表"></a>3.4.3 重定位表</h3><p>readelf -S 中.rel.xxx的Link对应.symtab下表，Info对应.xxx段的下标。</p>
+<h3 id="3-4-4-字符串表"><a href="#3-4-4-字符串表" class="headerlink" title="3.4.4 字符串表"></a>3.4.4 字符串表</h3><p>字符串集中存放到的一个表，使用字符串在表中的偏移来引用字符串。</p>
+<h2 id="3-5-链接的接口-符号"><a href="#3-5-链接的接口-符号" class="headerlink" title="3.5 链接的接口-符号"></a>3.5 链接的接口-符号</h2><ul>
+<li>定义在本文件的全局符号，可以被其他目标文件引用。</li>
+<li>在本文件中引用的全局符号，但没有在本文件中定义。<strong>称为外部符号</strong>。</li>
+<li>段名。</li>
+<li>局部符号。</li>
+<li>行号信息。</li>
+</ul>
+<p><code>nm</code>指令可以查看ELF文件的符号表。</p>
+<h3 id="3-5-1-ELF符号表结构"><a href="#3-5-1-ELF符号表结构" class="headerlink" title="3.5.1 ELF符号表结构"></a>3.5.1 ELF符号表结构</h3><p><code>readelf -s SimpleSection.o</code> 也可以查看符号表。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230531212159.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><p>Size: 符号大小</p>
+</li>
+<li><p>Type: 符号类型</p>
+<ul>
+<li>NOTYPE</li>
+<li>OBJECT(数据对象，变量/数组)</li>
+<li>FUNC(函数)</li>
+<li>SECTION(段)</li>
+<li>FILE(文件名)</li>
+</ul>
+</li>
+<li><p>Bind: 符号绑定信息</p>
+<ul>
+<li>LOCAL(局部符号)</li>
+<li>GLOBAL(全局符号)</li>
+<li>WEAK(弱引用)</li>
+</ul>
+</li>
+<li><p>Vis不用管。</p>
+</li>
+<li><p>Ndx: 符号所在段</p>
+<ul>
+<li>ABS(表示符号包含一个绝对值，比如文件名的符号)</li>
+<li>COMMON(未初始化的全局符号)</li>
+<li>UNDEF(本目标文件引用，但定义在其他文件)</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-6-调试信息"><a href="#3-6-调试信息" class="headerlink" title="3.6 调试信息"></a>3.6 调试信息</h2><p><code>strip</code>可以去掉ELF文件中的调试信息。</p>
+<h1 id="第四章-静态连接"><a href="#第四章-静态连接" class="headerlink" title="第四章 静态连接"></a><strong>第四章 静态连接</strong></h1><h2 id="4-1-空间与地址分配"><a href="#4-1-空间与地址分配" class="headerlink" title="4.1 空间与地址分配"></a>4.1 空间与地址分配</h2><p>Linux下，ELF可执行文件默认从地址0x08048000开始分配。</p>
+<h2 id="4-2-符号解析和重定位"><a href="#4-2-符号解析和重定位" class="headerlink" title="4.2 符号解析和重定位"></a><strong>4.2 符号解析和重定位</strong></h2><h3 id="4-2-2-重定位表"><a href="#4-2-2-重定位表" class="headerlink" title="4.2.2 重定位表"></a><strong>4.2.2 重定位表</strong></h3><p>.text ⇒ .rel.text</p>
+<p>.data ⇒ .rel.data</p>
+<p>查看目标文件重定位表：objdump -r a.o</p>
+<h3 id="4-2-4-指令修正方式"><a href="#4-2-4-指令修正方式" class="headerlink" title="4.2.4 指令修正方式"></a><strong>4.2.4 指令修正方式</strong></h3><ul>
+<li>绝对寻址修正，得到的是该符号的实际地址。<ul>
+<li>S+A 符号的实际地址+被修正位置的值</li>
+</ul>
+</li>
+<li>相对寻址修正,得到的是符号距离被修正的地址差。<ul>
+<li>S+A-P 符号的实际地址+被修正位置的值-被修正的位置的地址</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-3-COMMON块"><a href="#4-3-COMMON块" class="headerlink" title="4.3 COMMON块"></a><strong>4.3 COMMON块</strong></h2><p>把未初始化的全局变量标记为一个COMMON类型的变量。</p>
+<p>链接完成后，在最终输出文件的BSS段为其分配空间。</p>
+<h1 id="第六章-可执行文件的装载和进程"><a href="#第六章-可执行文件的装载和进程" class="headerlink" title="第六章 可执行文件的装载和进程"></a>第六章 可执行文件的装载和进程</h1><h2 id="6-1-进程虚拟地址空间"><a href="#6-1-进程虚拟地址空间" class="headerlink" title="6.1 进程虚拟地址空间"></a>6.1 进程虚拟地址空间</h2><p>0xC0000000<del>0xFFFFFFFF: 内核使用<br>0x0</del>0xC0000000: 进程使用</p>
+<p>32位CPU使用的空间能否超过4GB?<br>mmap(), 可以将进程的一部分虚拟地址空间映射到不同的物理空间去。</p>
+<h2 id="6-4-进程虚存空间分布"><a href="#6-4-进程虚存空间分布" class="headerlink" title="6.4 进程虚存空间分布"></a>6.4 进程虚存空间分布</h2><h3 id="6-4-1-ELF文件链接视图和执行视图"><a href="#6-4-1-ELF文件链接视图和执行视图" class="headerlink" title="6.4.1 ELF文件链接视图和执行视图"></a>6.4.1 ELF文件链接视图和执行视图</h3><p>对于相同权限的段(Section)，把它们合并到一起当作一个段映射。引入新的概念Segment。相当于从装载的角度重新划分了ELF文件的各个段(Section)。这样的好处是可以减少页面内部碎片。</p>
+<p>查看ELF的Segment<code>readelf -l SectionMapping.elf</code></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230602161011.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><p>Type: LOAD/DYNAMIC/INTERP…</p>
+</li>
+<li><p>offset: Segment在文件中的偏移。</p>
+</li>
+<li><p>VirtAddr：Segment的第一个字节在进程虚拟地址空间的起始位置。</p>
+</li>
+<li><p>PhysAddr: 物理装载地址，一般和Virtaddr相同。</p>
+</li>
+<li><p>FileSize：Segment在ELF文件中所占的长度。</p>
+</li>
+<li><p>MemSize：Segment在进程虚拟地址空间所占的长度。</p>
+</li>
+</ul>
+<p>MemSize可能比FileSize大的原因是，在进程虚拟地址空间中分配了bss段，而bss段在elf文件中其实是不存在的。</p>
+<h3 id="6-4-2-堆和栈"><a href="#6-4-2-堆和栈" class="headerlink" title="6.4.2 堆和栈"></a>6.4.2 堆和栈</h3><p><code>cat /proc/&lt;pid_num&gt;/maps</code>可以查看进程的虚拟空间分布。</p>
+<h1 id="第七章-动态链接"><a href="#第七章-动态链接" class="headerlink" title="第七章 动态链接"></a>第七章 动态链接</h1><p><code>gcc -fPIC -shared -o Lib.so Lib.c</code>生成动态链接库。</p>
+<p><code>gcc -o program1 program1.c ./Lib.so</code> 编译program1.c，依赖于lib.so。</p>
+<p>gcc -l 小写的L参数，用来指定共享库。或者更简洁的方式-lxxx，xxx为libxxx.so.2.6.1中的名字。</p>
+<p>gcc -L 用来指定共享库目录。</p>
+<h2 id="7-3-位置无关码"><a href="#7-3-位置无关码" class="headerlink" title="7.3 位置无关码"></a>7.3 位置无关码</h2><p><code>-fPIC</code>对共享文件编译生成位置无关码。<code>-fPIE</code>对可执行文件编译生成位置无关码。</p>
+<p>.got段</p>
+<h1 id="第八章-Linux共享库的组织"><a href="#第八章-Linux共享库的组织" class="headerlink" title="第八章 Linux共享库的组织"></a>第八章 Linux共享库的组织</h1><h3 id="8-1-2-共享库版本命名"><a href="#8-1-2-共享库版本命名" class="headerlink" title="8.1.2 共享库版本命名"></a>8.1.2 共享库版本命名</h3><p><code>libname.so.x.y.z</code></p>
+<p>主版本号x表示库的重大升级，不同主版本号的库之间不兼容。<br>次版本号y表示库的增量升级，增加一些新的接口符号，且保持原来的符号不变，向后兼容的。<br>发布版本号z表示库的一些错误的修正、性能的改进，不添加任何新的接口，也不对接口进行更改。</p>
+<h3 id="8-1-3-SO-NAME"><a href="#8-1-3-SO-NAME" class="headerlink" title="8.1.3 SO-NAME"></a>8.1.3 SO-NAME</h3><p>比如libfoo.so.2.6.1的SO-NAME为libfoo.so.2。Linux中，会在每个共享库目录中创建和SO-NAME相同的软链接。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Book/" class="category-chain-item">Book</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Book/">#Book</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/26/legacy/power_management/" title="电源管理">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">电源管理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/12/31/legacy/2021-12-31-linux%E9%87%8D%E5%AE%9A%E5%90%91/" title="Linux输入输出重定向">
+                        <span class="hidden-mobile">Linux输入输出重定向</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

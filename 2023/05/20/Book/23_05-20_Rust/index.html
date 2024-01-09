@@ -112,7 +112,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -250,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.3k words
+          2.8k words
         
       </span>
     
@@ -261,7 +263,7 @@
         
         
         
-          28 mins
+          24 mins
         
       </span>
     
@@ -336,10 +338,10 @@
 <p><code>cargo.toml</code> <strong>项目数据描述文件</strong></p>
 <p><code>cargo.lock</code> <strong>项目依赖详细清单</strong></p>
 <p>在cargo.toml中定义依赖的三种方式：</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs rust">[dependencies]<br>rand = <span class="hljs-string">&quot;0.3&quot;</span><br>hammer = &#123; version = <span class="hljs-string">&quot;0.5.0&quot;</span>&#125;<br>color = &#123; git = <span class="hljs-string">&quot;https://github.com/bjz/color-rs&quot;</span> &#125;<br>geometry = &#123; path = <span class="hljs-string">&quot;crates/geometry&quot;</span> &#125;<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs rust">[dependencies]<br>rand = <span class="hljs-string">"0.3"</span><br>hammer = { version = <span class="hljs-string">"0.5.0"</span>}<br>color = { git = <span class="hljs-string">"https://github.com/bjz/color-rs"</span> }<br>geometry = { path = <span class="hljs-string">"crates/geometry"</span> }<br><br></code></pre></td></tr></tbody></table></figure>
 
 <h1 id="2-Rust-基础入门"><a href="#2-Rust-基础入门" class="headerlink" title="2. Rust 基础入门"></a>2. Rust 基础入门</h1><h2 id="2-1-变量绑定与解构"><a href="#2-1-变量绑定与解构" class="headerlink" title="2.1 变量绑定与解构"></a>2.1 变量绑定与解构</h2><h3 id="变量绑定与可变性"><a href="#变量绑定与可变性" class="headerlink" title="变量绑定与可变性"></a>变量绑定与可变性</h3><p>变量只有初始化之后才能使用。如下会报错。</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">x</span>: <span class="hljs-type">i32</span>; <span class="hljs-comment">// 未初始化，但被使用</span><br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;x is equal to &#123;&#125;&quot;</span>, x); <br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">x</span>: <span class="hljs-type">i32</span>; <span class="hljs-comment">// 未初始化，但被使用</span><br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"x is equal to {}"</span>, x); <br>}<br></code></pre></td></tr></tbody></table></figure>
 
 
 
@@ -352,7 +354,7 @@
 </ul>
 <p>Rust 常量的命名约定是全部字母都使用大写，并使用下划线分隔单词，另外对数字字面量可插入下划线以提高可读性。</p>
 <p><code>const MAX_POINTS: u32 = 100_000;</code></p>
-<h3 id="变量遮蔽"><a href="#变量遮蔽" class="headerlink" title="变量遮蔽"></a>变量遮蔽</h3><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">x</span> = <span class="hljs-number">5</span>;<br><span class="hljs-keyword">let</span> <span class="hljs-variable">x</span> = x + <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+<h3 id="变量遮蔽"><a href="#变量遮蔽" class="headerlink" title="变量遮蔽"></a>变量遮蔽</h3><figure class="highlight rust"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">x</span> = <span class="hljs-number">5</span>;<br><span class="hljs-keyword">let</span> <span class="hljs-variable">x</span> = x + <span class="hljs-number">1</span>;<br></code></pre></td></tr></tbody></table></figure>
 
 <p>这和 <code>mut</code> 变量的使用是不同的，第二个 <code>let</code> 生成了完全不同的新变量，两个变量只是恰好拥有同样的名称，涉及一次内存对象的再分配 ，而 <code>mut</code> 声明的变量，可以修改同一个内存地址上的值，并不会发生内存对象的再分配，性能要更好。</p>
 <h2 id="2-2-基本类型"><a href="#2-2-基本类型" class="headerlink" title="2.2 基本类型"></a>2.2 基本类型</h2><ul>
@@ -370,7 +372,7 @@
 <li>使用 <code>saturating_*</code> 方法使值达到最小值或最大值</li>
 </ul>
 <p>下面是一个演示<code>wrapping_*</code>方法的示例：</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">a</span> : <span class="hljs-type">u8</span> = <span class="hljs-number">255</span>;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">b</span> = a.<span class="hljs-title function_ invoke__">wrapping_add</span>(<span class="hljs-number">20</span>);<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&#123;&#125;&quot;</span>, b);  <span class="hljs-comment">// 19</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">a</span> : <span class="hljs-type">u8</span> = <span class="hljs-number">255</span>;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">b</span> = a.<span class="hljs-title function_ invoke__">wrapping_add</span>(<span class="hljs-number">20</span>);<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, b);  <span class="hljs-comment">// 19</span><br>}<br></code></pre></td></tr></tbody></table></figure>
 
 <h4 id="浮点类型"><a href="#浮点类型" class="headerlink" title="浮点类型"></a>浮点类型</h4><p>为了避免上面说的两个陷阱，你需要遵守以下准则：</p>
 <ul>
@@ -381,7 +383,7 @@
 <h4 id="数字运算"><a href="#数字运算" class="headerlink" title="数字运算"></a>数字运算</h4><p>只有同样类型，才能运算。</p>
 <h4 id="序列"><a href="#序列" class="headerlink" title="序列"></a>序列</h4><p>生成连续的数值，例如 <code>1..5</code>，生成从 1 到 4 的连续数字，不包含 5 ；<code>1..=5</code>，生成从 1 到 5 的连续数字，包含 5。常常用于循环中：</p>
 <p>序列只允许用于数字或字符类型。</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br><span class="hljs-keyword">for</span> <span class="hljs-variable">i</span> <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>..=<span class="hljs-number">5</span> &#123;<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&#123;&#125;&quot;</span>,i);<br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br><span class="hljs-keyword">for</span> <span class="hljs-variable">i</span> <span class="hljs-keyword">in</span> <span class="hljs-string">&#x27;a&#x27;</span>..=<span class="hljs-string">&#x27;z&#x27;</span> &#123;<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&#123;&#125;&quot;</span>,i);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {<br><span class="hljs-keyword">for</span> <span class="hljs-variable">i</span> <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>..=<span class="hljs-number">5</span> {<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>,i);<br>}<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {<br><span class="hljs-keyword">for</span> <span class="hljs-variable">i</span> <span class="hljs-keyword">in</span> <span class="hljs-string">'a'</span>..=<span class="hljs-string">'z'</span> {<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>,i);<br>}<br><br></code></pre></td></tr></tbody></table></figure>
 
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p><strong>类型转换必须是显式的</strong>. Rust 永远也不会偷偷把你的 16bit 整数转换成 32bit 整数。</p>
 <h3 id="2-2-2-字符、布尔、单元类型"><a href="#2-2-2-字符、布尔、单元类型" class="headerlink" title="2.2.2 字符、布尔、单元类型"></a>2.2.2 字符、布尔、单元类型</h3><p>Rust 的字符不仅仅是 <code>ASCII</code>，所有的 <code>Unicode</code> 值都可以作为 Rust 字符。</p>
@@ -389,17 +391,17 @@
 <p>单元类型就是 <code>()</code> 。完全<strong>不占用</strong>任何内存。</p>
 <h3 id="2-2-3-语句和表达式"><a href="#2-2-3-语句和表达式" class="headerlink" title="2.2.3 语句和表达式"></a>2.2.3 语句和表达式</h3><p><strong>表达式不能包含分号</strong>，表达式如果不返回任何值，会隐式地返回一个 <code>()</code></p>
 <h3 id="2-2-4-函数"><a href="#2-2-4-函数" class="headerlink" title="2.2.4 函数"></a>2.2.4 函数</h3><p>当用 <code>!</code> 作函数返回类型的时候，表示该函数永不返回( diverge function )。</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">dead_end</span>() <span class="hljs-punctuation">-&gt;</span> ! &#123;<br>  <span class="hljs-built_in">panic!</span>(<span class="hljs-string">&quot;你已经到了穷途末路，崩溃吧！&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">dead_end</span>() <span class="hljs-punctuation">-&gt;</span> ! {<br>  <span class="hljs-built_in">panic!</span>(<span class="hljs-string">"你已经到了穷途末路，崩溃吧！"</span>);<br>}<br></code></pre></td></tr></tbody></table></figure>
 
 <h2 id="2-3-所有权和借用"><a href="#2-3-所有权和借用" class="headerlink" title="2.3 所有权和借用"></a>2.3 所有权和借用</h2><h3 id="2-3-1-所有权"><a href="#2-3-1-所有权" class="headerlink" title="2.3.1 所有权"></a>2.3.1 所有权</h3><ol>
 <li>Rust 中每一个值都被一个变量所拥有，该变量被称为值的所有者</li>
 <li>一个值同时只能被一个变量所拥有，或者说一个值只能拥有一个所有者</li>
 <li>当所有者(变量)离开作用域范围时，这个值将被丢弃(drop)</li>
 </ol>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-comment">// 由于 Rust 禁止你使用无效的引用，错误</span><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br><span class="hljs-keyword">let</span> <span class="hljs-variable">s1</span> = <span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;hello&quot;</span>);<br><span class="hljs-keyword">let</span> <span class="hljs-variable">s2</span> = s1;<br><br><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&#123;&#125;, world!&quot;</span>, s1);<br>&#125;<br><br><br><span class="hljs-comment">// 不报错，这个例子中，`x` 只是引用了存储在二进制中的字符串 `&quot;hello, world&quot;`，并没有持有所有权。</span><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">x</span>: &amp;<span class="hljs-type">str</span> = <span class="hljs-string">&quot;hello, world&quot;</span>;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">y</span> = x;<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&#123;&#125;,&#123;&#125;&quot;</span>,x,y);<br>&#125;<br><br><span class="hljs-comment">// Rust 有一个叫做 Copy 的特征，可以用在类似整型这样在栈中存储的类型。如果一个类型拥有 Copy 特征，一个旧的变量在被赋值给其他变量后仍然可用。</span><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">x</span>: &amp;<span class="hljs-type">str</span> = <span class="hljs-string">&quot;hello, world&quot;</span>;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">y</span> = x;<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&#123;&#125;,&#123;&#125;&quot;</span>,x,y);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-comment">// 由于 Rust 禁止你使用无效的引用，错误</span><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {<br><span class="hljs-keyword">let</span> <span class="hljs-variable">s1</span> = <span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">"hello"</span>);<br><span class="hljs-keyword">let</span> <span class="hljs-variable">s2</span> = s1;<br><br><span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}, world!"</span>, s1);<br>}<br><br><br><span class="hljs-comment">// 不报错，这个例子中，`x` 只是引用了存储在二进制中的字符串 `"hello, world"`，并没有持有所有权。</span><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">x</span>: &amp;<span class="hljs-type">str</span> = <span class="hljs-string">"hello, world"</span>;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">y</span> = x;<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{},{}"</span>,x,y);<br>}<br><br><span class="hljs-comment">// Rust 有一个叫做 Copy 的特征，可以用在类似整型这样在栈中存储的类型。如果一个类型拥有 Copy 特征，一个旧的变量在被赋值给其他变量后仍然可用。</span><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">x</span>: &amp;<span class="hljs-type">str</span> = <span class="hljs-string">"hello, world"</span>;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">y</span> = x;<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{},{}"</span>,x,y);<br>}<br><br></code></pre></td></tr></tbody></table></figure>
 
 <h4 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h4><p><code>clone</code></p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br><span class="hljs-keyword">let</span> <span class="hljs-variable">s1</span> = <span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">&quot;hello&quot;</span>);<br><span class="hljs-keyword">let</span> <span class="hljs-variable">s2</span> = s1.<span class="hljs-title function_ invoke__">clone</span>();<br><br><span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;s1 = &#123;&#125;, s2 = &#123;&#125;&quot;</span>, s1, s2);<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {<br><span class="hljs-keyword">let</span> <span class="hljs-variable">s1</span> = <span class="hljs-type">String</span>::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">"hello"</span>);<br><span class="hljs-keyword">let</span> <span class="hljs-variable">s2</span> = s1.<span class="hljs-title function_ invoke__">clone</span>();<br><br><span class="hljs-built_in">println!</span>(<span class="hljs-string">"s1 = {}, s2 = {}"</span>, s1, s2);<br>}<br></code></pre></td></tr></tbody></table></figure>
 
 <p><strong>任何基本类型的组合可以 <code>Copy</code> ，不需要分配内存或某种形式资源的类型是可以 <code>Copy</code> 的</strong>。</p>
 <ul>
@@ -479,6 +481,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

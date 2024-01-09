@@ -114,7 +114,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -252,7 +254,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.7k words
+          3.5k words
         
       </span>
     
@@ -263,7 +265,7 @@
         
         
         
-          31 mins
+          29 mins
         
       </span>
     
@@ -324,39 +326,39 @@
                 
                 <h2 id="设备树"><a href="#设备树" class="headerlink" title="设备树"></a>设备树</h2><p>Pinctrl controller节点：</p>
 <p>支持的属性可以查阅<code>/dts/bindings/pinctrl/pincfg-node.yaml</code>，支持配置上下拉，驱动能力等等。<br>当设备节点调用<code>perip0_default</code>的时候，<code>group1~N</code>都会被apply。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* board-pinctrl.dtsi */</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vnd-soc-pkgxx.h&gt;</span></span><br><br>&amp;pinctrl &#123;<br>    <span class="hljs-comment">/* Node with pin configuration for default state */</span><br>    periph0_default: periph0_default &#123;<br>        group1 &#123;<br>            <span class="hljs-comment">/* Mappings: PERIPH0_SIGA -&gt; PX0, PERIPH0_SIGC -&gt; PZ1 */</span><br>            pinmux = &lt;PERIPH0_SIGA_PX0&gt;, &lt;PERIPH0_SIGC_PZ1&gt;;<br>            <span class="hljs-comment">/* Pins PX0 and PZ1 have pull-up enabled */</span><br>            bias-pull-up;<br>        &#125;;<br>        ...<br>        groupN &#123;<br>            <span class="hljs-comment">/* Mappings: PERIPH0_SIGB -&gt; PY7 */</span><br>            pinmux = &lt;PERIPH0_SIGB_PY7&gt;;<br>        &#125;;<br>    &#125;;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* board-pinctrl.dtsi */</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vnd-soc-pkgxx.h&gt;</span></span><br><br>&amp;pinctrl {<br>    <span class="hljs-comment">/* Node with pin configuration for default state */</span><br>    periph0_default: periph0_default {<br>        group1 {<br>            <span class="hljs-comment">/* Mappings: PERIPH0_SIGA -&gt; PX0, PERIPH0_SIGC -&gt; PZ1 */</span><br>            pinmux = &lt;PERIPH0_SIGA_PX0&gt;, &lt;PERIPH0_SIGC_PZ1&gt;;<br>            <span class="hljs-comment">/* Pins PX0 and PZ1 have pull-up enabled */</span><br>            bias-pull-up;<br>        };<br>        ...<br>        groupN {<br>            <span class="hljs-comment">/* Mappings: PERIPH0_SIGB -&gt; PY7 */</span><br>            pinmux = &lt;PERIPH0_SIGB_PY7&gt;;<br>        };<br>    };<br>};<br></code></pre></td></tr></tbody></table></figure>
 
 <p>使用pinctrl的设备节点：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><br>&amp;periph0 &#123;<br>    pinctrl<span class="hljs-number">-0</span> = &lt;&amp;periph0_default&gt;;<br>    pinctrl-names = <span class="hljs-string">&quot;default&quot;</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><br>&amp;periph0 {<br>    pinctrl<span class="hljs-number">-0</span> = &lt;&amp;periph0_default&gt;;<br>    pinctrl-names = <span class="hljs-string">"default"</span>;<br>};<br></code></pre></td></tr></tbody></table></figure>
 
 <p>可以在pinctrl controller下面的pinctrl配置节点前加上<code>/omit-if-no-ref/</code>，表示这个节点没被引用的话会被丢弃，不会被解析到C头文件中。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">&amp;pinctrl &#123;<br>    /omit-<span class="hljs-keyword">if</span>-no-ref/ periph0_siga_px0_default: periph0_siga_px0_default &#123;<br>        pinmux = &lt;VNDSOC_PIN(X, <span class="hljs-number">0</span>, MUX0)&gt;;<br>    &#125;;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">&amp;pinctrl {<br>    /omit-<span class="hljs-keyword">if</span>-no-ref/ periph0_siga_px0_default: periph0_siga_px0_default {<br>        pinmux = &lt;VNDSOC_PIN(X, <span class="hljs-number">0</span>, MUX0)&gt;;<br>    };<br>};<br></code></pre></td></tr></tbody></table></figure>
 
 <h2 id="Device-driver使用Pinctrl"><a href="#Device-driver使用Pinctrl" class="headerlink" title="Device driver使用Pinctrl"></a>Device driver使用Pinctrl</h2><p>以<code>i2c_dw.c</code>为例，<br>通过<code>PINCTRL_DT_INST_DEFINE(n)</code>, 创建该device对应的<code>pinctrl_dev_config</code>结构体。<br>通过<code>PINCTRL_DT_INST_DEV_CONFIG_GET(n)</code> 得到该<code>pinctrl_dev_config</code>结构体。</p>
 <p>随后在init函数中调用<code>pinctrl_apply_state(rom-&gt;pcfg, PINCTRL_STATE_DEFAULT);</code>选择apply default的pinctrl配置。</p>
 <p>如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> DT_DRV_COMPAT mydev</span><br>...<br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;zephyr/drivers/pinctrl.h&gt;</span></span><br>...<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">mydev_config</span> &#123;</span><br>    ...<br>    <span class="hljs-comment">/* Reference to mydev pinctrl configuration */</span><br>    <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_dev_config</span> *<span class="hljs-title">pcfg</span>;</span><br>    ...<br>&#125;;<br>...<br><span class="hljs-type">static</span> <span class="hljs-type">int</span> <span class="hljs-title function_">mydev_init</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *dev)</span><br>&#123;<br>    <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">mydev_config</span> *<span class="hljs-title">config</span> =</span> dev-&gt;config;<br>    <span class="hljs-type">int</span> ret;<br>    ...<br>    <span class="hljs-comment">/* Select &quot;default&quot; state at initialization time */</span><br>    ret = pinctrl_apply_state(config-&gt;pcfg, PINCTRL_STATE_DEFAULT);<br>    <span class="hljs-keyword">if</span> (ret &lt; <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br>    ...<br>&#125;<br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MYDEV_DEFINE(i)                                                    \</span><br><span class="hljs-meta">    <span class="hljs-comment">/* Define all pinctrl configuration for instance &quot;i&quot; */</span>                \</span><br><span class="hljs-meta">    PINCTRL_DT_INST_DEFINE(i);                                             \</span><br><span class="hljs-meta">    ...                                                                    \</span><br><span class="hljs-meta">    static const struct mydev_config mydev_config_##i = &#123;                  \</span><br><span class="hljs-meta">        ...                                                                \</span><br><span class="hljs-meta">        <span class="hljs-comment">/* Keep a ref. to the pinctrl configuration for instance &quot;i&quot; */</span>    \</span><br><span class="hljs-meta">        .pcfg = PINCTRL_DT_INST_DEV_CONFIG_GET(i),                         \</span><br><span class="hljs-meta">        ...                                                                \</span><br><span class="hljs-meta">    &#125;;                                                                     \</span><br><span class="hljs-meta">    ...                                                                    \</span><br><span class="hljs-meta">                                                                           \</span><br><span class="hljs-meta">    DEVICE_DT_INST_DEFINE(i, mydev_init, NULL, &amp;mydev_data##i,             \</span><br><span class="hljs-meta">                          &amp;mydev_config##i, ...);</span><br><br>DT_INST_FOREACH_STATUS_OKAY(MYDEV_DEFINE)<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> DT_DRV_COMPAT mydev</span><br>...<br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;zephyr/drivers/pinctrl.h&gt;</span></span><br>...<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">mydev_config</span> {</span><br>    ...<br>    <span class="hljs-comment">/* Reference to mydev pinctrl configuration */</span><br>    <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_dev_config</span> *<span class="hljs-title">pcfg</span>;</span><br>    ...<br>};<br>...<br><span class="hljs-type">static</span> <span class="hljs-type">int</span> <span class="hljs-title function_">mydev_init</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *dev)</span><br>{<br>    <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">mydev_config</span> *<span class="hljs-title">config</span> =</span> dev-&gt;config;<br>    <span class="hljs-type">int</span> ret;<br>    ...<br>    <span class="hljs-comment">/* Select "default" state at initialization time */</span><br>    ret = pinctrl_apply_state(config-&gt;pcfg, PINCTRL_STATE_DEFAULT);<br>    <span class="hljs-keyword">if</span> (ret &lt; <span class="hljs-number">0</span>) {<br>        <span class="hljs-keyword">return</span> ret;<br>    }<br>    ...<br>}<br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MYDEV_DEFINE(i)                                                    \</span><br><span class="hljs-meta">    <span class="hljs-comment">/* Define all pinctrl configuration for instance "i" */</span>                \</span><br><span class="hljs-meta">    PINCTRL_DT_INST_DEFINE(i);                                             \</span><br><span class="hljs-meta">    ...                                                                    \</span><br><span class="hljs-meta">    static const struct mydev_config mydev_config_##i = {                  \</span><br><span class="hljs-meta">        ...                                                                \</span><br><span class="hljs-meta">        <span class="hljs-comment">/* Keep a ref. to the pinctrl configuration for instance "i" */</span>    \</span><br><span class="hljs-meta">        .pcfg = PINCTRL_DT_INST_DEV_CONFIG_GET(i),                         \</span><br><span class="hljs-meta">        ...                                                                \</span><br><span class="hljs-meta">    };                                                                     \</span><br><span class="hljs-meta">    ...                                                                    \</span><br><span class="hljs-meta">                                                                           \</span><br><span class="hljs-meta">    DEVICE_DT_INST_DEFINE(i, mydev_init, NULL, &amp;mydev_data##i,             \</span><br><span class="hljs-meta">                          &amp;mydev_config##i, ...);</span><br><br>DT_INST_FOREACH_STATUS_OKAY(MYDEV_DEFINE)<br></code></pre></td></tr></tbody></table></figure>
 
 <p>分析下<code>PINCTRL_DT_DEFINE</code>这个宏，</p>
-<figure class="highlight c"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> PINCTRL_DT_DEFINE(node_id)                 \</span><br><span class="hljs-meta">  LISTIFY(DT_NUM_PINCTRL_STATES(node_id),				       \</span><br><span class="hljs-meta">         Z_PINCTRL_STATE_PINS_DEFINE, (;), node_id);	       \</span><br><span class="hljs-meta">  Z_PINCTRL_STATES_DEFINE(node_id)				       \</span><br><span class="hljs-meta">  Z_PINCTRL_DEV_CONFIG_STATIC Z_PINCTRL_DEV_CONFIG_CONST		       \</span><br><span class="hljs-meta">  struct pinctrl_dev_config Z_PINCTRL_DEV_CONFIG_NAME(node_id) =	       \</span><br><span class="hljs-meta">  Z_PINCTRL_DEV_CONFIG_INIT(node_id)</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><figcaption><span>{.line-numbers}</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> PINCTRL_DT_DEFINE(node_id)                 \</span><br><span class="hljs-meta">  LISTIFY(DT_NUM_PINCTRL_STATES(node_id),				       \</span><br><span class="hljs-meta">         Z_PINCTRL_STATE_PINS_DEFINE, (;), node_id);	       \</span><br><span class="hljs-meta">  Z_PINCTRL_STATES_DEFINE(node_id)				       \</span><br><span class="hljs-meta">  Z_PINCTRL_DEV_CONFIG_STATIC Z_PINCTRL_DEV_CONFIG_CONST		       \</span><br><span class="hljs-meta">  struct pinctrl_dev_config Z_PINCTRL_DEV_CONFIG_NAME(node_id) =	       \</span><br><span class="hljs-meta">  Z_PINCTRL_DEV_CONFIG_INIT(node_id)</span><br></code></pre></td></tr></tbody></table></figure>
 
-</br>
+<br>
 
 <p>2~3行针对dts某个device节点，有N个<code>pinctrl-&lt;N&gt;</code>就调用<code>Z_PINCTRL_STATE_PINS_DEFINE</code>函数，创建包含N个<code>pinctrl_soc_pin_t</code>结构体的数组, 每个结构体包含该<code>pinctrl-&lt;N&gt;</code>对应pinctrl controller节点所需要的pins。该结构体数组的具体创建过程由<code>Z_PINCTRL_STATE_PINS_INIT</code>决定，该宏需要不同厂商在<code>pinctrl_soc.h</code>中定义。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_soc_pin_t</span></span><br><span class="hljs-class">&#123;</span><br>  <span class="hljs-comment">// need to define in `pinctrl_soc.h`</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_soc_pin_t</span></span><br><span class="hljs-class">{</span><br>  <span class="hljs-comment">// need to define in `pinctrl_soc.h`</span><br>}<br></code></pre></td></tr></tbody></table></figure>
 
-</br>
+<br>
 
 <p>第4行，根据N个<code>pinctrl-&lt;N&gt;</code>创建<code>pinctrl_state</code>结构体数组，从<code>devicetree_generated.h</code>中获取结构体信息。</p>
 <p>每个<code>pinctrl_state</code>结构体：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_state</span> &#123;</span><br>  <span class="hljs-type">const</span> <span class="hljs-type">pinctrl_soc_pin_t</span> *pins; <span class="hljs-comment">// 对应上面2~3行创建的`pinctrl_soc_pin_t`结构体数组。</span><br>  <span class="hljs-type">uint8_t</span> pin_cnt; <span class="hljs-comment">// 该state包含多少个pin。</span><br>  <span class="hljs-type">uint8_t</span> id = PINCTRL_STATE_XXX; <span class="hljs-comment">// XXX可以是DEFAULT,SLEEP或自定义属性。</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_state</span> {</span><br>  <span class="hljs-type">const</span> <span class="hljs-type">pinctrl_soc_pin_t</span> *pins; <span class="hljs-comment">// 对应上面2~3行创建的`pinctrl_soc_pin_t`结构体数组。</span><br>  <span class="hljs-type">uint8_t</span> pin_cnt; <span class="hljs-comment">// 该state包含多少个pin。</span><br>  <span class="hljs-type">uint8_t</span> id = PINCTRL_STATE_XXX; <span class="hljs-comment">// XXX可以是DEFAULT,SLEEP或自定义属性。</span><br>};<br></code></pre></td></tr></tbody></table></figure>
 
-</br>
+<br>
 
 <p>第5~7行，初始化一个<code>pinctrl_dev_config</code>结构体。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_dev_config</span> &#123;</span><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(CONFIG_PINCTRL_STORE_REG) || defined(__DOXYGEN__)</span><br>  <span class="hljs-type">uintptr_t</span> reg; <span class="hljs-comment">// 该device的reg地址</span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>  <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_state</span> *<span class="hljs-title">states</span>;</span> <span class="hljs-comment">// 即上面的`pinctrl_state`结构体数组。</span><br>  <span class="hljs-type">uint8_t</span> state_cnt; <span class="hljs-comment">// 包含的state数量。</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_dev_config</span> {</span><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(CONFIG_PINCTRL_STORE_REG) || defined(__DOXYGEN__)</span><br>  <span class="hljs-type">uintptr_t</span> reg; <span class="hljs-comment">// 该device的reg地址</span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>  <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_state</span> *<span class="hljs-title">states</span>;</span> <span class="hljs-comment">// 即上面的`pinctrl_state`结构体数组。</span><br>  <span class="hljs-type">uint8_t</span> state_cnt; <span class="hljs-comment">// 包含的state数量。</span><br>};<br></code></pre></td></tr></tbody></table></figure>
 
-</br>
+<br>
 
 <p>结构体关系如下, 其中<br><code>pinctrl_dev_config</code> 是每个device拥有一个。<br><code>pinctrl_state</code> 对应每个device的一个pinctrl state, 即dts中的<code>pinctrl-&lt;N&gt;</code>。<br><code>pinctrl_soc_pin_t</code> 对应一个pin。<br><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/pinctrl.png" srcset="/img/loading.gif" lazyload alt="Pinctrl 结构体"></p>
 <h2 id="Pinctrl-Driver实现"><a href="#Pinctrl-Driver实现" class="headerlink" title="Pinctrl Driver实现"></a>Pinctrl Driver实现</h2><p>实现<code>pinctrl_configure_pins()</code></p>
@@ -408,9 +410,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/12/28/Project/6.S801_XV6/XV6_Chapter1/" title="XV6 Book notes">
+                      <a href="/2023/12/30/Project/xv6/xv6_chapter1/" title="xv6_chapter1 Operating system interfaces">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">XV6 Book notes</span>
+                        <span class="hidden-mobile">xv6_chapter1 Operating system interfaces</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -430,6 +432,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

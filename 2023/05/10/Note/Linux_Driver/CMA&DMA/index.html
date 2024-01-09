@@ -16,12 +16,12 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Reserved-memory参考：http:&#x2F;&#x2F;www.wowotech.net&#x2F;memory_management&#x2F;cma.html https:&#x2F;&#x2F;xilinx-wiki.atlassian.net&#x2F;wiki&#x2F;spaces&#x2F;A&#x2F;pages&#x2F;18841683&#x2F;Linux+Reserved+Memory?view&#x3D;blog &#x2F;Documentation&#x2F;devicetree&amp;">
+    <meta name="description" content="Reserved-memory参考：http:&#x2F;&#x2F;www.wowotech.net&#x2F;memory_management&#x2F;cma.html https:&#x2F;&#x2F;xilinx-wiki.atlassian.net&#x2F;wiki&#x2F;spaces&#x2F;A&#x2F;pages&#x2F;18841683&#x2F;Linux+Reserved+Memory?view&#x3D;blog &#x2F;Documentation&#x2F;devicetree&#x2F;bindings&#x2F;r">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CMA&amp;DMA">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/05/10/Note/Linux_Driver/CMA&DMA/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Reserved-memory参考：http:&#x2F;&#x2F;www.wowotech.net&#x2F;memory_management&#x2F;cma.html https:&#x2F;&#x2F;xilinx-wiki.atlassian.net&#x2F;wiki&#x2F;spaces&#x2F;A&#x2F;pages&#x2F;18841683&#x2F;Linux+Reserved+Memory?view&#x3D;blog &#x2F;Documentation&#x2F;devicetree&amp;">
+<meta property="og:description" content="Reserved-memory参考：http:&#x2F;&#x2F;www.wowotech.net&#x2F;memory_management&#x2F;cma.html https:&#x2F;&#x2F;xilinx-wiki.atlassian.net&#x2F;wiki&#x2F;spaces&#x2F;A&#x2F;pages&#x2F;18841683&#x2F;Linux+Reserved+Memory?view&#x3D;blog &#x2F;Documentation&#x2F;devicetree&#x2F;bindings&#x2F;r">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230510112218.png">
 <meta property="article:published_time" content="2023-05-10T09:40:28.000Z">
@@ -114,7 +114,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -252,7 +254,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.2k words
+          6k words
         
       </span>
     
@@ -263,7 +265,7 @@
         
         
         
-          52 mins
+          51 mins
         
       </span>
     
@@ -324,25 +326,25 @@
                 
                 <h1 id="Reserved-memory"><a href="#Reserved-memory" class="headerlink" title="Reserved-memory"></a>Reserved-memory</h1><p>参考：<a target="_blank" rel="noopener" href="http://www.wowotech.net/memory_management/cma.html">http://www.wowotech.net/memory_management/cma.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841683/Linux+Reserved+Memory?view=blog">https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841683/Linux+Reserved+Memory?view=blog</a></p>
-<p>&#x2F;Documentation&#x2F;devicetree&#x2F;bindings&#x2F;reserved-memory&#x2F;reserved-memory.txt</p>
+<p>/Documentation/devicetree/bindings/reserved-memory/reserved-memory.txt</p>
 <p>定义了no-map属性的，不会自动映射到虚拟地址，需要自行在driver中映射。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// dts</span><br>reserved: buffer@<span class="hljs-number">0x38000000</span> &#123;<br>    no-<span class="hljs-built_in">map</span>;<br>    reg = &lt;<span class="hljs-number">0x38000000</span> <span class="hljs-number">0x08000000</span>&gt;;<br>&#125;;<br><br><span class="hljs-comment">/* Get reserved memory region from Device-tree */</span><br>np = of_parse_phandle(dev-&gt;of_node, <span class="hljs-string">&quot;memory-region&quot;</span>, <span class="hljs-number">0</span>);<br><br>rc = of_address_to_resource(np, <span class="hljs-number">0</span>, &amp;r);<br><br>lp-&gt;paddr = r.start;<br>lp-&gt;vaddr = memremap(r.start, resource_size(&amp;r), MEMREMAP_WB);<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// dts</span><br>reserved: buffer@<span class="hljs-number">0x38000000</span> {<br>    no-<span class="hljs-built_in">map</span>;<br>    reg = &lt;<span class="hljs-number">0x38000000</span> <span class="hljs-number">0x08000000</span>&gt;;<br>};<br><br><span class="hljs-comment">/* Get reserved memory region from Device-tree */</span><br>np = of_parse_phandle(dev-&gt;of_node, <span class="hljs-string">"memory-region"</span>, <span class="hljs-number">0</span>);<br><br>rc = of_address_to_resource(np, <span class="hljs-number">0</span>, &amp;r);<br><br>lp-&gt;paddr = r.start;<br>lp-&gt;vaddr = memremap(r.start, resource_size(&amp;r), MEMREMAP_WB);<br></code></pre></td></tr></tbody></table></figure>
 
 
 
 <p>定义”shared-dma-pool” 就可以创建DMA memory pool，使用DMA engine API了。of_reserved_mem_device_init中会帮我们创建映射。（DMA在of_reserved_mem_device_init阶段会进行memremap同上，这个remap不是直接映射的方式）。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// dts</span><br>reserved: buffer@<span class="hljs-number">0</span> &#123;<br>  compatible = <span class="hljs-string">&quot;shared-dma-pool&quot;</span>;<br>  no-<span class="hljs-built_in">map</span>;<br>  reg = &lt;<span class="hljs-number">0x0</span> <span class="hljs-number">0x70000000</span> <span class="hljs-number">0x0</span> <span class="hljs-number">0x10000000</span>&gt;;<br>&#125;;<br><br><span class="hljs-comment">/* Initialize reserved memory resources */</span><br>rc = of_reserved_mem_device_init(dev);<br><br><span class="hljs-comment">/* Allocate memory */</span><br>dma_set_coherent_mask(dev, <span class="hljs-number">0xFFFFFFFF</span>);<br>lp-&gt;vaddr = dma_alloc_coherent(dev, ALLOC_SIZE, &amp;lp-&gt;paddr, GFP_KERNEL);<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// dts</span><br>reserved: buffer@<span class="hljs-number">0</span> {<br>  compatible = <span class="hljs-string">"shared-dma-pool"</span>;<br>  no-<span class="hljs-built_in">map</span>;<br>  reg = &lt;<span class="hljs-number">0x0</span> <span class="hljs-number">0x70000000</span> <span class="hljs-number">0x0</span> <span class="hljs-number">0x10000000</span>&gt;;<br>};<br><br><span class="hljs-comment">/* Initialize reserved memory resources */</span><br>rc = of_reserved_mem_device_init(dev);<br><br><span class="hljs-comment">/* Allocate memory */</span><br>dma_set_coherent_mask(dev, <span class="hljs-number">0xFFFFFFFF</span>);<br>lp-&gt;vaddr = dma_alloc_coherent(dev, ALLOC_SIZE, &amp;lp-&gt;paddr, GFP_KERNEL);<br></code></pre></td></tr></tbody></table></figure>
 
 <p>log:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[    0.000000] Reserved memory: created DMA memory pool at 0x0000000070000000, size 256 MiB<br>[    0.000000] Reserved memory: initialized node buffer@0, compatible id shared-dma-pool<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[    0.000000] Reserved memory: created DMA memory pool at 0x0000000070000000, size 256 MiB<br>[    0.000000] Reserved memory: initialized node buffer@0, compatible id shared-dma-pool<br></code></pre></td></tr></tbody></table></figure>
 
 
 
 <p>加上resuable属性，变成CMA pool。（CMA在dma_alloc_coherent时会通过__va宏返回直接映射的虚拟地址）</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">reserved: buffer@<span class="hljs-number">0</span> &#123;<br>  compatible = <span class="hljs-string">&quot;shared-dma-pool&quot;</span>;<br>  reusable;<br>  reg = &lt;<span class="hljs-number">0x0</span> <span class="hljs-number">0x70000000</span> <span class="hljs-number">0x0</span> <span class="hljs-number">0x10000000</span>&gt;;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">reserved: buffer@<span class="hljs-number">0</span> {<br>  compatible = <span class="hljs-string">"shared-dma-pool"</span>;<br>  reusable;<br>  reg = &lt;<span class="hljs-number">0x0</span> <span class="hljs-number">0x70000000</span> <span class="hljs-number">0x0</span> <span class="hljs-number">0x10000000</span>&gt;;<br>};<br></code></pre></td></tr></tbody></table></figure>
 
 <p>log：</p>
-<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mel">[    <span class="hljs-number">0.000000</span>] Reserved <span class="hljs-keyword">memory</span>: created CMA <span class="hljs-keyword">memory</span> pool at <span class="hljs-number">0x0000000070000000</span>, <span class="hljs-keyword">size</span> <span class="hljs-number">256</span> MiB<br>[    <span class="hljs-number">0.000000</span>] Reserved <span class="hljs-keyword">memory</span>: initialized node buffer@0, compatible id shared-dma-pool<br></code></pre></td></tr></table></figure>
+<figure class="highlight mel"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mel">[    <span class="hljs-number">0.000000</span>] Reserved <span class="hljs-keyword">memory</span>: created CMA <span class="hljs-keyword">memory</span> pool at <span class="hljs-number">0x0000000070000000</span>, <span class="hljs-keyword">size</span> <span class="hljs-number">256</span> MiB<br>[    <span class="hljs-number">0.000000</span>] Reserved <span class="hljs-keyword">memory</span>: initialized node buffer@0, compatible id shared-dma-pool<br></code></pre></td></tr></tbody></table></figure>
 
 
 
@@ -351,7 +353,7 @@
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/109919756">https://zhuanlan.zhihu.com/p/109919756</a></p>
 <h2 id="CPU-and-DMA-addresses"><a href="#CPU-and-DMA-addresses" class="headerlink" title="CPU and DMA addresses"></a>CPU and DMA addresses</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230510112218.png" srcset="/img/loading.gif" lazyload></p>
 <p>有IOMMU的设备，设备device访问的地址是bus address（等同于dma address），IOMMU负责CPU physical address和bus address的映射。</p>
-<p>嵌入式设备一般没有IOMMU，此时bus address&#x3D;CPU pyhsical address。设备直接访问cpu的物理地址。</p>
+<p>嵌入式设备一般没有IOMMU，此时bus address=CPU pyhsical address。设备直接访问cpu的物理地址。</p>
 <h2 id="What-memory-is-DMA’able"><a href="#What-memory-is-DMA’able" class="headerlink" title="What memory is DMA’able?"></a>What memory is DMA’able?</h2><p><code>__get_free_page*()</code>, <code>kmalloc()</code>, <code>kmem_cache_alloc()</code>这些分配连续空间地址的都可以dma mapping。</p>
 <p><code>vmalloc()</code>, <code>kmap()</code>不行。</p>
 <h2 id="DMA-addressing-capabilities"><a href="#DMA-addressing-capabilities" class="headerlink" title="DMA addressing capabilities"></a>DMA addressing capabilities</h2><p>设置设备通过DMA能驱动多少位地址，寻址能力。</p>
@@ -370,17 +372,17 @@
 </li>
 <li>流式DMA映射（Streaming DMA mappings）。一次性的，需要进行DMA传输的时候map，DMA传输完成，就ummap。<code>spi-dw-rts.c</code>中ssi的传输就是流式dma映射。</li>
 </ul>
-<h2 id="一致性DMA映射"><a href="#一致性DMA映射" class="headerlink" title="一致性DMA映射"></a>一致性DMA映射</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">dma_addr_t</span> dma_handle;<br><span class="hljs-comment">//cpu_addr:虚拟地址，dma_handle:总线地址，没有IOMMU相当于物理地址</span><br>cpu_addr = dma_alloc_coherent(dev, size, &amp;dma_handle, gfp);<br></code></pre></td></tr></table></figure>
+<h2 id="一致性DMA映射"><a href="#一致性DMA映射" class="headerlink" title="一致性DMA映射"></a>一致性DMA映射</h2><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">dma_addr_t</span> dma_handle;<br><span class="hljs-comment">//cpu_addr:虚拟地址，dma_handle:总线地址，没有IOMMU相当于物理地址</span><br>cpu_addr = dma_alloc_coherent(dev, size, &amp;dma_handle, gfp);<br></code></pre></td></tr></tbody></table></figure>
 
 <p>You may however need to make sure to flush the processor’s write buffers before telling devices to read that memory.见下方sync的API。</p>
 <p>如果driver需要许多小的buffer,可以使用</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">dma_pool</span> *<span class="hljs-title">pool</span>;</span><br>pool = dma_pool_create(name, dev, size, align, boundary);<br>cpu_addr = dma_pool_alloc(pool, flags, &amp;dma_handle);<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">dma_pool</span> *<span class="hljs-title">pool</span>;</span><br>pool = dma_pool_create(name, dev, size, align, boundary);<br>cpu_addr = dma_pool_alloc(pool, flags, &amp;dma_handle);<br></code></pre></td></tr></tbody></table></figure>
 
 <h2 id="流式DMA映射"><a href="#流式DMA映射" class="headerlink" title="流式DMA映射"></a>流式DMA映射</h2><p>流式DMA映射需要设置DMA direction。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">DMA_BIDIRECTIONAL<br>DMA_TO_DEVICE<br>DMA_FROM_DEVICE<br>DMA_NONE<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">DMA_BIDIRECTIONAL<br>DMA_TO_DEVICE<br>DMA_FROM_DEVICE<br>DMA_NONE<br></code></pre></td></tr></tbody></table></figure>
 
 <p>接口一<code>dma_map_single</code></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">device</span> *<span class="hljs-title">dev</span> =</span> &amp;my_dev-&gt;dev;<br><span class="hljs-type">dma_addr_t</span> dma_handle;<br><span class="hljs-type">void</span> *addr = buffer-&gt;ptr;<br><span class="hljs-type">size_t</span> size = buffer-&gt;len;<br><br>dma_handle = dma_map_single(dev, addr, size, direction);<br><span class="hljs-keyword">if</span> (dma_mapping_error(dev, dma_handle)) &#123;<br>        <span class="hljs-comment">/*</span><br><span class="hljs-comment">         * reduce current DMA mapping usage,</span><br><span class="hljs-comment">         * delay and try again later or</span><br><span class="hljs-comment">         * reset driver.</span><br><span class="hljs-comment">         */</span><br>        <span class="hljs-keyword">goto</span> map_error_handling;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">device</span> *<span class="hljs-title">dev</span> =</span> &amp;my_dev-&gt;dev;<br><span class="hljs-type">dma_addr_t</span> dma_handle;<br><span class="hljs-type">void</span> *addr = buffer-&gt;ptr;<br><span class="hljs-type">size_t</span> size = buffer-&gt;len;<br><br>dma_handle = dma_map_single(dev, addr, size, direction);<br><span class="hljs-keyword">if</span> (dma_mapping_error(dev, dma_handle)) {<br>        <span class="hljs-comment">/*</span><br><span class="hljs-comment">         * reduce current DMA mapping usage,</span><br><span class="hljs-comment">         * delay and try again later or</span><br><span class="hljs-comment">         * reset driver.</span><br><span class="hljs-comment">         */</span><br>        <span class="hljs-keyword">goto</span> map_error_handling;<br>}<br></code></pre></td></tr></tbody></table></figure>
 
 <p>接口二<code>dma_map_page</code></p>
 <p>因为dma_map_single函数在进行DMA mapping的时候使用的是CPU指针（虚拟地址），导致该函数有一个弊端：不能使用HIGHMEM memory进行mapping。因为HIGHMEM memory没有进行线性映射，所以没有虚拟地址。</p>
@@ -397,9 +399,9 @@
 <p>由上面可以看出，DMA如果使用cache，那么一定要考虑cache的一致性。解决DMA导致的一致性的方法最简单的就是禁止DMA目标地址范围内的cache功能。但是这样就会牺牲性能。</p>
 <p>因此在DMA是否使用cache的问题上，可以根据DMA缓冲区期望保留的的时间长短来决策。DAM的映射就分为：<strong>一致性DMA映射</strong>和<strong>流式DMA映射</strong>。</p>
 <p>因为LCD随时都在使用，因此在Frame buffer驱动中，使用一致性DMA映射上面的代码中用到 <strong>dma_alloc_wc</strong>（<strong>non-cache, buffered</strong>）函数，另外还有一个一致性DMA映射函数<strong>dma_alloc_coherent</strong>（<strong>non-cache，non-buffer</strong>）</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> *<span class="hljs-title function_">dma_alloc_coherent</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">size_t</span> size,</span><br><span class="hljs-params">    <span class="hljs-type">dma_addr_t</span> *dma_handle, <span class="hljs-type">gfp_t</span> gfp)</span><br>&#123;<br>  <span class="hljs-keyword">return</span> dma_alloc_attrs(dev, size, dma_handle, gfp,<br>      (gfp &amp; __GFP_NOWARN) ? DMA_ATTR_NO_WARN : <span class="hljs-number">0</span>);<br>&#125;<br><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> *<span class="hljs-title function_">dma_alloc_wc</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">size_t</span> size,</span><br><span class="hljs-params">         <span class="hljs-type">dma_addr_t</span> *dma_addr, <span class="hljs-type">gfp_t</span> gfp)</span><br>&#123;<br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> attrs = DMA_ATTR_WRITE_COMBINE;<br><br>  <span class="hljs-keyword">if</span> (gfp &amp; __GFP_NOWARN)<br>    attrs |= DMA_ATTR_NO_WARN;<br><br>  <span class="hljs-keyword">return</span> dma_alloc_attrs(dev, size, dma_addr, gfp, attrs);<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> *<span class="hljs-title function_">dma_alloc_coherent</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">size_t</span> size,</span><br><span class="hljs-params">    <span class="hljs-type">dma_addr_t</span> *dma_handle, <span class="hljs-type">gfp_t</span> gfp)</span><br>{<br>  <span class="hljs-keyword">return</span> dma_alloc_attrs(dev, size, dma_handle, gfp,<br>      (gfp &amp; __GFP_NOWARN) ? DMA_ATTR_NO_WARN : <span class="hljs-number">0</span>);<br>}<br><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> *<span class="hljs-title function_">dma_alloc_wc</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">size_t</span> size,</span><br><span class="hljs-params">         <span class="hljs-type">dma_addr_t</span> *dma_addr, <span class="hljs-type">gfp_t</span> gfp)</span><br>{<br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> attrs = DMA_ATTR_WRITE_COMBINE;<br><br>  <span class="hljs-keyword">if</span> (gfp &amp; __GFP_NOWARN)<br>    attrs |= DMA_ATTR_NO_WARN;<br><br>  <span class="hljs-keyword">return</span> dma_alloc_attrs(dev, size, dma_addr, gfp, attrs);<br>}<br></code></pre></td></tr></tbody></table></figure>
 
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c">dma_alloc_attrs();<br>  dma_alloc_from_dev_coherent(); <span class="hljs-comment">// 如果dts有reserved memory会走这个函数</span><br>    dev_get_coherent_memory();<br>      <span class="hljs-keyword">return</span> dev-&gt;dma_mem <span class="hljs-comment">// 直接返回reserved-memory中分配的地址了</span><br>  <span class="hljs-keyword">return</span> cpu_addr;<br><br><span class="hljs-comment">// dev-&gt;mem的分配：</span><br>dma_init_reserved_memory();<br>  ops-&gt;device_init(dma_reserved_default_memory, <span class="hljs-literal">NULL</span>);<br><span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">reserved_mem_ops</span> <span class="hljs-title">rmem_dma_ops</span> =</span> &#123;<br>  .device_init	= rmem_dma_device_init,<br>&#125;;<br>rmem_dma_device_init();<br>  dma_init_coherent_memory();<br>  dma_assign_coherent_memory();<br>    dev-&gt;dma_mem = mem;<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c">dma_alloc_attrs();<br>  dma_alloc_from_dev_coherent(); <span class="hljs-comment">// 如果dts有reserved memory会走这个函数</span><br>    dev_get_coherent_memory();<br>      <span class="hljs-keyword">return</span> dev-&gt;dma_mem <span class="hljs-comment">// 直接返回reserved-memory中分配的地址了</span><br>  <span class="hljs-keyword">return</span> cpu_addr;<br><br><span class="hljs-comment">// dev-&gt;mem的分配：</span><br>dma_init_reserved_memory();<br>  ops-&gt;device_init(dma_reserved_default_memory, <span class="hljs-literal">NULL</span>);<br><span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">reserved_mem_ops</span> <span class="hljs-title">rmem_dma_ops</span> =</span> {<br>  .device_init	= rmem_dma_device_init,<br>};<br>rmem_dma_device_init();<br>  dma_init_coherent_memory();<br>  dma_assign_coherent_memory();<br>    dev-&gt;dma_mem = mem;<br><br></code></pre></td></tr></tbody></table></figure>
 
 <p>看起来如果在dts中分配了reserved-memory，<code>dma_alloc_coherent</code>和<code>dma_alloc_wc</code>流程是一样的，都会走<code>dma_alloc_from_dev_coherent</code>从reserved-memory中分配空间（<strong>这块区域是cached？buffer？</strong>，rts3917启动中有打印：<code>Memory policy: Data cache writeback</code>是否与reserved memory有关系）</p>
 <p><strong>所以rts_fb.c中有<code>dma_sync_single_for_device</code>?</strong></p>
@@ -414,22 +416,22 @@
 <tbody><tr>
 <td>0</td>
 <td>0</td>
-<td>无cache，无写缓冲<br />读、写都直达外设硬件</td>
+<td>无cache，无写缓冲<br>读、写都直达外设硬件</td>
 </tr>
 <tr>
 <td>0</td>
 <td>1</td>
-<td>无cache，有写缓冲<br />读操作直达外设硬件；写操作，CPU将数据写入到写缓冲后继续运行，由写缓冲进行写回操作。</td>
+<td>无cache，有写缓冲<br>读操作直达外设硬件；写操作，CPU将数据写入到写缓冲后继续运行，由写缓冲进行写回操作。</td>
 </tr>
 <tr>
 <td>1</td>
 <td>0</td>
-<td>有cache，写通模式write through。<br />数据要同时写入cache和内存，所以cache和内存中的数据保持一致。</td>
+<td>有cache，写通模式write through。<br>数据要同时写入cache和内存，所以cache和内存中的数据保持一致。</td>
 </tr>
 <tr>
 <td>1</td>
 <td>1</td>
-<td>有cache，写回模式write back<br />新数据只是写入cache ，不会立刻写入内存。</td>
+<td>有cache，写回模式write back<br>新数据只是写入cache ，不会立刻写入内存。</td>
 </tr>
 </tbody></table>
 
@@ -501,6 +503,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

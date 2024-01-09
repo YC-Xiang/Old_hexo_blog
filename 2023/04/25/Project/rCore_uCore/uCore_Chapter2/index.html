@@ -24,7 +24,7 @@
 <meta property="og:description" content="123456make -C user clean # 在os目录，相当于cd user;make clean;cd ..make clean # 或者在user目录git checkout ch2make user BASE&#x3D;1 CHAPTER&#x3D;2make runmake test BASE&#x3D;1 # make test 会完成　make user 和 make run 两个步骤（自动设置 CHAP">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-25T15:11:28.000Z">
-<meta property="article:modified_time" content="2023-09-05T07:28:26.946Z">
+<meta property="article:modified_time" content="2024-01-09T01:07:05.340Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="uCore">
 <meta name="twitter:card" content="summary_large_image">
@@ -112,7 +112,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -250,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.9k words
+          1.8k words
         
       </span>
     
@@ -261,7 +263,7 @@
         
         
         
-          16 mins
+          15 mins
         
       </span>
     
@@ -312,7 +314,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月5日 下午
+                    本文最后更新于：2024年1月9日 上午
                   
                 
               </p>
@@ -320,21 +322,21 @@
             
               <div class="markdown-body">
                 
-                <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs makefile">make -C user clean <span class="hljs-comment"># 在os目录，相当于cd user;make clean;cd ..</span><br>make clean <span class="hljs-comment"># 或者在user目录</span><br>git checkout ch2<br>make user BASE=1 CHAPTER=2<br>make run<br>make test BASE=1 <span class="hljs-comment"># make test 会完成　make user 和 make run 两个步骤（自动设置 CHAPTER）</span><br></code></pre></td></tr></table></figure>
+                <figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs makefile">make -C user clean <span class="hljs-comment"># 在os目录，相当于cd user;make clean;cd ..</span><br>make clean <span class="hljs-comment"># 或者在user目录</span><br>git checkout ch2<br>make user BASE=1 CHAPTER=2<br>make run<br>make test BASE=1 <span class="hljs-comment"># make test 会完成　make user 和 make run 两个步骤（自动设置 CHAPTER）</span><br></code></pre></td></tr></tbody></table></figure>
 
-<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c">main();<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;hello wrold!\n&quot;</span>);<br>  trap_init(); <span class="hljs-comment">// 设置中断/异常处理地址</span><br>    w_stvec((uint64)uservec &amp; ~<span class="hljs-number">0x3</span>); <span class="hljs-comment">//把uservec地址传入,uservec在trampoline.S中定义</span><br>      <span class="hljs-keyword">asm</span> <span class="hljs-title function_">volatile</span><span class="hljs-params">(<span class="hljs-string">&quot;csrw stvec, %0&quot;</span> : : <span class="hljs-string">&quot;r&quot;</span>(x))</span>; <span class="hljs-comment">// 设置stvec CSR</span><br>  loader_init();<br>  run_next_app();<br>    load_app();<br>    usertrapret(trapframe, (uint64)boot_stack_top);<br>      w_sepc(trapframe-&gt;epc);<br>      r_sstatus();<br>      w_sstatus();<br>      userret();<br>        sret <span class="hljs-comment">// 返回到sepc中的值，0x80400000第一个app</span><br><br></code></pre></td></tr></table></figure>
+<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c">main();<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"hello wrold!\n"</span>);<br>  trap_init(); <span class="hljs-comment">// 设置中断/异常处理地址</span><br>    w_stvec((uint64)uservec &amp; ~<span class="hljs-number">0x3</span>); <span class="hljs-comment">//把uservec地址传入,uservec在trampoline.S中定义</span><br>      <span class="hljs-keyword">asm</span> <span class="hljs-title function_">volatile</span><span class="hljs-params">(<span class="hljs-string">"csrw stvec, %0"</span> : : <span class="hljs-string">"r"</span>(x))</span>; <span class="hljs-comment">// 设置stvec CSR</span><br>  loader_init();<br>  run_next_app();<br>    load_app();<br>    usertrapret(trapframe, (uint64)boot_stack_top);<br>      w_sepc(trapframe-&gt;epc);<br>      r_sstatus();<br>      w_sstatus();<br>      userret();<br>        sret <span class="hljs-comment">// 返回到sepc中的值，0x80400000第一个app</span><br><br></code></pre></td></tr></tbody></table></figure>
 
 
 
-<h2 id="应用程序系统调用ecall进入内核异常处理过程"><a href="#应用程序系统调用ecall进入内核异常处理过程" class="headerlink" title="应用程序系统调用ecall进入内核异常处理过程"></a>应用程序系统调用ecall进入内核异常处理过程</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 进入应用程序</span><br><span class="hljs-built_in">exit</span>(MAGIC);<br>  syscall(SYS_exit, code);<br>    __syscall1(n, <span class="hljs-type">long</span>(<span class="hljs-number">1234</span>));<br>      __asm_syscall(<span class="hljs-string">&quot;r&quot;</span>(a7), <span class="hljs-string">&quot;0&quot;</span>(a0));<br>        ecall <span class="hljs-comment">//通过ecall 进入uservec</span><br><br>uservec<br>  <span class="hljs-title function_">usertrap</span><span class="hljs-params">()</span>; <span class="hljs-comment">// ld t0, 16(a0) jr t0</span><br>    r_scause(); <br>      csrr %<span class="hljs-number">0</span>, scause <span class="hljs-comment">// 应用层调用了ecall指令，所以scause自动被设置为8</span><br>    syscall();<br>      <span class="hljs-comment">//在uservec中应用层传入eid到寄存器a7,这里读a7来判断是什么system call</span><br>      id = trapframe-&gt;a7; <br>    usertrapret(); <span class="hljs-comment">// 这里回到第九行一样，循环，执行第二个应用程序</span><br></code></pre></td></tr></table></figure>
+<h2 id="应用程序系统调用ecall进入内核异常处理过程"><a href="#应用程序系统调用ecall进入内核异常处理过程" class="headerlink" title="应用程序系统调用ecall进入内核异常处理过程"></a>应用程序系统调用ecall进入内核异常处理过程</h2><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 进入应用程序</span><br><span class="hljs-built_in">exit</span>(MAGIC);<br>  syscall(SYS_exit, code);<br>    __syscall1(n, <span class="hljs-type">long</span>(<span class="hljs-number">1234</span>));<br>      __asm_syscall(<span class="hljs-string">"r"</span>(a7), <span class="hljs-string">"0"</span>(a0));<br>        ecall <span class="hljs-comment">//通过ecall 进入uservec</span><br><br>uservec<br>  <span class="hljs-title function_">usertrap</span><span class="hljs-params">()</span>; <span class="hljs-comment">// ld t0, 16(a0) jr t0</span><br>    r_scause();<br>      csrr %<span class="hljs-number">0</span>, scause <span class="hljs-comment">// 应用层调用了ecall指令，所以scause自动被设置为8</span><br>    syscall();<br>      <span class="hljs-comment">//在uservec中应用层传入eid到寄存器a7,这里读a7来判断是什么system call</span><br>      id = trapframe-&gt;a7;<br>    usertrapret(); <span class="hljs-comment">// 这里回到第九行一样，循环，执行第二个应用程序</span><br></code></pre></td></tr></tbody></table></figure>
 
-<p>分析下<code>uservec</code>,注意：这里只是把stvec设置为uservec地址，并不会执行uservec下的代码，要等U mode的中断&#x2F;异常到来时才会从uservec开始执行。</p>
+<p>分析下<code>uservec</code>,注意：这里只是把stvec设置为uservec地址，并不会执行uservec下的代码，要等U mode的中断/异常到来时才会从uservec开始执行。</p>
 <p class="note note-warning">uservec是U mode异常/中断的入口。</p>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs assembly">.globl uservec<br>uservec:<br>        csrrw a0, sscratch, a0 # 交换a0和sscratch<br><br>        # save the user registers in TRAPFRAME<br>        sd ra, 40(a0)<br>        sd sp, 48(a0)<br>    ...<br>        sd t6, 280(a0)<br><br>  # save the user a0 in p-&gt;trapframe-&gt;a0<br>        csrr t0, sscratch<br>        sd t0, 112(a0)<br><br>        csrr t1, sepc<br>        sd t1, 24(a0) # BASE_ADDRESS 0x80400000<br><br>        ld sp, 8(a0) # kstack + PGSIZE<br>        ld tp, 32(a0)<br>        ld t1, 0(a0)<br>        # csrw satp, t1<br>        # sfence.vma zero, zero<br>        ld t0, 16(a0)<br>        jr t0<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs assembly">.globl uservec<br>uservec:<br>        csrrw a0, sscratch, a0 # 交换a0和sscratch<br><br>        # save the user registers in TRAPFRAME<br>        sd ra, 40(a0)<br>        sd sp, 48(a0)<br>    ...<br>        sd t6, 280(a0)<br><br>  # save the user a0 in p-&gt;trapframe-&gt;a0<br>        csrr t0, sscratch<br>        sd t0, 112(a0)<br><br>        csrr t1, sepc<br>        sd t1, 24(a0) # BASE_ADDRESS 0x80400000<br><br>        ld sp, 8(a0) # kstack + PGSIZE<br>        ld tp, 32(a0)<br>        ld t1, 0(a0)<br>        # csrw satp, t1<br>        # sfence.vma zero, zero<br>        ld t0, 16(a0)<br>        jr t0<br><br></code></pre></td></tr></tbody></table></figure>
 
 <p>这里需要注意sscratch这个CSR寄存器的作用就是一个cache，它只负责存某一个值，这里它保存的就是trapframe结构体的位置。</p>
-<h1 id="实现批处理操作系统的细节"><a href="#实现批处理操作系统的细节" class="headerlink" title="实现批处理操作系统的细节"></a>实现批处理操作系统的细节</h1><p>从Makefile中可以发现，scripts&#x2F;pack.py，scripts&#x2F;kernelld.py用来生成os&#x2F;link_app.S和os&#x2F;kernel_app.ld。link_app.S将用户程序加入kernel可执行文件中。kernel_app.ld规定了用户程序所在的段(.data.app[x])。在load_app()中将用户程序relocate到0x80400000。</p>
+<h1 id="实现批处理操作系统的细节"><a href="#实现批处理操作系统的细节" class="headerlink" title="实现批处理操作系统的细节"></a>实现批处理操作系统的细节</h1><p>从Makefile中可以发现，scripts/pack.py，scripts/kernelld.py用来生成os/link_app.S和os/kernel_app.ld。link_app.S将用户程序加入kernel可执行文件中。kernel_app.ld规定了用户程序所在的段(.data.app[x])。在load_app()中将用户程序relocate到0x80400000。</p>
 <p>需要relocate的原因：我们并不能直接跳转到 app_n_start 直接运行，因为用户程序在编译的时候，会假定程序处在虚存的特定位置，而由于我们还没有虚存机制，因此我们在运行之前还需要将用户程序加载到规定的物理内存位置。</p>
 
                 
@@ -405,6 +407,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

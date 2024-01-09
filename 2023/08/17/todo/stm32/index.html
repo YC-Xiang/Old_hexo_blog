@@ -16,24 +16,30 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="XV6 实现的所有系统调用： 123456789101112131415161718192021int fork() &#x2F;&#x2F;Create a process, return child’s PID.void exit(int status) &#x2F;&#x2F;Terminate the current process; status reported to wait(). No return.int wait(i">
+    <meta name="description" content="PNP NPN P5  System总线用来读取寄存器。 AHB总线挂载了SDIO, RCC。 6.3.1 ICode总线6.3.2 驱动单元6.3.2.1 DCode总线常量就是固定不变的，用C语言中的const关键字修饰，是放到内部的FLASH当中的。变量是可变的，不管是全局变量还是局部变量都放在内部的SRAM。  有内存的系统中，常量放在.rodata，全局变量.data，局部变量栈。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="XV6 Book notes">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/12/28/Project/6.S801_XV6/XV6_Chapter1/index.html">
+<meta property="og:title" content="数字设计和计算机体系结构笔记">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/08/17/todo/stm32/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="XV6 实现的所有系统调用： 123456789101112131415161718192021int fork() &#x2F;&#x2F;Create a process, return child’s PID.void exit(int status) &#x2F;&#x2F;Terminate the current process; status reported to wait(). No return.int wait(i">
+<meta property="og:description" content="PNP NPN P5  System总线用来读取寄存器。 AHB总线挂载了SDIO, RCC。 6.3.1 ICode总线6.3.2 驱动单元6.3.2.1 DCode总线常量就是固定不变的，用C语言中的const关键字修饰，是放到内部的FLASH当中的。变量是可变的，不管是全局变量还是局部变量都放在内部的SRAM。  有内存的系统中，常量放在.rodata，全局变量.data，局部变量栈。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-12-28T01:28:28.000Z">
-<meta property="article:modified_time" content="2023-12-28T02:46:00.007Z">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230827204939.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230827210915.png">
+<meta property="og:image" content="c:\Users\yucheng_xiang\AppData\Roaming\Typora\typora-user-images\image-20230829221101699.png">
+<meta property="og:image" content="c:\Users\yucheng_xiang\AppData\Roaming\Typora\typora-user-images\image-20230829221147263.png">
+<meta property="og:image" content="https://yc-xiang.github.io/stm32clock.png">
+<meta property="article:published_time" content="2023-08-17T09:39:28.000Z">
+<meta property="article:modified_time" content="2024-01-09T01:07:05.340Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="XV6">
+<meta property="article:tag" content="Books">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230827204939.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>XV6 Book notes - Yucheng&#39;s Blog</title>
+  <title>数字设计和计算机体系结构笔记 - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -112,7 +118,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -227,7 +235,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">XV6 Book notes</span>
+            <span id="subtitle">数字设计和计算机体系结构笔记</span>
           
         </div>
 
@@ -238,8 +246,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-12-28 09:28" pubdate>
-          2023年12月28日 上午
+        <time datetime="2023-08-17 17:39" pubdate>
+          2023年8月17日 下午
         </time>
       </span>
     
@@ -250,7 +258,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k words
+          1.3k words
         
       </span>
     
@@ -261,7 +269,7 @@
         
         
         
-          15 mins
+          12 mins
         
       </span>
     
@@ -307,12 +315,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">XV6 Book notes</h1>
+            <h1 style="display: none">数字设计和计算机体系结构笔记</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年12月28日 上午
+                    本文最后更新于：2024年1月9日 上午
                   
                 
               </p>
@@ -320,15 +328,35 @@
             
               <div class="markdown-body">
                 
-                <p>XV6 实现的所有系统调用：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">fork</span><span class="hljs-params">()</span> <span class="hljs-comment">//Create a process, return child’s PID.</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">exit</span><span class="hljs-params">(<span class="hljs-type">int</span> status)</span> <span class="hljs-comment">//Terminate the current process; status reported to wait(). No return.</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">wait</span><span class="hljs-params">(<span class="hljs-type">int</span> *status)</span> <span class="hljs-comment">//Wait for a child to exit; exit status in *status; returns child PID.</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">kill</span><span class="hljs-params">(<span class="hljs-type">int</span> pid)</span> <span class="hljs-comment">//Terminate process PID. Returns 0, or -1 for error.</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">getpid</span><span class="hljs-params">()</span> <span class="hljs-comment">//Return the current process’s PID.</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">sleep</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> <span class="hljs-comment">//Pause for n clock ticks.</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">exec</span><span class="hljs-params">(<span class="hljs-type">char</span> *file, <span class="hljs-type">char</span> *argv[])</span> <span class="hljs-comment">//Load a file and execute it with arguments; only returns if error.</span><br><span class="hljs-type">char</span> *<span class="hljs-title function_">sbrk</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> <span class="hljs-comment">//Grow process’s memory by n bytes. Returns start of new memory.</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">open</span><span class="hljs-params">(<span class="hljs-type">char</span> *file, <span class="hljs-type">int</span> flags)</span> <span class="hljs-comment">//Open a file; flags indicate read/write; returns an fd (file descriptor).</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">write</span><span class="hljs-params">(<span class="hljs-type">int</span> fd, <span class="hljs-type">char</span> *buf, <span class="hljs-type">int</span> n)</span> <span class="hljs-comment">//Write n bytes from buf to file descriptor fd; returns n.</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">read</span><span class="hljs-params">(<span class="hljs-type">int</span> fd, <span class="hljs-type">char</span> *buf, <span class="hljs-type">int</span> n)</span> <span class="hljs-comment">//Read n bytes into buf; returns number read; or 0 if end of file.</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">close</span><span class="hljs-params">(<span class="hljs-type">int</span> fd)</span> <span class="hljs-comment">//Release open file fd.</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">dup</span><span class="hljs-params">(<span class="hljs-type">int</span> fd)</span> <span class="hljs-comment">//Return a new file descriptor referring to the same file as fd.</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">pipe</span><span class="hljs-params">(<span class="hljs-type">int</span> p[])</span> <span class="hljs-comment">//Create a pipe, put read/write file descriptors in p[0] and p[1].</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">chdir</span><span class="hljs-params">(<span class="hljs-type">char</span> *dir)</span> <span class="hljs-comment">//Change the current directory.</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">mkdir</span><span class="hljs-params">(<span class="hljs-type">char</span> *dir)</span> <span class="hljs-comment">//Create a new directory.</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">mknod</span><span class="hljs-params">(<span class="hljs-type">char</span> *file, <span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span> <span class="hljs-comment">//Create a device file.</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">fstat</span><span class="hljs-params">(<span class="hljs-type">int</span> fd, <span class="hljs-keyword">struct</span> stat *st)</span> <span class="hljs-comment">//Place info about an open file into *st.</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">stat</span><span class="hljs-params">(<span class="hljs-type">char</span> *file, <span class="hljs-keyword">struct</span> stat *st)</span> <span class="hljs-comment">//Place info about a named file into *st.</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">link</span><span class="hljs-params">(<span class="hljs-type">char</span> *file1, <span class="hljs-type">char</span> *file2)</span> <span class="hljs-comment">//Create another name (file2) for the file file1.</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">unlink</span><span class="hljs-params">(<span class="hljs-type">char</span> *file)</span> <span class="hljs-comment">//Remove a file.</span><br></code></pre></td></tr></table></figure>
+                <p>PNP</p>
+<p>NPN</p>
+<h2 id="P5"><a href="#P5" class="headerlink" title="P5"></a>P5</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230827204939.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230827210915.png" srcset="/img/loading.gif" lazyload></p>
+<p>System总线用来读取寄存器。</p>
+<p>AHB总线挂载了SDIO, RCC。</p>
+<h3 id="6-3-1-ICode总线"><a href="#6-3-1-ICode总线" class="headerlink" title="6.3.1 ICode总线"></a>6.3.1 ICode总线</h3><h3 id="6-3-2-驱动单元"><a href="#6-3-2-驱动单元" class="headerlink" title="6.3.2 驱动单元"></a>6.3.2 驱动单元</h3><h4 id="6-3-2-1-DCode总线"><a href="#6-3-2-1-DCode总线" class="headerlink" title="6.3.2.1 DCode总线"></a>6.3.2.1 DCode总线</h4><p>常量就是固定不变的，用C语言中的const关键字修饰，是放到内部的FLASH当中的。变量是可变的，不管是全局变量还是局部变量都放在内部的SRAM。</p>
+<blockquote>
+<p>有内存的系统中，常量放在.rodata，全局变量.data，局部变量栈。</p>
+</blockquote>
+<p> 因为数据可以被Dcode总线和DMA总线访问，所以为了避免访问冲突，在取数的时候需要经过一个总线矩阵来仲裁，决定哪个总线在取数。</p>
+<h4 id="6-3-2-2-系统总线"><a href="#6-3-2-2-系统总线" class="headerlink" title="6.3.2.2 系统总线"></a>6.3.2.2 系统总线</h4><p>主要是访问外设的寄存器，读写寄存器都是通过这根系统总线来完成的。</p>
+<h4 id="6-3-2-3-DMA总线"><a href="#6-3-2-3-DMA总线" class="headerlink" title="6.3.2.3 DMA总线"></a>6.3.2.3 DMA总线</h4><p>主要是用来传输数据，这个数据可以是在某个外设的数据寄存器，可以在SRAM，可以在内部的FLASH。 因为数据可以被Dcode总线和DMA总线访问，所以为了避免访问冲突，在取数的时候需要经过一个总线矩阵来仲裁，决定哪个总线在取数。</p>
+<h2 id="P10"><a href="#P10" class="headerlink" title="P10"></a>P10</h2><p>推挽和开漏输出</p>
+<p><img src="C:\Users\yucheng_xiang\AppData\Roaming\Typora\typora-user-images\image-20230829221101699.png" srcset="/img/loading.gif" lazyload alt="image-20230829221101699"></p>
+<p><img src="C:\Users\yucheng_xiang\AppData\Roaming\Typora\typora-user-images\image-20230829221147263.png" srcset="/img/loading.gif" lazyload alt="image-20230829221147263"></p>
+<p>推挽输出：</p>
+<p>开漏输出：</p>
+<h2 id="P16"><a href="#P16" class="headerlink" title="P16"></a>P16</h2><p>1.启动文件<br>startup_stm32f10x_hd.s:</p>
+<p>2.时钟配置文件<br>system_stm32f10x.c: 把外部时钟HSE=8M，经过PLL倍频为72M</p>
+<p>3.外设相关的<br>stm32f10x.h: 内核之外的外设寄存器映射<br>xxx: GPIO, USART, I2C, SPI…<br>stm32f10x_xxx.c: 外设的驱动函数库文件<br>stm32f10x_xxx.h: 外设的初始化结构体，外设初始化结构体成员的参数列表，外设固件库函数的声明</p>
+<p>4.内核相关的<br>CMSIS - Cortex 微控制器软件接口标准<br>core_cm3.h: 内核里的外设寄存器映射<br>core_cm3.c:</p>
+<p>NVIC(嵌套向量中断控制器)、SysTick(系统滴答定时器) ：<br>misc.h<br>misc.c</p>
+<p>5.头文件的配置文件<br>stm32f10x_conf.h：头文件的头文件，include了stm32f10x_xxx.h</p>
+<p>6.专门存放中断服务函数的C文件<br>stm32f10x_it.c<br>stm32f10x_it.h</p>
+<h2 id="P22"><a href="#P22" class="headerlink" title="P22"></a>P22</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs asm">Stack_Size      EQU     0x00000400    ; 1KB<br><br>                AREA    STACK, NOINIT, READWRITE, ALIGN=3<br>Stack_Mem       SPACE   Stack_Size<br>__initial_sp<br></code></pre></td></tr></tbody></table></figure>
 
-<p><code>pid_t fork(void)</code><br>创建一个新进程，拥有相同的memory内容(包括instruction和data)。Parent进程返回child进程的PID, Child进程返回0。</p>
-<p><code>void exit(int status)</code><br>停止当前进程，通常成功返回0，失败返回1。</p>
-<p><code>pid_t wait(int *status)</code><br>Block等待子进程退出。返回退出的子进程PID, 并把子进程exit()的status写入int *status。<br>没有没有子进程立即返回-1。如果不关心退出的状态可以传入0的地址<code>wait((int *)0)</code>。</p>
-<p><code>int exec(char *file, char *argv[])</code><br>file为传入的ELF可执行文件, argv为传入的参数，通常argv[0]为可执行文件名，argv[last]为0，表示字符串结束。</p>
-<p><code>read()</code><br><code>write()</code></p>
-<p><code>dup()</code><br><code>pipe()</code></p>
+<p>EQU: 定义Stack_Size常量为0x400<br>AREA: 告诉汇编器一个新的代码段或者数据段。STACK表示段名；NOINIT表示不初始化；READWRITE可读可写；ALIGN=3 8字节对齐。<br>SPACE: 分配一定大小的内存空间。这里大小为Stack_Size。<br>标号_intial_sp紧挨着SPACE, 表示栈的结束地址，即栈顶地址。</p>
+<h2 id="P23-RCC时钟树"><a href="#P23-RCC时钟树" class="headerlink" title="P23 RCC时钟树"></a>P23 RCC时钟树</h2><p><img src="/stm32clock.png" srcset="/img/loading.gif" lazyload alt="Alt text"><br>HSE: High speed external clock。4<del>16MHz。<br>HSI: high speed internal clock。8MHz。<br>LSE: Low speed External clock。32.768KHZ。<br>LSI: Low speed internal clock。30</del>60KHz。<br>Independent Watchdog<br>MCO引脚可以选择输出如图所示的，PLLCLK/2, HSI, HSE, SYSCLK信号。</p>
 
                 
               </div>
@@ -344,16 +372,6 @@
 <span class="category-chains">
   
   
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Project/" class="category-chain-item">Project</a>
-  
-  
-
-      </span>
-    
-  
 </span>
 
     </div>
@@ -362,7 +380,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/XV6/">#XV6</a>
+        <a href="/tags/Books/">#Books</a>
       
     </div>
   
@@ -372,26 +390,53 @@
               
 
               
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2023/12/25/Note/Zephyr/23-12-21_Pinctrl/" title="Zephyr -- Pinctrl Subsystem">
-                        <span class="hidden-mobile">Zephyr -- Pinctrl Subsystem</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

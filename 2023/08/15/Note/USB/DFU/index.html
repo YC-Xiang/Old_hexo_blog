@@ -129,7 +129,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -366,7 +368,7 @@
 <h3 id="Run-time-DFU-Interface-Descriptor"><a href="#Run-time-DFU-Interface-Descriptor" class="headerlink" title="Run-time DFU Interface Descriptor"></a><strong>Run-time DFU Interface Descriptor</strong></h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230802163107.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="DFU-Functional-Descriptor"><a href="#DFU-Functional-Descriptor" class="headerlink" title="DFU Functional Descriptor"></a><strong>DFU Functional Descriptor</strong></h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230802163409.png" srcset="/img/loading.gif" lazyload></p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230802163417.png" srcset="/img/loading.gif" lazyload></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">PrepareDFUFunDesc</span><span class="hljs-params">(DFUFunDesc_t *pDFUFunDesc)</span><br>&#123;<br>  pDFUFunDesc-&gt;bLength         = <span class="hljs-keyword">sizeof</span>(DFUFunDesc_t);<br>  pDFUFunDesc-&gt;bDescriptorType = <span class="hljs-number">0x21</span>;<br>  pDFUFunDesc-&gt;bmAttributes    = g_DFUVar.bmAttributes; <span class="hljs-comment">/// BIT0 | BIT1 | BIT2 | BIT3</span><br>  pDFUFunDesc-&gt;wDetachTimeOut  = <span class="hljs-number">200</span>;<br>  pDFUFunDesc-&gt;wTransferSize   = g_DFUVar.wTransferSize; <span class="hljs-comment">// 4096</span><br>  pDFUFunDesc-&gt;bcdDFUVersion   = <span class="hljs-number">0x0110</span>;<br><br>  <span class="hljs-keyword">if</span>(IsDFUMode())<br>  &#123;<br>    pDFUFunDesc-&gt;wDetachTimeOut = <span class="hljs-number">2000</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">PrepareDFUFunDesc</span><span class="hljs-params">(DFUFunDesc_t *pDFUFunDesc)</span><br>{<br>  pDFUFunDesc-&gt;bLength         = <span class="hljs-keyword">sizeof</span>(DFUFunDesc_t);<br>  pDFUFunDesc-&gt;bDescriptorType = <span class="hljs-number">0x21</span>;<br>  pDFUFunDesc-&gt;bmAttributes    = g_DFUVar.bmAttributes; <span class="hljs-comment">/// BIT0 | BIT1 | BIT2 | BIT3</span><br>  pDFUFunDesc-&gt;wDetachTimeOut  = <span class="hljs-number">200</span>;<br>  pDFUFunDesc-&gt;wTransferSize   = g_DFUVar.wTransferSize; <span class="hljs-comment">// 4096</span><br>  pDFUFunDesc-&gt;bcdDFUVersion   = <span class="hljs-number">0x0110</span>;<br><br>  <span class="hljs-keyword">if</span>(IsDFUMode())<br>  {<br>    pDFUFunDesc-&gt;wDetachTimeOut = <span class="hljs-number">2000</span>;<br>  }<br>}<br></code></pre></td></tr></tbody></table></figure>
 
 
 
@@ -378,7 +380,7 @@
 <li>A single functional descriptor</li>
 </ul>
 <h3 id="DFU-Device-Descriptor"><a href="#DFU-Device-Descriptor" class="headerlink" title="DFU Device Descriptor"></a><strong>DFU Device Descriptor</strong></h3><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230802164728.png" srcset="/img/loading.gif" lazyload></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// rom code UsbDescCore_Rom.c</span><br>USBDevDesc_t USBDevDesc =<br>  &#123;<br>    <span class="hljs-keyword">sizeof</span>(USBDevDesc),		<span class="hljs-comment">// bLength:</span><br>    <span class="hljs-number">0x01</span>,					<span class="hljs-comment">// USB_DEVICE_DESCRIPTOR_TYPE,bDescriptorType:</span><br>    <span class="hljs-number">0x0201</span>,					<span class="hljs-comment">// bcdUSB version:NORM:0200H</span><br>    DEV_CLS_MULTI,			<span class="hljs-comment">// bDeviceClass:-&gt; This is a Multi-interface Function Code Device</span><br>    DEV_SUBCLS_COMMON,		<span class="hljs-comment">// bDeviceSubClass: -&gt; This is the Common Class Sub Class</span><br>    DEV_PROTOCOL_IAD,		<span class="hljs-comment">// bDeviceProtocol: -&gt; This is the Interface Association Descriptor protocol</span><br>    <span class="hljs-number">0x40</span>,					<span class="hljs-comment">// bMaxPacketSize0: = (64) Bytes</span><br>    ROM_RT_VID,				<span class="hljs-comment">// idVendor:    = Realtek Corp.</span><br>    ROM_RT_FP_PID,			<span class="hljs-comment">// idProduct:</span><br>    <span class="hljs-number">0x0001</span>,					<span class="hljs-comment">// FW_TRUNK_VERSION, //bcdDevice:1.00</span><br>    I_MANUFACTURER,			<span class="hljs-comment">// iManufacturer:</span><br>    I_PRODUCT,				<span class="hljs-comment">// iProduct:</span><br>    I_SERIALNUMBER,			<span class="hljs-comment">// iSerialNumber:</span><br>    <span class="hljs-number">0x01</span>					<span class="hljs-comment">// bNumConfigurations:</span><br>  &#125;;<br><br>  <span class="hljs-keyword">if</span>(IsDFUMode())<br>  &#123;<br>    <span class="hljs-comment">// USBDevDesc.bcdUSB = 0x0200;</span><br>    USBDevDesc.bDeviceClass    = <span class="hljs-number">0x00</span>;<br>    USBDevDesc.bDeviceSubClass = <span class="hljs-number">0x00</span>;<br>    USBDevDesc.bDeviceProtocol = <span class="hljs-number">0x00</span>;<br>    USBDevDesc.idProduct = <span class="hljs-number">0x5800</span>;<br>    <span class="hljs-keyword">if</span>(DevIdcfg.cfgDevId_en==<span class="hljs-number">1</span>)<br>    &#123;<br>      USBDevDesc.idVendor = DevIdcfg.dfu_idVendor;<br>      USBDevDesc.idProduct = DevIdcfg.dfu_idProduct;<br>      USBDevDesc.bcdDevice = DevIdcfg.dfu_bcdDevice;<br>    &#125;<br>  &#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// rom code UsbDescCore_Rom.c</span><br>USBDevDesc_t USBDevDesc =<br>  {<br>    <span class="hljs-keyword">sizeof</span>(USBDevDesc),		<span class="hljs-comment">// bLength:</span><br>    <span class="hljs-number">0x01</span>,					<span class="hljs-comment">// USB_DEVICE_DESCRIPTOR_TYPE,bDescriptorType:</span><br>    <span class="hljs-number">0x0201</span>,					<span class="hljs-comment">// bcdUSB version:NORM:0200H</span><br>    DEV_CLS_MULTI,			<span class="hljs-comment">// bDeviceClass:-&gt; This is a Multi-interface Function Code Device</span><br>    DEV_SUBCLS_COMMON,		<span class="hljs-comment">// bDeviceSubClass: -&gt; This is the Common Class Sub Class</span><br>    DEV_PROTOCOL_IAD,		<span class="hljs-comment">// bDeviceProtocol: -&gt; This is the Interface Association Descriptor protocol</span><br>    <span class="hljs-number">0x40</span>,					<span class="hljs-comment">// bMaxPacketSize0: = (64) Bytes</span><br>    ROM_RT_VID,				<span class="hljs-comment">// idVendor:    = Realtek Corp.</span><br>    ROM_RT_FP_PID,			<span class="hljs-comment">// idProduct:</span><br>    <span class="hljs-number">0x0001</span>,					<span class="hljs-comment">// FW_TRUNK_VERSION, //bcdDevice:1.00</span><br>    I_MANUFACTURER,			<span class="hljs-comment">// iManufacturer:</span><br>    I_PRODUCT,				<span class="hljs-comment">// iProduct:</span><br>    I_SERIALNUMBER,			<span class="hljs-comment">// iSerialNumber:</span><br>    <span class="hljs-number">0x01</span>					<span class="hljs-comment">// bNumConfigurations:</span><br>  };<br><br>  <span class="hljs-keyword">if</span>(IsDFUMode())<br>  {<br>    <span class="hljs-comment">// USBDevDesc.bcdUSB = 0x0200;</span><br>    USBDevDesc.bDeviceClass    = <span class="hljs-number">0x00</span>;<br>    USBDevDesc.bDeviceSubClass = <span class="hljs-number">0x00</span>;<br>    USBDevDesc.bDeviceProtocol = <span class="hljs-number">0x00</span>;<br>    USBDevDesc.idProduct = <span class="hljs-number">0x5800</span>;<br>    <span class="hljs-keyword">if</span>(DevIdcfg.cfgDevId_en==<span class="hljs-number">1</span>)<br>    {<br>      USBDevDesc.idVendor = DevIdcfg.dfu_idVendor;<br>      USBDevDesc.idProduct = DevIdcfg.dfu_idProduct;<br>      USBDevDesc.bcdDevice = DevIdcfg.dfu_bcdDevice;<br>    }<br>  }<br></code></pre></td></tr></tbody></table></figure>
 
 
 
@@ -393,7 +395,7 @@
 </ul>
 <h2 id="5-1-DFU-DETACH"><a href="#5-1-DFU-DETACH" class="headerlink" title="5.1 DFU_DETACH"></a>5.1 DFU_DETACH</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20230802170347.png" srcset="/img/loading.gif" lazyload></p>
 <h1 id="6-Transfer-Phase"><a href="#6-Transfer-Phase" class="headerlink" title="6. Transfer Phase"></a>6. Transfer Phase</h1><h2 id="6-1-Downloading"><a href="#6-1-Downloading" class="headerlink" title="6.1 Downloading"></a>6.1 Downloading</h2><p>把固件文件分为N pieces。</p>
-<p>$N &#x3D; ((F - S) &#x2F; O) + 1$</p>
+<p>$N = ((F - S) / O) + 1$</p>
 <p>F: 传输固件大小，S: 固件文件suffix大小，O:每次传输的size</p>
 <p>如果传输过程中发生error，device会返回STALL给host，随后host会发送DFU_GETSTATUS来判断错误的原因。</p>
 <p>device有三种方式从host接收firmware image：</p>
@@ -491,6 +493,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

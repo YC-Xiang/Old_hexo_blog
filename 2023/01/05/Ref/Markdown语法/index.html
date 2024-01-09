@@ -16,12 +16,12 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="TagsMethod 1:              Markdown             123&amp;#123;% note success %&amp;#125;success&amp;#123;% endnote %&amp;#125;  Method 2: html  1&lt;p class&#x3D;&quot;note note-info&quot;&gt;html&lt;&#x2F;p&gt;  Support variou">
+    <meta name="description" content="TagsMethod 1:              Markdown             123{% note success %}success{% endnote %}  Method 2: html  1&lt;p class&#x3D;&quot;note note-info&quot;&gt;html&lt;&#x2F;p&gt;  Support various colors: primary secondary su">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Markdown and theme Fluid syntax">
 <meta property="og:url" content="https://yc-xiang.github.io/2023/01/05/Ref/Markdown%E8%AF%AD%E6%B3%95/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="TagsMethod 1:              Markdown             123&amp;#123;% note success %&amp;#125;success&amp;#123;% endnote %&amp;#125;  Method 2: html  1&lt;p class&#x3D;&quot;note note-info&quot;&gt;html&lt;&#x2F;p&gt;  Support variou">
+<meta property="og:description" content="TagsMethod 1:              Markdown             123{% note success %}success{% endnote %}  Method 2: html  1&lt;p class&#x3D;&quot;note note-info&quot;&gt;html&lt;&#x2F;p&gt;  Support various colors: primary secondary su">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git1.png">
 <meta property="og:image" content="https://yc-xiang.github.io/img/default.png">
@@ -30,6 +30,8 @@
 <meta property="og:image" content="https://yc-xiang.github.io/img/default.png">
 <meta property="og:image" content="https://yc-xiang.github.io/img/default.png">
 <meta property="og:image" content="https://yc-xiang.github.io/img/default.png">
+<meta property="og:image" content="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png?v8">
+<meta property="og:image" content="https://github.githubassets.com/images/icons/emoji/unicode/1f436.png?v8">
 <meta property="article:published_time" content="2023-01-05T08:22:15.000Z">
 <meta property="article:modified_time" content="2023-12-15T07:52:36.235Z">
 <meta property="article:author" content="Yucheng Xiang">
@@ -120,7 +122,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -258,7 +262,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.1k words
+          2k words
         
       </span>
     
@@ -269,7 +273,7 @@
         
         
         
-          18 mins
+          17 mins
         
       </span>
     
@@ -333,12 +337,12 @@
             <p>Markdown</p>
           </div>
 
-<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs md">&#123;% note success %&#125;<br>success<br>&#123;% endnote %&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight md"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs md">{% note success %}<br>success<br>{% endnote %}<br></code></pre></td></tr></tbody></table></figure>
 
 <p>Method 2:</p>
 <p class="note note-info">html</p>
 
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;note note-info&quot;</span>&gt;</span>html<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"note note-info"</span>&gt;</span>html<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></td></tr></tbody></table></figure>
 
 <p>Support various colors:</p>
 <p class="note note-primary">primary</p>
@@ -369,24 +373,24 @@
 </ul>
 <p>Method 2：</p>
 <div>
-            <input type="checkbox" disabled >a task list item
+            <input type="checkbox" disabled="">a task list item
           </div>
 <div>
-            <input type="checkbox" disabled checked="checked">a task list item
+            <input type="checkbox" disabled="" checked="checked">a task list item
           </div>
 
-            <input type="checkbox" disabled >a task list item
+            <input type="checkbox" disabled="">a task list item
           
 <p><a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/guide/#tag-%E6%8F%92%E4%BB%B6">勾选框</a></p>
-<h2 id="Code-block"><a href="#Code-block" class="headerlink" title="Code block"></a>Code block</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">require</span> <span class="hljs-string">&#x27;redcarpet&#x27;</span><br>markdown = <span class="hljs-title class_">Redcarpet</span>.new(<span class="hljs-string">&quot;Hello World!&quot;</span>)<br>puts markdown.to_html<br></code></pre></td></tr></table></figure>
+<h2 id="Code-block"><a href="#Code-block" class="headerlink" title="Code block"></a>Code block</h2><figure class="highlight ruby"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">require</span> <span class="hljs-string">'redcarpet'</span><br>markdown = <span class="hljs-title class_">Redcarpet</span>.new(<span class="hljs-string">"Hello World!"</span>)<br>puts markdown.to_html<br></code></pre></td></tr></tbody></table></figure>
 
 <p>inline code:<br><code>int a = 123</code></p>
 <h2 id="Math-block"><a href="#Math-block" class="headerlink" title="Math block"></a>Math block</h2><p class="note note-warning">需要在front-matter中指定math：true</p>
 
-<p>$$<br>\mathbf{V}_1 \times \mathbf{V}_2 &#x3D;<br>\begin{bmatrix}<br>\mathbf{i} &amp; \mathbf{j} &amp; \mathbf{k} \<br>\frac{\partial X}{\partial u} &amp;  \frac{\partial Y}{\partial u} &amp; 0 \<br>\frac{\partial X}{\partial v} &amp;  \frac{\partial Y}{\partial v} &amp; 0 \<br>\end{bmatrix}<br>$$</p>
+<p>$$<br>\mathbf{V}_1 \times \mathbf{V}_2 =<br>\begin{bmatrix}<br>\mathbf{i} &amp; \mathbf{j} &amp; \mathbf{k} \<br>\frac{\partial X}{\partial u} &amp;  \frac{\partial Y}{\partial u} &amp; 0 \<br>\frac{\partial X}{\partial v} &amp;  \frac{\partial Y}{\partial v} &amp; 0 \<br>\end{bmatrix}<br>$$</p>
 <p class="note note-danger">矩阵没法换行，有bug，以后换个LaTeX引擎</p>
 
-<p>Inline math:<br>$\lim_{x \to \infty} \exp(-x) &#x3D; 0$</p>
+<p>Inline math:<br>$\lim_{x \to \infty} \exp(-x) = 0$</p>
 <h2 id="Table"><a href="#Table" class="headerlink" title="Table"></a>Table</h2><table>
 <thead>
 <tr>
@@ -457,7 +461,7 @@ Class08 &lt;--&gt; C2: Cool label
 </div>
 
 <p><strong>Method 1</strong>: html</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">align</span>=<span class="hljs-string">&quot;center&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git1.png&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;50%&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">align</span>=<span class="hljs-string">"center"</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/git1.png"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"50%"</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></tbody></table></figure>
 
 <p><strong>Method 2</strong>: Markdown</p>
 <p>不能改格式大小<br><img src="/img/default.png" srcset="/img/loading.gif" lazyload alt="图片标题"></p>
@@ -467,7 +471,7 @@ Class08 &lt;--&gt; C2: Cool label
 <h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><p><del>Mistaken text</del> <u>underline</u><br><strong>Bold</strong> <em>italic</em></p>
 <!-- This is some comments -->
 
-<h2 id="Emoji"><a href="#Emoji" class="headerlink" title="Emoji"></a>Emoji</h2><p>:smile:<br>:dog:</p>
+<h2 id="Emoji"><a href="#Emoji" class="headerlink" title="Emoji"></a>Emoji</h2><p><span class="github-emoji"><span>😄</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png?v8" srcset="/img/loading.gif" lazyload aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span><br><span class="github-emoji"><span>🐶</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f436.png?v8" srcset="/img/loading.gif" lazyload aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span></p>
 <h2 id="html"><a href="#html" class="headerlink" title="html"></a>html</h2><!-- This is some comments -->
 <p>注释：<code>&lt;!-- This is some comments --&gt;</code></p>
 <p>空行：<code>&lt;br /&gt;</code></p>
@@ -480,9 +484,9 @@ Class08 &lt;--&gt; C2: Cool label
 <li>代码行: ctrl + shift + `</li>
 </ul>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/guide/">Hexo Fluid 用户手册</a></p>
-<br />
-<br />
-<br />
+<br>
+<br>
+<br>
 <section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>这是对应的脚注
 <a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
                 
@@ -541,8 +545,8 @@ Class08 &lt;--&gt; C2: Cool label
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/01/04/Note/23_01-04_Git/" title="Git 常用指令">
-                        <span class="hidden-mobile">Git 常用指令</span>
+                      <a href="/2023/01/04/Project/xv6/xv6_lab2/" title="xv6_lab2 System calls">
+                        <span class="hidden-mobile">xv6_lab2 System calls</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -553,6 +557,50 @@ Class08 &lt;--&gt; C2: Cool label
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>

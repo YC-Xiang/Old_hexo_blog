@@ -118,7 +118,9 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -329,7 +331,7 @@
                 <h2 id="10-1-导言"><a href="#10-1-导言" class="headerlink" title="10.1 导言"></a>10.1 导言</h2><p>到目前为止，本书主要关注RISC-V 对通用计算的支持：我们引入的所有指令都在用户模式（User mode 应用程序的代码在此模式下运行）下可用。本章介绍两种新的权限模式：运行最可信的代码的机器模式（machine mode），以及为Linux，FreeBSD 和Windows 等操作系统提供支持的监管者模式（supervisor mode）。</p>
 <p>图10.1是RISC-V 特权指令的图形表示，图10.2列出了这些指令的操作码。显然，特权架构添加的指令非常少。作为替代，几个新的控制状态寄存器（CSR）显示了附加的功能。</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/10.1.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="10-2-简单嵌入式系统的机器模式"><a href="#10-2-简单嵌入式系统的机器模式" class="headerlink" title="10.2 简单嵌入式系统的机器模式"></a>10.2 简单嵌入式系统的机器模式</h2><p>机器模式（缩写为M模式， M-mode）是 RISC-V中（hart hardware thread，硬件线程）可以执行的最高权限模式。程）可以执行的最高权限模式。在M模式下运行的hart对内存，I&#x2F;O和一些对于启动和配置系统来说必要的底层功能有着完全的使用权。因此它是唯一所有标准RISC-V处理器都必须实现的权限模式。实际上简单的 RISC-V微控制器仅支持 M模式。</p>
+<h2 id="10-2-简单嵌入式系统的机器模式"><a href="#10-2-简单嵌入式系统的机器模式" class="headerlink" title="10.2 简单嵌入式系统的机器模式"></a>10.2 简单嵌入式系统的机器模式</h2><p>机器模式（缩写为M模式， M-mode）是 RISC-V中（hart hardware thread，硬件线程）可以执行的最高权限模式。程）可以执行的最高权限模式。在M模式下运行的hart对内存，I/O和一些对于启动和配置系统来说必要的底层功能有着完全的使用权。因此它是唯一所有标准RISC-V处理器都必须实现的权限模式。实际上简单的 RISC-V微控制器仅支持 M模式。</p>
 <p>机器模式最重要的特性是拦截和处理异常的能力。RISC-V将异常分为两类。一类是同步异常。另一类是中断，它是与指令流异步的外部事件，比如鼠标的单击。</p>
 <p>在 M模式运行期间可能发生的同步异常有五种：</p>
 <ul>
@@ -358,7 +360,7 @@
 <li>mstatus (Machine Status) 它保存全局中断使能，以及许多其他的状态，如图10.4所示。</li>
 </ul>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/RISC-V%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C/10.4.png" srcset="/img/loading.gif" lazyload></p>
-<p>处理器在M模式下运行时，只有在全局中断使能位mstatus.MIE置1时才会产生中断。此外，每个中断在控制状态寄存器mie中都有自己的使能位。这些位在mie中的位置对应于图10.3中的中断代码。例如，mie[7]对应于M模式中的时钟中断。控制状态寄存器mip具有相同的布局，并且它指示当前待处理的中断。。将所有三个控制状态寄存器合在一起考虑，如果 mstatus.MIE &#x3D; 1，mie[7] &#x3D; 1，且 mip[7] &#x3D; 1，则可以处理机器的时钟中断。</p>
+<p>处理器在M模式下运行时，只有在全局中断使能位mstatus.MIE置1时才会产生中断。此外，每个中断在控制状态寄存器mie中都有自己的使能位。这些位在mie中的位置对应于图10.3中的中断代码。例如，mie[7]对应于M模式中的时钟中断。控制状态寄存器mip具有相同的布局，并且它指示当前待处理的中断。。将所有三个控制状态寄存器合在一起考虑，如果 mstatus.MIE = 1，mie[7] = 1，且 mip[7] = 1，则可以处理机器的时钟中断。</p>
 <p>当一个hart发生异常时，硬件自动经历如下的状态转换：</p>
 <div class="note note-info">
             <p>hart是硬件线程 (hardware thread) 的缩略形式 。我们用该术语将它们与大多数程序员熟悉的软件线程区分开来。软件线程在 harts上进行分时复用。大多数处理器核都只有一个hart。</p>
@@ -455,6 +457,50 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>
