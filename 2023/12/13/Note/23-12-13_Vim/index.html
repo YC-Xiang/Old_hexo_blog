@@ -24,7 +24,7 @@
 <meta property="og:description" content="BasicCommand-line :e {name of file} open file for editing :ls show open buffers :help {topic} open help :help :w opens help for the :w command :help w opens help for the w movement    MovementMovement">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-12-13T01:32:28.000Z">
-<meta property="article:modified_time" content="2023-12-15T09:38:47.141Z">
+<meta property="article:modified_time" content="2024-01-23T09:52:32.789Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="Vim">
 <meta name="twitter:card" content="summary_large_image">
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4k words
+          4.8k words
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          34 mins
+          41 mins
         
       </span>
     
@@ -314,7 +314,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年12月15日 下午
+                    本文最后更新于：2024年1月23日 下午
                   
                 
               </p>
@@ -387,6 +387,8 @@
 <li><code>ci[</code> change the contents inside the current pair of square brackets</li>
 <li><code>da'</code> delete a single-quoted string, including the surrounding single quotes</li>
 </ul>
+<h3 id="Tabs标签页"><a href="#Tabs标签页" class="headerlink" title="Tabs标签页"></a>Tabs标签页</h3><p><code>gt</code>, <code>gT</code> 切换标签页。<br><code>Ctrl-w c</code> 关闭当前标签页。</p>
+<h3 id="Windows窗口"><a href="#Windows窗口" class="headerlink" title="Windows窗口"></a>Windows窗口</h3><p><code>Ctrl-w h/j/k/l</code> 移动到左/下/上/右窗口<br><code>Ctrl-w c</code><br><code>Ctrl w w</code>: 循环窗口切换。</p>
 <h2 id="Customizing-Vim"><a href="#Customizing-Vim" class="headerlink" title="Customizing Vim"></a>Customizing Vim</h2><p><a target="_blank" rel="noopener" href="https://github.com/YC-Xiang/dotfiles/blob/main/.vimrc">my vim config</a></p>
 <h2 id="Extending-Vim"><a href="#Extending-Vim" class="headerlink" title="Extending Vim"></a>Extending Vim</h2><p>Vim 8.0 之后自带插件管理工具，只要create the directory <code>~/.vim/pack/vendor/start/</code>, and put plugins in there (e.g. via <code>git clone</code>). <code>vendor</code>目录名好像可以替换。</p>
 <h2 id="Advanced-Vim"><a href="#Advanced-Vim" class="headerlink" title="Advanced Vim"></a>Advanced Vim</h2><h3 id="Search-and-replace"><a href="#Search-and-replace" class="headerlink" title="Search and replace"></a>Search and replace</h3><p><code>:s</code> (substitute) command</p>
@@ -401,6 +403,11 @@
 <li>Can have multiple views of the same buffer.</li>
 </ul>
 <h3 id="Macros"><a href="#Macros" class="headerlink" title="Macros"></a>Macros</h3><p>to do</p>
+<h2 id="Vscode-Vim"><a href="#Vscode-Vim" class="headerlink" title="Vscode Vim"></a>Vscode Vim</h2><p><code>gd</code>: 函数定义跳转。</p>
+<p><code>setting.json</code>配置</p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-comment">/***vscode vim***/</span><br><span class="hljs-attr">"vim.useSystemClipboard"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">"vim.incsearch"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">"vim.hlsearch"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">"vim.easymotion"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">"vim.leader"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"&lt;space&gt;"</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">"vim.insertModeKeyBindings"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br><span class="hljs-punctuation">{</span><br><span class="hljs-attr">"before"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">"j"</span><span class="hljs-punctuation">,</span> <span class="hljs-string">"j"</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">"after"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">"&lt;Esc&gt;"</span><span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">}</span><br><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">"vim.normalModeKeyBindings"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br><span class="hljs-punctuation">{</span><br><span class="hljs-attr">"before"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">"&lt;Enter&gt;"</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">"after"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">"o"</span><span class="hljs-punctuation">,</span> <span class="hljs-string">"&lt;Esc&gt;"</span><span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span><br><span class="hljs-punctuation">{</span><br><span class="hljs-attr">"before"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">"&lt;C-v&gt;"</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">"after"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">"i"</span><span class="hljs-punctuation">,</span> <span class="hljs-string">"&lt;C-v&gt;"</span><span class="hljs-punctuation">,</span><span class="hljs-string">"&lt;Esc&gt;"</span><span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">}</span><br><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br><br><span class="hljs-attr">"vim.handleKeys"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>  <span class="hljs-attr">"&lt;C-a&gt;"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"&lt;C-x&gt;"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"&lt;C-f&gt;"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"&lt;C-h&gt;"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"&lt;C-n&gt;"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"&lt;C-p&gt;"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"&lt;C-y&gt;"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"&lt;C-g&gt;"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"&lt;Shift+Tab&gt;"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><br><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span><br></code></pre></td></tr></tbody></table></figure>
+
+<h3 id="easymotion"><a href="#easymotion" class="headerlink" title="easymotion"></a>easymotion</h3><p><code>&lt;leader&gt;+&lt;leader&gt;+w</code> <code>&lt;leader&gt;+&lt;leader&gt;+b</code>: 快速跳转<br><code>&lt;leader&gt;+&lt;leader&gt;+f+&lt;char&gt;</code>: 查找跳转</p>
 <h2 id="Vimtutor"><a href="#Vimtutor" class="headerlink" title="Vimtutor"></a>Vimtutor</h2><h3 id="Lesson-1"><a href="#Lesson-1" class="headerlink" title="Lesson 1"></a>Lesson 1</h3><p><code>hjkl</code> 移动<br><code>x</code> 删除一个字符<br><code>i</code> 输入<br><code>a</code> append输入</p>
 <h3 id="Lesson-2"><a href="#Lesson-2" class="headerlink" title="Lesson 2"></a>Lesson 2</h3><p><code>dw</code> 删除单词<br><code>de</code> 删除单词，光标留在单词末尾。<br><code>d$</code> 输出到行尾<br><code>2w</code> <code>3b</code> <code>2e</code> 移动单词<br><code>d2w</code> 删除两个单词<br><code>dd</code> <code>2dd</code> 删除两行<br><code>u</code> 撤销 <code>U</code> 返回一行的原始状态 <code>Ctrl r</code> 复原</p>
 <h3 id="Lesson-3"><a href="#Lesson-3" class="headerlink" title="Lesson 3"></a>Lesson 3</h3><p><code>dd</code> 之后的一行可以 <code>p</code> 粘贴<br><code>rx</code> 替换某个字符为<code>x</code><br><code>ce</code> 删除光标后单词部分，并进入insert mode。<br><code>cc</code> 删除整行，进入insert mode。<br><code>c$</code> 输出光标到行尾，并进入insert mode。</p>
@@ -408,8 +415,6 @@
 <h3 id="Lesson-5"><a href="#Lesson-5" class="headerlink" title="Lesson 5"></a>Lesson 5</h3><p><code>! + command</code> 执行外部命令<br><code>:w FILENAME</code> 文件另存为<br><code>v</code> 进入visual模式选中再 <code>:w FILENAME</code> 保存部分内容<br><code>:r FILENAME</code> 将文件内容追加到光标下<br><code>:r !ls</code> 将ls内容加到光标下</p>
 <h3 id="Lesson-6"><a href="#Lesson-6" class="headerlink" title="Lesson 6"></a>Lesson 6</h3><p><code>o</code> 光标下插入新行 <code>O</code>光标上插入新行<br><code>R</code> replace mode<br><code>2y</code> 复制两行<br><code>:set ic</code> 接下来搜索大小写都会包括</p>
 <h3 id="Lesson-7"><a href="#Lesson-7" class="headerlink" title="Lesson 7"></a>Lesson 7</h3><p><code>:</code>接<code>ctrl d</code>可以自动显示命令</p>
-<h2 id="Tabs标签页"><a href="#Tabs标签页" class="headerlink" title="Tabs标签页"></a>Tabs标签页</h2><p><code>gt</code>, <code>gT</code> 切换标签页。<br><code>Ctrl-w c</code> 关闭当前标签页。</p>
-<h2 id="Windows窗口"><a href="#Windows窗口" class="headerlink" title="Windows窗口"></a>Windows窗口</h2><p><code>Ctrl-w h/j/k/l</code> 移动到左/下/上/右窗口<br><code>Ctrl-w c</code><br><code>Ctrl w w</code>: 循环窗口切换。</p>
 <h2 id="NERDTree"><a href="#NERDTree" class="headerlink" title="NERDTree"></a>NERDTree</h2><p><code>Ctrl p</code>: 模糊搜索。</p>
 <p><strong>文件操作</strong><br><code>o</code>: 打开文件并跳转。<br><code>go</code>: 打开文件不跳转，仍然保留在nerdtree。<br><code>t</code>: 新建标签页打开该文件。<br><code>T</code>: 新建标签页打开该文件, 不跳转。<br><code>i</code>: 上下分屏。<br><code>gi</code>: 上下分屏，不跳转。<br><code>s</code>: 左右分屏。<br><code>gs</code>: 左右分屏，不跳转。<br><strong>目录操作</strong><br><code>o</code>: 打开目录。<br><code>O</code>: 递归打开目录。<br><code>t</code>: 在新标签页中打开目录。<br><code>T</code>: 在新标签页中打开目录，不跳转。<br><code>x</code>: 关闭父目录。<br><code>X</code>：关闭子目录。</p>
 <h2 id="Ctags"><a href="#Ctags" class="headerlink" title="Ctags"></a>Ctags</h2><p><a target="_blank" rel="noopener" href="https://kulkarniamit.github.io/whatwhyhow/howto/use-vim-ctags.html">Ctags使用方法</a></p>

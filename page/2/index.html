@@ -258,15 +258,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/11/30/Note/Zephyr/23-11-30_Zephyr_DevelopWithZephyr/" target="_self">
-          Zephyr -- Develop with Zephyr
+        <a href="/2023/12/05/Note/Zephyr/23-12-05_Zephyr_BuildAndConfiguration/" target="_self">
+          Zephyr -- Build and Configuration Systems
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/11/30/Note/Zephyr/23-11-30_Zephyr_DevelopWithZephyr/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/12/05/Note/Zephyr/23-12-05_Zephyr_BuildAndConfiguration/" target="_self">
         <div>
-          Getting Started Guide设置Python虚拟环境 python3 -m venv ~/zephyrproject/.venv source ~/zephyrproject/.venv/bin/activate deactive 退出虚拟环境。 Remember to activate the virtual environment every time you start wor
+          Build System(CMake)Devicetreebuild/zephyr/zephyr.dts: final devicetree Configuration System(Kconfig)生成的配置文件:zephyr/build/.config: for CMake use.zephyr/build/zephyr/include/generated/autoconf.h: for c
         </div>
       </a>
 
@@ -274,8 +274,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2023-11-30 14:17" pubdate>
-              2023-11-30
+            <time datetime="2023-12-05 14:06" pubdate>
+              2023-12-05
             </time>
           </div>
         
@@ -328,6 +328,67 @@
       <a class="index-excerpt index-excerpt__noimg" href="/2023/11/30/Note/Zephyr/23-12-01_Zephyr_DeviceDriverModel/" target="_self">
         <div>
           123456struct device {      const char *name;      const void *config;      const void *api;      void * const data;};  config: 放地址映射，中断号等一些物理信息。api: 回调函数。data: 放reference counts, semaphores, scratch b
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-11-30 14:17" pubdate>
+              2023-11-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Zephyr/">#Zephyr</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/11/30/Note/Zephyr/23-11-30_Zephyr_DevelopWithZephyr/" target="_self">
+          Zephyr -- Develop with Zephyr
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/11/30/Note/Zephyr/23-11-30_Zephyr_DevelopWithZephyr/" target="_self">
+        <div>
+          Getting Started Guide设置Python虚拟环境 python3 -m venv ~/zephyrproject/.venv source ~/zephyrproject/.venv/bin/activate deactive 退出虚拟环境。 Remember to activate the virtual environment every time you start wor
         </div>
       </a>
 
@@ -794,67 +855,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/usb/">#usb</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/05/26/Project/rCore_uCore/Lookup/" target="_self">
-          risc-v Lookup
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/26/Project/rCore_uCore/Lookup/" target="_self">
-        <div>
-          CSRs参考riscv-privileged-20211203.pdf sstatus SPP: 在进入S mode之前hart处于什么mode。用户态trap进入S mode，SPP被设置为0，其他情况为1。如果SPP为0，执行SRET后，返回U mode。如果SPP为1，执行SRET后，返回S mode。随后SPP置0。 SIE: 1开启/0关闭 S mode的所有中断 in S mode。在
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-05-26 09:45" pubdate>
-              2023-05-26
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Project/" class="category-chain-item">Project</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/uCore/">#uCore</a>
             
           </div>
         
