@@ -7,6 +7,9 @@ categories:
 - Project
 ---
 
+`make qemu`
+`make clean`
+
 `Ctrl-p` 打印进程。
 `Ctrl-a x` 退出qemu。
 

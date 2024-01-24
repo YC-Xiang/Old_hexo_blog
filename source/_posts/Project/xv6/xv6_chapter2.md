@@ -99,3 +99,14 @@ start:
 ```
 
 最终在`init.c`中调用`fork()`在子进程中执行shell进程`exec("sh", argv);`,父进程则进入死循环。
+
+## 4.3 Code: Calling system calls
+
+`initcode.S` 把执行`exec`的参数存放在`a0`,`a1`寄存器中, 把system call编号存在`a7`寄存器中。随后`ecall`指令会trap into kernel, 导致进入`uservec`和`usertrap`函数, 最后调用到`sys_exec`函数。
+
+## 4.4 Code: System call arguments
+
+User space通过系统调用进入kernel space, 参数保存在current process当前进程的trap frame中。
+比如`exit(0)`, 0会被保存到`a0`寄存器，随后会被kernel保存到`p->trapframe->a0`。
+
+`argint`, `argaddr`, `argfd`函数从当前进程的trap frame中读取传入的参数。
