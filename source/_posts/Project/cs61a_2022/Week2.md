@@ -1,5 +1,5 @@
 ---
-title: CS61A Week1
+title: CS61A Week2
 date: 2024-1-22 22:33:28
 tags:
 - CS61A
