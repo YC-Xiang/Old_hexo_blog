@@ -103,7 +103,7 @@ theme: fluid
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repository: git@github.com:YC-Xiang/YC-Xiang.github.io.git
+  repository: https://github.com/YC-Xiang/YC-Xiang.github.io.git
   branch: main
 
 githubEmojis:
