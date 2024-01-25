@@ -16,15 +16,15 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Trace在Makefile中增加trace用户程序的编译 123UPROGS&#x3D;\  ...  $U&#x2F;_trace  在user&#x2F;user.h中增加函数声明 1int trace(int);  在usys.pl中增加user space trace函数的入口。可以看到user space调用的系统调用, 是由这个脚本生成的函数。以trace为例, 提供了trace函数的入口.global trac">
+    <meta name="description" content="2.6 Code: starting xv6, the first process and system call启动代码:entry.S 为每个CPU设置堆栈，然后跳进start.c的start函数。 123456789101112131415161718192021  # qemu -kernel loads the kernel at 0x80000000        # and caus">
 <meta property="og:type" content="article">
-<meta property="og:title" content="xv6_lab2 System calls">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/01/04/Project/xv6/xv6_lab2/index.html">
+<meta property="og:title" content="xv6_chapter2 Operating system organization">
+<meta property="og:url" content="https://yc-xiang.github.io/2024/01/04/Project/xv6/xv6_chapter2/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Trace在Makefile中增加trace用户程序的编译 123UPROGS&#x3D;\  ...  $U&#x2F;_trace  在user&#x2F;user.h中增加函数声明 1int trace(int);  在usys.pl中增加user space trace函数的入口。可以看到user space调用的系统调用, 是由这个脚本生成的函数。以trace为例, 提供了trace函数的入口.global trac">
+<meta property="og:description" content="2.6 Code: starting xv6, the first process and system call启动代码:entry.S 为每个CPU设置堆栈，然后跳进start.c的start函数。 123456789101112131415161718192021  # qemu -kernel loads the kernel at 0x80000000        # and caus">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-01-04T14:51:28.000Z">
-<meta property="article:modified_time" content="2024-01-25T01:34:23.084Z">
+<meta property="article:published_time" content="2024-01-04T12:57:28.000Z">
+<meta property="article:modified_time" content="2024-01-25T06:35:32.838Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="xv6">
 <meta name="twitter:card" content="summary_large_image">
@@ -33,7 +33,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>xv6_lab2 System calls - Yucheng&#39;s Blog</title>
+  <title>xv6_chapter2 Operating system organization - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +229,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">xv6_lab2 System calls</span>
+            <span id="subtitle">xv6_chapter2 Operating system organization</span>
           
         </div>
 
@@ -240,8 +240,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-01-04 22:51" pubdate>
-          2023年1月4日 晚上
+        <time datetime="2024-01-04 20:57" pubdate>
+          2024年1月4日 晚上
         </time>
       </span>
     
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          827 words
+          1.5k words
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          7 mins
+          13 mins
         
       </span>
     
@@ -309,12 +309,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">xv6_lab2 System calls</h1>
+            <h1 style="display: none">xv6_chapter2 Operating system organization</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年1月25日 上午
+                    本文最后更新于：2024年1月25日 下午
                   
                 
               </p>
@@ -322,20 +322,35 @@
             
               <div class="markdown-body">
                 
-                <h2 id="Trace"><a href="#Trace" class="headerlink" title="Trace"></a>Trace</h2><p>在Makefile中增加trace用户程序的编译</p>
-<figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs Makefile">UPROGS=\<br>  ...<br>  $U/_trace<br></code></pre></td></tr></tbody></table></figure>
+                <h2 id="2-6-Code-starting-xv6-the-first-process-and-system-call"><a href="#2-6-Code-starting-xv6-the-first-process-and-system-call" class="headerlink" title="2.6 Code: starting xv6, the first process and system call"></a>2.6 Code: starting xv6, the first process and system call</h2><p>启动代码:<br><code>entry.S</code> 为每个CPU设置堆栈，然后跳进<code>start.c</code>的start函数。</p>
+<figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs makefile">  <span class="hljs-comment"># qemu -kernel loads the kernel at 0x80000000</span><br>        <span class="hljs-comment"># and causes each CPU to jump there.</span><br>        <span class="hljs-comment"># kernel.ld causes the following code to</span><br>        <span class="hljs-comment"># be placed at 0x80000000.</span><br>.section .text<br>.global _entry<br><span class="hljs-section">_entry:</span><br>  <span class="hljs-comment"># set up a stack for C.</span><br>        <span class="hljs-comment"># stack0 is declared in start.c,</span><br>        <span class="hljs-comment"># with a 4096-byte stack per CPU.</span><br>        <span class="hljs-comment"># sp = stack0 + (hartid * 4096)</span><br>        la sp, stack0<br>        li a0, 1024*4<br>  csrr a1, mhartid <span class="hljs-comment"># CPUs 0~7 has hartid from 0~7</span><br>        addi a1, a1, 1<br>        mul a0, a0, a1<br>        add sp, sp, a0<br>  <span class="hljs-comment"># jump to start() in start.c</span><br>        call start<br><span class="hljs-section">spin:</span><br>        j spin<br></code></pre></td></tr></tbody></table></figure>
 
-<p>在<code>user/user.h</code>中增加函数声明</p>
-<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">trace</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span>;<br></code></pre></td></tr></tbody></table></figure>
+<br>
 
-<p>在<code>usys.pl</code>中增加user space <code>trace</code>函数的入口。可以看到user space调用的系统调用, 是由这个脚本生成的函数。<br>以trace为例, 提供了trace函数的入口<code>.global trace</code>, 随后将定义在<code>syscall.h</code>中的<code>SYS_trace</code>编号存入寄存器<code>a7</code>, 通过<code>ecall</code>命令进入内核态。</p>
-<figure class="highlight perl"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs perl"><span class="hljs-function"><span class="hljs-keyword">sub</span> <span class="hljs-title">entry</span> </span>{<br>    <span class="hljs-keyword">my</span> $name = <span class="hljs-keyword">shift</span>;<br>    <span class="hljs-keyword">print</span> <span class="hljs-string">".global $name\n"</span>;<br>    <span class="hljs-keyword">print</span> <span class="hljs-string">"<span class="hljs-subst">${name}</span>:\n"</span>;<br>    <span class="hljs-keyword">print</span> <span class="hljs-string">" li a7, SYS_<span class="hljs-subst">${name}</span>\n"</span>;<br>    <span class="hljs-keyword">print</span> <span class="hljs-string">" ecall\n"</span>;<br>    <span class="hljs-keyword">print</span> <span class="hljs-string">" ret\n"</span>;<br>}<br>entry(<span class="hljs-string">"trace"</span>);<br></code></pre></td></tr></tbody></table></figure>
+<p><code>start.c</code> 调用<code>mret</code>, 从machine mode进入supervisor mode。跳转至<code>mepc</code>中存入的main函数地址。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">start</span><span class="hljs-params">()</span><br>{<br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> x = r_mstatus();<br>  x &amp;= ~MSTATUS_MPP_MASK;<br>  x |= MSTATUS_MPP_S;<br>  w_mstatus(x);<br><br>  w_mepc((uint64)main);<br>  <span class="hljs-comment">// ...</span><br>  <span class="hljs-keyword">asm</span> <span class="hljs-title function_">volatile</span><span class="hljs-params">(<span class="hljs-string">"mret"</span>)</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
 
-<p>在<code>syscall.c</code>的<code>syscall</code>函数中通过获取<code>a6</code>寄存器中的编号，找到我们添加的系统调用函数，<code>sys_trace</code>。</p>
-<p>函数具体实现如下:</p>
-<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 在proc结构体中增加mask成员</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">proc</span> {</span><br>  <span class="hljs-comment">//...</span><br>  <span class="hljs-type">int</span> mask;<br>}<br><br><span class="hljs-comment">// 将user space传入的mask，传递给当前进程的mask变量</span><br>uint64 <span class="hljs-title function_">sys_trace</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>{<br>  <span class="hljs-keyword">if</span>(argint(<span class="hljs-number">0</span>, &amp;myproc()-&gt;mask) &lt; <span class="hljs-number">0</span>)<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br><br><span class="hljs-comment">// 随后执行的系统调用number如果 (1 &lt;&lt; num == mask), 则打印</span><br>syscall(<span class="hljs-type">void</span>)<br>{<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-keyword">if</span> ((<span class="hljs-number">1</span> &lt;&lt; num) &amp; p-&gt;mask)<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d: syscall %s -&gt; %d\n"</span>, p-&gt;pid, syscalls_name[num - <span class="hljs-number">1</span>], p-&gt;trapframe-&gt;a0);<br>}<br></code></pre></td></tr></tbody></table></figure>
+<br>
 
-<h2 id="Sysinfo"><a href="#Sysinfo" class="headerlink" title="Sysinfo"></a>Sysinfo</h2>
+<p><code>main.c</code> userinit()中创建第一个进程。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>{<br>  <span class="hljs-comment">// ...</span><br>  userinit();<br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<br>
+
+<p><code>userinit.c</code> <code>uvminit</code>把<code>uchar initcode[]</code> 即<code>user/initcode.S</code>编译出来的<code>initcode</code>可执行程序加载进进程的页表中。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">userinit</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>{<br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">proc</span> *<span class="hljs-title">p</span>;</span><br>  p = allocproc();<br><br>  uvminit(p-&gt;pagetable, initcode, <span class="hljs-keyword">sizeof</span>(initcode));<br>}<br><br></code></pre></td></tr></tbody></table></figure>
+
+<br>
+
+<p>接着<code>initcode</code>会执行系统调用<code>exec</code>执行<code>/init</code>用户程序。</p>
+<p><code>initcode.S</code></p>
+<figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># exec(init, argv)</span><br>.globl start<br><span class="hljs-section">start:</span><br>        la a0, init<br>        la a1, argv<br>        li a7, SYS_exec<br>        ecall<br><br></code></pre></td></tr></tbody></table></figure>
+
+<p>最终在<code>init.c</code>中调用<code>fork()</code>在子进程中执行shell进程<code>exec("sh", argv);</code>,父进程则进入死循环。</p>
+<h2 id="4-3-Code-Calling-system-calls"><a href="#4-3-Code-Calling-system-calls" class="headerlink" title="4.3 Code: Calling system calls"></a>4.3 Code: Calling system calls</h2><p><code>initcode.S</code> 把执行<code>exec</code>的参数存放在<code>a0</code>,<code>a1</code>寄存器中, 把system call编号存在<code>a7</code>寄存器中。随后<code>ecall</code>指令会trap into kernel, 导致进入<code>uservec</code>和<code>usertrap</code>函数, 最后调用到<code>sys_exec</code>函数。</p>
+<h2 id="4-4-Code-System-call-arguments"><a href="#4-4-Code-System-call-arguments" class="headerlink" title="4.4 Code: System call arguments"></a>4.4 Code: System call arguments</h2><p>User space通过系统调用进入kernel space, 参数保存在current process当前进程的trap frame中。<br>比如<code>exit(0)</code>, 0会被保存到<code>a0</code>寄存器，随后会被kernel保存到<code>p-&gt;trapframe-&gt;a0</code>。</p>
+<p><code>argint</code>, <code>argaddr</code>, <code>argfd</code>函数从当前进程的trap frame中读取传入的参数。</p>
+
                 
               </div>
             
@@ -382,9 +397,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/01/05/Ref/Markdown%E8%AF%AD%E6%B3%95/" title="Markdown and theme Fluid syntax">
+                      <a href="/2024/01/04/Project/xv6/xv6_lab2/" title="xv6_lab2 System calls">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Markdown and theme Fluid syntax</span>
+                        <span class="hidden-mobile">xv6_lab2 System calls</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -392,8 +407,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/01/04/Project/xv6/xv6_chapter2/" title="xv6_chapter2 Operating system organization">
-                        <span class="hidden-mobile">xv6_chapter2 Operating system organization</span>
+                      <a href="/2023/12/30/Project/xv6/xv6_lab1/" title="xv6_lab1 Unix utilities">
+                        <span class="hidden-mobile">xv6_lab1 Unix utilities</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

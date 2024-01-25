@@ -565,6 +565,189 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2024/01/11/Project/xv6/xv6_chapter3/" target="_self">
+          xv6_chapter3 Page tables
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/01/11/Project/xv6/xv6_chapter3/" target="_self">
+        <div>
+          3.1 Paging hardwarexv6 runs on Sv39 RISC-V, 使用低39位来表示虚拟内存, 高25位没有使用。 39位中27位用作index来寻找PTE(Page table entry), 低12位表示在某个页表中的偏移地址, 正好对应4KB。每个PTE包含44bits的PPN(physical page number)和一些控制位。  实际的RISC-V CPU翻译虚
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-11 22:30" pubdate>
+              2024-01-11
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/xv6/">#xv6</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2024/01/04/Project/xv6/xv6_lab2/" target="_self">
+          xv6_lab2 System calls
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/01/04/Project/xv6/xv6_lab2/" target="_self">
+        <div>
+          Trace在Makefile中增加trace用户程序的编译 123UPROGS=\  ...  $U/_trace  在user/user.h中增加函数声明 1int trace(int);  在usys.pl中增加user space trace函数的入口。可以看到user space调用的系统调用, 是由这个脚本生成的函数。以trace为例, 提供了trace函数的入口.global trac
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-04 22:51" pubdate>
+              2024-01-04
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/xv6/">#xv6</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2024/01/04/Project/xv6/xv6_chapter2/" target="_self">
+          xv6_chapter2 Operating system organization
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/01/04/Project/xv6/xv6_chapter2/" target="_self">
+        <div>
+          2.6 Code: starting xv6, the first process and system call启动代码:entry.S 为每个CPU设置堆栈，然后跳进start.c的start函数。 123456789101112131415161718192021  # qemu -kernel loads the kernel at 0x80000000        # and caus
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-04 20:57" pubdate>
+              2024-01-04
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/xv6/">#xv6</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/12/30/Project/xv6/xv6_lab1/" target="_self">
           xv6_lab1 Unix utilities
         </a>
@@ -674,189 +857,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/xv6/">#xv6</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/12/25/Note/Zephyr/23-12-21_Pinctrl/" target="_self">
-          Zephyr -- Pinctrl Subsystem
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/12/25/Note/Zephyr/23-12-21_Pinctrl/" target="_self">
-        <div>
-          设备树Pinctrl controller节点： 支持的属性可以查阅/dts/bindings/pinctrl/pincfg-node.yaml，支持配置上下拉，驱动能力等等。当设备节点调用perip0_default的时候，group1~N都会被apply。 12345678910111213141516171819/* board-pinctrl.dtsi */#include &lt;vnd
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-12-25 09:45" pubdate>
-              2023-12-25
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Zephyr/">#Zephyr</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/12/18/Note/Zephyr/23-12-18_UserMode/" target="_self">
-          Zephyr -- System  Call
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/12/18/Note/Zephyr/23-12-18_UserMode/" target="_self">
-        <div>
-          C Prototype系统调用函数必须以__syscall开头，在include/或SYSCALL_INCLUDE_DIRS目录下被声明。 scripts/build/parse_syscalls.py会parse__syscall这个标记，并且函数有以下限制：  参数不能传入数组，比如int foo[] or int foo[12], 必须用int *foo代替。 函数指针不能正常解析，需要先对
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-12-18 14:18" pubdate>
-              2023-12-18
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Zephyr/">#Zephyr</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/12/15/Note/Zephyr/23-12-18_SPI/" target="_self">
-          Zephyr -- SPI framework
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/12/15/Note/Zephyr/23-12-18_SPI/" target="_self">
-        <div>
-          应用层方法1： 设备树API 参考zephyr/tests/drivers/spi/spi_loopback/src/spi.c 1234567891011121314151617181920// 获取spi device node id#define SPI_DEV  DT_COMPAT_GET_ANY_STATUS_OKAY(test_spi_loopback) //这里注意是spi devi
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-12-15 16:01" pubdate>
-              2023-12-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Zephyr/">#Zephyr</a>
             
           </div>
         

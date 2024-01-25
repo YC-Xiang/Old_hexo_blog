@@ -258,6 +258,189 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/05/17/Project/rCore_uCore/uCore_Chapter3/" target="_self">
+          uCore_Chapter3 多道程序与分时多任务
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/17/Project/rCore_uCore/uCore_Chapter3/" target="_self">
+        <div>
+          分时多任务系统与抢占式调度RISC-V架构中断以内核所在的 S 特权级为例，中断屏蔽相应的 CSR 有 sstatus 和 sie 。sstatus 的 sie 为 S 特权级的中断使能，能够同时控制三种中断，如果将其清零则会将它们全部屏蔽。即使 sstatus.sie 置 1 ，还要看 sie 这个 CSR，它的三个字段 ssie/stie/seie 分别控制 S 特权级的软件中断、时钟中断和外
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-05-17 20:20" pubdate>
+              2023-05-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/uCore/">#uCore</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/05/15/Note/Linux_Driver/Uart/" target="_self">
+          Uart Subsystem
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/15/Note/Linux_Driver/Uart/" target="_self">
+        <div>
+          Referencehttps://www.kernel.org/doc/Documentation/serial/driver Introduction波特率115200，bps每秒传输的bit数。 每一位1/115200秒，传输1byte需要10位（start, data, stop）,那么每秒能传11520byte。 115200，8n1。8:data，n:校验位不用，1：停止位。  TTY体
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-05-15 22:25" pubdate>
+              2023-05-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Linux-driver/">#Linux driver</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/05/12/Note/Linux_Driver/GPIO/" target="_self">
+          GPIO Subsystem
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/12/Note/Linux_Driver/GPIO/" target="_self">
+        <div>
+          https://zhuanlan.zhihu.com/p/41942876 push pull推挽输出 推挽输出的最大特点是可以真正能真正的输出高电平和低电平，在两种电平下都具有驱动能力。 open drain开漏输出 open source开集输出 这两种输出的原理和特性基本是类似的，区别在于一个是使用MOS管，其中的”漏”指的就是MOS管的漏极；另一个使用三极管，其中的”集”指的就是MOS三极
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-05-12 10:19" pubdate>
+              2023-05-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Linux-driver/">#Linux driver</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/05/10/Note/Linux_Driver/CMA&amp;DMA/" target="_self">
           CMA&amp;DMA
         </a>
@@ -672,189 +855,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/uCore/">#uCore</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/04/19/Misc/U-Boot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" target="_self">
-          U-Boot启动流程
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/19/Misc/U-Boot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" target="_self">
-        <div>
-          Uboot编译流程https://blog.csdn.net/ooonebook/article/details/53000893 编译生成的文件：   具体可以参考Uboot Makefile u-boot Makefile12345678910111213141516171819202122232425262728293031323334353637u-boot.cfg: $(Q)$(MAKE
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-04-19 14:10" pubdate>
-              2023-04-19
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Misc/" class="category-chain-item">Misc</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/U-Boot/">#U-Boot</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/04/13/Note/Linux_Driver/I2C/" target="_self">
-          I2C Subsystem
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/13/Note/Linux_Driver/I2C/" target="_self">
-        <div>
-          用户层测试指令12345678910111213# 检测当前系统有几组i2c总线i2cdetect -l# 查看i2c-0接口上的设备i2cdetect -y -a 0 # Force scanning of non-regular addressesi2cdetect -y -r 0# 读取指定设备的全部寄存器的值i2cdump -f -y 0 0x68# 读取指定i2c设备的某个寄存器的值，如
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-04-13 17:40" pubdate>
-              2023-04-13
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Linux-driver/">#Linux driver</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/04/13/Note/23-04-13_Buildroot/" target="_self">
-          Buildroot
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/13/Note/23-04-13_Buildroot/" target="_self">
-        <div>
-          Notes./lanuch 最终的操作是 12cd sdk_3921/buildroot-dist # 进入buildroot目录make BR2_EXTERNAL=sdk_3921/platform/ O=sdk3921/out/rts3923_fpga/ rts3923_fpga_defconfig    12345678local.mk # BR2_PACKAGE_OVERRIDE_FILE
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-04-13 17:39" pubdate>
-              2023-04-13
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Buildroot/">#Buildroot</a>
             
           </div>
         

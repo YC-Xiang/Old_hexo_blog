@@ -258,6 +258,189 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/12/25/Note/Zephyr/23-12-21_Pinctrl/" target="_self">
+          Zephyr -- Pinctrl Subsystem
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/12/25/Note/Zephyr/23-12-21_Pinctrl/" target="_self">
+        <div>
+          设备树Pinctrl controller节点： 支持的属性可以查阅/dts/bindings/pinctrl/pincfg-node.yaml，支持配置上下拉，驱动能力等等。当设备节点调用perip0_default的时候，group1~N都会被apply。 12345678910111213141516171819/* board-pinctrl.dtsi */#include &lt;vnd
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-12-25 09:45" pubdate>
+              2023-12-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Zephyr/">#Zephyr</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/12/18/Note/Zephyr/23-12-18_UserMode/" target="_self">
+          Zephyr -- System  Call
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/12/18/Note/Zephyr/23-12-18_UserMode/" target="_self">
+        <div>
+          C Prototype系统调用函数必须以__syscall开头，在include/或SYSCALL_INCLUDE_DIRS目录下被声明。 scripts/build/parse_syscalls.py会parse__syscall这个标记，并且函数有以下限制：  参数不能传入数组，比如int foo[] or int foo[12], 必须用int *foo代替。 函数指针不能正常解析，需要先对
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-12-18 14:18" pubdate>
+              2023-12-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Zephyr/">#Zephyr</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/12/15/Note/Zephyr/23-12-18_SPI/" target="_self">
+          Zephyr -- SPI framework
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/12/15/Note/Zephyr/23-12-18_SPI/" target="_self">
+        <div>
+          应用层方法1： 设备树API 参考zephyr/tests/drivers/spi/spi_loopback/src/spi.c 1234567891011121314151617181920// 获取spi device node id#define SPI_DEV  DT_COMPAT_GET_ANY_STATUS_OKAY(test_spi_loopback) //这里注意是spi devi
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-12-15 16:01" pubdate>
+              2023-12-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Zephyr/">#Zephyr</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/12/15/Note/Zephyr/23-12-15_I2C/" target="_self">
           Zephyr -- I2C framework
         </a>
@@ -672,189 +855,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/ICS/">#ICS</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/09/12/Book/23-09-12_I2C_spec/" target="_self">
-          I2C spec
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/12/Book/23-09-12_I2C_spec/" target="_self">
-        <div>
-          ReferenceI2C 为什么要用开漏输出，而不能用推挽输出。  防止短路。两个push pull输出相连，如果一个输出高，一个输出低，会短路。 线与。开漏输出有一个输出端输出低，则整条线都为低，所有输出高才为高。https://www.zhihu.com/question/534999506https://www.eet-china.com/mp/a87499.html  以上都是针对mult
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-09-12 15:15" pubdate>
-              2023-09-12
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Book/" class="category-chain-item">Book</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Spec/">#Spec</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/09/06/Misc/%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D.bss%E5%8F%98%E9%87%8F%E8%BD%AC%E5%8C%96%E6%88%90.data%E6%AE%B5%E5%8F%98%E9%87%8F/" target="_self">
-          如何避免.bss变量转化成.data段变量
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/06/Misc/%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D.bss%E5%8F%98%E9%87%8F%E8%BD%AC%E5%8C%96%E6%88%90.data%E6%AE%B5%E5%8F%98%E9%87%8F/" target="_self">
-        <div>
-          发现在一个.c文件中有一个初始化为非0的全局变量或静态变量，会使这整个文件中定义的全局变量或静态变量都由.bss段转化为.data段。 .data段的变量会在mcu boot阶段的clib会对这些变量做初始化，**.bss段**可以透过keilc的config如下图控制是否要跳过clib的初始化为0（目前我们的配置是把IRAM配置为不要初始化）这样的话，我们的芯片在suspend或sleep之后，
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-09-06 14:12" pubdate>
-              2023-09-06
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Misc/" class="category-chain-item">Misc</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Misc/">#Misc</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/09/06/Book/23-09-06_Cortex-M3%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/" target="_self">
-          Cortex-M3权威指南
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/06/Book/23-09-06_Cortex-M3%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/" target="_self">
-        <div>
-          Reference 《Cortex-M3权威指南》 《ARMv7-M Architecture Reference Manual》 《Cortex-M3 Technical Reference Manual》  Chapter1 介绍Cortex－M3处理器（CM3）采用ARMv7-M架构，它包括所有的16位Thumb指令集和基本的32位Thumb-2指令集架构，Cortex-M3处理器不能执行A
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-09-06 09:43" pubdate>
-              2023-09-06
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Book/" class="category-chain-item">Book</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Book/">#Book</a>
             
           </div>
         
