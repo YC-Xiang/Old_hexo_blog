@@ -16,24 +16,24 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="C Prototype系统调用函数必须以__syscall开头，在include&#x2F;或SYSCALL_INCLUDE_DIRS目录下被声明。 scripts&#x2F;build&#x2F;parse_syscalls.py会parse__syscall这个标记，并且函数有以下限制：  参数不能传入数组，比如int foo[] or int foo[12], 必须用int *foo代替。 函数指针不能正常解析，需要先对">
+    <meta name="description" content="Lab0python3 ok --help: 查看ok提示。 python3 ok -q python-basics -u python3 ok: 运行全部测试。 python3 ok --score:查看分数。 python3 ok ... --local:本地运行测试。 python3 -m doctest lab00.py: 运行doctest。 Hw1 Functions, Control">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Zephyr -- System  Call">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/12/18/Note/Zephyr/23-12-18_SystemCall/index.html">
+<meta property="og:title" content="CS61A Week1">
+<meta property="og:url" content="https://yc-xiang.github.io/2024/01/22/Project/cs61a/Week1/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="C Prototype系统调用函数必须以__syscall开头，在include&#x2F;或SYSCALL_INCLUDE_DIRS目录下被声明。 scripts&#x2F;build&#x2F;parse_syscalls.py会parse__syscall这个标记，并且函数有以下限制：  参数不能传入数组，比如int foo[] or int foo[12], 必须用int *foo代替。 函数指针不能正常解析，需要先对">
+<meta property="og:description" content="Lab0python3 ok --help: 查看ok提示。 python3 ok -q python-basics -u python3 ok: 运行全部测试。 python3 ok --score:查看分数。 python3 ok ... --local:本地运行测试。 python3 -m doctest lab00.py: 运行doctest。 Hw1 Functions, Control">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-12-18T06:18:28.000Z">
-<meta property="article:modified_time" content="2023-12-18T07:18:43.508Z">
+<meta property="article:published_time" content="2024-01-22T13:33:28.000Z">
+<meta property="article:modified_time" content="2024-01-25T01:34:23.084Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="Zephyr">
+<meta property="article:tag" content="CS61A">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Zephyr -- System  Call - Yucheng&#39;s Blog</title>
+  <title>CS61A Week1 - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +229,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Zephyr -- System  Call</span>
+            <span id="subtitle">CS61A Week1</span>
           
         </div>
 
@@ -240,8 +240,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-12-18 14:18" pubdate>
-          2023年12月18日 下午
+        <time datetime="2024-01-22 21:33" pubdate>
+          2024年1月22日 晚上
         </time>
       </span>
     
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k words
+          635 words
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          14 mins
+          6 mins
         
       </span>
     
@@ -309,12 +309,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Zephyr -- System  Call</h1>
+            <h1 style="display: none">CS61A Week1</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年12月18日 下午
+                    本文最后更新于：2024年1月25日 上午
                   
                 
               </p>
@@ -322,22 +322,24 @@
             
               <div class="markdown-body">
                 
-                <h2 id="C-Prototype"><a href="#C-Prototype" class="headerlink" title="C Prototype"></a>C Prototype</h2><p>系统调用函数必须以<code>__syscall</code>开头，在<code>include/</code>或<code>SYSCALL_INCLUDE_DIRS</code>目录下被声明。</p>
-<p><code>scripts/build/parse_syscalls.py</code>会parse<code>__syscall</code>这个标记，并且函数有以下限制：</p>
-<ul>
-<li>参数不能传入数组，比如<code>int foo[]</code> or <code>int foo[12]</code>, 必须用<code>int *foo</code>代替。</li>
-<li>函数指针不能正常解析，需要先对函数指针<code>typedef</code>，再传入。</li>
-</ul>
-<p>定义了系统调用的<code>xxx.h</code>头文件必须要文件末尾加上同名的<code>#include &lt;syscall/xxx.h&gt;</code>。</p>
-<h3 id="Invocation-Context-调用上下文"><a href="#Invocation-Context-调用上下文" class="headerlink" title="Invocation Context 调用上下文"></a>Invocation Context 调用上下文</h3><ul>
-<li>如果定义了<code>CONFIG_USERSPACE</code>，所有的system call APIs都会直接调用对应的implementation function。</li>
-<li>如果定义了<code>__ZEPHYR_SUPERVISOR__</code>，表示所有code都在supervisor mode下运行，直接调用对应的implementation function。</li>
-<li>如果定义了<code>__ZEPHYR_USER__</code></li>
-</ul>
-<h3 id="Implementation-Detail-实现细节"><a href="#Implementation-Detail-实现细节" class="headerlink" title="Implementation Detail 实现细节"></a>Implementation Detail 实现细节</h3><p><code>scripts/build/gencalls.py</code>会把parse到的system calls放进<code>/build/include/generated/syscall_list.h</code>中。以<code>K_SYSCALL_</code>前缀加上API。</p>
-<p>所有可以调用的system calls被保存在<code>syscall_dispatch.c</code>中的<code>_k_syscall_table</code>中。</p>
-<p>system calls的API实现被保存在了<code>/build/include/generated/syscalls/xxx.h</code> 这些文件被<code>/include/xxx.h</code>文件最后include进去，完成函数的定义。e.g</p>
-<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// include/i2c.h</span><br>__syscall <span class="hljs-type">int</span> <span class="hljs-title function_">i2c_configure</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *dev, <span class="hljs-type">uint32_t</span> dev_config)</span>; <span class="hljs-comment">//声明</span><br><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">z_impl_i2c_configure</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *dev,</span><br><span class="hljs-params">               <span class="hljs-type">uint32_t</span> dev_config)</span><br>{<br>  <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_driver_api</span> *<span class="hljs-title">api</span> =</span><br>    (<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> i2c_driver_api *)dev-&gt;api;<br><br>  <span class="hljs-keyword">return</span> api-&gt;configure(dev, dev_config);<br>}<br><span class="hljs-comment">//...</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;syscalls/i2c.h&gt;</span></span><br><br><span class="hljs-comment">// build/include/generated/syscalls/i2c.h</span><br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> <span class="hljs-title function_">z_impl_i2c_configure</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device * dev, <span class="hljs-type">uint32_t</span> dev_config)</span>;<br><br>__pinned_func<br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">i2c_configure</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device * dev, <span class="hljs-type">uint32_t</span> dev_config)</span><br>{<br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> CONFIG_USERSPACE</span><br>        <span class="hljs-keyword">if</span> (z_syscall_trap()) {<br>                <span class="hljs-class"><span class="hljs-keyword">union</span> {</span> <span class="hljs-type">uintptr_t</span> x; <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">device</span> * <span class="hljs-title">val</span>;</span> } parm0 = { .val = dev };<br>                <span class="hljs-class"><span class="hljs-keyword">union</span> {</span> <span class="hljs-type">uintptr_t</span> x; <span class="hljs-type">uint32_t</span> val; } parm1 = { .val = dev_config };<br>                <span class="hljs-keyword">return</span> (<span class="hljs-type">int</span>) arch_syscall_invoke2(parm0.x, parm1.x, K_SYSCALL_I2C_CONFIGURE);<br>        }<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>        compiler_barrier();<br>        <span class="hljs-keyword">return</span> z_impl_i2c_configure(dev, dev_config);<br>}<br><br></code></pre></td></tr></tbody></table></figure>
+                <h2 id="Lab0"><a href="#Lab0" class="headerlink" title="Lab0"></a>Lab0</h2><p><code>python3 ok --help</code>: 查看ok提示。</p>
+<p><code>python3 ok -q python-basics -u</code></p>
+<p><code>python3 ok</code>: 运行全部测试。</p>
+<p><code>python3 ok --score</code>:查看分数。</p>
+<p><code>python3 ok ... --local</code>:本地运行测试。</p>
+<p><code>python3 -m doctest lab00.py</code>: 运行doctest。</p>
+<h2 id="Hw1-Functions-Control"><a href="#Hw1-Functions-Control" class="headerlink" title="Hw1 Functions, Control"></a>Hw1 Functions, Control</h2><p><code>python3 ok -q a_plus_abs_b</code></p>
+<p><code>python3 ok -q two_of_three</code></p>
+<p>返回三个数中最小的两个数。先取min(i, j)得到较小的一个数，在从min(max(i, j), k)中得到第二小的数。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">two_of_three</span>(<span class="hljs-params">i, j, k</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">min</span>(i, j)**<span class="hljs-number">2</span> + <span class="hljs-built_in">min</span>(<span class="hljs-built_in">max</span>(i, j), k)**<span class="hljs-number">2</span><br></code></pre></td></tr></tbody></table></figure>
+
+<p><code>python3 ok -q largest_factor</code></p>
+<p>返回能被整除的最大数。从1到n遍历，如果n%i==0即能够整除，返回最大值。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">largest_factor</span>(<span class="hljs-params">n</span>):<br>    res = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>, n):<br>        <span class="hljs-keyword">if</span> n % i == <span class="hljs-number">0</span>:<br>            res = i<br>    <span class="hljs-keyword">return</span> res<br></code></pre></td></tr></tbody></table></figure>
+
+<p><code>python3 ok -q hailstone</code></p>
+<p>按照题意，偶数除以2，奇数*3+1操作，返回操作的次数。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">hailstone</span>(<span class="hljs-params">n</span>):<br>    count = <span class="hljs-number">1</span><br>    <span class="hljs-keyword">while</span> (n != <span class="hljs-number">1</span>):<br>        <span class="hljs-built_in">print</span>(n)<br>        <span class="hljs-keyword">if</span> (n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>):<br>            n = n // <span class="hljs-number">2</span><br>        <span class="hljs-keyword">else</span>:<br>            n = n * <span class="hljs-number">3</span> + <span class="hljs-number">1</span><br>        count += <span class="hljs-number">1</span><br>    <span class="hljs-built_in">print</span>(n)<br>    <span class="hljs-keyword">return</span> count<br></code></pre></td></tr></tbody></table></figure>
 
                 
               </div>
@@ -356,7 +358,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
+  <a href="/categories/Project/" class="category-chain-item">Project</a>
   
   
 
@@ -371,7 +373,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Zephyr/">#Zephyr</a>
+        <a href="/tags/CS61A/">#CS61A</a>
       
     </div>
   
@@ -385,9 +387,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/12/25/Note/Zephyr/23-12-21_Pinctrl/" title="Zephyr -- Pinctrl Subsystem">
+                      <a href="/2024/01/22/Project/cs61a/Week2/" title="CS61A Week2">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Zephyr -- Pinctrl Subsystem</span>
+                        <span class="hidden-mobile">CS61A Week2</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -395,8 +397,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/12/15/Note/Zephyr/23-12-18_SPI/" title="Zephyr -- SPI framework">
-                        <span class="hidden-mobile">Zephyr -- SPI framework</span>
+                      <a href="/2023/12/30/Project/xv6/xv6_lab1/" title="xv6_lab1 Unix utilities">
+                        <span class="hidden-mobile">xv6_lab1 Unix utilities</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

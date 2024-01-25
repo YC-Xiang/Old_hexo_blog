@@ -24,7 +24,7 @@
 <meta property="og:description" content="2.6 Code: starting xv6, the first process and system call启动代码:entry.S 为每个CPU设置堆栈，然后跳进start.c的start函数。 123456789101112131415161718192021  # qemu -kernel loads the kernel at 0x80000000        # and caus">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-01-04T12:57:28.000Z">
-<meta property="article:modified_time" content="2024-01-09T01:07:05.340Z">
+<meta property="article:modified_time" content="2024-01-25T01:34:23.084Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="xv6">
 <meta name="twitter:card" content="summary_large_image">
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k words
+          1.5k words
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          10 mins
+          13 mins
         
       </span>
     
@@ -314,7 +314,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年1月9日 上午
+                    本文最后更新于：2024年1月25日 上午
                   
                 
               </p>
@@ -347,6 +347,9 @@
 <figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># exec(init, argv)</span><br>.globl start<br><span class="hljs-section">start:</span><br>        la a0, init<br>        la a1, argv<br>        li a7, SYS_exec<br>        ecall<br><br></code></pre></td></tr></tbody></table></figure>
 
 <p>最终在<code>init.c</code>中调用<code>fork()</code>在子进程中执行shell进程<code>exec("sh", argv);</code>,父进程则进入死循环。</p>
+<h2 id="4-3-Code-Calling-system-calls"><a href="#4-3-Code-Calling-system-calls" class="headerlink" title="4.3 Code: Calling system calls"></a>4.3 Code: Calling system calls</h2><p><code>initcode.S</code> 把执行<code>exec</code>的参数存放在<code>a0</code>,<code>a1</code>寄存器中, 把system call编号存在<code>a7</code>寄存器中。随后<code>ecall</code>指令会trap into kernel, 导致进入<code>uservec</code>和<code>usertrap</code>函数, 最后调用到<code>sys_exec</code>函数。</p>
+<h2 id="4-4-Code-System-call-arguments"><a href="#4-4-Code-System-call-arguments" class="headerlink" title="4.4 Code: System call arguments"></a>4.4 Code: System call arguments</h2><p>User space通过系统调用进入kernel space, 参数保存在current process当前进程的trap frame中。<br>比如<code>exit(0)</code>, 0会被保存到<code>a0</code>寄存器，随后会被kernel保存到<code>p-&gt;trapframe-&gt;a0</code>。</p>
+<p><code>argint</code>, <code>argaddr</code>, <code>argfd</code>函数从当前进程的trap frame中读取传入的参数。</p>
 
                 
               </div>
