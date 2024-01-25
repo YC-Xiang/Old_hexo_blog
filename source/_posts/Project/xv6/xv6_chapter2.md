@@ -1,6 +1,6 @@
 ---
 title: xv6_chapter2 Operating system organization
-date: 2023-1-4 20:57:28
+date: 2024-1-4 20:57:28
 tags:
 - xv6
 categories:
