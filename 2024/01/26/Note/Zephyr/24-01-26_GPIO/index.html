@@ -16,26 +16,24 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Device TreePinctrl controller节点： 支持的属性可以查阅&#x2F;dts&#x2F;bindings&#x2F;pinctrl&#x2F;pincfg-node.yaml，支持配置上下拉，驱动能力等等。当设备节点调用perip0_default的时候，group1~N都会被apply。 12345678910111213141516171819&#x2F;* board-pinctrl.dtsi *&#x2F;#include">
+    <meta name="description" content="Device Treedts&#x2F;binding&#x2F;gpio&#x2F;gpio-controller.yaml描述了设备树中支持的属性。 gpio-controller节点：其中gpio-controller和gpio-cells两个属性是必须的。前者表示gpio controller节点，后者表示其他节点使用gpio specifier需要几个item来描述。 12345678gpio: gpio@0x400">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Zephyr -- Pinctrl Subsystem">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/12/25/Note/Zephyr/23-12-21_Pinctrl/index.html">
+<meta property="og:title" content="Zephyr -- GPIO Subsystem">
+<meta property="og:url" content="https://yc-xiang.github.io/2024/01/26/Note/Zephyr/24-01-26_GPIO/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Device TreePinctrl controller节点： 支持的属性可以查阅&#x2F;dts&#x2F;bindings&#x2F;pinctrl&#x2F;pincfg-node.yaml，支持配置上下拉，驱动能力等等。当设备节点调用perip0_default的时候，group1~N都会被apply。 12345678910111213141516171819&#x2F;* board-pinctrl.dtsi *&#x2F;#include">
+<meta property="og:description" content="Device Treedts&#x2F;binding&#x2F;gpio&#x2F;gpio-controller.yaml描述了设备树中支持的属性。 gpio-controller节点：其中gpio-controller和gpio-cells两个属性是必须的。前者表示gpio controller节点，后者表示其他节点使用gpio specifier需要几个item来描述。 12345678gpio: gpio@0x400">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/pinctrl.png">
-<meta property="article:published_time" content="2023-12-25T01:45:28.000Z">
-<meta property="article:modified_time" content="2024-01-26T02:24:48.338Z">
+<meta property="article:published_time" content="2024-01-26T01:30:28.000Z">
+<meta property="article:modified_time" content="2024-01-26T03:55:33.706Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="Zephyr">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/pinctrl.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Zephyr -- Pinctrl Subsystem - Yucheng&#39;s Blog</title>
+  <title>Zephyr -- GPIO Subsystem - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -231,7 +229,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Zephyr -- Pinctrl Subsystem</span>
+            <span id="subtitle">Zephyr -- GPIO Subsystem</span>
           
         </div>
 
@@ -242,8 +240,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-12-25 09:45" pubdate>
-          2023年12月25日 上午
+        <time datetime="2024-01-26 09:30" pubdate>
+          2024年1月26日 上午
         </time>
       </span>
     
@@ -254,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.5k words
+          2.8k words
         
       </span>
     
@@ -265,7 +263,7 @@
         
         
         
-          30 mins
+          24 mins
         
       </span>
     
@@ -311,12 +309,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Zephyr -- Pinctrl Subsystem</h1>
+            <h1 style="display: none">Zephyr -- GPIO Subsystem</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年1月26日 上午
+                    本文最后更新于：2024年1月26日 中午
                   
                 
               </p>
@@ -324,46 +322,25 @@
             
               <div class="markdown-body">
                 
-                <h2 id="Device-Tree"><a href="#Device-Tree" class="headerlink" title="Device Tree"></a>Device Tree</h2><p>Pinctrl controller节点：</p>
-<p>支持的属性可以查阅<code>/dts/bindings/pinctrl/pincfg-node.yaml</code>，支持配置上下拉，驱动能力等等。<br>当设备节点调用<code>perip0_default</code>的时候，<code>group1~N</code>都会被apply。</p>
-<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* board-pinctrl.dtsi */</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vnd-soc-pkgxx.h&gt;</span></span><br><br>&amp;pinctrl {<br>    <span class="hljs-comment">/* Node with pin configuration for default state */</span><br>    periph0_default: periph0_default {<br>        group1 {<br>            <span class="hljs-comment">/* Mappings: PERIPH0_SIGA -&gt; PX0, PERIPH0_SIGC -&gt; PZ1 */</span><br>            pinmux = &lt;PERIPH0_SIGA_PX0&gt;, &lt;PERIPH0_SIGC_PZ1&gt;;<br>            <span class="hljs-comment">/* Pins PX0 and PZ1 have pull-up enabled */</span><br>            bias-pull-up;<br>        };<br>        ...<br>        groupN {<br>            <span class="hljs-comment">/* Mappings: PERIPH0_SIGB -&gt; PY7 */</span><br>            pinmux = &lt;PERIPH0_SIGB_PY7&gt;;<br>        };<br>    };<br>};<br></code></pre></td></tr></tbody></table></figure>
+                <h1 id="Device-Tree"><a href="#Device-Tree" class="headerlink" title="Device Tree"></a>Device Tree</h1><p><code>dts/binding/gpio/gpio-controller.yaml</code>描述了设备树中支持的属性。</p>
+<p>gpio-controller节点：<br>其中<code>gpio-controller</code>和<code>gpio-cells</code>两个属性是必须的。<br>前者表示gpio controller节点，后者表示其他节点使用gpio specifier需要几个item来描述。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c">gpio: gpio@<span class="hljs-number">0x400ff000</span> {<br>  compatible = <span class="hljs-string">"nxp, kinetis-gpio"</span>;<br>  status = <span class="hljs-string">"disabled"</span>;<br>  reg = &lt;<span class="hljs-number">0x400ff000</span> <span class="hljs-number">0x40</span>&gt;;<br>  interrupts = &lt;<span class="hljs-number">59</span> <span class="hljs-number">2</span>&gt;;<br>  gpio-controller;<br>  <span class="hljs-meta">#gpio-cells = <span class="hljs-string">&lt;2&gt;</span>;</span><br>};<br></code></pre></td></tr></tbody></table></figure>
 
-<p>使用pinctrl的设备节点：</p>
-<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><br>&amp;periph0 {<br>    pinctrl<span class="hljs-number">-0</span> = &lt;&amp;periph0_default&gt;;<br>    pinctrl-names = <span class="hljs-string">"default"</span>;<br>};<br></code></pre></td></tr></tbody></table></figure>
+<p>consumer节点:</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">xxx-gpios/gpios = &lt;&amp;&lt;gpio-controller节点&gt; &lt;gpio_number&gt; &lt;配置属性&gt;&gt;<br>xxx-gpios = &lt;&amp;gpio0 <span class="hljs-number">5</span> (GPIO_PULL_UP | GPIO_ACTIVE_LOW)&gt;,<br>    &lt;&amp;gpio0 <span class="hljs-number">6</span> (GPIO_PULL_DOWN | GPIO_ACTIVE_LOW)&gt;;<br></code></pre></td></tr></tbody></table></figure>
 
-<p>可以在pinctrl controller下面的pinctrl配置节点前加上<code>/omit-if-no-ref/</code>，表示这个节点没被引用的话会被丢弃，不会被解析到C头文件中。</p>
-<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">&amp;pinctrl {<br>    /omit-<span class="hljs-keyword">if</span>-no-ref/ periph0_siga_px0_default: periph0_siga_px0_default {<br>        pinmux = &lt;VNDSOC_PIN(X, <span class="hljs-number">0</span>, MUX0)&gt;;<br>    };<br>};<br></code></pre></td></tr></tbody></table></figure>
+<p>配置属性可在<code>include/zephyr/dt-bindings/gpio/gpio.h</code>中查找。</p>
+<h1 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a>Consumer</h1><p>从设备树获取的gpio信息会保存到<code>gpio_dt_spec</code>结构体。包括gpio controller, pin number, config flag。对应上面device tree中consumer节点的node。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">gpio_dt_spec</span> {</span><br>  <span class="hljs-comment">/** GPIO device controlling the pin */</span><br>  <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">device</span> *<span class="hljs-title">port</span>;</span><br>  <span class="hljs-comment">/** The pin's number on the device */</span><br>  <span class="hljs-type">gpio_pin_t</span> pin;<br>  <span class="hljs-comment">/** The pin's configuration flags as specified in devicetree */</span><br>  <span class="hljs-type">gpio_dt_flags_t</span> dt_flags;<br>};<br></code></pre></td></tr></tbody></table></figure>
 
-<h2 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a>Consumer</h2><p>Device driver如何使用pinctrl配置引脚function:</p>
-<p>以<code>i2c_dw.c</code>为例，<br>通过<code>PINCTRL_DT_INST_DEFINE(n)</code>, 创建该device对应的<code>pinctrl_dev_config</code>结构体。<br>通过<code>PINCTRL_DT_INST_DEV_CONFIG_GET(n)</code> 得到该<code>pinctrl_dev_config</code>结构体。</p>
-<p>随后在init函数中调用<code>pinctrl_apply_state(rom-&gt;pcfg, PINCTRL_STATE_DEFAULT);</code>选择apply default的pinctrl配置。</p>
-<p>如下：</p>
-<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> DT_DRV_COMPAT mydev</span><br>...<br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;zephyr/drivers/pinctrl.h&gt;</span></span><br>...<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">mydev_config</span> {</span><br>    ...<br>    <span class="hljs-comment">/* Reference to mydev pinctrl configuration */</span><br>    <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_dev_config</span> *<span class="hljs-title">pcfg</span>;</span><br>    ...<br>};<br>...<br><span class="hljs-type">static</span> <span class="hljs-type">int</span> <span class="hljs-title function_">mydev_init</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *dev)</span><br>{<br>    <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">mydev_config</span> *<span class="hljs-title">config</span> =</span> dev-&gt;config;<br>    <span class="hljs-type">int</span> ret;<br>    ...<br>    <span class="hljs-comment">/* Select "default" state at initialization time */</span><br>    ret = pinctrl_apply_state(config-&gt;pcfg, PINCTRL_STATE_DEFAULT);<br>    <span class="hljs-keyword">if</span> (ret &lt; <span class="hljs-number">0</span>) {<br>        <span class="hljs-keyword">return</span> ret;<br>    }<br>    ...<br>}<br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MYDEV_DEFINE(i)                                                    \</span><br><span class="hljs-meta">    <span class="hljs-comment">/* Define all pinctrl configuration for instance "i" */</span>                \</span><br><span class="hljs-meta">    PINCTRL_DT_INST_DEFINE(i);                                             \</span><br><span class="hljs-meta">    ...                                                                    \</span><br><span class="hljs-meta">    static const struct mydev_config mydev_config_##i = {                  \</span><br><span class="hljs-meta">        ...                                                                \</span><br><span class="hljs-meta">        <span class="hljs-comment">/* Keep a ref. to the pinctrl configuration for instance "i" */</span>    \</span><br><span class="hljs-meta">        .pcfg = PINCTRL_DT_INST_DEV_CONFIG_GET(i),                         \</span><br><span class="hljs-meta">        ...                                                                \</span><br><span class="hljs-meta">    };                                                                     \</span><br><span class="hljs-meta">    ...                                                                    \</span><br><span class="hljs-meta">                                                                           \</span><br><span class="hljs-meta">    DEVICE_DT_INST_DEFINE(i, mydev_init, NULL, &amp;mydev_data##i,             \</span><br><span class="hljs-meta">                          &amp;mydev_config##i, ...);</span><br><br>DT_INST_FOREACH_STATUS_OKAY(MYDEV_DEFINE)<br></code></pre></td></tr></tbody></table></figure>
+<p>可以通过<code>GPIO_DT_SPEC_GET_BY_IDX()</code>或其他一系列变种函数解析dts获取<code>gpio_dt_spec</code>结构体。<br><code>node_id</code>对应consumer的node，<code>prop</code>为<code>xxx-gpios</code>, <code>idx</code>为<code>xxx-gpios</code>下的第x条属性。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> GPIO_DT_SPEC_GET_BY_IDX(node_id, prop, idx)             \</span><br><span class="hljs-meta">  {								       \</span><br><span class="hljs-meta">    .port = DEVICE_DT_GET(DT_GPIO_CTLR_BY_IDX(node_id, prop, idx)),\</span><br><span class="hljs-meta">    .pin = DT_GPIO_PIN_BY_IDX(node_id, prop, idx),		       \</span><br><span class="hljs-meta">    .dt_flags = DT_GPIO_FLAGS_BY_IDX(node_id, prop, idx),	       \</span><br><span class="hljs-meta">  }</span><br></code></pre></td></tr></tbody></table></figure>
 
-<p>分析下<code>PINCTRL_DT_DEFINE</code>这个宏，</p>
-<figure class="highlight c"><figcaption><span>{.line-numbers}</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> PINCTRL_DT_DEFINE(node_id)                 \</span><br><span class="hljs-meta">  LISTIFY(DT_NUM_PINCTRL_STATES(node_id),				       \</span><br><span class="hljs-meta">         Z_PINCTRL_STATE_PINS_DEFINE, (;), node_id);	       \</span><br><span class="hljs-meta">  Z_PINCTRL_STATES_DEFINE(node_id)				       \</span><br><span class="hljs-meta">  Z_PINCTRL_DEV_CONFIG_STATIC Z_PINCTRL_DEV_CONFIG_CONST		       \</span><br><span class="hljs-meta">  struct pinctrl_dev_config Z_PINCTRL_DEV_CONFIG_NAME(node_id) =	       \</span><br><span class="hljs-meta">  Z_PINCTRL_DEV_CONFIG_INIT(node_id)</span><br></code></pre></td></tr></tbody></table></figure>
+<p>得到<code>gpio_dt_spec</code>结构体后，就可以调用一系列函数来进行GPIO操作了。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 判断gpio controller是否ready</span><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">bool</span> <span class="hljs-title function_">gpio_is_ready_dt</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> gpio_dt_spec *spec)</span>;<br><span class="hljs-comment">/** 设置GPIO中断, 可传入的gpio_flags_t有, 具体含义参考drivers/gpio.h:</span><br><span class="hljs-comment"> * GPIO_INT_EDGE_RISING</span><br><span class="hljs-comment"> * GPIO_INT_EDGE_FALLING</span><br><span class="hljs-comment"> * GPIO_INT_EDGE_BOTH</span><br><span class="hljs-comment"> * GPIO_INT_LEVEL_LOW</span><br><span class="hljs-comment"> * GPIO_INT_LEVEL_HIGH</span><br><span class="hljs-comment"> * ...</span><br><span class="hljs-comment"> **/</span><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_pin_interrupt_configure_dt</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> gpio_dt_spec *spec,</span><br><span class="hljs-params">              <span class="hljs-type">gpio_flags_t</span> flags)</span>;<br><span class="hljs-comment">//</span><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_pin_configure_dt</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> gpio_dt_spec *spec,</span><br><span class="hljs-params">          <span class="hljs-type">gpio_flags_t</span> extra_flags)</span><br></code></pre></td></tr></tbody></table></figure>
 
-<br>
-
-<p>2~3行针对dts某个device节点，有N个<code>pinctrl-&lt;N&gt;</code>就调用<code>Z_PINCTRL_STATE_PINS_DEFINE</code>函数，创建包含N个<code>pinctrl_soc_pin_t</code>结构体的数组, 每个结构体包含该<code>pinctrl-&lt;N&gt;</code>对应pinctrl controller节点所需要的pins。该结构体数组的具体创建过程由<code>Z_PINCTRL_STATE_PINS_INIT</code>决定，该宏需要不同厂商在<code>pinctrl_soc.h</code>中定义。</p>
-<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_soc_pin_t</span></span><br><span class="hljs-class">{</span><br>  <span class="hljs-comment">// need to define in `pinctrl_soc.h`</span><br>}<br></code></pre></td></tr></tbody></table></figure>
-
-<br>
-
-<p>第4行，根据N个<code>pinctrl-&lt;N&gt;</code>创建<code>pinctrl_state</code>结构体数组，从<code>devicetree_generated.h</code>中获取结构体信息。</p>
-<p>每个<code>pinctrl_state</code>结构体：</p>
-<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_state</span> {</span><br>  <span class="hljs-type">const</span> <span class="hljs-type">pinctrl_soc_pin_t</span> *pins; <span class="hljs-comment">// 对应上面2~3行创建的`pinctrl_soc_pin_t`结构体数组。</span><br>  <span class="hljs-type">uint8_t</span> pin_cnt; <span class="hljs-comment">// 该state包含多少个pin。</span><br>  <span class="hljs-type">uint8_t</span> id = PINCTRL_STATE_XXX; <span class="hljs-comment">// XXX可以是DEFAULT,SLEEP或自定义属性。</span><br>};<br></code></pre></td></tr></tbody></table></figure>
-
-<br>
-
-<p>第5~7行，初始化一个<code>pinctrl_dev_config</code>结构体。</p>
-<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_dev_config</span> {</span><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(CONFIG_PINCTRL_STORE_REG) || defined(__DOXYGEN__)</span><br>  <span class="hljs-type">uintptr_t</span> reg; <span class="hljs-comment">// 该device的reg地址</span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>  <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_state</span> *<span class="hljs-title">states</span>;</span> <span class="hljs-comment">// 即上面的`pinctrl_state`结构体数组。</span><br>  <span class="hljs-type">uint8_t</span> state_cnt; <span class="hljs-comment">// 包含的state数量。</span><br>};<br></code></pre></td></tr></tbody></table></figure>
-
-<br>
-
-<p>结构体关系如下, 其中<br><code>pinctrl_dev_config</code> 是每个device拥有一个。<br><code>pinctrl_state</code> 对应每个device的一个pinctrl state, 即dts中的<code>pinctrl-&lt;N&gt;</code>。<br><code>pinctrl_soc_pin_t</code> 对应一个pin。<br><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/pinctrl.png" srcset="/img/loading.gif" lazyload alt="Pinctrl 结构体"></p>
-<h2 id="Provider"><a href="#Provider" class="headerlink" title="Provider"></a>Provider</h2><p>Pinctrl Driver实现:<br>主要需要实现回调函数<code>pinctrl_configure_pins()</code></p>
-<p>添加<code>pinctrl_soc.h</code>, 一般路径为<code>soc/&lt;arch&gt;/&lt;vendor&gt;/&lt;board&gt;/...</code><br>在其中定义<code>pinctrl_soc_pin_t</code> 结构体，<code>Z_PINCTRL_STATE_PINS_INIT</code>宏，该宏接收两个参数，设备树node identifier和property name(pinctrl-N)。</p>
+<h1 id="Provider"><a href="#Provider" class="headerlink" title="Provider"></a>Provider</h1><p>需要实现的API:</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c">__subsystem <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">gpio_driver_api</span> {</span><br>  <span class="hljs-type">int</span> (*pin_configure)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port, <span class="hljs-type">gpio_pin_t</span> pin,<br>           <span class="hljs-type">gpio_flags_t</span> flags);<br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> CONFIG_GPIO_GET_CONFIG</span><br>  <span class="hljs-type">int</span> (*pin_get_config)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port, <span class="hljs-type">gpio_pin_t</span> pin,<br>            <span class="hljs-type">gpio_flags_t</span> *flags);<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>  <span class="hljs-type">int</span> (*port_get_raw)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,<br>          <span class="hljs-type">gpio_port_value_t</span> *value);<br>  <span class="hljs-type">int</span> (*port_set_masked_raw)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,<br>           <span class="hljs-type">gpio_port_pins_t</span> mask,<br>           <span class="hljs-type">gpio_port_value_t</span> value);<br>  <span class="hljs-type">int</span> (*port_set_bits_raw)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,<br>         <span class="hljs-type">gpio_port_pins_t</span> pins);<br>  <span class="hljs-type">int</span> (*port_clear_bits_raw)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,<br>           <span class="hljs-type">gpio_port_pins_t</span> pins);<br>  <span class="hljs-type">int</span> (*port_toggle_bits)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,<br>        <span class="hljs-type">gpio_port_pins_t</span> pins);<br>  <span class="hljs-type">int</span> (*pin_interrupt_configure)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,<br>               <span class="hljs-type">gpio_pin_t</span> pin,<br>               <span class="hljs-keyword">enum</span> gpio_int_mode, <span class="hljs-keyword">enum</span> gpio_int_trig);<br>  <span class="hljs-type">int</span> (*manage_callback)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,<br>             <span class="hljs-keyword">struct</span> gpio_callback *cb,<br>             <span class="hljs-type">bool</span> <span class="hljs-built_in">set</span>);<br>  <span class="hljs-type">uint32_t</span> (*get_pending_int)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *dev);<br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> CONFIG_GPIO_GET_DIRECTION</span><br>  <span class="hljs-type">int</span> (*port_get_direction)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port, <span class="hljs-type">gpio_port_pins_t</span> <span class="hljs-built_in">map</span>,<br>          <span class="hljs-type">gpio_port_pins_t</span> *inputs, <span class="hljs-type">gpio_port_pins_t</span> *outputs);<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">/* CONFIG_GPIO_GET_DIRECTION */</span></span><br>};<br></code></pre></td></tr></tbody></table></figure>
 
                 
               </div>
@@ -411,18 +388,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/12/30/Project/xv6/xv6_chapter1/" title="xv6_chapter1 Operating system interfaces">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">xv6_chapter1 Operating system interfaces</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/12/18/Note/Zephyr/23-12-18_UserMode/" title="Zephyr -- System  Call">
-                        <span class="hidden-mobile">Zephyr -- System  Call</span>
+                      <a href="/2024/01/24/Misc/%E7%BB%88%E7%AB%AF%E5%BC%80%E5%90%AF%E4%BB%A3%E7%90%86/" title="Clash如何开启终端代理">
+                        <span class="hidden-mobile">Clash如何开启终端代理</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

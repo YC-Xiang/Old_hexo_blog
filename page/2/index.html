@@ -258,6 +258,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/12/30/Project/xv6/xv6_chapter1/" target="_self">
+          xv6_chapter1 Operating system interfaces
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/12/30/Project/xv6/xv6_chapter1/" target="_self">
+        <div>
+          XV6 实现的所有系统调用： 123456789101112131415161718192021int fork() //Create a process, return child’s PID.void exit(int status) //Terminate the current process; status reported to wait(). No return.int wait(i
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-12-30 15:12" pubdate>
+              2023-12-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/xv6/">#xv6</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/12/25/Note/Zephyr/23-12-21_Pinctrl/" target="_self">
           Zephyr -- Pinctrl Subsystem
         </a>
@@ -266,7 +327,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/12/25/Note/Zephyr/23-12-21_Pinctrl/" target="_self">
         <div>
-          设备树Pinctrl controller节点： 支持的属性可以查阅/dts/bindings/pinctrl/pincfg-node.yaml，支持配置上下拉，驱动能力等等。当设备节点调用perip0_default的时候，group1~N都会被apply。 12345678910111213141516171819/* board-pinctrl.dtsi */#include &lt;vnd
+          Device TreePinctrl controller节点： 支持的属性可以查阅/dts/bindings/pinctrl/pincfg-node.yaml，支持配置上下拉，驱动能力等等。当设备节点调用perip0_default的时候，group1~N都会被apply。 12345678910111213141516171819/* board-pinctrl.dtsi */#include
         </div>
       </a>
 
@@ -388,7 +449,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/12/15/Note/Zephyr/23-12-18_SPI/" target="_self">
         <div>
-          应用层方法1： 设备树API 参考zephyr/tests/drivers/spi/spi_loopback/src/spi.c 1234567891011121314151617181920// 获取spi device node id#define SPI_DEV  DT_COMPAT_GET_ANY_STATUS_OKAY(test_spi_loopback) //这里注意是spi devi
+          DeviceTree1234567891011121314151617181920212223242526spi0: spi@f0020000 {  compatible = "snps,designware-spi";  #address-cells = &lt;1&gt;;  #size-cells = &lt;0&gt;;  reg = &lt;0xf0020000 0x100&gt;;
         </div>
       </a>
 
@@ -449,7 +510,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/12/15/Note/Zephyr/23-12-15_I2C/" target="_self">
         <div>
-          应用层方法1： 设备树API 1234567891011121314// 获取i2c device node id#define I2C_DEV  DT_COMPAT_GET_ANY_STATUS_OKAY(test_i2c) // i2c deivce的compatible，不是i2c bus// 通过I2C_DT_SPEC_GET宏从设备树获得i2c_dt_spec结构体struct i2c_
+          Device TreeConsumer(应用层和其他driver如何调用i2c接口)方法1： 设备树API 1234567891011121314// 获取i2c device node id#define I2C_DEV  DT_COMPAT_GET_ANY_STATUS_OKAY(test_i2c) // i2c deivce的compatible，不是i2c bus// 通过I2C_DT_S
         </div>
       </a>
 
@@ -794,67 +855,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Zephyr/">#Zephyr</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/10/17/Project/ICS/PA0/" target="_self">
-          ICS2022 PA0
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/10/17/Project/ICS/PA0/" target="_self">
-        <div>
-          1. 环境配置1.1 虚拟机安装网络选择桥接网络，复制物理状态 1.2 软件安装1234567891011apt-get install vim # vimapt-get install openssh-server # sshapt-get install build-essential    # build-essential packages, include binary utilitie
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-10-17 16:47" pubdate>
-              2023-10-17
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Project/" class="category-chain-item">Project</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/ICS/">#ICS</a>
             
           </div>
         
