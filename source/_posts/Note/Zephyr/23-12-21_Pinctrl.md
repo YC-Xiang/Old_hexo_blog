@@ -7,7 +7,7 @@ categories:
 - Zephyr OS
 ---
 
-## 设备树
+## Device Tree
 
 Pinctrl controller节点：
 
@@ -56,7 +56,9 @@ Pinctrl controller节点：
 };
 ```
 
-## Device driver使用Pinctrl
+## Consumer
+
+Device driver如何使用pinctrl配置引脚function:
 
 以`i2c_dw.c`为例，
 通过`PINCTRL_DT_INST_DEFINE(n)`, 创建该device对应的`pinctrl_dev_config`结构体。
@@ -168,9 +170,10 @@ struct pinctrl_dev_config {
 `pinctrl_soc_pin_t` 对应一个pin。
 ![Pinctrl 结构体](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/pinctrl.png)
 
-## Pinctrl Driver实现
+## Provider
 
-实现`pinctrl_configure_pins()`
+Pinctrl Driver实现:
+主要需要实现回调函数`pinctrl_configure_pins()`
 
 添加`pinctrl_soc.h`, 一般路径为`soc/<arch>/<vendor>/<board>/...`
 在其中定义`pinctrl_soc_pin_t` 结构体，`Z_PINCTRL_STATE_PINS_INIT`宏，该宏接收两个参数，设备树node identifier和property name(pinctrl-N)。
