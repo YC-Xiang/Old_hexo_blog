@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240124215308.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240124215223.png">
 <meta property="article:published_time" content="2024-01-24T12:47:28.000Z">
-<meta property="article:modified_time" content="2024-01-25T01:41:02.458Z">
+<meta property="article:modified_time" content="2024-01-30T03:56:29.163Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="Misc">
 <meta name="twitter:card" content="summary_large_image">
@@ -255,7 +255,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          941 words
+          1.1k words
         
       </span>
     
@@ -266,7 +266,7 @@
         
         
         
-          8 mins
+          9 mins
         
       </span>
     
@@ -317,7 +317,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年1月25日 上午
+                    本文最后更新于：2024年1月30日 中午
                   
                 
               </p>
@@ -339,6 +339,9 @@
 
 <p>git 有两种协议，一种是https，还有一种是ssh。</p>
 <p>如果是用https，设置终端代理即可，参考上面MacOS&amp;Linux的配置方法。如果是ssh，需要单独配置代理。</p>
+<h3 id="SSH-通过443端口连接github"><a href="#SSH-通过443端口连接github" class="headerlink" title="SSH 通过443端口连接github"></a>SSH 通过443端口连接github</h3><p>有时候ssh的默认端口22被封了, 但443端口仍然可以访问。<br>只需要修改<code>~/.ssh/config</code>：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">Host github.com<br>  HostName ssh.github.com<br>  User git<br>  Port <span class="hljs-number">443</span><br></code></pre></td></tr></tbody></table></figure>
+
 <h2 id="VMware虚拟机开启终端代理"><a href="#VMware虚拟机开启终端代理" class="headerlink" title="VMware虚拟机开启终端代理"></a>VMware虚拟机开启终端代理</h2><p>参考:<a target="_blank" rel="noopener" href="https://www.cnblogs.com/bisa/p/17397950.html">https://www.cnblogs.com/bisa/p/17397950.html</a></p>
 <p>Clash打开允许局域网连接。</p>
 <p>虚拟机网络模式选择NAT模式。</p>
@@ -397,9 +400,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/01/26/Note/Zephyr/24-01-26_GPIO/" title="Zephyr -- GPIO Subsystem">
+                      <a href="/2024/01/26/Note/Zephyr/24-01-29_Interrupt/" title="Zephyr -- Interrupt Subsystem">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Zephyr -- GPIO Subsystem</span>
+                        <span class="hidden-mobile">Zephyr -- Interrupt Subsystem</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     

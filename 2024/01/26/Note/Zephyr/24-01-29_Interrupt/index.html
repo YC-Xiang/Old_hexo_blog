@@ -16,24 +16,24 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG&#x3D;trace # 其他选项可以看Makefilemake clean # rm build&#x2F;make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 退出 qemu 的方法 如果是正常推出，uC">
+    <meta name="description" content="Overviewhttps:&#x2F;&#x2F;docs.zephyrproject.org&#x2F;latest&#x2F;kernel&#x2F;services&#x2F;interrupts.html Multi-level Interrupt Handling如果要支持中断嵌套，需要打开CONFIG_MULTI_LEVEL_INTERRUPTS。CONFIG_2ND_LEVEL_INTERRUPTS, CONFIG_3RD_LEVEL_IN">
 <meta property="og:type" content="article">
-<meta property="og:title" content="uCore_Chapter1 应用程序与基本执行环境">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/04/25/Project/rCore_uCore/uCore_Chapter1/index.html">
+<meta property="og:title" content="Zephyr -- Interrupt Subsystem">
+<meta property="og:url" content="https://yc-xiang.github.io/2024/01/26/Note/Zephyr/24-01-29_Interrupt/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG&#x3D;trace # 其他选项可以看Makefilemake clean # rm build&#x2F;make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 退出 qemu 的方法 如果是正常推出，uC">
+<meta property="og:description" content="Overviewhttps:&#x2F;&#x2F;docs.zephyrproject.org&#x2F;latest&#x2F;kernel&#x2F;services&#x2F;interrupts.html Multi-level Interrupt Handling如果要支持中断嵌套，需要打开CONFIG_MULTI_LEVEL_INTERRUPTS。CONFIG_2ND_LEVEL_INTERRUPTS, CONFIG_3RD_LEVEL_IN">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-25T15:11:28.000Z">
-<meta property="article:modified_time" content="2023-09-05T07:28:26.945Z">
+<meta property="article:published_time" content="2024-01-26T01:30:28.000Z">
+<meta property="article:modified_time" content="2024-01-29T09:55:57.563Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="uCore">
+<meta property="article:tag" content="Zephyr">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>uCore_Chapter1 应用程序与基本执行环境 - Yucheng&#39;s Blog</title>
+  <title>Zephyr -- Interrupt Subsystem - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +229,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">uCore_Chapter1 应用程序与基本执行环境</span>
+            <span id="subtitle">Zephyr -- Interrupt Subsystem</span>
           
         </div>
 
@@ -240,8 +240,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-25 23:11" pubdate>
-          2023年4月25日 晚上
+        <time datetime="2024-01-26 09:30" pubdate>
+          2024年1月26日 上午
         </time>
       </span>
     
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k words
+          2.1k words
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          10 mins
+          18 mins
         
       </span>
     
@@ -309,12 +309,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">uCore_Chapter1 应用程序与基本执行环境</h1>
+            <h1 style="display: none">Zephyr -- Interrupt Subsystem</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月5日 下午
+                    本文最后更新于：2024年1月29日 下午
                   
                 
               </p>
@@ -322,21 +322,24 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h1><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">make build # 仅编译<br>make run # 编译+运行qemu<br>make run LOG=trace # 其他选项可以看Makefile<br>make clean # rm build/<br>make debug # 编译+运行gdb调试<br></code></pre></td></tr></tbody></table></figure>
+                <h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><p><a target="_blank" rel="noopener" href="https://docs.zephyrproject.org/latest/kernel/services/interrupts.html">https://docs.zephyrproject.org/latest/kernel/services/interrupts.html</a></p>
+<h2 id="Multi-level-Interrupt-Handling"><a href="#Multi-level-Interrupt-Handling" class="headerlink" title="Multi-level Interrupt Handling"></a>Multi-level Interrupt Handling</h2><p>如果要支持中断嵌套，需要打开<code>CONFIG_MULTI_LEVEL_INTERRUPTS</code>。<code>CONFIG_2ND_LEVEL_INTERRUPTS</code>, <code>CONFIG_3RD_LEVEL_INTERRUPTS</code>也需要根据硬件架构来选择是否打开。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">          <span class="hljs-number">9</span>         <span class="hljs-number">4</span>   <span class="hljs-number">2</span>   <span class="hljs-number">0</span><br>    _ _ _ _ _ _ _ _ _ _ _ _ _         (LEVEL <span class="hljs-number">1</span>)<br>  <span class="hljs-number">5</span>   <span class="hljs-number">3</span>   |         A   |     <span class="hljs-number">2</span><br>_ _ _ _ _ _ _         _ _ _ _ _ _ _   (LEVEL <span class="hljs-number">2</span>)<br>  |   C                       B<br>_ _ _ _ _ _ _                         (LEVEL <span class="hljs-number">3</span>)<br>        D<br></code></pre></td></tr></tbody></table></figure>
 
-<p>每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。</p>
-<p><strong>退出 qemu 的方法</strong></p>
-<p>如果是正常推出，uCore 会自动关闭 qemu，但如果 os 跑飞了，我们不能通过 <code>Ctrl + C</code> 来推出。此时可以先按下 <code>Ctrl+A</code> ，再按下 <code>X</code> 来退出 Qemu。</p>
-<h1 id="ch1"><a href="#ch1" class="headerlink" title="ch1"></a>ch1</h1><h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// entry.S</span><br>_entry<br>    la sp, boot_stack_top <span class="hljs-comment">//设置堆栈</span><br>    call main<br><span class="hljs-comment">// main.c</span><br>  clean_bss();<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"hello wrold!\n"</span>);<br>    consputc();<br>      console_putchar(<span class="hljs-type">int</span> c);<br>        sbi_call(SBI_CONSOLE_PUTCHAR, c, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br></code></pre></td></tr></tbody></table></figure>
+<p>Level 1第一级中断控制器有12条interrupt lines, 其中第2条和第9条接到了Level2优先级更高的中断控制器。第4条上接了设备A。<br>Level 2有两个中断控制器，左边的第3条interrupt line接了设备C, 第5条接到Level3中断控制器。<br>右边的第二条接了设备B。<br>Level 3中断控制器上第2条interrupt line接到了设备D。</p>
+<p>因此各设备对应的interrupt numbers如下。其中Level 2之后的offset会+1, 因为0表示该级别不存在中断号。<br>设备A直接就是0x4对应Level 1 interrupt controller的第4条interrupt line。<br>设备B首先从Level 1 interrupt controller的第2条interrupt line找到level 2 interrupt controller, 再对应到Level 2 interrupt controller的第3条interrupt line。<br>设备C/D同理。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">A -&gt; <span class="hljs-number">0x00000004</span><br>B -&gt; <span class="hljs-number">0x00000302</span><br>C -&gt; <span class="hljs-number">0x00000409</span><br>D -&gt; <span class="hljs-number">0x00030609</span><br></code></pre></td></tr></tbody></table></figure>
 
-<p class="note note-danger">怎么用gdb调试？`file kernel`然后？</p>
+<h1 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h1><h2 id="Regular-ISR"><a href="#Regular-ISR" class="headerlink" title="Regular ISR"></a>Regular ISR</h2><p>Define irq: <code>IRQ_CONNECT(irq_p, priority_p, isr_p, isr_param_p, flags_p)</code><br>其中<code>irq_p</code>是中断号，<code>priority_p</code>是中断优先级，<code>isr_param_p</code>是传递给中断处理函数的参数，<code>flags_p</code>是中断flags。</p>
+<p>e.g.</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> GPIO_CFG_IRQ(idx, n)</span><br>  IRQ_CONNECT(DT_INST_IRQ_BY_IDX(n, idx, irq),<br>    COND_CODE_1(DT_INST_IRQ_HAS_CELL(n, priority),<br>    DT_INST_IRQ(n, priority), (<span class="hljs-number">0</span>)), gpio_altera_irq_handler,<br>    DEVICE_DT_INST_GET(n), <span class="hljs-number">0</span>);<br></code></pre></td></tr></tbody></table></figure>
 
-<h2 id="Makefile流程分析"><a href="#Makefile流程分析" class="headerlink" title="Makefile流程分析"></a>Makefile流程分析</h2><p>根据<code>make run </code>打印的信息：</p>
-<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">riscv64-unknown-elf-gcc -Wall -Werror -O -fno-omit-frame-pointer -ggdb -MD -mcmodel=medany -ffreestanding -fno-common -nostdlib -mno-relax -Ios -fno-stack-protector -D LOG_LEVEL_ERROR  -fno-pie -no-pie -c os/console.c -o build/os/console.o<br>... # 编译所有的.c文件成.o文件<br>riscv64-unknown-elf-ld -z max-page-size=4096 -T os/kernel.ld -o build/kernel build/os/console.o build/os/main.o build/os/sbi.o build/os/printf.o  build/os/entry.o build/os/link_app.o # 链接<br>riscv64-unknown-elf-objdump -S build/kernel &gt; build/kernel.asm<br>riscv64-unknown-elf-objdump -t build/kernel | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' &gt; build/kernel.sym<br>Build kernel done<br></code></pre></td></tr></tbody></table></figure>
-
-<p>比较熟悉的是<code>objdump -d</code> <code>objdump -D</code>将所有段都反汇编，而<code>-d</code>应该仅反汇编代码段。</p>
-<p><code>objdump -S</code>是在-d的基础上，代码段反汇编的同时，将反汇编代码与源代码交替显示，编译时需要使用<code>-g</code>参数，即需要调试信息。</p>
-<p><code>objdump -t</code>打印符号表。</p>
+<p>Enable irq: <code>irq_enable(irq)</code><br>其中<code>irq</code>是中断号。</p>
+<h2 id="Direct-ISR"><a href="#Direct-ISR" class="headerlink" title="Direct ISR"></a>Direct ISR</h2><p><code>IRQ_DIRECT_CONNECT(irq_p, priority_p, isr_p, flags_p)</code></p>
+<p>开销更少的ISR定义。如果打开了power management, 大部分时间设备处于idle状态，如果来了一个中断，所有的hardware需要resume，再进中断处理函数，这个耗时很长。可以通过Direct ISR解决。</p>
+<h2 id="Sharing-an-interrupt-line"><a href="#Sharing-an-interrupt-line" class="headerlink" title="Sharing an interrupt line"></a>Sharing an interrupt line</h2><p>打开<code>CONFIG_SHARED_INTERRUPTS</code></p>
+<p>一个中断号对应两个中断处理函数，两个函数都会进入，根据<code>IRQ_CONNECT</code>中传入isr的参数不同，通过软件处理来选择执行哪个函数（不需要的另一个函数，可以通过参数判断提前return）。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> MY_DEV_IRQ 24               <span class="hljs-comment">/* device uses INTID 24 */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MY_DEV_IRQ_PRIO 2           <span class="hljs-comment">/* device uses interrupt priority 2 */</span></span><br><span class="hljs-comment">/*  this argument may be anything */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MY_FST_ISR_ARG INT_TO_POINTER(1)</span><br><span class="hljs-comment">/*  this argument may be anything */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MY_SND_ISR_ARG INT_TO_POINTER(2)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MY_IRQ_FLAGS 0              <span class="hljs-comment">/* IRQ flags */</span></span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">my_first_isr</span><span class="hljs-params">(<span class="hljs-type">void</span> *arg)</span><br>{<br>   ... <span class="hljs-comment">/* some magic happens here */</span><br>}<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">my_second_isr</span><span class="hljs-params">(<span class="hljs-type">void</span> *arg)</span><br>{<br>   ... <span class="hljs-comment">/* even more magic happens here */</span><br>}<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">my_isr_installer</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>{<br>   ...<br>   IRQ_CONNECT(MY_DEV_IRQ, MY_DEV_IRQ_PRIO, my_first_isr, MY_FST_ISR_ARG, MY_IRQ_FLAGS);<br>   IRQ_CONNECT(MY_DEV_IRQ, MY_DEV_IRQ_PRIO, my_second_isr, MY_SND_ISR_ARG, MY_IRQ_FLAGS);<br>   ...<br>}<br></code></pre></td></tr></tbody></table></figure>
 
                 
               </div>
@@ -355,7 +358,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
   
   
 
@@ -370,7 +373,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/uCore/">#uCore</a>
+        <a href="/tags/Zephyr/">#Zephyr</a>
       
     </div>
   
@@ -384,9 +387,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/25/Project/rCore_uCore/uCore_Chapter2/" title="uCore_Chapter2 批处理系统">
+                      <a href="/2024/01/26/Note/Zephyr/24-01-26_GPIO/" title="Zephyr -- GPIO Subsystem">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">uCore_Chapter2 批处理系统</span>
+                        <span class="hidden-mobile">Zephyr -- GPIO Subsystem</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -394,8 +397,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/19/Misc/U-Boot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" title="U-Boot启动流程">
-                        <span class="hidden-mobile">U-Boot启动流程</span>
+                      <a href="/2024/01/24/Misc/%E7%BB%88%E7%AB%AF%E5%BC%80%E5%90%AF%E4%BB%A3%E7%90%86/" title="Clash如何开启终端代理">
+                        <span class="hidden-mobile">Clash如何开启终端代理</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

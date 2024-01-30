@@ -16,24 +16,27 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG&#x3D;trace # 其他选项可以看Makefilemake clean # rm build&#x2F;make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 退出 qemu 的方法 如果是正常推出，uC">
+    <meta name="description" content="Vector_table.S以arm cortex-M系列的启动流程为例，arch&#x2F;arm&#x2F;core&#x2F;cortex_m: vector_table.S: 定义了中断向量表_vector_table。其中arm cortex-M规定0x0地址存放栈的起始地址（栈顶）。0x4开始存放reset handler,…  没看到定义外部中断的地址  上电后跳转至z_arm_reset函数，进入reset.S">
 <meta property="og:type" content="article">
-<meta property="og:title" content="uCore_Chapter1 应用程序与基本执行环境">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/04/25/Project/rCore_uCore/uCore_Chapter1/index.html">
+<meta property="og:title" content="Zephyr -- Kernel Init">
+<meta property="og:url" content="https://yc-xiang.github.io/2024/01/30/Note/Zephyr/24-01-30_KernelInit/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Notes12345make build # 仅编译make run # 编译+运行qemumake run LOG&#x3D;trace # 其他选项可以看Makefilemake clean # rm build&#x2F;make debug # 编译+运行gdb调试  每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。 退出 qemu 的方法 如果是正常推出，uC">
+<meta property="og:description" content="Vector_table.S以arm cortex-M系列的启动流程为例，arch&#x2F;arm&#x2F;core&#x2F;cortex_m: vector_table.S: 定义了中断向量表_vector_table。其中arm cortex-M规定0x0地址存放栈的起始地址（栈顶）。0x4开始存放reset handler,…  没看到定义外部中断的地址  上电后跳转至z_arm_reset函数，进入reset.S">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-25T15:11:28.000Z">
-<meta property="article:modified_time" content="2023-09-05T07:28:26.945Z">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240130152631.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240130155822.png">
+<meta property="article:published_time" content="2024-01-30T06:14:28.000Z">
+<meta property="article:modified_time" content="2024-01-30T09:38:20.265Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="uCore">
+<meta property="article:tag" content="Zephyr">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240130152631.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>uCore_Chapter1 应用程序与基本执行环境 - Yucheng&#39;s Blog</title>
+  <title>Zephyr -- Kernel Init - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +232,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">uCore_Chapter1 应用程序与基本执行环境</span>
+            <span id="subtitle">Zephyr -- Kernel Init</span>
           
         </div>
 
@@ -240,8 +243,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-25 23:11" pubdate>
-          2023年4月25日 晚上
+        <time datetime="2024-01-30 14:14" pubdate>
+          2024年1月30日 下午
         </time>
       </span>
     
@@ -252,7 +255,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k words
+          3.4k words
         
       </span>
     
@@ -263,7 +266,7 @@
         
         
         
-          10 mins
+          29 mins
         
       </span>
     
@@ -309,12 +312,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">uCore_Chapter1 应用程序与基本执行环境</h1>
+            <h1 style="display: none">Zephyr -- Kernel Init</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月5日 下午
+                    本文最后更新于：2024年1月30日 下午
                   
                 
               </p>
@@ -322,21 +325,43 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h1><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">make build # 仅编译<br>make run # 编译+运行qemu<br>make run LOG=trace # 其他选项可以看Makefile<br>make clean # rm build/<br>make debug # 编译+运行gdb调试<br></code></pre></td></tr></tbody></table></figure>
+                <h2 id="Vector-table-S"><a href="#Vector-table-S" class="headerlink" title="Vector_table.S"></a>Vector_table.S</h2><p>以arm cortex-M系列的启动流程为例，<code>arch/arm/core/cortex_m</code>:</p>
+<p><code>vector_table.S</code>: 定义了中断向量表<code>_vector_table</code>。其中arm cortex-M规定0x0地址存放栈的起始地址（栈顶）。0x4开始存放reset handler,…<br><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240130152631.png" srcset="/img/loading.gif" lazyload></p>
+<blockquote>
+<p>没看到定义外部中断的地址</p>
+</blockquote>
+<p>上电后跳转至<code>z_arm_reset</code>函数，进入<code>reset.S</code>。</p>
+<h2 id="Reset-S"><a href="#Reset-S" class="headerlink" title="Reset.S"></a>Reset.S</h2><p>目前大部分的宏定义都没打开。这里关注下通用的一些流程：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">movs.n r0, #_EXC_IRQ_DEFAULT_PRIO<br>msr BASEPRI, r0<br></code></pre></td></tr></tbody></table></figure>
 
-<p>每次在make run之前，尽量先执行make clean以删除缓存，特别是在切换ch分支之后。</p>
-<p><strong>退出 qemu 的方法</strong></p>
-<p>如果是正常推出，uCore 会自动关闭 qemu，但如果 os 跑飞了，我们不能通过 <code>Ctrl + C</code> 来推出。此时可以先按下 <code>Ctrl+A</code> ，再按下 <code>X</code> 来退出 Qemu。</p>
-<h1 id="ch1"><a href="#ch1" class="headerlink" title="ch1"></a>ch1</h1><h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// entry.S</span><br>_entry<br>    la sp, boot_stack_top <span class="hljs-comment">//设置堆栈</span><br>    call main<br><span class="hljs-comment">// main.c</span><br>  clean_bss();<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"hello wrold!\n"</span>);<br>    consputc();<br>      console_putchar(<span class="hljs-type">int</span> c);<br>        sbi_call(SBI_CONSOLE_PUTCHAR, c, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br></code></pre></td></tr></tbody></table></figure>
+<p>设置BASEPRI寄存器, 中断的base prioriity, 低于或等于该优先级的中断都会被屏蔽。<br>这里<code>#_EXC_IRQ_DEFAULT_PRIO</code>宏展开为3，说明中断优先级只能配置为0/1/2。</p>
+<br>
 
-<p class="note note-danger">怎么用gdb调试？`file kernel`然后？</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c">ldr r0, =z_interrupt_stacks<br>ldr r1, =CONFIG_ISR_STACK_SIZE + MPU_GUARD_ALIGN_AND_SIZE<br>adds r0, r0, r1<br>msr PSP, r0 <span class="hljs-comment">// write r0 to PSP</span><br>mrs r0, CONTROL <span class="hljs-comment">// read CONTROL to r0</span><br>movs r1, #<span class="hljs-number">2</span><br>orrs r0, r1 <span class="hljs-comment">/* CONTROL_SPSEL_Msk */</span><br>msr CONTROL, r0 <span class="hljs-comment">// write 0x2 to CONTROL</span><br>isb<br>bl z_arm_prep_c<br></code></pre></td></tr></tbody></table></figure>
 
-<h2 id="Makefile流程分析"><a href="#Makefile流程分析" class="headerlink" title="Makefile流程分析"></a>Makefile流程分析</h2><p>根据<code>make run </code>打印的信息：</p>
-<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">riscv64-unknown-elf-gcc -Wall -Werror -O -fno-omit-frame-pointer -ggdb -MD -mcmodel=medany -ffreestanding -fno-common -nostdlib -mno-relax -Ios -fno-stack-protector -D LOG_LEVEL_ERROR  -fno-pie -no-pie -c os/console.c -o build/os/console.o<br>... # 编译所有的.c文件成.o文件<br>riscv64-unknown-elf-ld -z max-page-size=4096 -T os/kernel.ld -o build/kernel build/os/console.o build/os/main.o build/os/sbi.o build/os/printf.o  build/os/entry.o build/os/link_app.o # 链接<br>riscv64-unknown-elf-objdump -S build/kernel &gt; build/kernel.asm<br>riscv64-unknown-elf-objdump -t build/kernel | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' &gt; build/kernel.sym<br>Build kernel done<br></code></pre></td></tr></tbody></table></figure>
+<p>1.设置进程堆栈指针PSP, process stack pointer。<br>2.写CONTROL寄存器bit1，使用PSP作为当前的stack。<br>3.跳转至<code>z_arm_prep_c</code></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240130155822.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="Prep-c-c"><a href="#Prep-c-c" class="headerlink" title="Prep_c.c"></a>Prep_c.c</h2><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">z_arm_prep_c</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>{<br>  relocate_vector_table();<br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(CONFIG_CPU_HAS_FPU)</span><br>  z_arm_floating_point_init();<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>  z_bss_zero();<br>  z_data_copy();<br>  z_arm_interrupt_init();<br>  z_cstart();<br>  CODE_UNREACHABLE;<br>}<br></code></pre></td></tr></tbody></table></figure>
 
-<p>比较熟悉的是<code>objdump -d</code> <code>objdump -D</code>将所有段都反汇编，而<code>-d</code>应该仅反汇编代码段。</p>
-<p><code>objdump -S</code>是在-d的基础上，代码段反汇编的同时，将反汇编代码与源代码交替显示，编译时需要使用<code>-g</code>参数，即需要调试信息。</p>
-<p><code>objdump -t</code>打印符号表。</p>
+<p><code>z_bss_zero()</code>: 清bss段。<br><code>z_data_copy()</code>: 把data段数据从ROM拷贝到RAM。<br><code>z_arm_interrupt_init()</code>: 设置外部中断优先级先都为1。<br><code>z_cstart()</code>: 跳转至<code>init.c</code>。</p>
+<h1 id="Init-c"><a href="#Init-c" class="headerlink" title="Init.c"></a>Init.c</h1><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">z_cstart</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>{<br>  <span class="hljs-comment">/* initialize early init calls */</span><br>  z_sys_init_run_level(INIT_LEVEL_EARLY);<br>  <span class="hljs-comment">/* perform any architecture-specific initialization */</span><br>  arch_kernel_init();<br>  LOG_CORE_INIT();<br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(CONFIG_MULTITHREADING)</span><br>  <span class="hljs-comment">/* Note: The z_ready_thread() call in prepare_multithreading() requires</span><br><span class="hljs-comment">   * a dummy thread even if CONFIG_ARCH_HAS_CUSTOM_SWAP_TO_MAIN=y</span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">k_thread</span> <span class="hljs-title">dummy_thread</span>;</span><br>  z_dummy_thread_init(&amp;dummy_thread);<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>  <span class="hljs-comment">/* do any necessary initialization of static devices */</span><br>  z_device_state_init();<br>  <span class="hljs-comment">/* perform basic hardware initialization */</span><br>  z_sys_init_run_level(INIT_LEVEL_PRE_KERNEL_1);<br>  z_sys_init_run_level(INIT_LEVEL_PRE_KERNEL_2);<br><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> CONFIG_MULTITHREADING</span><br>  switch_to_main_thread(prepare_multithreading());<br>  <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) {<br>  }<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">/* CONFIG_MULTITHREADING */</span></span><br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<p>删掉了一些没打开的宏相关代码。</p>
+<p><code>z_sys_init_run_level(INIT_LEVEL_EARLY)</code><br><code>z_sys_init_run_level(INIT_LEVEL_PRE_KERNEL_1)</code><br><code>z_sys_init_run_level(INIT_LEVEL_PRE_KERNEL_2)</code><br>根据优先级，初始化系统中所有driver的init函数和通过<code>SYS_INIT()</code>定义的init函数。<br>参考<code>DEVICE_DT_DEFINE</code>-&gt;<code>Z_DEVICE_INIT_ENTRY_DEFINE</code>宏定义的driver,会在<code>z_sys_init_run_level</code>函数中调用<code>.init_fn-&gt;.dev(dev)</code>。<br>而<code>SYS_INIT()</code>会调用到<code>.init_fn-&gt;sys()</code></p>
+<p>初始化完成后进入死循环。</p>
+<br>
+
+<p>其中<code>arch_kernel_init</code>函数：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> ALWAYS_INLINE <span class="hljs-type">void</span> <span class="hljs-title function_">arch_kernel_init</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>{<br>  z_arm_interrupt_stack_setup();<br>  z_arm_exc_setup();<br>  z_arm_fault_init();<br>  z_arm_cpu_idle_init();<br>  z_arm_clear_faults();<br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(CONFIG_ARM_MPU)</span><br>  z_arm_mpu_init();<br>  z_arm_configure_static_mpu_regions();<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">/* CONFIG_ARM_MPU */</span></span><br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<p><code>z_arm_interrupt_stack_setup()</code>: 设置msp, interrupt使用的stack。<br><code>z_arm_exc_setup()</code>: 设置好系统异常的中断优先级。<br><code>z_arm_fault_init()</code>: 设置CPU CCR寄存器，打开除0异常。非对齐访问异常由宏开关控制是否打开，默认不打开。<br><code>z_arm_cpu_idle_init()</code>: 设置CPU SCR寄存器，设置中断可以唤醒CPU idle状态。<br><code>z_arm_clear_faults()</code>: reset all faults，清除所有异常。</p>
+<br>
+
+<p><code>switch_to_main_thread(prepare_multithreading())</code>: 创建一个kernel线程，接着会跑进<code>bg_thread_main</code>:</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">bg_thread_main</span><span class="hljs-params">(<span class="hljs-type">void</span> *unused1, <span class="hljs-type">void</span> *unused2, <span class="hljs-type">void</span> *unused3)</span><br>{<br>  ARG_UNUSED(unused1);<br>  ARG_UNUSED(unused2);<br>  ARG_UNUSED(unused3);<br><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> CONFIG_MMU</span><br>  z_mem_manage_init();<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">/* CONFIG_MMU */</span></span><br>  z_sys_post_kernel = <span class="hljs-literal">true</span>;<br>  z_sys_init_run_level(INIT_LEVEL_POST_KERNEL);<br>  boot_banner();<br>  <span class="hljs-comment">/* Final init level before app starts */</span><br>  z_sys_init_run_level(INIT_LEVEL_APPLICATION);<br>  z_init_static_threads();<br><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> CONFIG_MMU</span><br>  z_mem_manage_boot_finish();<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">/* CONFIG_MMU */</span></span><br><br>  <span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;<br><br>  (<span class="hljs-type">void</span>)main();<br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<p>包括一些低优先级的driver, <code>SYS_INIT()</code>初始化，MMU初始化，<code>boot_banner</code>会打印LOGO。这时kernel已经初始化完毕，之后跳转进应用程序的<code>main()</code>函数。</p>
+<h1 id="linker-ld"><a href="#linker-ld" class="headerlink" title="linker.ld"></a>linker.ld</h1><p><code>include/zephyr/arch/arm/cortex_m/scripts/linker.ld</code>链接脚本。</p>
 
                 
               </div>
@@ -355,7 +380,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
   
   
 
@@ -370,7 +395,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/uCore/">#uCore</a>
+        <a href="/tags/Zephyr/">#Zephyr</a>
       
     </div>
   
@@ -384,18 +409,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/25/Project/rCore_uCore/uCore_Chapter2/" title="uCore_Chapter2 批处理系统">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">uCore_Chapter2 批处理系统</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/19/Misc/U-Boot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" title="U-Boot启动流程">
-                        <span class="hidden-mobile">U-Boot启动流程</span>
+                      <a href="/2024/01/26/Note/Zephyr/24-01-26_GPIO/" title="Zephyr -- GPIO Subsystem">
+                        <span class="hidden-mobile">Zephyr -- GPIO Subsystem</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
