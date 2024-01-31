@@ -1,0 +1,749 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yucheng Xiang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Device Treedts&#x2F;binding&#x2F;gpio&#x2F;gpio-controller.yaml描述了设备树中支持的属性。 gpio-controller节点：其中gpio-controller和gpio-cells两个属性是必须的。前者表示gpio controller节点，后者表示其他节点使用gpio specifier需要几个item来描述。 12345678910gpio: gpio@0x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zephyr -- GPIO Subsystem">
+<meta property="og:url" content="https://yc-xiang.github.io/2024/01/26/Note/Zephyr/Driver/24-01-26_GPIO/index.html">
+<meta property="og:site_name" content="Yucheng&#39;s Blog">
+<meta property="og:description" content="Device Treedts&#x2F;binding&#x2F;gpio&#x2F;gpio-controller.yaml描述了设备树中支持的属性。 gpio-controller节点：其中gpio-controller和gpio-cells两个属性是必须的。前者表示gpio controller节点，后者表示其他节点使用gpio specifier需要几个item来描述。 12345678910gpio: gpio@0x">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-26T01:30:28.000Z">
+<meta property="article:modified_time" content="2024-01-29T07:49:48.500Z">
+<meta property="article:author" content="Yucheng Xiang">
+<meta property="article:tag" content="Zephyr">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Zephyr -- GPIO Subsystem - Yucheng&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yc-xiang.github.io","root":"/","version":"1.9.4","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"C"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"ed5b2440a3a7651272e4681ae4ac17e2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?ed5b2440a3a7651272e4681ae4ac17e2";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>YC&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/homepage.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Zephyr -- GPIO Subsystem</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-26 09:30" pubdate>
+          2024年1月26日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.1k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          60 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> times
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Zephyr -- GPIO Subsystem</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2024年1月29日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Device-Tree"><a href="#Device-Tree" class="headerlink" title="Device Tree"></a>Device Tree</h1><p><code>dts/binding/gpio/gpio-controller.yaml</code>描述了设备树中支持的属性。</p>
+<p>gpio-controller节点：<br>其中<code>gpio-controller</code>和<code>gpio-cells</code>两个属性是必须的。<br>前者表示gpio controller节点，后者表示其他节点使用gpio specifier需要几个item来描述。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c">gpio: gpio@<span class="hljs-number">0x400ff000</span> {<br>  compatible = <span class="hljs-string">"nxp, kinetis-gpio"</span>;<br>  status = <span class="hljs-string">"disabled"</span>;<br>  reg = &lt;<span class="hljs-number">0x400ff000</span> <span class="hljs-number">0x40</span>&gt;;<br>  interrupts = &lt;<span class="hljs-number">59</span> <span class="hljs-number">2</span>&gt;;<br>  gpio-controller;<br>  <span class="hljs-meta">#gpio-cells = <span class="hljs-string">&lt;2&gt;</span>;</span><br>  ngpios = &lt;<span class="hljs-number">32</span>&gt;; <span class="hljs-comment">// optional, default 32</span><br>  gpio-reserved-ranges = &lt;<span class="hljs-number">3</span> <span class="hljs-number">2</span>&gt;, &lt;<span class="hljs-number">10</span>, <span class="hljs-number">1</span>&gt;; <span class="hljs-comment">// optional, &lt;index size&gt;表示第&lt;index&gt;起&lt;size&gt;个gpio不能使用。</span><br>};<br></code></pre></td></tr></tbody></table></figure>
+
+<p>consumer节点:</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">xxx-gpios/gpios = &lt;&amp;&lt;gpio-controller节点&gt; &lt;gpio_number&gt; &lt;配置属性&gt;&gt;<br><br>xxx-gpios = &lt;&amp;gpio <span class="hljs-number">5</span> (GPIO_PULL_UP | GPIO_ACTIVE_LOW)&gt;,<br>    &lt;&amp;gpio <span class="hljs-number">6</span> (GPIO_PULL_DOWN | GPIO_ACTIVE_LOW)&gt;;<br></code></pre></td></tr></tbody></table></figure>
+
+<p><code>GPIO_ACTIVE_LOW</code>表示逻辑电平和实际电平相反，逻辑1代表低电平。</p>
+<p>配置属性可在<code>include/zephyr/dt-bindings/gpio/gpio.h</code>中查找。</p>
+<h1 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a>Consumer</h1><p><strong>方法一:</strong> 设备树API</p>
+<p>从设备树获取的gpio信息会保存到<code>gpio_dt_spec</code>结构体。包括gpio controller, pin number, config flag。对应上面device tree中consumer节点的node。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">gpio_dt_spec</span> {</span><br>  <span class="hljs-comment">/** GPIO device controlling the pin */</span><br>  <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">device</span> *<span class="hljs-title">port</span>;</span><br>  <span class="hljs-comment">/** The pin's number on the device */</span><br>  <span class="hljs-type">gpio_pin_t</span> pin;<br>  <span class="hljs-comment">/** The pin's configuration flags as specified in devicetree */</span><br>  <span class="hljs-type">gpio_dt_flags_t</span> dt_flags;<br>};<br></code></pre></td></tr></tbody></table></figure>
+
+<p>可以通过<code>GPIO_DT_SPEC_GET_BY_IDX()</code>或其他一系列变种函数解析dts获取<code>gpio_dt_spec</code>结构体。<br><code>node_id</code>对应consumer的node，<code>prop</code>为<code>xxx-gpios</code>, <code>idx</code>为<code>xxx-gpios</code>下的第x条属性。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> GPIO_DT_SPEC_GET_BY_IDX(node_id, prop, idx)             \</span><br><span class="hljs-meta">  {								       \</span><br><span class="hljs-meta">    .port = DEVICE_DT_GET(DT_GPIO_CTLR_BY_IDX(node_id, prop, idx)),\</span><br><span class="hljs-meta">    .pin = DT_GPIO_PIN_BY_IDX(node_id, prop, idx),		       \</span><br><span class="hljs-meta">    .dt_flags = DT_GPIO_FLAGS_BY_IDX(node_id, prop, idx),	       \</span><br><span class="hljs-meta">  }</span><br></code></pre></td></tr></tbody></table></figure>
+
+<p>得到<code>gpio_dt_spec</code>结构体后，就可以调用一系列设备树函数来进行GPIO操作了。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 判断gpio controller是否ready</span><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">bool</span> <span class="hljs-title function_">gpio_is_ready_dt</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> gpio_dt_spec *spec)</span>;<br><span class="hljs-comment">/** 设置GPIO中断, 可传入的gpio_flags_t有, 具体含义参考drivers/gpio.h:</span><br><span class="hljs-comment"> * GPIO_INT_EDGE_RISING</span><br><span class="hljs-comment"> * GPIO_INT_EDGE_FALLING</span><br><span class="hljs-comment"> * GPIO_INT_EDGE_BOTH</span><br><span class="hljs-comment"> * GPIO_INT_LEVEL_LOW</span><br><span class="hljs-comment"> * GPIO_INT_LEVEL_HIGH</span><br><span class="hljs-comment"> * ...</span><br><span class="hljs-comment"> **/</span><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_pin_interrupt_configure_dt</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> gpio_dt_spec *spec,</span><br><span class="hljs-params">              <span class="hljs-type">gpio_flags_t</span> flags)</span>;<br><span class="hljs-comment">// 配置一个pin的config, 结果为spec-&gt;dt_flags | extra_flags</span><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_pin_configure_dt</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> gpio_dt_spec *spec,</span><br><span class="hljs-params">          <span class="hljs-type">gpio_flags_t</span> extra_flags)</span><br><span class="hljs-comment">// 判断pin是否为input</span><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_pin_is_input_dt</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> gpio_dt_spec *spec)</span><br><span class="hljs-comment">// 判断pin是否为output</span><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_pin_is_output_dt</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> gpio_dt_spec *spec)</span><br><span class="hljs-comment">// 获取pin的config保存到flags中</span><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_pin_get_config_dt</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> gpio_dt_spec *spec,</span><br><span class="hljs-params">          <span class="hljs-type">gpio_flags_t</span> *flags)</span><br><span class="hljs-comment">// 获取input pin value</span><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_pin_get_dt</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> gpio_dt_spec *spec)</span><br><span class="hljs-comment">// 设置ouput pin value</span><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_pin_set_dt</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> gpio_dt_spec *spec, <span class="hljs-type">int</span> value)</span><br><span class="hljs-comment">// toggle gpio</span><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_pin_toggle_dt</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> gpio_dt_spec *spec)</span><br><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_add_callback_dt</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> gpio_dt_spec *spec,</span><br><span class="hljs-params">          <span class="hljs-keyword">struct</span> gpio_callback *callback)</span><br></code></pre></td></tr></tbody></table></figure>
+
+<p><strong>方法二:</strong> 直接传入<code>device</code>结构体，不需要从设备树获取数据。</p>
+<p>可以通过<code>DEVICE_DT_GET</code>宏得到<code>device</code>结构体。<br><code>include/zephyr/devicetree/gpio.h</code>中封装了许多gpio操作devicetree的宏，用来获取gpio pin flag等属性。</p>
+<p>和上面的device tree APIs的底层实现是相同的，不过这些APIs需要指定pin, flags等参数传入。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs c">__syscall <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_pin_interrupt_configure</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,</span><br><span class="hljs-params">             <span class="hljs-type">gpio_pin_t</span> pin,</span><br><span class="hljs-params">             <span class="hljs-type">gpio_flags_t</span> flags)</span>;<br>__syscall <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_pin_configure</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,</span><br><span class="hljs-params">         <span class="hljs-type">gpio_pin_t</span> pin,</span><br><span class="hljs-params">         <span class="hljs-type">gpio_flags_t</span> flags)</span>;<br>__syscall <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_port_get_direction</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port, <span class="hljs-type">gpio_port_pins_t</span> <span class="hljs-built_in">map</span>,</span><br><span class="hljs-params">              <span class="hljs-type">gpio_port_pins_t</span> *inputs, <span class="hljs-type">gpio_port_pins_t</span> *outputs)</span>;<br>__syscall <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_pin_get_config</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port, <span class="hljs-type">gpio_pin_t</span> pin,</span><br><span class="hljs-params">          <span class="hljs-type">gpio_flags_t</span> *flags)</span>;<br><span class="hljs-comment">// 获取input value</span><br>__syscall <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_port_get_raw</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,</span><br><span class="hljs-params">        <span class="hljs-type">gpio_port_value_t</span> *value)</span>;<br><span class="hljs-comment">// 设置output value</span><br>__syscall <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_port_set_masked_raw</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,</span><br><span class="hljs-params">               <span class="hljs-type">gpio_port_pins_t</span> mask,</span><br><span class="hljs-params">               <span class="hljs-type">gpio_port_value_t</span> value)</span>;<br>__syscall <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_port_set_bits_raw</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,</span><br><span class="hljs-params">             <span class="hljs-type">gpio_port_pins_t</span> pins)</span>;<br>__syscall <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_port_clear_bits_raw</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,</span><br><span class="hljs-params">               <span class="hljs-type">gpio_port_pins_t</span> pins)</span>;<br>__syscall <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_port_toggle_bits</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,</span><br><span class="hljs-params">            <span class="hljs-type">gpio_port_pins_t</span> pins)</span>;<br>__syscall <span class="hljs-type">int</span> <span class="hljs-title function_">gpio_get_pending_int</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *dev)</span>;<br></code></pre></td></tr></tbody></table></figure>
+
+<h2 id="Driver-Example"><a href="#Driver-Example" class="headerlink" title="Driver Example"></a>Driver Example</h2><p><code>i2c_ite_enhance.c</code>在<code>dev-&gt;config</code>中保存了两个<code>gpio_dt_spec</code>结构体：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_enhance_config</span> {</span><br>  <span class="hljs-comment">//...</span><br>  <span class="hljs-comment">/* SCL GPIO cells */</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">gpio_dt_spec</span> <span class="hljs-title">scl_gpios</span>;</span><br>  <span class="hljs-comment">/* SDA GPIO cells */</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">gpio_dt_spec</span> <span class="hljs-title">sda_gpios</span>;</span><br>  <span class="hljs-comment">//...</span><br>};<br></code></pre></td></tr></tbody></table></figure>
+
+<p>初始化时通过<code>GPIO_DT_SPEC_INST_GET</code>宏从设备树获取数据填充<code>gpio_dt_spec</code>：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">i2c0: i2c@f04300 {<br>  compatible = <span class="hljs-string">"ite,enhance-i2c"</span>;<br>  scl-gpios = &lt;&amp;gpiob <span class="hljs-number">3</span> <span class="hljs-number">0</span>&gt;;<br>  sda-gpios = &lt;&amp;gpiob <span class="hljs-number">4</span> <span class="hljs-number">0</span>&gt;;<br>};<br></code></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_enhance_config</span> <span class="hljs-title">i2c_enhance_cfg_</span>##<span class="hljs-title">inst</span> =</span> {       \<br>  <span class="hljs-comment">//...</span><br>  .scl_gpios = GPIO_DT_SPEC_INST_GET(inst, scl_gpios),            \<br>  .sda_gpios = GPIO_DT_SPEC_INST_GET(inst, sda_gpios),            \<br>  <span class="hljs-comment">//...</span><br>};<br></code></pre></td></tr></tbody></table></figure>
+
+<p>在<code>i2c_enhance_recover_bus</code>函数中获取<code>dev-&gt;config</code>, 就可以调用gpio相关api了。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">i2c_enhance_config</span> *<span class="hljs-title">config</span> =</span> dev-&gt;config;<br><span class="hljs-comment">/* Set SCL of I2C as GPIO pin */</span><br>gpio_pin_configure_dt(&amp;config-&gt;scl_gpios, GPIO_OUTPUT);<br><span class="hljs-comment">/* Set SDA of I2C as GPIO pin */</span><br>gpio_pin_configure_dt(&amp;config-&gt;sda_gpios, GPIO_OUTPUT);<br><br><span class="hljs-comment">/* Pull SCL and SDA pin to high */</span><br>gpio_pin_set_dt(&amp;config-&gt;scl_gpios, <span class="hljs-number">1</span>);<br>gpio_pin_set_dt(&amp;config-&gt;sda_gpios, <span class="hljs-number">1</span>);<br></code></pre></td></tr></tbody></table></figure>
+
+<h2 id="Test-Example"><a href="#Test-Example" class="headerlink" title="Test Example"></a>Test Example</h2><p><code>tests/drivers/gpio/</code>目录下有许多gpio相关的测试程序。</p>
+<h1 id="Provider"><a href="#Provider" class="headerlink" title="Provider"></a>Provider</h1><p>可以实现的API:</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c">__subsystem <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">gpio_driver_api</span> {</span><br>  <span class="hljs-comment">// 配置output/input, pull up/down,</span><br>  <span class="hljs-type">int</span> (*pin_configure)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port, <span class="hljs-type">gpio_pin_t</span> pin,<br>           <span class="hljs-type">gpio_flags_t</span> flags);<br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> CONFIG_GPIO_GET_CONFIG</span><br>  <span class="hljs-type">int</span> (*pin_get_config)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port, <span class="hljs-type">gpio_pin_t</span> pin,<br>            <span class="hljs-type">gpio_flags_t</span> *flags);<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>  <span class="hljs-type">int</span> (*port_get_raw)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,<br>          <span class="hljs-type">gpio_port_value_t</span> *value);<br>  <span class="hljs-type">int</span> (*port_set_masked_raw)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,<br>           <span class="hljs-type">gpio_port_pins_t</span> mask,<br>           <span class="hljs-type">gpio_port_value_t</span> value);<br>  <span class="hljs-type">int</span> (*port_set_bits_raw)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,<br>         <span class="hljs-type">gpio_port_pins_t</span> pins);<br>  <span class="hljs-type">int</span> (*port_clear_bits_raw)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,<br>           <span class="hljs-type">gpio_port_pins_t</span> pins);<br>  <span class="hljs-type">int</span> (*port_toggle_bits)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,<br>        <span class="hljs-type">gpio_port_pins_t</span> pins);<br>  <span class="hljs-type">int</span> (*pin_interrupt_configure)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,<br>               <span class="hljs-type">gpio_pin_t</span> pin,<br>               <span class="hljs-keyword">enum</span> gpio_int_mode, <span class="hljs-keyword">enum</span> gpio_int_trig);<br>  <span class="hljs-type">int</span> (*manage_callback)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port,<br>             <span class="hljs-keyword">struct</span> gpio_callback *cb,<br>             <span class="hljs-type">bool</span> <span class="hljs-built_in">set</span>);<br>  <span class="hljs-type">uint32_t</span> (*get_pending_int)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *dev);<br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> CONFIG_GPIO_GET_DIRECTION</span><br>  <span class="hljs-type">int</span> (*port_get_direction)(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *port, <span class="hljs-type">gpio_port_pins_t</span> <span class="hljs-built_in">map</span>,<br>          <span class="hljs-type">gpio_port_pins_t</span> *inputs, <span class="hljs-type">gpio_port_pins_t</span> *outputs);<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">/* CONFIG_GPIO_GET_DIRECTION */</span></span><br>};<br></code></pre></td></tr></tbody></table></figure>
+
+<p>Driver需要定义一个device实例，其中<code>dev-&gt;config</code>和<code>dev-&gt;data</code>两个自定义结构体，需要首先包含<code>struct gpio_driver_config</code>和<code>struct gpio_driver_data</code>两个通用结构体，以<code>gpio_dw.h</code>为例：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">gpio_dw_config</span> {</span><br>  <span class="hljs-comment">/* gpio_driver_config needs to be first */</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">gpio_driver_config</span> <span class="hljs-title">common</span>;</span><br>  <span class="hljs-type">uint32_t</span> ngpios;<br>  <span class="hljs-type">uint32_t</span> irq_num; <span class="hljs-comment">/* set to 0 if GPIO port cannot interrupt */</span><br>  <span class="hljs-type">gpio_config_irq_t</span> config_func;<br>};<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">gpio_dw_runtime</span> {</span><br>  <span class="hljs-comment">/* gpio_driver_data needs to be first */</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">gpio_driver_data</span> <span class="hljs-title">common</span>;</span><br>  <span class="hljs-type">uint32_t</span> base_addr;<br>  <span class="hljs-type">sys_slist_t</span> callbacks;<br>};<br></code></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">gpio_driver_config</span> {</span><br>  <span class="hljs-comment">/** Mask identifying pins supported by the controller.</span><br><span class="hljs-comment">   *</span><br><span class="hljs-comment">   * Initialization of this mask is the responsibility of device</span><br><span class="hljs-comment">   * instance generation in the driver.</span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-type">gpio_port_pins_t</span> port_pin_mask;<br>};<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">gpio_driver_data</span> {</span><br>  <span class="hljs-comment">/** Mask identifying pins that are configured as active low.</span><br><span class="hljs-comment">   *</span><br><span class="hljs-comment">   * Management of this mask is the responsibility of the</span><br><span class="hljs-comment">   * wrapper functions in this header.</span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-type">gpio_port_pins_t</span> invert;<br>};<br><br><span class="hljs-comment">// port_pin_mask需要在gpio controller driver中定义。以gpio_dw.c为例：</span><br><span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">gpio_dw_config</span> <span class="hljs-title">gpio_dw_config_</span>##<span class="hljs-title">n</span> =</span> {        \<br>  .common = {									\<br>    .port_pin_mask = GPIO_PORT_PIN_MASK_FROM_DT_INST(n),			\<br>  },										\<br>  .irq_num = COND_CODE_1(DT_INST_IRQ_HAS_IDX(n, <span class="hljs-number">0</span>), (DT_INST_IRQN(n)), (<span class="hljs-number">0</span>)),	\<br>  .ngpios = DT_INST_PROP(n, ngpios),						\<br>  .config_func = gpio_config_#<span class="hljs-meta">#n##_irq,						\</span><br><span class="hljs-meta">};</span><br><br><span class="hljs-comment">// invert会在抽象层gpio.h定义，不需要driver来实现，从设备树GPIO_ACTIVE_HIGH/LOW获取。</span><br></code></pre></td></tr></tbody></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Zephyr/">#Zephyr</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/01/26/Note/Zephyr/Driver/24-01-29_Interrupt/" title="Zephyr -- Interrupt Subsystem">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Zephyr -- Interrupt Subsystem</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/24/Misc/%E7%BB%88%E7%AB%AF%E5%BC%80%E5%90%AF%E4%BB%A3%E7%90%86/" title="Clash如何开启终端代理">
+                        <span class="hidden-mobile">Clash如何开启终端代理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

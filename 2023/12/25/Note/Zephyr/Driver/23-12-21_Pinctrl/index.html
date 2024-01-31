@@ -1,0 +1,780 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yucheng Xiang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Device TreePinctrl controller节点： 所有可选的支持属性可以查阅&#x2F;dts&#x2F;bindings&#x2F;pinctrl&#x2F;pincfg-node.yaml，支持配置上下拉，驱动能力等等。具体支持属性要参考soc的yaml文件&#x2F;dts&#x2F;bindings&#x2F;pinctrl&#x2F;xxx.yaml 当设备节点调用perip0_default的时候，group1~N都会被apply。 1234567">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zephyr -- Pinctrl Subsystem">
+<meta property="og:url" content="https://yc-xiang.github.io/2023/12/25/Note/Zephyr/Driver/23-12-21_Pinctrl/index.html">
+<meta property="og:site_name" content="Yucheng&#39;s Blog">
+<meta property="og:description" content="Device TreePinctrl controller节点： 所有可选的支持属性可以查阅&#x2F;dts&#x2F;bindings&#x2F;pinctrl&#x2F;pincfg-node.yaml，支持配置上下拉，驱动能力等等。具体支持属性要参考soc的yaml文件&#x2F;dts&#x2F;bindings&#x2F;pinctrl&#x2F;xxx.yaml 当设备节点调用perip0_default的时候，group1~N都会被apply。 1234567">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/pinctrl.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240131145556.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240131150328.png">
+<meta property="article:published_time" content="2023-12-25T01:45:28.000Z">
+<meta property="article:modified_time" content="2024-01-31T07:04:18.244Z">
+<meta property="article:author" content="Yucheng Xiang">
+<meta property="article:tag" content="Zephyr">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/pinctrl.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Zephyr -- Pinctrl Subsystem - Yucheng&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yc-xiang.github.io","root":"/","version":"1.9.4","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"C"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"ed5b2440a3a7651272e4681ae4ac17e2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?ed5b2440a3a7651272e4681ae4ac17e2";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>YC&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/homepage.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Zephyr -- Pinctrl Subsystem</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-12-25 09:45" pubdate>
+          2023年12月25日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.1k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          52 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> times
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Zephyr -- Pinctrl Subsystem</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2024年1月31日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Device-Tree"><a href="#Device-Tree" class="headerlink" title="Device Tree"></a>Device Tree</h2><p>Pinctrl controller节点：</p>
+<p>所有可选的支持属性可以查阅<code>/dts/bindings/pinctrl/pincfg-node.yaml</code>，支持配置上下拉，驱动能力等等。具体支持属性要参考soc的yaml文件<code>/dts/bindings/pinctrl/xxx.yaml</code></p>
+<p>当设备节点调用<code>perip0_default</code>的时候，<code>group1~N</code>都会被apply。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* board-pinctrl.dtsi */</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vnd-soc-pkgxx.h&gt;</span></span><br><br>&amp;pinctrl {<br>    <span class="hljs-comment">/* Node with pin configuration for default state */</span><br>    periph0_default: periph0_default {<br>        group1 {<br>            <span class="hljs-comment">/* Mappings: PERIPH0_SIGA -&gt; PX0, PERIPH0_SIGC -&gt; PZ1 */</span><br>            pinmux = &lt;PERIPH0_SIGA_PX0&gt;, &lt;PERIPH0_SIGC_PZ1&gt;;<br>            <span class="hljs-comment">/* Pins PX0 and PZ1 have pull-up enabled */</span><br>            bias-pull-up;<br>        };<br>        ...<br>        groupN {<br>            <span class="hljs-comment">/* Mappings: PERIPH0_SIGB -&gt; PY7 */</span><br>            pinmux = &lt;PERIPH0_SIGB_PY7&gt;;<br>        };<br>    };<br>};<br></code></pre></td></tr></tbody></table></figure>
+
+<p>使用pinctrl的设备节点：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><br>&amp;periph0 {<br>    pinctrl<span class="hljs-number">-0</span> = &lt;&amp;periph0_default&gt;;<br>    pinctrl-names = <span class="hljs-string">"default"</span>;<br>};<br></code></pre></td></tr></tbody></table></figure>
+
+<p>可以在pinctrl controller下面的pinctrl配置节点前加上<code>/omit-if-no-ref/</code>，表示这个节点没被引用的话会被丢弃，不会被解析到C头文件中。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">&amp;pinctrl {<br>    /omit-<span class="hljs-keyword">if</span>-no-ref/ periph0_siga_px0_default: periph0_siga_px0_default {<br>        pinmux = &lt;VNDSOC_PIN(X, <span class="hljs-number">0</span>, MUX0)&gt;;<br>    };<br>};<br></code></pre></td></tr></tbody></table></figure>
+
+<h2 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a>Consumer</h2><p>Device driver如何使用pinctrl配置引脚function:</p>
+<p>以<code>i2c_dw.c</code>为例，<br>通过<code>PINCTRL_DT_INST_DEFINE(n)</code>, 创建该device对应的<code>pinctrl_dev_config</code>结构体。<br>通过<code>PINCTRL_DT_INST_DEV_CONFIG_GET(n)</code> 得到该<code>pinctrl_dev_config</code>结构体。</p>
+<p>随后在init函数中调用<code>pinctrl_apply_state(rom-&gt;pcfg, PINCTRL_STATE_DEFAULT);</code>选择apply default的pinctrl配置。</p>
+<p>如下：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> DT_DRV_COMPAT mydev</span><br>...<br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;zephyr/drivers/pinctrl.h&gt;</span></span><br>...<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">mydev_config</span> {</span><br>    ...<br>    <span class="hljs-comment">/* Reference to mydev pinctrl configuration */</span><br>    <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_dev_config</span> *<span class="hljs-title">pcfg</span>;</span><br>    ...<br>};<br>...<br><span class="hljs-type">static</span> <span class="hljs-type">int</span> <span class="hljs-title function_">mydev_init</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> device *dev)</span><br>{<br>    <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">mydev_config</span> *<span class="hljs-title">config</span> =</span> dev-&gt;config;<br>    <span class="hljs-type">int</span> ret;<br>    ...<br>    <span class="hljs-comment">/* Select "default" state at initialization time */</span><br>    ret = pinctrl_apply_state(config-&gt;pcfg, PINCTRL_STATE_DEFAULT);<br>    <span class="hljs-keyword">if</span> (ret &lt; <span class="hljs-number">0</span>) {<br>        <span class="hljs-keyword">return</span> ret;<br>    }<br>    ...<br>}<br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MYDEV_DEFINE(i)                                                    \</span><br><span class="hljs-meta">    <span class="hljs-comment">/* Define all pinctrl configuration for instance "i" */</span>                \</span><br><span class="hljs-meta">    PINCTRL_DT_INST_DEFINE(i);                                             \</span><br><span class="hljs-meta">    ...                                                                    \</span><br><span class="hljs-meta">    static const struct mydev_config mydev_config_##i = {                  \</span><br><span class="hljs-meta">        ...                                                                \</span><br><span class="hljs-meta">        <span class="hljs-comment">/* Keep a ref. to the pinctrl configuration for instance "i" */</span>    \</span><br><span class="hljs-meta">        .pcfg = PINCTRL_DT_INST_DEV_CONFIG_GET(i),                         \</span><br><span class="hljs-meta">        ...                                                                \</span><br><span class="hljs-meta">    };                                                                     \</span><br><span class="hljs-meta">    ...                                                                    \</span><br><span class="hljs-meta">                                                                           \</span><br><span class="hljs-meta">    DEVICE_DT_INST_DEFINE(i, mydev_init, NULL, &amp;mydev_data##i,             \</span><br><span class="hljs-meta">                          &amp;mydev_config##i, ...);</span><br><br>DT_INST_FOREACH_STATUS_OKAY(MYDEV_DEFINE)<br></code></pre></td></tr></tbody></table></figure>
+
+<p>分析下<code>PINCTRL_DT_DEFINE</code>这个宏，</p>
+<figure class="highlight c"><figcaption><span>{.line-numbers}</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> PINCTRL_DT_DEFINE(node_id)                 \</span><br><span class="hljs-meta">  LISTIFY(DT_NUM_PINCTRL_STATES(node_id),				       \</span><br><span class="hljs-meta">         Z_PINCTRL_STATE_PINS_DEFINE, (;), node_id);	       \</span><br><span class="hljs-meta">  Z_PINCTRL_STATES_DEFINE(node_id)				       \</span><br><span class="hljs-meta">  Z_PINCTRL_DEV_CONFIG_STATIC Z_PINCTRL_DEV_CONFIG_CONST		       \</span><br><span class="hljs-meta">  struct pinctrl_dev_config Z_PINCTRL_DEV_CONFIG_NAME(node_id) =	       \</span><br><span class="hljs-meta">  Z_PINCTRL_DEV_CONFIG_INIT(node_id)</span><br></code></pre></td></tr></tbody></table></figure>
+
+<br>
+
+<p>2~3行针对dts某个device节点，有N个<code>pinctrl-&lt;N&gt;</code>就调用<code>Z_PINCTRL_STATE_PINS_DEFINE</code>函数，创建包含N个<code>pinctrl_soc_pin_t</code>结构体的数组, 每个结构体包含该<code>pinctrl-&lt;N&gt;</code>对应pinctrl controller节点所需要的pins。该结构体数组的具体创建过程由<code>Z_PINCTRL_STATE_PINS_INIT</code>决定，该宏需要不同厂商在<code>pinctrl_soc.h</code>中定义。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_soc_pin_t</span></span><br><span class="hljs-class">{</span><br>  <span class="hljs-comment">// need to define in `pinctrl_soc.h`</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<br>
+
+<p>第4行，根据N个<code>pinctrl-&lt;N&gt;</code>创建<code>pinctrl_state</code>结构体数组，从<code>devicetree_generated.h</code>中获取结构体信息。</p>
+<p>每个<code>pinctrl_state</code>结构体：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_state</span> {</span><br>  <span class="hljs-type">const</span> <span class="hljs-type">pinctrl_soc_pin_t</span> *pins; <span class="hljs-comment">// 对应上面2~3行创建的`pinctrl_soc_pin_t`结构体数组。</span><br>  <span class="hljs-type">uint8_t</span> pin_cnt; <span class="hljs-comment">// 该state包含多少个pin。</span><br>  <span class="hljs-type">uint8_t</span> id = PINCTRL_STATE_XXX; <span class="hljs-comment">// XXX可以是DEFAULT,SLEEP或自定义属性。</span><br>};<br></code></pre></td></tr></tbody></table></figure>
+
+<br>
+
+<p>第5~7行，初始化一个<code>pinctrl_dev_config</code>结构体。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_dev_config</span> {</span><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(CONFIG_PINCTRL_STORE_REG) || defined(__DOXYGEN__)</span><br>  <span class="hljs-type">uintptr_t</span> reg; <span class="hljs-comment">// 该device的reg地址</span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>  <span class="hljs-type">const</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pinctrl_state</span> *<span class="hljs-title">states</span>;</span> <span class="hljs-comment">// 即上面的`pinctrl_state`结构体数组。</span><br>  <span class="hljs-type">uint8_t</span> state_cnt; <span class="hljs-comment">// 包含的state数量。</span><br>};<br></code></pre></td></tr></tbody></table></figure>
+
+<br>
+
+<p>结构体关系如下, 其中<br><code>pinctrl_dev_config</code> 是每个device拥有一个。<br><code>pinctrl_state</code> 对应每个device的一个pinctrl state, 即dts中的<code>pinctrl-&lt;N&gt;</code>。<br><code>pinctrl_soc_pin_t</code> 对应一个pin，包含了pin number, config配置信息等。<br><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/pinctrl.png" srcset="/img/loading.gif" lazyload alt="Pinctrl 结构体"></p>
+<h2 id="Provider"><a href="#Provider" class="headerlink" title="Provider"></a>Provider</h2><p>Pinctrl Driver实现:<br>主要需要实现回调函数<code>pinctrl_configure_pins(const pinctrl_soc_pin_t *pins, uint8_t pin_cnt, uintptr_t reg)</code>。<br><code>pinctrl_soc_pin_t *pins</code>：某个pinctrl state包含的pins链表。<br><code>pin_cnt</code>：该state包含的pins数量。<br><code>reg</code>: pinctrl controller的地址。</p>
+<p>添加<code>pinctrl_soc.h</code>, 一般路径为<code>soc/&lt;arch&gt;/&lt;vendor&gt;/&lt;board&gt;/...</code><br>在其中定义<code>pinctrl_soc_pin_t</code> 结构体。<code>Z_PINCTRL_STATE_PINS_INIT</code>宏，该宏接收两个参数，设备树node identifier和property name(pinctrl-N)，用来解析设备树属性。</p>
+<p>参考ti-cc32xx pinctrl的实现，参考文件有：<br><code>dts/bindings/pinctrl/ti,cc32xx-pinctrl.yaml</code>：描述设备树属性。<br><code>soc/arm/ti_simplelink/cc32xx/pinctrl_soc.h</code>: 具体实现。<br><code>include/zephyr/dt-bindings/pinctrl/ti-cc32xx-pinctrl.h</code>：头文件。<br><code>boards/arm/cc3220sf_launchxl/cc3220sf_launchxl-pinctrl.dtsi</code>: pinctrl设备树。<br><code>drivers/pinctrl/pinctrl_ti_cc32xx.cpinctrl_nrf.c</code>: pinctrl driver。</p>
+<br>
+
+<p><code>pinctrl.dtsi</code>:</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c">&amp;pinctrl {<br>  uart0_default: uart0_default {<br>    group1 {<br>      pinmux = &lt;UART0_TX_P55&gt;, &lt;UART0_RX_P57&gt;;<br>    };<br>  };<br><br>  i2c0_default: i2c0_default {<br>    group1 {<br>      pinmux = &lt;I2C_SCL_P1&gt;, &lt;I2C_SDA_P2&gt;;<br>    };<br>  };<br>};<br><br>&amp;uart0 {<br>  pinctrl<span class="hljs-number">-0</span> = &lt;&amp;uart0_default&gt;;<br>  pinctrl-names = <span class="hljs-string">"default"</span>;<br>};<br><br>&amp;i2c0 {<br>  pinctrl<span class="hljs-number">-0</span> = &lt;&amp;i2c0_default&gt;;<br>  pinctrl-names = <span class="hljs-string">"default"</span>;<br>};<br></code></pre></td></tr></tbody></table></figure>
+
+<br>
+
+<p><code>pinctrl_soc.h</code>:</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> Z_PINCTRL_STATE_PINS_INIT(node_id, prop)                                                   \</span><br><span class="hljs-meta">  {                                                                                          \</span><br><span class="hljs-meta">    DT_FOREACH_CHILD_VARGS(DT_PHANDLE(node_id, prop), DT_FOREACH_PROP_ELEM, pinmux,    \</span><br><span class="hljs-meta">               Z_PINCTRL_STATE_PIN_INIT)                                   \</span><br><span class="hljs-meta">  }</span><br></code></pre></td></tr></tbody></table></figure>
+
+<p>上层调用传入的<code>node_id</code>对应使用pinctrl的设备节点，<code>prop</code>对应<code>pinctrl-0,1...</code></p>
+<p><code>DT_FOREACH_CHILD_VARGS</code>会遍历<code>pinctrl-X</code>引用的phandle下的<code>group1~n</code>，这里这个名称可以是任意值，因为会遍历所有子节点，对<code>pinmux</code>属性调用<code>Z_PINCTRL_STATE_PIN_INIT</code>函数，每个pin创建一个<code>pinctrl_soc_pin_t</code>结构体。</p>
+<br>
+
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-type">uint32_t</span> <span class="hljs-type">pinctrl_soc_pin_t</span>;<br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> Z_PINCTRL_STATE_PIN_INIT(node_id, prop, idx)                                               \</span><br><span class="hljs-meta">  (DT_PROP_BY_IDX(node_id, prop, idx) |                                                      \</span><br><span class="hljs-meta">   (TI_CC32XX_OPEN_DRAIN * DT_PROP(node_id, drive_open_drain)) |                             \</span><br><span class="hljs-meta">   (TI_CC32XX_PULL_UP * DT_PROP(node_id, bias_pull_down)) |                                  \</span><br><span class="hljs-meta">   (TI_CC32XX_PULL_DOWN * DT_PROP(node_id, bias_pull_up)) |                                  \</span><br><span class="hljs-meta">   ((DT_ENUM_IDX(node_id, drive_strength) &amp; TI_CC32XX_DRIVE_STRENGTH_MSK)                    \</span><br><span class="hljs-meta">    &lt;&lt; TI_CC32XX_DRIVE_STRENGTH_POS) |                                                       \</span><br><span class="hljs-meta">   TI_CC32XX_PAD_OUT_OVERRIDE | TI_CC32XX_PAD_OUT_BUF_OVERRIDE),</span><br></code></pre></td></tr></tbody></table></figure>
+
+<p><code>DT_PROP_BY_IDX(node_id, prop, idx)</code>: 从设备树pinmux prop中获取值，比如<code>&lt;UART0_TX_P55&gt;</code>, <code>&lt;UART0_RX_P57&gt;</code>，这些宏定义在<code>ti-cc32xx-pinctrl.h</code>中，前面<code>UART0_TX</code>表示mux function，后面<code>P55</code>表示第55个pin。mux function保存在bit0<del>3, pin offset保存在bit16</del>21。</p>
+<p><code>(TI_CC32XX_OPEN_DRAIN * DT_PROP(node_id, drive_open_drain))</code> 判断设备中某个group中是否有属性<code>drive_open_drain</code>, 保存在<code>TI_CC32XX_OPEN_DRAIN</code>, bit4中。</p>
+<p>其他几个属性同理，一样保存进<code>pinctrl_soc_pin_t</code>的bitmap中。</p>
+<p>排列顺序如下图，这里的位置应该对应的ti pinctrol寄存器。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240131145556.png" srcset="/img/loading.gif" lazyload></p>
+<br>
+
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">int</span> <span class="hljs-title function_">pinctrl_configure_pin</span><span class="hljs-params">(<span class="hljs-type">pinctrl_soc_pin_t</span> pincfg)</span><br>{<br>  <span class="hljs-type">uint8_t</span> pin;<br><br>  pin = (pincfg &gt;&gt; TI_CC32XX_PIN_POS) &amp; TI_CC32XX_PIN_MSK;<br>  <span class="hljs-keyword">if</span> ((pin &gt;= ARRAY_SIZE(pin2pad)) || (pin2pad[pin] == <span class="hljs-number">255U</span>)) {<br>    <span class="hljs-keyword">return</span> -EINVAL;<br>  }<br><br>  sys_write32(pincfg &amp; MEM_GPIO_PAD_CONFIG_MSK, DT_INST_REG_ADDR(<span class="hljs-number">0</span>) + (pin2pad[pin] &lt;&lt; <span class="hljs-number">2U</span>));<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<p>接着在<code>pinctrl_ti_cs32xx.c</code>中，<code>pinctrl_configure_pin</code>函数，根据pin offset将其他配置写进对应的寄存器中。</p>
+<p>对应的fingerprint项目的pad register，可以实现的<code>pinctrl_soc_pin_t</code>可以参考：</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240131150328.png" srcset="/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Zephyr/">#Zephyr</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/12/30/Project/xv6/xv6_chapter1/" title="xv6_chapter1 Operating system interfaces">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">xv6_chapter1 Operating system interfaces</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/12/18/Note/Zephyr/Kernel/23-12-18_UserMode/" title="Zephyr -- System  Call">
+                        <span class="hidden-mobile">Zephyr -- System  Call</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
