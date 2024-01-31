@@ -142,6 +142,12 @@ zephyrproject/
 
 <p class="note note-info">Linux下run target will use the SDK’s QEMU binary by default.通过修改`QEMU_BIN_PATH`可以替换为自己下载的QEMU版本</p>
 
+### Custom Board, Devicetree and SOC Definitions
+
+可以将`board/`, `soc/` 放在application目录下。
+
+west build的时候需要``
+
 ## Optimization
 
 检查ram，rom使用空间：
@@ -151,98 +157,3 @@ west build -b reel_board samples/hello_world
 west build -t ram_report
 west build -t rom_report
 ```
-
-## West
-
-### Workspace concepts
-
-#### configuration file
-
-`.west/config` 配置文件，定义了manifest repository等。
-
-#### manifest file
-
-`west.yml` 描述了管理的其他git仓库。可以用`manifest.file`覆盖。执行`west update`可以更新所有git仓库。
-
-### Built-in commands
-
-`west help`: 查看支持的命令。
-`west <command> -h`: for detailed help.
-`west update -r`: sync的时候会rebase local commits.
-`west compare`: compare the state of the workspace against the manifest.
-`west diff`
-`west status`
-`west forall -c <command>`: 对所有仓库执行某个shell命令。
-`west grep`
-`west list`: 所有project信息。
-`west manifest`: 管理manifest文件。
-
-### Workspaces
-
-#### Topologies supported
-
-- star topology, zephyr is the manifest repository
-- star topology, a Zephyr application is the manifest repository
-- forest topology, freestanding manifest repository
-
-### West Manifests
-
-[West Manifests yaml文件](https://docs.zephyrproject.org/latest/develop/west/manifest.html#)
-
-### Configuration
-
-[west config 提供的一些选项](https://docs.zephyrproject.org/latest/develop/west/config.html)
-
-- System: `/etc/westconfig`
-- Global: `~/.westconfig`
-- local: `<REPO_DIR>/.west/config`
-
-通过`west config --system/global/local`可以设置。
-
-## Testing
-
-### Creating a test suite
-
-`ZTEST_SUITE`
-
-```c
-/**
- * Create and register a ztest suite. Using this macro creates a new test suite (using
- * ztest_test_suite). It then creates a struct ztest_suite_node in a specific linker section.
- *
- * Tests can then be run by calling ztest_run_test_suites(const void *state) by passing
- * in the current state. See the documentation for ztest_run_test_suites for more info.
- *
- * @param SUITE_NAME The name of the suite (see ztest_test_suite for more info)
- * @param PREDICATE A function to test against the state and determine if the test should run.
- * @param setup_fn The setup function to call before running this test suite
- * @param before_fn The function to call before each unit test in this suite
- * @param after_fn The function to call after each unit test in this suite
- * @param teardown_fn The function to call after running all the tests in this suite
-**/
-#define ZTEST_SUITE(SUITE_NAME, PREDICATE, setup_fn, before_fn, after_fn, teardown_fn)             \
-	struct ztest_suite_stats UTIL_CAT(z_ztest_suite_node_stats_, SUITE_NAME);                  \
-	static const STRUCT_SECTION_ITERABLE(ztest_suite_node,                                     \
-					     UTIL_CAT(z_ztest_test_node_, SUITE_NAME)) = {         \
-		.name = STRINGIFY(SUITE_NAME),                                                     \
-		.setup = (setup_fn),                                                               \
-		.before = (before_fn),                                                             \
-		.after = (after_fn),                                                               \
-		.teardown = (teardown_fn),                                                         \
-		.predicate = PREDICATE,                                                            \
-		.stats = &UTIL_CAT(z_ztest_suite_node_stats_, SUITE_NAME),             \
-	}
-```
-
-`.setup`: 每个test suite run都会调用一次。
-`.before`: 每个single test in the test suite run前都会调用一次。
-`.after`: 每个single test in the test suite run后都会调用一次。
-`.teardown`: 所有tests跑完后会调用一次。
-`.predicate`: return bool，判断是否要进行test。
-
-### Adding tests to a suite
-
-`ZTEST(suite_name, test_name)`: suite_name为上面通过ZTEST_SUITE创建的SUITE_NAME, test_name为测试名称。
-`ZTEST_USER(suite_name, test_name)`: 和ZTEST类似，不过在`CONFIG_USERSPACE`打开后，测试会跑在userspace线程。
-`ZTEST_F(suite_name, test_name)`: 和ZTEST类似，不过会自带一个名为`<suite_name>_fixture`的变量。
-`ZTEST_USER_F`：结合2,3两条。
