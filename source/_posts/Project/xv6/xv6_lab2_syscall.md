@@ -9,6 +9,8 @@ categories:
 
 ## Trace
 
+实现系统调用`int trace(int mask);`, 当调用mask中包含的系统调用号，打印出来。
+
 在Makefile中增加trace用户程序的编译
 
 ```Makefile
@@ -68,3 +70,14 @@ syscall(void)
 ```
 
 ## Sysinfo
+
+实现系统调用`int sysinfo(struct sysinfo *);`，返回free memory bytes和状态不是`UNUSED`的进程。
+
+其中：
+
+```c
+struct sysinfo {
+  uint64 freemem;   // amount of free memory (bytes)
+  uint64 nproc;     // number of process
+};
+```
