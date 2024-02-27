@@ -382,6 +382,250 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2024/02/25/Project/xv6/xv6_TA/" target="_self">
+          xv6 calling conventions and stack frames RISC-V
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/02/25/Project/xv6/xv6_TA/" target="_self">
+        <div>
+          caller: not preserved across fn call. 需要调用函数来保存寄存器。参考下面例子中的ra寄存器值。callee: preserved across fn call. 被调用函数来保存寄存器。    123456789101112131415161718sum_to:  mv t0, a0  li a0, 0    loop:  add a0, a0, t0  a
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-02-25 20:16" pubdate>
+              2024-02-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/xv6/">#xv6</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2024/02/01/Project/xv6/xv6_lab3_pgbtl/" target="_self">
+          xv6_lab3 pgtbl
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/02/01/Project/xv6/xv6_lab3_pgbtl/" target="_self">
+        <div>
+          Q1 Speed up system call这个实验的目的是将用户程序的虚拟地址USYSCALL映射到保存有进程pid的物理地址。这样不用通过系统调用getpid()的方式，直接通过ugetpid()访问虚拟地址就可以直接得到映射的进程pid。 1234567#define USYSCALL (TRAPFRAME - PGSIZE) // USYSCALL位于虚拟地址顶部Trapframe下面一
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-02-01 22:57" pubdate>
+              2024-02-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/xv6/">#xv6</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2024/02/01/Project/xv6/xv6_misc/" target="_self">
+          xv6 Misc
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/02/01/Project/xv6/xv6_misc/" target="_self">
+        <div>
+          xv6运行make qemumake clean Ctrl-p 打印进程。Ctrl-a x 退出qemu。 make grade 检查所有lab得分。./grade-lab-util sleep or make GRADEFLAGS=sleep grade 检查某一项作业得分。 GDB 调试sudo aptitude install gdb-multiarch: 解决ubuntu22.04 gdb
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-02-01 22:12" pubdate>
+              2024-02-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/xv6/">#xv6</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2024/02/01/Note/Zephyr/EnvBuild/24-02-01_Porting/" target="_self">
+          Zephyr -- Board Porting Guide
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/02/01/Note/Zephyr/EnvBuild/24-02-01_Porting/" target="_self">
+        <div>
+          Board/添加自定义的board：boards/&lt;arch&gt;/&lt;board&gt;/ 1234567891011boards/&lt;ARCH&gt;/plank├── board.cmake├── CMakeLists.txt├── doc│   ├── plank.png│   └── index.rst├── Kconfig.board├── Kconfig.defcon
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-02-01 11:09" pubdate>
+              2024-02-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Zephyr/">#Zephyr</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2024/01/31/Note/Zephyr/24-01-31_Misc/" target="_self">
           Zephyr -- Misc
         </a>
@@ -565,67 +809,6 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2024/01/26/Note/Zephyr/Driver/24-01-29_Interrupt/" target="_self">
-          Zephyr -- Interrupt Subsystem
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/01/26/Note/Zephyr/Driver/24-01-29_Interrupt/" target="_self">
-        <div>
-          Overviewhttps://docs.zephyrproject.org/latest/kernel/services/interrupts.html Multi-level Interrupt Handling如果要支持中断嵌套，需要打开CONFIG_MULTI_LEVEL_INTERRUPTS。CONFIG_2ND_LEVEL_INTERRUPTS, CONFIG_3RD_LEVEL_IN
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-01-26 09:30" pubdate>
-              2024-01-26
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Zephyr/">#Zephyr</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
         <a href="/2024/01/26/Note/Zephyr/Driver/24-01-26_GPIO/" target="_self">
           Zephyr -- GPIO Subsystem
         </a>
@@ -674,189 +857,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Zephyr/">#Zephyr</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2024/01/24/Misc/%E7%BB%88%E7%AB%AF%E5%BC%80%E5%90%AF%E4%BB%A3%E7%90%86/" target="_self">
-          Clash如何开启终端代理
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/01/24/Misc/%E7%BB%88%E7%AB%AF%E5%BC%80%E5%90%AF%E4%BB%A3%E7%90%86/" target="_self">
-        <div>
-          MacOS&amp;Linux参考：https://weilining.github.io/294.html 临时方法： 12export http_proxy=http://127.0.0.1:7890export https_proxy=$http_proxy  可以把命令写进.bash_profile或.zprofile永久生效：7890为端口号。 12345678910function p
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-01-24 20:47" pubdate>
-              2024-01-24
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Misc/" class="category-chain-item">Misc</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Misc/">#Misc</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2024/01/23/Misc/vscode/" target="_self">
-          Vscode备忘录
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/01/23/Misc/vscode/" target="_self">
-        <div>
-          keybindings.json: 键盘快捷方式json文件。setting.json: vscode设置文件。 块选择：shift+箭头 /  shift+Alt+鼠标 增加光标：Ctrl+Alt+上/下箭头 / Alt+click 复制一行：Shift+Alt+上/下箭头 移动一行：Alt+箭头 删除一行：Ctrl+Shift+K F2可以代码重构，对project下所有的函数名替换名称 格式
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-01-23 16:38" pubdate>
-              2024-01-23
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Misc/" class="category-chain-item">Misc</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Misc/">#Misc</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2024/01/22/Project/cs61a/Week2/" target="_self">
-          CS61A Week2
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/01/22/Project/cs61a/Week2/" target="_self">
-        <div>
-          1. Control1.4.1 Documentationdocstring。在函数名后在``````中描述函数信息。第一行用来描述函数，接着空一行，接着可以描述参数等。 help(pressure)可以查看函数帮助信息。 1234567891011&gt;&gt;&gt; def pressure(v, t, n):        """Compute the pressure in pasca
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-01-22 22:33" pubdate>
-              2024-01-22
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Project/" class="category-chain-item">Project</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/CS61A/">#CS61A</a>
             
           </div>
         

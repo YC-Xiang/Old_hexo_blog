@@ -16,15 +16,15 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Trace在Makefile中增加trace用户程序的编译 123UPROGS&#x3D;\  ...  $U&#x2F;_trace  在user&#x2F;user.h中增加函数声明 1int trace(int);  在usys.pl中增加user space trace函数的入口。可以看到user space调用的系统调用, 是由这个脚本生成的函数。以trace为例, 提供了trace函数的入口.global trac">
+    <meta name="description" content="Trace实现系统调用int trace(int mask);, 当调用mask中包含的系统调用号，打印出来。 在Makefile中增加trace用户程序的编译 123UPROGS&#x3D;\  ...  $U&#x2F;_trace  在user&#x2F;user.h中增加函数声明 1int trace(int);  在usys.pl中增加user space trace函数的入口。可以看到user space调用的系统">
 <meta property="og:type" content="article">
 <meta property="og:title" content="xv6_lab2 System calls">
-<meta property="og:url" content="https://yc-xiang.github.io/2024/01/04/Project/xv6/xv6_lab2/index.html">
+<meta property="og:url" content="https://yc-xiang.github.io/2024/01/04/Project/xv6/xv6_lab2_syscall/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Trace在Makefile中增加trace用户程序的编译 123UPROGS&#x3D;\  ...  $U&#x2F;_trace  在user&#x2F;user.h中增加函数声明 1int trace(int);  在usys.pl中增加user space trace函数的入口。可以看到user space调用的系统调用, 是由这个脚本生成的函数。以trace为例, 提供了trace函数的入口.global trac">
+<meta property="og:description" content="Trace实现系统调用int trace(int mask);, 当调用mask中包含的系统调用号，打印出来。 在Makefile中增加trace用户程序的编译 123UPROGS&#x3D;\  ...  $U&#x2F;_trace  在user&#x2F;user.h中增加函数声明 1int trace(int);  在usys.pl中增加user space trace函数的入口。可以看到user space调用的系统">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-01-04T14:51:28.000Z">
-<meta property="article:modified_time" content="2024-01-25T06:35:44.733Z">
+<meta property="article:modified_time" content="2024-02-26T01:51:54.751Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="xv6">
 <meta name="twitter:card" content="summary_large_image">
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          827 words
+          1k words
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          7 mins
+          9 mins
         
       </span>
     
@@ -314,7 +314,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年1月25日 下午
+                    本文最后更新于：2024年2月26日 上午
                   
                 
               </p>
@@ -322,7 +322,8 @@
             
               <div class="markdown-body">
                 
-                <h2 id="Trace"><a href="#Trace" class="headerlink" title="Trace"></a>Trace</h2><p>在Makefile中增加trace用户程序的编译</p>
+                <h2 id="Trace"><a href="#Trace" class="headerlink" title="Trace"></a>Trace</h2><p>实现系统调用<code>int trace(int mask);</code>, 当调用mask中包含的系统调用号，打印出来。</p>
+<p>在Makefile中增加trace用户程序的编译</p>
 <figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs Makefile">UPROGS=\<br>  ...<br>  $U/_trace<br></code></pre></td></tr></tbody></table></figure>
 
 <p>在<code>user/user.h</code>中增加函数声明</p>
@@ -335,7 +336,10 @@
 <p>函数具体实现如下:</p>
 <figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 在proc结构体中增加mask成员</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">proc</span> {</span><br>  <span class="hljs-comment">//...</span><br>  <span class="hljs-type">int</span> mask;<br>}<br><br><span class="hljs-comment">// 将user space传入的mask，传递给当前进程的mask变量</span><br>uint64 <span class="hljs-title function_">sys_trace</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>{<br>  <span class="hljs-keyword">if</span>(argint(<span class="hljs-number">0</span>, &amp;myproc()-&gt;mask) &lt; <span class="hljs-number">0</span>)<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br><br><span class="hljs-comment">// 随后执行的系统调用number如果 (1 &lt;&lt; num == mask), 则打印</span><br>syscall(<span class="hljs-type">void</span>)<br>{<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-keyword">if</span> ((<span class="hljs-number">1</span> &lt;&lt; num) &amp; p-&gt;mask)<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d: syscall %s -&gt; %d\n"</span>, p-&gt;pid, syscalls_name[num - <span class="hljs-number">1</span>], p-&gt;trapframe-&gt;a0);<br>}<br></code></pre></td></tr></tbody></table></figure>
 
-<h2 id="Sysinfo"><a href="#Sysinfo" class="headerlink" title="Sysinfo"></a>Sysinfo</h2>
+<h2 id="Sysinfo"><a href="#Sysinfo" class="headerlink" title="Sysinfo"></a>Sysinfo</h2><p>实现系统调用<code>int sysinfo(struct sysinfo *);</code>，返回free memory bytes和状态不是<code>UNUSED</code>的进程。</p>
+<p>其中：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sysinfo</span> {</span><br>  uint64 freemem;   <span class="hljs-comment">// amount of free memory (bytes)</span><br>  uint64 nproc;     <span class="hljs-comment">// number of process</span><br>};<br></code></pre></td></tr></tbody></table></figure>
+
                 
               </div>
             

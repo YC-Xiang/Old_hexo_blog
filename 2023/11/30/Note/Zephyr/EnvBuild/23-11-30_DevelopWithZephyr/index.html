@@ -24,7 +24,7 @@
 <meta property="og:description" content="Getting Started Guide设置Python虚拟环境 python3 -m venv ~&#x2F;zephyrproject&#x2F;.venv source ~&#x2F;zephyrproject&#x2F;.venv&#x2F;bin&#x2F;activate deactive 退出虚拟环境。 Remember to activate the virtual environment every time you start wor">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-11-30T06:17:28.000Z">
-<meta property="article:modified_time" content="2024-01-31T09:16:06.136Z">
+<meta property="article:modified_time" content="2024-02-01T03:01:11.524Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="Zephyr">
 <meta name="twitter:card" content="summary_large_image">
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.5k words
+          2.8k words
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          21 mins
+          24 mins
         
       </span>
     
@@ -314,7 +314,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年1月31日 下午
+                    本文最后更新于：2024年2月1日 上午
                   
                 
               </p>
@@ -362,8 +362,15 @@
 <h3 id="Building-an-Application"><a href="#Building-an-Application" class="headerlink" title="Building an Application"></a>Building an Application</h3><p><code>west build -b &lt;board&gt; samples/hello_world</code>: 编译。<br><code>west build -b &lt;board&gt;@&lt;revision&gt;</code>: 指定版本。<br><code>west build -t clean</code>：build clean, <code>.config</code>不会删除。<br><code>west build -t pristine</code>: build目录下全部清空。<br><code>west flash</code>: 将可执行文件烧进主板。每次执行west flash，app都会rebuild and flash again。<br><code>west build -t run</code>: 当选择的board是qemu_x86/qemu_cortex_m3，可以直接在qemu中run。每次执行west run，app都会rebuild and run again。</p>
 <p class="note note-info">Linux下run target will use the SDK’s QEMU binary by default.通过修改`QEMU_BIN_PATH`可以替换为自己下载的QEMU版本</p>
 
-<h3 id="Custom-Board-Devicetree-and-SOC-Definitions"><a href="#Custom-Board-Devicetree-and-SOC-Definitions" class="headerlink" title="Custom Board, Devicetree and SOC Definitions"></a>Custom Board, Devicetree and SOC Definitions</h3><p>可以将<code>board/</code>, <code>soc/</code> 放在application目录下。</p>
-<p>west build的时候需要``</p>
+<h3 id="Custom-Board-Devicetree-and-SOC-Definitions"><a href="#Custom-Board-Devicetree-and-SOC-Definitions" class="headerlink" title="Custom Board, Devicetree and SOC Definitions"></a>Custom Board, Devicetree and SOC Definitions</h3><p>有几种方法可以将<code>board/</code>, <code>soc/</code> <code>dts/</code>放在application目录下：</p>
+<p>1.Build的时候指定：<br><code>west build -b &lt;board name&gt; -- -DSOC_ROOT=&lt;path to soc&gt; -DBOARD_ROOT=&lt;path to boards&gt; -DDTS_ROOT=&lt;path to dts&gt;</code></p>
+<p>2.在app下的<code>module.yml</code>中指定:</p>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">build:</span><br>  <span class="hljs-attr">settings:</span><br>    <span class="hljs-attr">board_root:</span> <span class="hljs-string">.</span><br>    <span class="hljs-attr">dts_root:</span> <span class="hljs-string">.</span><br>    <span class="hljs-attr">soc_root:</span> <span class="hljs-string">.</span><br>    <span class="hljs-attr">arch_root:</span> <span class="hljs-string">.</span><br>    <span class="hljs-attr">module_ext_root:</span> <span class="hljs-string">.</span><br></code></pre></td></tr></tbody></table></figure>
+
+<p>3.在app下<code>CMakeList.txt</code>中指定：</p>
+<figure class="highlight cmake"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs CMake"><span class="hljs-keyword">list</span>(APPEND SOC_ROOT <span class="hljs-variable">${CMAKE_CURRENT_SOURCE_DIR}</span>/&lt;extra-soc-root&gt;)<br></code></pre></td></tr></tbody></table></figure>
+
+<p>注意需要在<code>find_package(Zephyr ...)</code>前。</p>
 <h2 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h2><p>检查ram，rom使用空间：</p>
 <figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">west build -b reel_board samples/hello_world<br>west build -t ram_report<br>west build -t rom_report<br></code></pre></td></tr></tbody></table></figure>
 

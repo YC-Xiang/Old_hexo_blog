@@ -24,7 +24,7 @@
 <meta property="og:description" content="Steppingstep(s)&#x2F;stepi(si) + &lt;n&gt;: 执行n行c&#x2F;assembly 代码, 会跳进函数。next(n)&#x2F;nexti(ni) + &lt;n&gt;: 执行n行c&#x2F;assembly 代码，不会跳进函数。 Runningcontinue(c): run code 直到遇到breakpoint。finish: run code直到当前函数return。advanc">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-08T10:00:28.000Z">
-<meta property="article:modified_time" content="2024-01-09T01:09:57.331Z">
+<meta property="article:modified_time" content="2024-02-26T01:51:54.751Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="GDB">
 <meta name="twitter:card" content="summary_large_image">
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k words
+          1.9k words
         
       </span>
     
@@ -314,7 +314,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年1月9日 上午
+                    本文最后更新于：2024年2月26日 上午
                   
                 
               </p>
@@ -327,7 +327,9 @@
 <h2 id="Breakpoints"><a href="#Breakpoints" class="headerlink" title="Breakpoints"></a>Breakpoints</h2><p><code>break &lt;location&gt;</code>: 设置断点，location可以是内存地址<code>"*0x7c00"</code>或者名称<code>"mon_backtrace", "monitor.c:71"</code><br><code>break &lt;location&gt; if &lt;condition&gt;</code>: 只有condition满足的时候才会break。<br><code>cond &lt;number&gt; &lt;condition&gt;</code>: 给某个断点增加condition。</p>
 <h2 id="Watchpoints"><a href="#Watchpoints" class="headerlink" title="Watchpoints"></a>Watchpoints</h2><p><code>watch &lt;expression&gt;</code>: 表达式值发生改变时，会停止执行指令。<br><code>watch -l &lt;address&gt;</code>: 内存地址的值发生改变时，会停止执行指令。<br><code>rwatch [-l] &lt;expression&gt;</code>: 表达式值被read后，会停止执行指令。</p>
 <h2 id="Examining"><a href="#Examining" class="headerlink" title="Examining"></a>Examining</h2><p><code>x</code>: 打印内存的原始数据，<code>x/x</code>十六进制，<code>x/i</code>汇编。<br><code>print(p)</code>: 打印C expression。<br><code>info registers</code>: 打印寄存器。<br><code>info frame</code>: 打印当前栈帧。<br><code>list &lt;location&gt;</code>: 打印具体位置的source code。<br><code>backtrace</code></p>
-<h2 id="Layout"><a href="#Layout" class="headerlink" title="Layout"></a>Layout</h2><p><code>layout &lt;name&gt;</code><br><code>layout src</code>：显示源代码窗口<br><code>layout asm</code>：显示汇编窗口<br><code>layout regs</code>：显示源代码/汇编和寄存器窗口<br><code>layout split</code>：显示源代码和汇编窗口<br><code>layout next</code>：显示下一个layout<br><code>layout prev</code>：显示上一个layout<br><code>Ctrl + L</code>：刷新窗口<br><code>Ctrl + x</code>，再按1：单窗口模式，显示一个窗口<br><code>Ctrl + x</code>，再按2：双窗口模式，显示两个窗口<br><code>Ctrl + x</code>，再按a：回到传统模式，即退出layout，回到执行layout之前的调试窗口。</p>
+<h2 id="Layout"><a href="#Layout" class="headerlink" title="Layout"></a>Layout</h2><p><code>tui enable</code></p>
+<p><code>layout &lt;name&gt;</code><br><code>layout src</code>：显示源代码窗口<br><code>layout asm</code>：显示汇编窗口<br><code>layout regs</code>：显示源代码/汇编和寄存器窗口<br><code>layout split</code>：显示源代码和汇编窗口<br><code>layout next</code>：显示下一个layout<br><code>layout prev</code>：显示上一个layout<br><code>Ctrl + L</code>：刷新窗口<br><code>Ctrl + x</code>，再按1：单窗口模式，显示一个窗口<br><code>Ctrl + x</code>，再按2：双窗口模式，显示两个窗口<br><code>Ctrl + x</code>，再按a：回到传统模式，即退出layout，回到执行layout之前的调试窗口。</p>
+<p><code>focus src/asm/regs</code>: 移动到某个窗口</p>
 <h2 id="Other-tricks"><a href="#Other-tricks" class="headerlink" title="Other tricks"></a>Other tricks</h2><p><code>set</code><br><code>symbol-file</code></p>
 <h2 id="GDB调试core-dump文件"><a href="#GDB调试core-dump文件" class="headerlink" title="GDB调试core dump文件"></a>GDB调试core dump文件</h2><p>默认程序运行触发core dump是不会生成core dump message的，运行<code>ulimit -c</code>可以发现为0.</p>
 <p>生成core dump文件: <code>ulimit -c unlimited</code><br>设置core dump文件路径为当前目录并写入系统环境变量。</p>

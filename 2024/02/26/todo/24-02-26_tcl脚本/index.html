@@ -16,24 +16,24 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="make qemumake clean Ctrl-p 打印进程。Ctrl-a x 退出qemu。 make grade 检查所有lab得分。.&#x2F;grade-lab-util sleep or make GRADEFLAGS&#x3D;sleep grade 检查某一项作业得分。">
+    <meta name="description" content="置换变量置换$1234prompt &gt; set x 1010prompt &gt; set y $x+110+1  这里x的值已经被替换成 10 ，但是没有执行我们想要的 x+1 计算。这时就要用到命令置换。 1234expr 5&#x2F;41expr 5.0&#x2F;41.25  默认除法不是浮点数除法。 命令置换[]命令置换会导致某一个命令的所有或部分单词被另一个命令的结果所代替。 12prompt &amp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="xv6_lab1 Unix utilities">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/12/30/Project/xv6/xv6_lab1/index.html">
+<meta property="og:title" content="TCL脚本语法">
+<meta property="og:url" content="https://yc-xiang.github.io/2024/02/26/todo/24-02-26_tcl%E8%84%9A%E6%9C%AC/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="make qemumake clean Ctrl-p 打印进程。Ctrl-a x 退出qemu。 make grade 检查所有lab得分。.&#x2F;grade-lab-util sleep or make GRADEFLAGS&#x3D;sleep grade 检查某一项作业得分。">
+<meta property="og:description" content="置换变量置换$1234prompt &gt; set x 1010prompt &gt; set y $x+110+1  这里x的值已经被替换成 10 ，但是没有执行我们想要的 x+1 计算。这时就要用到命令置换。 1234expr 5&#x2F;41expr 5.0&#x2F;41.25  默认除法不是浮点数除法。 命令置换[]命令置换会导致某一个命令的所有或部分单词被另一个命令的结果所代替。 12prompt &amp;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-12-30T14:56:28.000Z">
-<meta property="article:modified_time" content="2024-01-25T01:34:23.084Z">
+<meta property="article:published_time" content="2024-02-26T01:54:28.000Z">
+<meta property="article:modified_time" content="2024-02-27T09:26:33.150Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="xv6">
+<meta property="article:tag" content="Misc">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>xv6_lab1 Unix utilities - Yucheng&#39;s Blog</title>
+  <title>TCL脚本语法 - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +229,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">xv6_lab1 Unix utilities</span>
+            <span id="subtitle">TCL脚本语法</span>
           
         </div>
 
@@ -240,8 +240,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-12-30 22:56" pubdate>
-          2023年12月30日 晚上
+        <time datetime="2024-02-26 09:54" pubdate>
+          2024年2月26日 上午
         </time>
       </span>
     
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          119 words
+          766 words
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          1 mins
+          7 mins
         
       </span>
     
@@ -309,12 +309,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">xv6_lab1 Unix utilities</h1>
+            <h1 style="display: none">TCL脚本语法</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年1月25日 上午
+                    本文最后更新于：2024年2月27日 下午
                   
                 
               </p>
@@ -322,9 +322,47 @@
             
               <div class="markdown-body">
                 
-                <p><code>make qemu</code><br><code>make clean</code></p>
-<p><code>Ctrl-p</code> 打印进程。<br><code>Ctrl-a x</code> 退出qemu。</p>
-<p><code>make grade</code> 检查所有lab得分。<br><code>./grade-lab-util sleep</code> or <code>make GRADEFLAGS=sleep grade</code> 检查某一项作业得分。</p>
+                <h2 id="置换"><a href="#置换" class="headerlink" title="置换"></a>置换</h2><h3 id="变量置换"><a href="#变量置换" class="headerlink" title="变量置换$"></a>变量置换$</h3><figure class="highlight tcl"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs tcl">prompt &gt; <span class="hljs-keyword">set</span> x <span class="hljs-number">10</span><br><span class="hljs-number">10</span><br>prompt &gt; <span class="hljs-keyword">set</span> y <span class="hljs-variable">$x</span>+<span class="hljs-number">1</span><br><span class="hljs-number">10</span>+<span class="hljs-number">1</span><br></code></pre></td></tr></tbody></table></figure>
+
+<p>这里x的值已经被替换成 10 ，但是没有执行我们想要的 x+1 计算。这时就要用到命令置换。</p>
+<figure class="highlight tcl"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs tcl"><span class="hljs-keyword">expr</span> <span class="hljs-number">5</span>/<span class="hljs-number">4</span><br><span class="hljs-number">1</span><br><span class="hljs-keyword">expr</span> <span class="hljs-number">5.0</span>/<span class="hljs-number">4</span><br><span class="hljs-number">1.25</span><br></code></pre></td></tr></tbody></table></figure>
+
+<p>默认除法不是浮点数除法。</p>
+<h3 id="命令置换"><a href="#命令置换" class="headerlink" title="命令置换[]"></a>命令置换[]</h3><p>命令置换会导致某一个命令的所有或部分单词被另一个命令的结果所代替。</p>
+<figure class="highlight tcl"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs tcl">prompt &gt; <span class="hljs-keyword">set</span> y [<span class="hljs-keyword">expr</span> <span class="hljs-variable">$x</span>+<span class="hljs-number">1</span>]<br><span class="hljs-number">11</span><br></code></pre></td></tr></tbody></table></figure>
+
+<h3 id="反斜杠置换"><a href="#反斜杠置换" class="headerlink" title="反斜杠置换"></a>反斜杠置换</h3><p>类似于C语言中反斜杠的用法，主要用于在单词符号中插入诸如换行符、空格、[]、$等被TCL解释器当作特殊符号对待的字符。</p>
+<figure class="highlight tcl"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs tcl">prompt &gt; <span class="hljs-keyword">set</span> msg multiple\ space<br>multiple space<br></code></pre></td></tr></tbody></table></figure>
+
+<p>如果没有 \ 的话，TCL会报错，因为解释器会把这里最后两个单词之间的空格认为是分隔符，于是发现set命令有多于两个参数，从而报错。加入了 \ 后，空格不被当作分隔符，multiple space 被认为是一个 单词。</p>
+<p>TCL支持以下反斜杠置换：</p>
+<table>
+<thead>
+<tr>
+<th>Backslash Sequence</th>
+<th>Replaced By</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\a</td>
+<td>Audible alert (0x7)</td>
+</tr>
+<tr>
+<td>\b</td>
+<td>Backspace (0x8)</td>
+</tr>
+<tr>
+<td>\f</td>
+<td>Form feed (0xc)</td>
+</tr>
+</tbody></table>
+<h3 id="双括号和花括号"><a href="#双括号和花括号" class="headerlink" title="双括号和花括号"></a>双括号和花括号</h3><p>TCL解释器对双引号中的各种分隔符将不作处理，但是对换行符 及＄和[]两种置换符会照常处理。</p>
+<figure class="highlight tcl"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs tcl">OpenSees &gt; <span class="hljs-keyword">set</span>  x  <span class="hljs-number">100</span><br><span class="hljs-number">100</span><br>OpenSees &gt; <span class="hljs-keyword">set</span>  y  <span class="hljs-string">"$x   ddd"</span><br><span class="hljs-number">100</span>   ddd<br></code></pre></td></tr></tbody></table></figure>
+
+<p>在花括号中，所有特殊字符都将成为普通字符，失去其特殊意义，TCL解释器不会对其作特殊处理。</p>
+<figure class="highlight tcl"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs tcl">OpenSees &gt; <span class="hljs-keyword">set</span>  y {/n<span class="hljs-variable">$x</span>   [<span class="hljs-keyword">expr</span> <span class="hljs-number">10</span>+<span class="hljs-number">100</span>]}<br>/n<span class="hljs-variable">$x</span>   [<span class="hljs-keyword">expr</span> <span class="hljs-number">10</span>+<span class="hljs-number">100</span>]<br></code></pre></td></tr></tbody></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://openseescheck.readthedocs.io/en/latest/tcl.html">https://openseescheck.readthedocs.io/en/latest/tcl.html</a></p>
 
                 
               </div>
@@ -343,7 +381,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  <a href="/categories/Misc/" class="category-chain-item">Misc</a>
   
   
 
@@ -358,7 +396,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/xv6/">#xv6</a>
+        <a href="/tags/Misc/">#Misc</a>
       
     </div>
   
@@ -367,29 +405,6 @@
 
               
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2024/01/04/Project/xv6/xv6_chapter2/" title="xv6_chapter2 Operating system organization">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">xv6_chapter2 Operating system organization</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2023/12/30/Project/xv6/xv6_chapter1/" title="xv6_chapter1 Operating system interfaces">
-                        <span class="hidden-mobile">xv6_chapter1 Operating system interfaces</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
               
             </div>
 

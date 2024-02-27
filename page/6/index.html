@@ -258,6 +258,311 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/04/25/Project/rCore_uCore/uCore_Chapter2/" target="_self">
+          uCore_Chapter2 批处理系统
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/25/Project/rCore_uCore/uCore_Chapter2/" target="_self">
+        <div>
+          123456make -C user clean # 在os目录，相当于cd user;make clean;cd ..make clean # 或者在user目录git checkout ch2make user BASE=1 CHAPTER=2make runmake test BASE=1 # make test 会完成　make user 和 make run 两个步骤（自动设置 CHAP
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-04-25 23:11" pubdate>
+              2023-04-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/uCore/">#uCore</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/04/19/Misc/U-Boot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" target="_self">
+          U-Boot启动流程
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/19/Misc/U-Boot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" target="_self">
+        <div>
+          Uboot编译流程https://blog.csdn.net/ooonebook/article/details/53000893 编译生成的文件：   具体可以参考Uboot Makefile u-boot Makefile12345678910111213141516171819202122232425262728293031323334353637u-boot.cfg: $(Q)$(MAKE
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-04-19 14:10" pubdate>
+              2023-04-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Misc/" class="category-chain-item">Misc</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/U-Boot/">#U-Boot</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/04/13/Note/Linux_Driver/I2C/" target="_self">
+          I2C Subsystem
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/13/Note/Linux_Driver/I2C/" target="_self">
+        <div>
+          用户层测试指令12345678910111213# 检测当前系统有几组i2c总线i2cdetect -l# 查看i2c-0接口上的设备i2cdetect -y -a 0 # Force scanning of non-regular addressesi2cdetect -y -r 0# 读取指定设备的全部寄存器的值i2cdump -f -y 0 0x68# 读取指定i2c设备的某个寄存器的值，如
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-04-13 17:40" pubdate>
+              2023-04-13
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Linux-driver/">#Linux driver</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/04/13/Note/23-04-13_Buildroot/" target="_self">
+          Buildroot
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/04/13/Note/23-04-13_Buildroot/" target="_self">
+        <div>
+          Notes./lanuch 最终的操作是 12cd sdk_3921/buildroot-dist # 进入buildroot目录make BR2_EXTERNAL=sdk_3921/platform/ O=sdk3921/out/rts3923_fpga/ rts3923_fpga_defconfig    12345678local.mk # BR2_PACKAGE_OVERRIDE_FILE
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-04-13 17:39" pubdate>
+              2023-04-13
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Buildroot/">#Buildroot</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/03/21/Note/Linux_Driver/PWM/" target="_self">
+          PWM Subsystem
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/21/Note/Linux_Driver/PWM/" target="_self">
+        <div>
+          PWM 子系统PWM原理 利用微处理器的数字输出来对模拟电路进行控制的一种非常有效的技术，其本质是一种对模拟信号电平进行数字编码的方法。在嵌入式设备中，PWM多用于控制马达、LED、振动器等模拟器件。  脉冲周期（T），单位是时间，ns, us ,ms。 脉冲频率（f），单位是赫兹（Hz），与脉冲周期成倒数关系，f=1/T。 脉冲宽度（W），简称“脉宽”，是脉冲高电平持续的时间。单位是时间，ns,
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-03-21 16:00" pubdate>
+              2023-03-21
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Linux-driver/">#Linux driver</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/01/31/Project/ICS/PA2/" target="_self">
           ICS2022 PA2
         </a>
@@ -543,311 +848,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/ICS/">#ICS</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/01/09/Book/23-01-09_RISC-V%E7%AC%AC%E5%8D%81%E7%AB%A0/" target="_self">
-          RISC-V手册 第十章 RISC-V特权架构
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/09/Book/23-01-09_RISC-V%E7%AC%AC%E5%8D%81%E7%AB%A0/" target="_self">
-        <div>
-          10.1 导言到目前为止，本书主要关注RISC-V 对通用计算的支持：我们引入的所有指令都在用户模式（User mode 应用程序的代码在此模式下运行）下可用。本章介绍两种新的权限模式：运行最可信的代码的机器模式（machine mode），以及为Linux，FreeBSD 和Windows 等操作系统提供支持的监管者模式（supervisor mode）。 图10.1是RISC-V 特权指令的图
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-01-09 17:13" pubdate>
-              2023-01-09
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Book/" class="category-chain-item">Book</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/RISC-V/">#RISC-V</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/01/06/Book/23-01-06_RISC-V%E7%AC%AC%E4%B8%89%E5%9B%9B%E7%AB%A0/" target="_self">
-          RISC-V手册 第三、四章 RISC-V汇编语言，乘法和除法指令
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/06/Book/23-01-06_RISC-V%E7%AC%AC%E4%B8%89%E5%9B%9B%E7%AB%A0/" target="_self">
-        <div>
-          第三章 RISC-V汇编语言3.2 函数调用规范 3.3 汇编器这类指令在巧妙配置常规指令的基础上实现，称为伪指令。图 3.3和 3.4列出了 RISC-V伪指令。 汇编程序的开头是一些汇编指示符，它们是汇编器的命令。图 3.9是RISC-V的汇编指示符。其中图 3.6中用到的指示符有：  .text：进入代码段。 .align 2：后续代码按2^2字节对齐。 .globl main：声明全局符号
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-01-06 17:44" pubdate>
-              2023-01-06
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Book/" class="category-chain-item">Book</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/RISC-V/">#RISC-V</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/01/06/Book/23-01-06_RISC-V%E7%AC%AC%E4%BA%8C%E7%AB%A0/" target="_self">
-          RISC-V手册 第二章 RV32I基础整数指令集
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/06/Book/23-01-06_RISC-V%E7%AC%AC%E4%BA%8C%E7%AB%A0/" target="_self">
-        <div>
-          1.2 模块化与增量型 ISA​和几乎所有以往的 ISA不同，RISC-V是模块化的。它的核心是一个名为RV32I的基础 ISA，运行一个完整的软件栈。RV32I是固定的，永远不会改变。模块化来源于可选的标准扩展，根据应用程序的需要，硬件可以包含或不包含这些扩展。可以生成当前硬件条件下的最佳代码。惯例是把代表扩展的字母附加到指令集名称之后作为指示。例如，RV32IMFD将乘法（ RV32M），单精
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-01-06 16:39" pubdate>
-              2023-01-06
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Book/" class="category-chain-item">Book</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/RISC-V/">#RISC-V</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/01/05/Ref/Markdown%E8%AF%AD%E6%B3%95/" target="_self">
-          Markdown and theme Fluid syntax
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/01/05/Ref/Markdown%E8%AF%AD%E6%B3%95/" target="_self">
-        <div>
-          TagsMethod 1:              Markdown             123{% note success %}success{% endnote %}  Method 2: html  1&lt;p class="note note-info"&gt;html&lt;/p&gt;  Support various colors: primary secondary su
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-01-05 16:22" pubdate>
-              2023-01-05
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Markdown/">#Markdown</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/26/legacy/power_management/" target="_self">
-          电源管理
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/04/26/legacy/power_management/" target="_self">
-        <div>
-          This article is out of date and need to rewrite. http://www.wowotech.net/pm_subsystem/suspend_and_resume.html Linux内核提供了三种Suspend: Freeze、Standby和STR(Suspend to RAM)，在用户空间向”/sys/power/state”文件分别写入”fre
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-26 10:19" pubdate>
-              2022-04-26
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Legacy/" class="category-chain-item">Legacy</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Legacy/">#Legacy</a>
             
           </div>
         

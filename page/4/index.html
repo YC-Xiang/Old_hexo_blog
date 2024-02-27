@@ -258,6 +258,311 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/10/17/Project/ICS/PA0/" target="_self">
+          ICS2022 PA0
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/10/17/Project/ICS/PA0/" target="_self">
+        <div>
+          1. 环境配置1.1 虚拟机安装网络选择桥接网络，复制物理状态 1.2 软件安装1234567891011apt-get install vim # vimapt-get install openssh-server # sshapt-get install build-essential    # build-essential packages, include binary utilitie
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-10-17 16:47" pubdate>
+              2023-10-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/ICS/">#ICS</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/09/12/Book/23-09-12_I2C_spec/" target="_self">
+          I2C spec
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/12/Book/23-09-12_I2C_spec/" target="_self">
+        <div>
+          ReferenceI2C 为什么要用开漏输出，而不能用推挽输出。  防止短路。两个push pull输出相连，如果一个输出高，一个输出低，会短路。 线与。开漏输出有一个输出端输出低，则整条线都为低，所有输出高才为高。https://www.zhihu.com/question/534999506https://www.eet-china.com/mp/a87499.html  以上都是针对mult
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-12 15:15" pubdate>
+              2023-09-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Book/" class="category-chain-item">Book</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Spec/">#Spec</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/09/06/Misc/%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D.bss%E5%8F%98%E9%87%8F%E8%BD%AC%E5%8C%96%E6%88%90.data%E6%AE%B5%E5%8F%98%E9%87%8F/" target="_self">
+          如何避免.bss变量转化成.data段变量
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/06/Misc/%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D.bss%E5%8F%98%E9%87%8F%E8%BD%AC%E5%8C%96%E6%88%90.data%E6%AE%B5%E5%8F%98%E9%87%8F/" target="_self">
+        <div>
+          发现在一个.c文件中有一个初始化为非0的全局变量或静态变量，会使这整个文件中定义的全局变量或静态变量都由.bss段转化为.data段。 .data段的变量会在mcu boot阶段的clib会对这些变量做初始化，**.bss段**可以透过keilc的config如下图控制是否要跳过clib的初始化为0（目前我们的配置是把IRAM配置为不要初始化）这样的话，我们的芯片在suspend或sleep之后，
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-06 14:12" pubdate>
+              2023-09-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Misc/" class="category-chain-item">Misc</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Misc/">#Misc</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/09/06/Book/23-09-06_Cortex-M3%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/" target="_self">
+          Cortex-M3权威指南
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/06/Book/23-09-06_Cortex-M3%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/" target="_self">
+        <div>
+          Reference 《Cortex-M3权威指南》 《ARMv7-M Architecture Reference Manual》 《Cortex-M3 Technical Reference Manual》  Chapter1 介绍Cortex－M3处理器（CM3）采用ARMv7-M架构，它包括所有的16位Thumb指令集和基本的32位Thumb-2指令集架构，Cortex-M3处理器不能执行A
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-06 09:43" pubdate>
+              2023-09-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Book/" class="category-chain-item">Book</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Book/">#Book</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/08/15/Note/USB/DFU/" target="_self">
+          DFU(Device Firmware Upgrade)
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/08/15/Note/USB/DFU/" target="_self">
+        <div>
+          2. Overview四个阶段：  Enumeration device告知host具备的能力。通过Run-Time Descriptor中增加的DFU class-interface descriptor和functional descriptor实现。   Reconfiguration host和device同意初始固件升级。host会发送一次USB reset，设备会exports DFU
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-08-15 17:39" pubdate>
+              2023-08-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/usb/">#usb</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/06/15/Note/USB/usb%20driver/" target="_self">
           linux usb driver
         </a>
@@ -550,311 +855,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Rust/">#Rust</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/05/19/Note/Linux_Driver/Universal/" target="_self">
-          Linux Driver Common Essentials
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/19/Note/Linux_Driver/Universal/" target="_self">
-        <div>
-          NOT indexedinclude &lt;asm/xxx.h&gt; 先找arch/xxx/include/xxx.h，没有的话就找/include/asm-generic/xxx.h 从dts中获取regs地址并映射到virtual address: linux5.10: void __iomem *devm_platform_get_and_ioremap_resource(struct
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-05-19 22:25" pubdate>
-              2023-05-19
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Linux-driver/">#Linux driver</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/05/17/Project/rCore_uCore/uCore_Chapter3/" target="_self">
-          uCore_Chapter3 多道程序与分时多任务
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/17/Project/rCore_uCore/uCore_Chapter3/" target="_self">
-        <div>
-          分时多任务系统与抢占式调度RISC-V架构中断以内核所在的 S 特权级为例，中断屏蔽相应的 CSR 有 sstatus 和 sie 。sstatus 的 sie 为 S 特权级的中断使能，能够同时控制三种中断，如果将其清零则会将它们全部屏蔽。即使 sstatus.sie 置 1 ，还要看 sie 这个 CSR，它的三个字段 ssie/stie/seie 分别控制 S 特权级的软件中断、时钟中断和外
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-05-17 20:20" pubdate>
-              2023-05-17
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Project/" class="category-chain-item">Project</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/uCore/">#uCore</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/05/15/Note/Linux_Driver/Uart/" target="_self">
-          Uart Subsystem
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/15/Note/Linux_Driver/Uart/" target="_self">
-        <div>
-          Referencehttps://www.kernel.org/doc/Documentation/serial/driver Introduction波特率115200，bps每秒传输的bit数。 每一位1/115200秒，传输1byte需要10位（start, data, stop）,那么每秒能传11520byte。 115200，8n1。8:data，n:校验位不用，1：停止位。  TTY体
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-05-15 22:25" pubdate>
-              2023-05-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Linux-driver/">#Linux driver</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/05/12/Note/Linux_Driver/GPIO/" target="_self">
-          GPIO Subsystem
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/12/Note/Linux_Driver/GPIO/" target="_self">
-        <div>
-          https://zhuanlan.zhihu.com/p/41942876 push pull推挽输出 推挽输出的最大特点是可以真正能真正的输出高电平和低电平，在两种电平下都具有驱动能力。 open drain开漏输出 open source开集输出 这两种输出的原理和特性基本是类似的，区别在于一个是使用MOS管，其中的”漏”指的就是MOS管的漏极；另一个使用三极管，其中的”集”指的就是MOS三极
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-05-12 10:19" pubdate>
-              2023-05-12
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Linux-driver/">#Linux driver</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/05/10/Note/Linux_Driver/CMA&amp;DMA/" target="_self">
-          CMA&amp;DMA
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/10/Note/Linux_Driver/CMA&amp;DMA/" target="_self">
-        <div>
-          Reserved-memory参考：http://www.wowotech.net/memory_management/cma.html https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841683/Linux+Reserved+Memory?view=blog /Documentation/devicetree/bindings/r
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-05-10 17:40" pubdate>
-              2023-05-10
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Linux-driver/" class="category-chain-item">Linux driver</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Linux-driver/">#Linux driver</a>
             
           </div>
         
