@@ -1,11 +1,11 @@
 ---
 title: 安全加密算法
 date: 2023-08-15 17:39:28
+hide: true
 tags:
 - 加密算法
 categories:
 - Notes
-hide: true
 ---
 
 # 1. 非可逆加密

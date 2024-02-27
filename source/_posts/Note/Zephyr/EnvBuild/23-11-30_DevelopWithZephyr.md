@@ -144,9 +144,30 @@ zephyrproject/
 
 ### Custom Board, Devicetree and SOC Definitions
 
-可以将`board/`, `soc/` 放在application目录下。
+有几种方法可以将`board/`, `soc/` `dts/`放在application目录下：
 
-west build的时候需要``
+1.Build的时候指定：
+`west build -b <board name> -- -DSOC_ROOT=<path to soc> -DBOARD_ROOT=<path to boards> -DDTS_ROOT=<path to dts>`
+
+2.在app下的`module.yml`中指定:
+
+```yaml
+build:
+  settings:
+    board_root: .
+    dts_root: .
+    soc_root: .
+    arch_root: .
+    module_ext_root: .
+```
+
+3.在app下`CMakeList.txt`中指定：
+
+```CMake
+list(APPEND SOC_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/<extra-soc-root>)
+```
+
+注意需要在`find_package(Zephyr ...)`前。
 
 ## Optimization
 
