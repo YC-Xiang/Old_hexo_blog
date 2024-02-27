@@ -2,7 +2,7 @@
 title: xv6_chapter3 Page tables
 date: 2024-1-11 22:30:28
 tags:
-- xv6
+- xv6 OS
 categories:
 - Project
 ---

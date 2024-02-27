@@ -2,7 +2,7 @@
 title: xv6_chapter1 Operating system interfaces
 date: 2023-12-30 15:12:28
 tags:
-- xv6
+- xv6 OS
 categories:
 - Project
 ---

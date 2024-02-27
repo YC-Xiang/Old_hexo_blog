@@ -2,7 +2,7 @@
 title: xv6_lab3 pgtbl
 date: 2024-2-1 22:57:28
 tags:
-- xv6
+- xv6 OS
 categories:
 - Project
 ---

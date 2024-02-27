@@ -2,7 +2,7 @@
 title: xv6 calling conventions and stack frames RISC-V
 date: 2024-2-25 20:16:28
 tags:
-- xv6
+- xv6 OS
 categories:
 - Project
 ---

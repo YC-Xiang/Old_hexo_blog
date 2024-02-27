@@ -2,7 +2,7 @@
 title: xv6 Misc
 date: 2024-2-1 22:12:28
 tags:
-- xv6
+- xv6 OS
 categories:
 - Project
 ---

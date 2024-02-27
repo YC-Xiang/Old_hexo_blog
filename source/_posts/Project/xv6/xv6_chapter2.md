@@ -2,7 +2,7 @@
 title: xv6_chapter2 Operating system organization
 date: 2024-1-4 20:57:28
 tags:
-- xv6
+- xv6 OS
 categories:
 - Project
 ---
