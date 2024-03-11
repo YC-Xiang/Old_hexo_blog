@@ -16,24 +16,31 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="TestingCreating a test suiteZTEST_SUITE 1234567891011121314151617181920212223242526&#x2F;** * Create and register a ztest suite. Using this macro creates a new test suite (using * ztest_test_suite). It the">
+    <meta name="description" content="Numpytodo: MatplotlibReference官网API参考TutorialTutorial中示例ipynb文件   安装Matplotlib：pip install matplotlib Figure对应的API设置如图：  常用的API: markers, line sytles, colors 1234567891011plt.plot([1, 2, 3, 4], [1, 4,">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Zephyr -- ZTest">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/11/30/Note/Zephyr/EnvBuild/23-11-30_ZTest/index.html">
+<meta property="og:title" content="Python Numpy&amp;Matplotlib笔记">
+<meta property="og:url" content="https://yc-xiang.github.io/2024/03/11/todo/24-03-11_Numpy&Matplotlib/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="TestingCreating a test suiteZTEST_SUITE 1234567891011121314151617181920212223242526&#x2F;** * Create and register a ztest suite. Using this macro creates a new test suite (using * ztest_test_suite). It the">
+<meta property="og:description" content="Numpytodo: MatplotlibReference官网API参考TutorialTutorial中示例ipynb文件   安装Matplotlib：pip install matplotlib Figure对应的API设置如图：  常用的API: markers, line sytles, colors 1234567891011plt.plot([1, 2, 3, 4], [1, 4,">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-11-30T07:48:28.000Z">
-<meta property="article:modified_time" content="2024-02-27T09:30:03.844Z">
+<meta property="og:image" content="https://matplotlib.org/stable/_images/anatomy.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/cheatsheet1.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/cheatsheet2.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/beginer.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/intermediate.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/tips.png">
+<meta property="article:published_time" content="2024-03-11T06:52:28.000Z">
+<meta property="article:modified_time" content="2024-03-11T09:50:58.803Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="Zephyr">
+<meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://matplotlib.org/stable/_images/anatomy.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Zephyr -- ZTest - Yucheng&#39;s Blog</title>
+  <title>Python Numpy&amp;Matplotlib笔记 - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +236,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Zephyr -- ZTest</span>
+            <span id="subtitle">Python Numpy&Matplotlib笔记</span>
           
         </div>
 
@@ -240,8 +247,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-11-30 15:48" pubdate>
-          2023年11月30日 下午
+        <time datetime="2024-03-11 14:52" pubdate>
+          2024年3月11日 下午
         </time>
       </span>
     
@@ -252,7 +259,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k words
+          945 words
         
       </span>
     
@@ -263,7 +270,7 @@
         
         
         
-          15 mins
+          8 mins
         
       </span>
     
@@ -309,12 +316,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Zephyr -- ZTest</h1>
+            <h1 style="display: none">Python Numpy&amp;Matplotlib笔记</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年2月27日 下午
+                    本文最后更新于：2024年3月11日 下午
                   
                 
               </p>
@@ -322,11 +329,28 @@
             
               <div class="markdown-body">
                 
-                <h2 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h2><h3 id="Creating-a-test-suite"><a href="#Creating-a-test-suite" class="headerlink" title="Creating a test suite"></a>Creating a test suite</h3><p><code>ZTEST_SUITE</code></p>
-<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Create and register a ztest suite. Using this macro creates a new test suite (using</span><br><span class="hljs-comment"> * ztest_test_suite). It then creates a struct ztest_suite_node in a specific linker section.</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * Tests can then be run by calling ztest_run_test_suites(const void *state) by passing</span><br><span class="hljs-comment"> * in the current state. See the documentation for ztest_run_test_suites for more info.</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * @param SUITE_NAME The name of the suite (see ztest_test_suite for more info)</span><br><span class="hljs-comment"> * @param PREDICATE A function to test against the state and determine if the test should run.</span><br><span class="hljs-comment"> * @param setup_fn The setup function to call before running this test suite</span><br><span class="hljs-comment"> * @param before_fn The function to call before each unit test in this suite</span><br><span class="hljs-comment"> * @param after_fn The function to call after each unit test in this suite</span><br><span class="hljs-comment"> * @param teardown_fn The function to call after running all the tests in this suite</span><br><span class="hljs-comment">**/</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> ZTEST_SUITE(SUITE_NAME, PREDICATE, setup_fn, before_fn, after_fn, teardown_fn)             \</span><br><span class="hljs-meta">  struct ztest_suite_stats UTIL_CAT(z_ztest_suite_node_stats_, SUITE_NAME);                  \</span><br><span class="hljs-meta">  static const STRUCT_SECTION_ITERABLE(ztest_suite_node,                                     \</span><br><span class="hljs-meta">               UTIL_CAT(z_ztest_test_node_, SUITE_NAME)) = {         \</span><br><span class="hljs-meta">    .name = STRINGIFY(SUITE_NAME),                                                     \</span><br><span class="hljs-meta">    .setup = (setup_fn),                                                               \</span><br><span class="hljs-meta">    .before = (before_fn),                                                             \</span><br><span class="hljs-meta">    .after = (after_fn),                                                               \</span><br><span class="hljs-meta">    .teardown = (teardown_fn),                                                         \</span><br><span class="hljs-meta">    .predicate = PREDICATE,                                                            \</span><br><span class="hljs-meta">    .stats = &amp;UTIL_CAT(z_ztest_suite_node_stats_, SUITE_NAME),             \</span><br><span class="hljs-meta">  }</span><br></code></pre></td></tr></tbody></table></figure>
+                <h1 id="Numpy"><a href="#Numpy" class="headerlink" title="Numpy"></a>Numpy</h1><p>todo:</p>
+<h1 id="Matplotlib"><a href="#Matplotlib" class="headerlink" title="Matplotlib"></a>Matplotlib</h1><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://matplotlib.org/stable/">官网</a><br><a target="_blank" rel="noopener" href="https://matplotlib.org/3.8.3/api/index.html">API参考</a><br><a target="_blank" rel="noopener" href="https://matplotlib.org/stable/tutorials/pyplot.html#sphx-glr-tutorials-pyplot-py">Tutorial</a><br><a target="_blank" rel="noopener" href="https://matplotlib.org/stable/_downloads/0e5d53c90d360a55082257e36bfaa2c2/pyplot.ipynb">Tutorial中示例ipynb文件</a></p>
+<br>
 
-<p><code>.setup</code>: 每个test suite run都会调用一次。<br><code>.before</code>: 每个single test in the test suite run前都会调用一次。<br><code>.after</code>: 每个single test in the test suite run后都会调用一次。<br><code>.teardown</code>: 所有tests跑完后会调用一次。<br><code>.predicate</code>: return bool，判断是否要进行test。</p>
-<h3 id="Adding-tests-to-a-suite"><a href="#Adding-tests-to-a-suite" class="headerlink" title="Adding tests to a suite"></a>Adding tests to a suite</h3><p><code>ZTEST(suite_name, test_name)</code>: suite_name为上面通过ZTEST_SUITE创建的SUITE_NAME, test_name为测试名称。<br><code>ZTEST_USER(suite_name, test_name)</code>: 和ZTEST类似，不过在<code>CONFIG_USERSPACE</code>打开后，测试会跑在userspace线程。<br><code>ZTEST_F(suite_name, test_name)</code>: 和ZTEST类似，不过会自带一个名为<code>&lt;suite_name&gt;_fixture</code>的变量。<br><code>ZTEST_USER_F</code>：结合2,3两条。</p>
+<p>安装Matplotlib：<code>pip install matplotlib</code></p>
+<p>Figure对应的API设置如图：</p>
+<p><img src="https://matplotlib.org/stable/_images/anatomy.png" srcset="/img/loading.gif" lazyload alt="Parts of a Figure"></p>
+<p>常用的API:</p>
+<p><a target="_blank" rel="noopener" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html#matplotlib.pyplot.plot">markers, line sytles, colors</a></p>
+<figure class="highlight py"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs py">plt.plot([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">1</span>, <span class="hljs-number">4</span>, <span class="hljs-number">9</span>, <span class="hljs-number">16</span>], <span class="hljs-string">'ro'</span>)<br>plt.axis((<span class="hljs-number">0</span>, <span class="hljs-number">6</span>, <span class="hljs-number">0</span>, <span class="hljs-number">20</span>))<br>plt.ylabel(<span class="hljs-string">'some numbers'</span>) <span class="hljs-comment"># x,y坐标轴名称</span><br>plt.title(<span class="hljs-string">'title'</span>) <span class="hljs-comment"># 标题</span><br>plt.text(<span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-string">r'$\mu=100,\ \sigma=15$'</span>) <span class="hljs-comment"># 在某个点加入text</span><br>plt.annotate(<span class="hljs-string">'local max'</span>, xy=(<span class="hljs-number">3</span>, <span class="hljs-number">9</span>), xytext=(<span class="hljs-number">3</span>, <span class="hljs-number">9</span>),<br>             arrowprops=<span class="hljs-built_in">dict</span>(facecolor=<span class="hljs-string">'black'</span>, shrink=<span class="hljs-number">0.05</span>),<br>             ) <span class="hljs-comment"># 注释，比text功能更强大</span><br>plt.grid(<span class="hljs-literal">True</span>) <span class="hljs-comment"># 开启网格</span><br>plt.yscale(<span class="hljs-string">'linear'</span>) <span class="hljs-comment"># x,y轴刻度分布规则，linear/log/symlog/logit...</span><br>plt.show()<br></code></pre></td></tr></tbody></table></figure>
+
+<p>利用numpy输入数据：</p>
+<figure class="highlight py"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># evenly sampled time at 200ms intervals</span><br>t = np.arange(<span class="hljs-number">0.</span>, <span class="hljs-number">5.</span>, <span class="hljs-number">0.2</span>)<br><br><span class="hljs-comment"># red dashes, blue squares and green triangles</span><br>plt.plot(t, t, <span class="hljs-string">'r--'</span>, t, t**<span class="hljs-number">2</span>, <span class="hljs-string">'bs'</span>, t, t**<span class="hljs-number">3</span>, <span class="hljs-string">'g^'</span>)<br>plt.show()<br></code></pre></td></tr></tbody></table></figure>
+
+<p>绘制子图：</p>
+<figure class="highlight py"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">f</span>(<span class="hljs-params">t</span>):<br>    <span class="hljs-keyword">return</span> np.exp(-t) * np.cos(<span class="hljs-number">2</span>*np.pi*t)<br><br>t1 = np.arange(<span class="hljs-number">0.0</span>, <span class="hljs-number">5.0</span>, <span class="hljs-number">0.1</span>)<br>t2 = np.arange(<span class="hljs-number">0.0</span>, <span class="hljs-number">5.0</span>, <span class="hljs-number">0.02</span>)<br><br>plt.figure()<br>plt.subplot(<span class="hljs-number">211</span>)<br>plt.plot(t1, f(t1), <span class="hljs-string">'bo'</span>, t2, f(t2), <span class="hljs-string">'k'</span>)<br><br>plt.subplot(<span class="hljs-number">212</span>)<br>plt.plot(t2, np.cos(<span class="hljs-number">2</span>*np.pi*t2), <span class="hljs-string">'r--'</span>)<br>plt.show()<br></code></pre></td></tr></tbody></table></figure>
+
+<h2 id="cheatsheet"><a href="#cheatsheet" class="headerlink" title="cheatsheet"></a>cheatsheet</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/cheatsheet1.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/cheatsheet2.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/beginer.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/intermediate.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/tips.png" srcset="/img/loading.gif" lazyload></p>
 
                 
               </div>
@@ -345,7 +369,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
   
   
 
@@ -360,7 +384,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Zephyr/">#Zephyr</a>
+        <a href="/tags/Python/">#Python</a>
       
     </div>
   
@@ -369,29 +393,6 @@
 
               
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2023/11/30/Note/Zephyr/EnvBuild/23-11-30_West/" title="Zephyr -- West">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Zephyr -- West</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2023/11/30/Note/Zephyr/EnvBuild/23-11-30_DevelopWithZephyr/" title="Zephyr -- Develop with Zephyr">
-                        <span class="hidden-mobile">Zephyr -- Develop with Zephyr</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
               
             </div>
 
