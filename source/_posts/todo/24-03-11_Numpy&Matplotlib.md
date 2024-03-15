@@ -10,7 +10,34 @@ hide: true
 
 # Numpy
 
-todo:
+[官网教程](https://numpy.org/doc/stable/)
+
+```py
+pip install numpy # install numpy
+import numpy as np
+```
+
+## How to create a basic array
+
+```py
+np.array([1,2,3])
+np.zeros(2) # array([0., 0.])
+np.ones(2) # array([1., 1.])
+np.empty(2) # random memory values
+np.arange(4) # array([0, 1, 2, 3])
+np.arange(2, 9, 2) # first_num, last_num, step. array([2, 4, 6, 8])
+np.linspace(0, 10, num=5) # 0 to 10, divided by 5 numbers. array([ 0. ,  2.5,  5. ,  7.5, 10. ])
+# 指定数据格式，默认的为float型
+np.ones(2, dtype=np.int64) # array([1, 1])
+```
+
+## Adding, removing, sorting
+
+```py
+
+```
+
+// todo:
 
 # Matplotlib
 
@@ -23,7 +50,10 @@ todo:
 
 </br>
 
-安装Matplotlib：`pip install matplotlib`
+```py
+pip install matplotlib #install matplotlib
+import matplitlib.plot as plt
+```
 
 Figure对应的API设置如图：
 
@@ -38,13 +68,24 @@ plt.plot([1, 2, 3, 4], [1, 4, 9, 16], 'ro')
 plt.axis((0, 6, 0, 20))
 plt.ylabel('some numbers') # x,y坐标轴名称
 plt.title('title') # 标题
+plt.xlim(0, 6) #x轴坐标轴刻度范围
+plt.ylim((0, 3))#y轴坐标轴刻度范围
 plt.text(2, 4, r'$\mu=100,\ \sigma=15$') # 在某个点加入text
 plt.annotate('local max', xy=(3, 9), xytext=(3, 9),
              arrowprops=dict(facecolor='black', shrink=0.05),
              ) # 注释，比text功能更强大
 plt.grid(True) # 开启网格
 plt.yscale('linear') # x,y轴刻度分布规则，linear/log/symlog/logit...
+plt.plot(2, 3, label="123")#第一个label
+plt.plot(2, 3* 2, label="456")#第二个label
+plt.legend(loc='best')#图列位置，可选best，center等
 plt.show()
+
+# 如果需要将数字设为负数，也可能出现乱码的情况
+plt.rcParams['axes.unicode_minus']=False
+# 如果title是中文，matplotlib会乱码
+plt.rcParams['font.sans-serif']=['SimHei']
+
 ```
 
 利用numpy输入数据：
