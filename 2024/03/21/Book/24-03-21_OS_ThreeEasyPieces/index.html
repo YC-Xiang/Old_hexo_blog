@@ -1,0 +1,793 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/elephant.png">
+  <link rel="icon" href="/img/elephant.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yucheng Xiang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Chapter 4 Process4.2 Process API一般OS会提供以下的进程API来操作进程：  Create: 创建进程。 Destory: 结束进程。 Wait: Wait a process to stop running. 等待进程结束。 Miscellaneous Control: Suspend&#x2F;Resume… 休眠，唤醒等等。 Status: 查看进程状态。  4.3 P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Operating Systems Three Easy Pieces(OSTEP)">
+<meta property="og:url" content="https://yc-xiang.github.io/2024/03/21/Book/24-03-21_OS_ThreeEasyPieces/index.html">
+<meta property="og:site_name" content="Yucheng&#39;s Blog">
+<meta property="og:description" content="Chapter 4 Process4.2 Process API一般OS会提供以下的进程API来操作进程：  Create: 创建进程。 Destory: 结束进程。 Wait: Wait a process to stop running. 等待进程结束。 Miscellaneous Control: Suspend&#x2F;Resume… 休眠，唤醒等等。 Status: 查看进程状态。  4.3 P">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240321160042.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240321175447.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322113305.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322170741.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322170605.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322170759.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322170536.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322170714.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322171956.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322174407.png">
+<meta property="article:published_time" content="2024-03-21T06:22:28.000Z">
+<meta property="article:modified_time" content="2024-03-22T09:44:12.576Z">
+<meta property="article:author" content="Yucheng Xiang">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240321160042.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Operating Systems Three Easy Pieces(OSTEP) - Yucheng&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yc-xiang.github.io","root":"/","version":"1.9.4","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"C"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"ed5b2440a3a7651272e4681ae4ac17e2","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?ed5b2440a3a7651272e4681ae4ac17e2";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>YC&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/homepage.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Operating Systems Three Easy Pieces(OSTEP)</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-21 14:22" pubdate>
+          2024年3月21日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          36 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> times
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Operating Systems Three Easy Pieces(OSTEP)</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2024年3月22日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Chapter-4-Process"><a href="#Chapter-4-Process" class="headerlink" title="Chapter 4 Process"></a>Chapter 4 Process</h1><h2 id="4-2-Process-API"><a href="#4-2-Process-API" class="headerlink" title="4.2 Process API"></a>4.2 Process API</h2><p>一般OS会提供以下的进程API来操作进程：</p>
+<ul>
+<li><strong>Create</strong>: 创建进程。</li>
+<li><strong>Destory</strong>: 结束进程。</li>
+<li><strong>Wait</strong>: Wait a process to stop running. 等待进程结束。</li>
+<li><strong>Miscellaneous Control</strong>: Suspend/Resume… 休眠，唤醒等等。</li>
+<li><strong>Status</strong>: 查看进程状态。</li>
+</ul>
+<h2 id="4-3-Process-Creation"><a href="#4-3-Process-Creation" class="headerlink" title="4.3 Process Creation"></a>4.3 Process Creation</h2><ol>
+<li>首先OS将存储在disk or SSD的program程序加载进memory内存。<br>这边有两种方式，一种是在运行前把code和static data全部加载进内存。现代操作系统一般会使用第二种方式，<strong>懒加载</strong>，只加载即将使用的code和data。</li>
+<li>分配栈。</li>
+<li>分配堆。</li>
+<li>分配三个文件描述符，标准输入0，标准输出1，错误2。</li>
+</ol>
+<h2 id="4-4-Process-Status"><a href="#4-4-Process-Status" class="headerlink" title="4.4 Process Status"></a>4.4 Process Status</h2><p>进程的状态有：</p>
+<ul>
+<li><strong>Running</strong>: 正在使用CPU执行指令。</li>
+<li><strong>Ready</strong>: 进程就绪态。</li>
+<li><strong>Blocked</strong>: 比如进程在和disk IO交互，这时会把CPU让出给其他进程使用，进入阻塞态。</li>
+</ul>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240321160042.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="4-5-Data-Struct"><a href="#4-5-Data-Struct" class="headerlink" title="4.5 Data Struct"></a>4.5 Data Struct</h2><p>PCB, Process Control Block 用来描述进程的数据结构。</p>
+<p>参考xv6中描述进程的数据结构：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">proc</span> {</span><br>  <span class="hljs-type">char</span> *mem; <span class="hljs-comment">// Start of process memory</span><br>  uint sz; <span class="hljs-comment">// Size of process memory</span><br>  <span class="hljs-type">char</span> *kstack; <span class="hljs-comment">// Bottom of kernel stack</span><br>  <span class="hljs-comment">// for this process</span><br>  <span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">proc_state</span> <span class="hljs-title">state</span>;</span> <span class="hljs-comment">// Process state</span><br>  <span class="hljs-type">int</span> pid; <span class="hljs-comment">// Process ID</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">proc</span> *<span class="hljs-title">parent</span>;</span> <span class="hljs-comment">// Parent process</span><br>  <span class="hljs-type">void</span> *chan; <span class="hljs-comment">// If !zero, sleeping on chan</span><br>  <span class="hljs-type">int</span> killed; <span class="hljs-comment">// If !zero, has been killed</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">file</span> *<span class="hljs-title">ofile</span>[<span class="hljs-title">NOFILE</span>];</span> <span class="hljs-comment">// Open files</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">inode</span> *<span class="hljs-title">cwd</span>;</span> <span class="hljs-comment">// Current directory</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">context</span> <span class="hljs-title">context</span>;</span> <span class="hljs-comment">// Switch here to run process</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">trapframe</span> *<span class="hljs-title">tf</span>;</span> <span class="hljs-comment">// Trap frame for the current interrupt</span><br>};<br></code></pre></td></tr></tbody></table></figure>
+
+<h1 id="Chapter-5-Process-API"><a href="#Chapter-5-Process-API" class="headerlink" title="Chapter 5 Process API"></a>Chapter 5 Process API</h1><h2 id="5-1-fork-system-call"><a href="#5-1-fork-system-call" class="headerlink" title="5.1 fork() system call"></a>5.1 fork() system call</h2><p><code>pid_t fork(void)</code></p>
+<p>fork系统调用用来创建进程。子进程返回0，父进程返回子进程PID。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span> {<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"hello (pid:%d)\n"</span>, (<span class="hljs-type">int</span>) getpid());<br>  <span class="hljs-type">int</span> rc = fork();<br>  <span class="hljs-keyword">if</span> (rc &lt; <span class="hljs-number">0</span>) {<br>    <span class="hljs-comment">// fork failed</span><br>    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">"fork failed\n"</span>);<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (rc == <span class="hljs-number">0</span>) {<br>    <span class="hljs-comment">// child (new process)</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"child (pid:%d)\n"</span>, (<span class="hljs-type">int</span>) getpid());<br>  } <span class="hljs-keyword">else</span> {<br>    <span class="hljs-comment">// parent goes down this path (main)</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"parent of %d (pid:%d)\n"</span>, rc, (<span class="hljs-type">int</span>) getpid());<br>}<br><span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">prompt&gt; </span><span class="language-bash">./p1</span><br>hello (pid:29146)<br>parent of 29147 (pid:29146) # 这条和下面一条出现顺序随机<br>child (pid:29147)<br><span class="hljs-meta prompt_">prompt&gt;</span><br></code></pre></td></tr></tbody></table></figure>
+
+<h2 id="5-2-wait-system-call"><a href="#5-2-wait-system-call" class="headerlink" title="5.2 wait() system call"></a>5.2 wait() system call</h2><p><code>pid_t wait(int *wstatus)</code></p>
+<p>wait系统调用会block等待子进程结束。<code>wstatus</code>可以传入NULL，也可以传入一个指针，通过进一步其他的API来获取子进程状态。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/wait.h&gt;</span></span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span> {<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"hello (pid:%d)\n"</span>, (<span class="hljs-type">int</span>) getpid());<br>  <span class="hljs-type">int</span> rc = fork();<br>  <span class="hljs-keyword">if</span> (rc &lt; <span class="hljs-number">0</span>) { <span class="hljs-comment">// fork failed; exit</span><br>    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">"fork failed\n"</span>);<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (rc == <span class="hljs-number">0</span>) { <span class="hljs-comment">// child (new process)</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"child (pid:%d)\n"</span>, (<span class="hljs-type">int</span>) getpid());<br>  } <span class="hljs-keyword">else</span> { <span class="hljs-comment">// parent goes down this path</span><br>    <span class="hljs-type">int</span> rc_wait = wait(<span class="hljs-literal">NULL</span>);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"parent of %d (rc_wait:%d) (pid:%d)\n"</span>, rc, rc_wait, (<span class="hljs-type">int</span>) getpid());<br>  }<br><span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sh">prompt&gt; ./p2<br>hello (pid:29266)<br>child (pid:29267) <span class="hljs-comment"># 这条和吓一条顺序是确定的</span><br>parent of 29267 (rc_wait:29267) (pid:29266)<br>prompt&gt;<br></code></pre></td></tr></tbody></table></figure>
+
+<h2 id="5-3-exec-system-call"><a href="#5-3-exec-system-call" class="headerlink" title="5.3 exec() system call"></a>5.3 exec() system call</h2><p><code>exec()</code>系列系统调用，直接在当前进程加载另一个program, 运行另一个进程，不返回。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/wait.h&gt;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span> {<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"hello (pid:%d)\n"</span>, (<span class="hljs-type">int</span>) getpid());<br>  <span class="hljs-type">int</span> rc = fork();<br>  <span class="hljs-keyword">if</span> (rc &lt; <span class="hljs-number">0</span>) { <span class="hljs-comment">// fork failed; exit</span><br>    <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">"fork failed\n"</span>);<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (rc == <span class="hljs-number">0</span>) { <span class="hljs-comment">// child (new process)</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"child (pid:%d)\n"</span>, (<span class="hljs-type">int</span>) getpid());<br>    <span class="hljs-type">char</span> *myargs[<span class="hljs-number">3</span>];<br>    myargs[<span class="hljs-number">0</span>] = strdup(<span class="hljs-string">"wc"</span>); <span class="hljs-comment">// program: "wc"</span><br>    myargs[<span class="hljs-number">1</span>] = strdup(<span class="hljs-string">"p3.c"</span>); <span class="hljs-comment">// arg: input file</span><br>    myargs[<span class="hljs-number">2</span>] = <span class="hljs-literal">NULL</span>; <span class="hljs-comment">// mark end of array</span><br>    execvp(myargs[<span class="hljs-number">0</span>], myargs); <span class="hljs-comment">// runs word count</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"this shouldn’t print out"</span>);<br>  } <span class="hljs-keyword">else</span> { <span class="hljs-comment">// parent goes down this path</span><br>    <span class="hljs-type">int</span> rc_wait = wait(<span class="hljs-literal">NULL</span>);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"parent of %d (rc_wait:%d) (pid:%d)\n"</span>, rc, rc_wait, (<span class="hljs-type">int</span>) getpid());<br>  }<br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br><br></code></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sh">prompt&gt; ./p3<br>hello (pid:29383)<br>child (pid:29384)<br>29 107 1030 p3.c<br>parent of 29384 (rc_wait:29384) (pid:29383)<br>prompt&gt;<br></code></pre></td></tr></tbody></table></figure>
+
+<h2 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h2><p><code>kill()</code>, <code>signal()</code>, <code>pipe()</code></p>
+<h1 id="Chapter-6-Limited-Direct-Execution"><a href="#Chapter-6-Limited-Direct-Execution" class="headerlink" title="Chapter 6 Limited Direct Execution"></a>Chapter 6 Limited Direct Execution</h1><h2 id="6-1-Problem-1-Restricted-Operations"><a href="#6-1-Problem-1-Restricted-Operations" class="headerlink" title="6.1 Problem#1 Restricted Operations"></a>6.1 Problem#1 Restricted Operations</h2><p>User space要与kernel space隔离，通过system call的方式来访问硬件。</p>
+<p>OS启动，以及user程序system call与kernel交互流程：</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240321175447.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="6-2-Problem-2-Switching-Between-Processes"><a href="#6-2-Problem-2-Switching-Between-Processes" class="headerlink" title="6.2 Problem#2 Switching Between Processes"></a>6.2 Problem#2 Switching Between Processes</h2><ul>
+<li>Cooperative Approach：协作式，等process自己主动交出CPU控制权。</li>
+<li>Non-cooperative Approach: 抢占式，OS通过timer interrupt，给每个process一定的时间片执行，到了timer的时间就要交出CPU控制权。</li>
+</ul>
+<p><strong>Context Switch</strong></p>
+<p>进程A和进程B进行切换的上下文交换过程：</p>
+<blockquote>
+<p>注意每个进程都有自己的kernel stack。</p>
+</blockquote>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322113305.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><ol>
+<li>CPU跑OS需要支持<strong>user mode</strong>和<strong>kernel mode</strong>。</li>
+<li>user mode使用<strong>system call</strong> trap into kernel。</li>
+<li>kernel启动过程中准备好了<strong>trap table</strong>。</li>
+<li>OS完成system call后，通过<strong>return-from-trap</strong>指令返回user code。</li>
+<li>kernel利用<strong>timer interrupt</strong>来防止一个用户进程一直占用CPU。</li>
+<li>进程间交换需要<strong>context switch</strong>。</li>
+</ol>
+<h1 id="Chapter-7-Scheduling"><a href="#Chapter-7-Scheduling" class="headerlink" title="Chapter 7 Scheduling"></a>Chapter 7 Scheduling</h1><p>几个衡量性能的指标：</p>
+<p>转换时间=完成时间-到达时间<br>$T_{turnaround}=T_{completion}-T_{arrival}$</p>
+<p>响应时间=开始执行时间-到达时间<br>$T_{response}=T_{firstrun}-T_{arrival}$</p>
+<h2 id="7-3-FIFO"><a href="#7-3-FIFO" class="headerlink" title="7.3 FIFO"></a>7.3 FIFO</h2><p>先进先出原则，如果进程一起到来，按先后顺序执行。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322170741.png" srcset="/img/loading.gif" lazyload></p>
+<p>存在的问题是，如果前面的进程运行时间长，平均的turnaround时间就会变得很长：</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322170605.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="7-4-Shortest-Job-first-SJF"><a href="#7-4-Shortest-Job-first-SJF" class="headerlink" title="7.4 Shortest Job first(SJF)"></a>7.4 Shortest Job first(SJF)</h2><p>先执行时间短的进程。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322170759.png" srcset="/img/loading.gif" lazyload></p>
+<p>存在的问题是，如果几个进程不是同时到来，先执行到时间长的进程，仍然有和FIFO调度一样的问题：</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322170536.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="7-5-Shortest-Time-to-Completion-First-STCF"><a href="#7-5-Shortest-Time-to-Completion-First-STCF" class="headerlink" title="7.5 Shortest Time-to-Completion First(STCF)"></a>7.5 Shortest Time-to-Completion First(STCF)</h2><p>在SJF调度上加入抢占式机制。当有新进程到来时，调度器会判断谁的执行时间更短，来执行时间更短的进程。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322170714.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="7-7-Round-Robin"><a href="#7-7-Round-Robin" class="headerlink" title="7.7 Round Robin"></a>7.7 Round Robin</h2><p>Response time比前面的调度算法都好。</p>
+<p>每个进程执行一段时间后切换。要考虑context switch的消耗，选择合适的时间片。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322171956.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="7-8-Incorporating-I-x2F-O"><a href="#7-8-Incorporating-I-x2F-O" class="headerlink" title="7.8 Incorporating I/O"></a>7.8 Incorporating I/O</h2><p>执行IO的时候，调度别的进程。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322174407.png" srcset="/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Book/" class="category-chain-item">Book</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/OS/">#OS</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/02/25/Project/xv6/xv6_TA/" title="xv6 calling conventions and stack frames RISC-V">
+                        <span class="hidden-mobile">xv6 calling conventions and stack frames RISC-V</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"YC-Xiang/YC-Xiang.github.io","repo-id":"R_kgDOIuQ8yA","category":"Announcements","category-id":"DIC_kwDOIuQ8yM4CcRjS","theme-light":"light","theme-dark":"dark","mapping":"title","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","reactions_enabled":1,"emit_metadata":0,"theme":"light","loading":"lazy"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
