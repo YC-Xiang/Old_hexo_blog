@@ -22,7 +22,7 @@ categories:
 
 `sudo aptitude install gdb-multiarch`: 解决ubuntu22.04 gdb版本不匹配的问题。
 
-一个shell运行`make qemu-gdb`， 另一个shell运行`gdb-multiarch`，出现如下错误：
+一个shell运行`make qemu-gdb`， 另一个shell运行`gdb-multiarch`，会自动加载`.gdbinit`。如果出现如下错误：
 
 ```shell
 warning: File "/home/xyc/MIT-6.S081-Operation-System/.gdbinit" auto-loading has been declined by your `auto-load safe-path' set to "$debugdir:$datadir/auto-load".

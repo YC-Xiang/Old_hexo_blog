@@ -110,3 +110,12 @@ User space通过系统调用进入kernel space, 参数保存在current process�
 比如`exit(0)`, 0会被保存到`a0`寄存器，随后会被kernel保存到`p->trapframe->a0`。
 
 `argint`, `argaddr`, `argfd`函数从当前进程的trap frame中读取传入的参数。
+
+</br>
+
+如果user space传入指针，会有两个问题。
+
+1. user space可能传入invalid address或者是企图访问kernel memory的恶意指针。
+2. xv6 kernel page table和user space的page table mapping不同，所以同一个虚拟地址对应的物理地址是不同的。
+
+这时候需要用`copyinstr`函数。

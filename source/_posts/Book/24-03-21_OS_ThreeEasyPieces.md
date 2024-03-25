@@ -214,7 +214,7 @@ OS启动，以及user程序system call与kernel交互流程：
 5. kernel利用**timer interrupt**来防止一个用户进程一直占用CPU。
 6. 进程间交换需要**context switch**。
 
-# Chapter 7 Scheduling
+# Chapter 7 Scheduling: Introduction
 
 几个衡量性能的指标：
 
@@ -264,3 +264,114 @@ Response time比前面的调度算法都好。
 执行IO的时候，调度别的进程。
 
 ![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322174407.png)
+
+# Chapter 8 Sheduling: The Multi-Level Feedback Queue(MLFQ)
+
+MLFQ算法会维护一系列**Queues**, 拥有不同的优先级。
+
+- **Rule1**: Priority(A)>Priority(B), 运行进程A.
+- **Rule2**: Priority(A)=Priority(B), A和B以RR(Round Robin)规则运行.
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240323151420.png)
+
+- **Rule3**: 一个进程刚到来时，属于最高优先级。
+- **Rule4a**: 如果进程用完了自己的allotment, 会降低一个优先级。
+- **Rule4b**: 如果进程在用完allotment前放弃了CPU(比如进行IO操作)，会停留在当前优先级，allotment重置。(Figure 8.3b)
+
+Examples:
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240323152425.png)
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240323152443.png)
+
+**目前为止MLFQ存在的问题**
+
+- Starvation饥饿问题。如果有太多短时的进程，运行时间长的进程会拿不到CPU。
+- Game the scheduler欺骗调度器。一个恶意的用户程序，可以在每次即将用完allotment时，进行一次IO操作，这样又可以停留在最高优先级了。
+
+## Priority boost
+
+为了解决饥饿问题，增加第五条规则：
+
+- **Rule5**: 经过固定时间S, 把所有进程的优先级都调到最高。
+
+这个时间S也称作voo-doo constants，比如把voo-doo constants设置为100ms:
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240323155652.png)
+
+## Better Accounting
+
+为了解决Game the scheduler的问题，修改Rule 4a和4b，不再是计算单次使用CPU的alloment，而是：
+
+- **Rule4**: 当一个进程在某一优先级的总时间用完后，降低一个优先级。
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240323161225.png)
+
+## Tuning MLFQ
+
+一些参数是可以调整的，Queue的数量，time slice，allotment，priority boost time。
+
+一种可以优化的做法是越高优先级的队列，time slice越短。
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240324095045.png)
+
+# Chapter 9 Scheduling: Proportional Share
+
+比例份额调度(proportinal-share)，也称公平份额调度(fair-share)。
+
+## 9.2 Lottery Scheduling
+
+每个进程分配一个Ticket，生成一个位于0\~sum_tickets随机数winner，如下图如果winner位于0\~99，进程A执行; 100~149，进程B执行; 150~400，进程C执行。
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240325214031.png)
+
+
+实现代码：
+
+```c
+// counter: used to track if we’ve found the winner yet
+int counter = 0;
+
+// winner: call some random number generator to
+// get a value >= 0 and <= (totaltickets - 1)
+int winner = getrandom(0, totaltickets);
+
+// current: use this to walk through the list of jobs
+node_t *current = head;
+while (current) {
+counter = counter + current->tickets;
+if (counter > winner)
+break; // found the winner
+current = current->next;
+}
+// ’current’ is the winner: schedule it...
+```
+
+Lottery scheduling存在的问题有，如果job length很短的话会存在不公平的现象。还有一个是如何分配tickets。参考9.4和9.5章节。
+
+## 9.6 Stride Scheduling
+
+仍然给A,B,C分别分配tickets100,50,250，在Stride scheduling中需要一个总目标数，比如10000，用1000计算A,B,C的步长，10000/100=100, 10000/50=200, 10000/250=40。
+
+Basic idea: at any given time, pick the process to run that has the lowest pass value so far; when you run a process, increment its pass counter by its stride.
+
+```c
+curr = remove_min(queue); // pick client with min pass
+schedule(curr); // run for quantum
+curr->pass += curr->stride; // update pass using stride
+insert(queue, curr); // return curr to queue
+```
+
+![](https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240325215738.png)
+
+Pass Value相同时随机选择进程Run。
+
+Stride Scheduling存在的问题有，如果新来一个进程，那么这个进程的pass value会是0，会持续运行该进程，占据CPU一段时间。
+
+## 9.7 The Linux Completely Fair Scheduler(CFS)
+
+所有竞争的进程公平地分配CPU使用。
+
+每个进程运行会累计**virtual runtime**, CPU会选择vruntime最小的进程来run。
+
+存在的问题有，如果CPU切换太快，context switch对系统的性能损耗太大。如果CPU切换太慢，进程间的公平性又会降低。
