@@ -16,12 +16,12 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Chapter 4 Process4.2 Process API一般OS会提供以下的进程API来操作进程：  Create: 创建进程。 Destory: 结束进程。 Wait: Wait a process to stop running. 等待进程结束。 Miscellaneous Control: Suspend&#x2F;Resume… 休眠，唤醒等等。 Status: 查看进程状态。  4.3 P">
+    <meta name="description" content="这篇文章是阅读OSTEP Chapter3~11的笔记，主要讲的是Virtualization中Virtualize CPU的部分。 Chapter 4 Process4.2 Process API一般OS会提供以下的进程API来操作进程：  Create: 创建进程。 Destory: 结束进程。 Wait: Wait a process to stop running. 等待进程结束。 Mis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Operating Systems Three Easy Pieces(OSTEP)">
-<meta property="og:url" content="https://yc-xiang.github.io/2024/03/21/Book/24-03-21_OS_ThreeEasyPieces/index.html">
+<meta property="og:url" content="https://yc-xiang.github.io/2024/03/21/Book/24-03-21_OSTEP_ch3_11/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="Chapter 4 Process4.2 Process API一般OS会提供以下的进程API来操作进程：  Create: 创建进程。 Destory: 结束进程。 Wait: Wait a process to stop running. 等待进程结束。 Miscellaneous Control: Suspend&#x2F;Resume… 休眠，唤醒等等。 Status: 查看进程状态。  4.3 P">
+<meta property="og:description" content="这篇文章是阅读OSTEP Chapter3~11的笔记，主要讲的是Virtualization中Virtualize CPU的部分。 Chapter 4 Process4.2 Process API一般OS会提供以下的进程API来操作进程：  Create: 创建进程。 Destory: 结束进程。 Wait: Wait a process to stop running. 等待进程结束。 Mis">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240321160042.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240321175447.png">
@@ -33,8 +33,20 @@
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322170714.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322171956.png">
 <meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322174407.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240323151420.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240323152425.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240323152443.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240323155652.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240323161225.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240324095045.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240325214031.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240325215738.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240326153422.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240326164317.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240326164432.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240326164849.png">
 <meta property="article:published_time" content="2024-03-21T06:22:28.000Z">
-<meta property="article:modified_time" content="2024-03-22T09:44:12.576Z">
+<meta property="article:modified_time" content="2024-03-26T09:32:15.960Z">
 <meta property="article:author" content="Yucheng Xiang">
 <meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary_large_image">
@@ -263,7 +275,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.3k words
+          6.9k words
         
       </span>
     
@@ -274,7 +286,7 @@
         
         
         
-          36 mins
+          58 mins
         
       </span>
     
@@ -325,7 +337,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年3月22日 下午
+                    本文最后更新于：2024年3月26日 下午
                   
                 
               </p>
@@ -333,7 +345,8 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Chapter-4-Process"><a href="#Chapter-4-Process" class="headerlink" title="Chapter 4 Process"></a>Chapter 4 Process</h1><h2 id="4-2-Process-API"><a href="#4-2-Process-API" class="headerlink" title="4.2 Process API"></a>4.2 Process API</h2><p>一般OS会提供以下的进程API来操作进程：</p>
+                <p>这篇文章是阅读OSTEP Chapter3~11的笔记，主要讲的是Virtualization中Virtualize CPU的部分。</p>
+<h1 id="Chapter-4-Process"><a href="#Chapter-4-Process" class="headerlink" title="Chapter 4 Process"></a>Chapter 4 Process</h1><h2 id="4-2-Process-API"><a href="#4-2-Process-API" class="headerlink" title="4.2 Process API"></a>4.2 Process API</h2><p>一般OS会提供以下的进程API来操作进程：</p>
 <ul>
 <li><strong>Create</strong>: 创建进程。</li>
 <li><strong>Destory</strong>: 结束进程。</li>
@@ -397,7 +410,7 @@
 <li>kernel利用<strong>timer interrupt</strong>来防止一个用户进程一直占用CPU。</li>
 <li>进程间交换需要<strong>context switch</strong>。</li>
 </ol>
-<h1 id="Chapter-7-Scheduling"><a href="#Chapter-7-Scheduling" class="headerlink" title="Chapter 7 Scheduling"></a>Chapter 7 Scheduling</h1><p>几个衡量性能的指标：</p>
+<h1 id="Chapter-7-Scheduling-Introduction"><a href="#Chapter-7-Scheduling-Introduction" class="headerlink" title="Chapter 7 Scheduling: Introduction"></a>Chapter 7 Scheduling: Introduction</h1><p>几个衡量性能的指标：</p>
 <p>转换时间=完成时间-到达时间<br>$T_{turnaround}=T_{completion}-T_{arrival}$</p>
 <p>响应时间=开始执行时间-到达时间<br>$T_{response}=T_{firstrun}-T_{arrival}$</p>
 <h2 id="7-3-FIFO"><a href="#7-3-FIFO" class="headerlink" title="7.3 FIFO"></a>7.3 FIFO</h2><p>先进先出原则，如果进程一起到来，按先后顺序执行。</p>
@@ -415,6 +428,73 @@
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322171956.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="7-8-Incorporating-I-x2F-O"><a href="#7-8-Incorporating-I-x2F-O" class="headerlink" title="7.8 Incorporating I/O"></a>7.8 Incorporating I/O</h2><p>执行IO的时候，调度别的进程。</p>
 <p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240322174407.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="Chapter-8-Sheduling-The-Multi-Level-Feedback-Queue-MLFQ"><a href="#Chapter-8-Sheduling-The-Multi-Level-Feedback-Queue-MLFQ" class="headerlink" title="Chapter 8 Sheduling: The Multi-Level Feedback Queue(MLFQ)"></a>Chapter 8 Sheduling: The Multi-Level Feedback Queue(MLFQ)</h1><p>MLFQ算法会维护一系列<strong>Queues</strong>, 拥有不同的优先级。</p>
+<ul>
+<li><strong>Rule1</strong>: Priority(A)&gt;Priority(B), 运行进程A.</li>
+<li><strong>Rule2</strong>: Priority(A)=Priority(B), A和B以RR(Round Robin)规则运行.</li>
+</ul>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240323151420.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><strong>Rule3</strong>: 一个进程刚到来时，属于最高优先级。</li>
+<li><strong>Rule4a</strong>: 如果进程用完了自己的allotment, 会降低一个优先级。</li>
+<li><strong>Rule4b</strong>: 如果进程在用完allotment前放弃了CPU(比如进行IO操作)，会停留在当前优先级，allotment重置。(Figure 8.3b)</li>
+</ul>
+<p>Examples:</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240323152425.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240323152443.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>目前为止MLFQ存在的问题</strong></p>
+<ul>
+<li>Starvation饥饿问题。如果有太多短时的进程，运行时间长的进程会拿不到CPU。</li>
+<li>Game the scheduler欺骗调度器。一个恶意的用户程序，可以在每次即将用完allotment时，进行一次IO操作，这样又可以停留在最高优先级了。</li>
+</ul>
+<h2 id="Priority-boost"><a href="#Priority-boost" class="headerlink" title="Priority boost"></a>Priority boost</h2><p>为了解决饥饿问题，增加第五条规则：</p>
+<ul>
+<li><strong>Rule5</strong>: 经过固定时间S, 把所有进程的优先级都调到最高。</li>
+</ul>
+<p>这个时间S也称作voo-doo constants，比如把voo-doo constants设置为100ms:</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240323155652.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="Better-Accounting"><a href="#Better-Accounting" class="headerlink" title="Better Accounting"></a>Better Accounting</h2><p>为了解决Game the scheduler的问题，修改Rule 4a和4b，不再是计算单次使用CPU的alloment，而是：</p>
+<ul>
+<li><strong>Rule4</strong>: 当一个进程在某一优先级的总时间用完后，降低一个优先级。</li>
+</ul>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240323161225.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="Tuning-MLFQ"><a href="#Tuning-MLFQ" class="headerlink" title="Tuning MLFQ"></a>Tuning MLFQ</h2><p>一些参数是可以调整的，Queue的数量，time slice，allotment，priority boost time。</p>
+<p>一种可以优化的做法是越高优先级的队列，time slice越短。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240324095045.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="Chapter-9-Scheduling-Proportional-Share"><a href="#Chapter-9-Scheduling-Proportional-Share" class="headerlink" title="Chapter 9 Scheduling: Proportional Share"></a>Chapter 9 Scheduling: Proportional Share</h1><p>比例份额调度(proportinal-share)，也称公平份额调度(fair-share)。</p>
+<h2 id="9-2-Lottery-Scheduling"><a href="#9-2-Lottery-Scheduling" class="headerlink" title="9.2 Lottery Scheduling"></a>9.2 Lottery Scheduling</h2><p>每个进程分配一个Ticket，生成一个位于0~sum_tickets随机数winner，如下图如果winner位于0~99，进程A执行; 100<del>149，进程B执行; 150</del>400，进程C执行。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240325214031.png" srcset="/img/loading.gif" lazyload></p>
+<p>实现代码：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// counter: used to track if we’ve found the winner yet</span><br><span class="hljs-type">int</span> counter = <span class="hljs-number">0</span>;<br><br><span class="hljs-comment">// winner: call some random number generator to</span><br><span class="hljs-comment">// get a value &gt;= 0 and &lt;= (totaltickets - 1)</span><br><span class="hljs-type">int</span> winner = getrandom(<span class="hljs-number">0</span>, totaltickets);<br><br><span class="hljs-comment">// current: use this to walk through the list of jobs</span><br><span class="hljs-type">node_t</span> *current = head;<br><span class="hljs-keyword">while</span> (current) {<br>counter = counter + current-&gt;tickets;<br><span class="hljs-keyword">if</span> (counter &gt; winner)<br><span class="hljs-keyword">break</span>; <span class="hljs-comment">// found the winner</span><br>current = current-&gt;next;<br>}<br><span class="hljs-comment">// ’current’ is the winner: schedule it...</span><br></code></pre></td></tr></tbody></table></figure>
+
+<p>Lottery scheduling存在的问题有，如果job length很短的话会存在不公平的现象。还有一个是如何分配tickets。参考9.4和9.5章节。</p>
+<h2 id="9-6-Stride-Scheduling"><a href="#9-6-Stride-Scheduling" class="headerlink" title="9.6 Stride Scheduling"></a>9.6 Stride Scheduling</h2><p>仍然给A,B,C分别分配tickets100,50,250，在Stride scheduling中需要一个总目标数，比如10000，用1000计算A,B,C的步长，10000/100=100, 10000/50=200, 10000/250=40。</p>
+<p>Basic idea: at any given time, pick the process to run that has the lowest pass value so far; when you run a process, increment its pass counter by its stride.</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">curr = remove_min(<span class="hljs-built_in">queue</span>); <span class="hljs-comment">// pick client with min pass</span><br>schedule(curr); <span class="hljs-comment">// run for quantum</span><br>curr-&gt;pass += curr-&gt;stride; <span class="hljs-comment">// update pass using stride</span><br>insert(<span class="hljs-built_in">queue</span>, curr); <span class="hljs-comment">// return curr to queue</span><br></code></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240325215738.png" srcset="/img/loading.gif" lazyload></p>
+<p>Pass Value相同时随机选择进程Run。</p>
+<p>Stride Scheduling存在的问题有，如果新来一个进程，那么这个进程的pass value会是0，会持续运行该进程，占据CPU一段时间。</p>
+<h2 id="9-7-The-Linux-Completely-Fair-Scheduler-CFS"><a href="#9-7-The-Linux-Completely-Fair-Scheduler-CFS" class="headerlink" title="9.7 The Linux Completely Fair Scheduler(CFS)"></a>9.7 The Linux Completely Fair Scheduler(CFS)</h2><p>所有竞争的进程公平地分配CPU使用。</p>
+<p>每个进程运行会累计<strong>virtual runtime</strong>, CPU会选择vruntime最小的进程来run。</p>
+<p>存在的问题有，如果CPU切换太快，context switch对系统的性能损耗太大。如果CPU切换太慢，进程间的公平性又会降低。</p>
+<p>CFS算法为了解决上述问题，提供了一些控制参数：</p>
+<ul>
+<li><strong>sched_latency</strong>: context switch之前进程应该跑多久，典型值为48ms。如果此时有n个进程一起在running，sched_latency=48/n。如下图所示，一开始有4个进程一起跑，sched_latency比较短，后面只有两个进程在跑，sched_latency变长。</li>
+</ul>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240326153422.png" srcset="/img/loading.gif" lazyload></p>
+<p>如果有太多进程一起在running，那么sched_latency就会被分的很小，为了解决这个问题，提出了第二个控制参数：</p>
+<ul>
+<li><strong>min_granularity</strong>: 典型值6ms。进程最短的运行时间，不能再被分割。</li>
+</ul>
+<h3 id="Weighting-Niceness"><a href="#Weighting-Niceness" class="headerlink" title="Weighting(Niceness)"></a>Weighting(Niceness)</h3><p>Unix系统可以通过修改<strong>nice</strong>值来调整进程权重，可选值为-20~+19。</p>
+<p>根据权重再调整进程的time_slice。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240326164317.png" srcset="/img/loading.gif" lazyload></p>
+<p>n为总进程数，k为当前进程。weight：</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240326164432.png" srcset="/img/loading.gif" lazyload></p>
+<p>vruntime计算也需要调整：</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240326164849.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="Using-Red-Black-Trees"><a href="#Using-Red-Black-Trees" class="headerlink" title="Using Red-Black Trees"></a>Using Red-Black Trees</h3><p>进程用链表查找太慢了，CFS使用红黑树来管理正在running的进程。</p>
 
                 
               </div>
@@ -466,8 +546,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/02/25/Project/xv6/xv6_TA/" title="xv6 calling conventions and stack frames RISC-V">
-                        <span class="hidden-mobile">xv6 calling conventions and stack frames RISC-V</span>
+                      <a href="/2024/02/26/Project/xv6/xv6_chapter4/" title="xv6_chapter4 traps">
+                        <span class="hidden-mobile">xv6_chapter4 traps</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

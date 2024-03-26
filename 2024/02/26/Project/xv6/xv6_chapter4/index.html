@@ -16,24 +16,27 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="123456make -C user clean # 在os目录，相当于cd user;make clean;cd ..make clean # 或者在user目录git checkout ch2make user BASE&#x3D;1 CHAPTER&#x3D;2make runmake test BASE&#x3D;1 # make test 会完成　make user 和 make run 两个步骤（自动设置 CHAP">
+    <meta name="description" content="Lecturegdb调试shell write函数的syscall过程： 12345678910111213(gdb) b *0xdec # 在0xde8地址设置断点(gdb) c(gdb) delete 1 # 删除断点(gdb) print $pc$1 &#x3D; (void (*)()) 0xdec(gdb) info r(gdb) x&#x2F;3i 0xde8 # 打印0xdfe开始的三条指令0xdfe:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="uCore_Chapter2 批处理系统">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/04/25/Project/rCore_uCore/uCore_Chapter2/index.html">
+<meta property="og:title" content="xv6_chapter4 traps">
+<meta property="og:url" content="https://yc-xiang.github.io/2024/02/26/Project/xv6/xv6_chapter4/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="123456make -C user clean # 在os目录，相当于cd user;make clean;cd ..make clean # 或者在user目录git checkout ch2make user BASE&#x3D;1 CHAPTER&#x3D;2make runmake test BASE&#x3D;1 # make test 会完成　make user 和 make run 两个步骤（自动设置 CHAP">
+<meta property="og:description" content="Lecturegdb调试shell write函数的syscall过程： 12345678910111213(gdb) b *0xdec # 在0xde8地址设置断点(gdb) c(gdb) delete 1 # 删除断点(gdb) print $pc$1 &#x3D; (void (*)()) 0xdec(gdb) info r(gdb) x&#x2F;3i 0xde8 # 打印0xdfe开始的三条指令0xdfe:">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-25T15:11:28.000Z">
-<meta property="article:modified_time" content="2024-01-09T01:07:05.340Z">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240227224055.png">
+<meta property="og:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240227220131.png">
+<meta property="article:published_time" content="2024-02-26T14:39:28.000Z">
+<meta property="article:modified_time" content="2024-03-26T02:00:00.293Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="uCore">
+<meta property="article:tag" content="xv6">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240227224055.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>uCore_Chapter2 批处理系统 - Yucheng&#39;s Blog</title>
+  <title>xv6_chapter4 traps - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +232,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">uCore_Chapter2 批处理系统</span>
+            <span id="subtitle">xv6_chapter4 traps</span>
           
         </div>
 
@@ -240,8 +243,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-25 23:11" pubdate>
-          2023年4月25日 晚上
+        <time datetime="2024-02-26 22:39" pubdate>
+          2024年2月26日 晚上
         </time>
       </span>
     
@@ -252,7 +255,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k words
+          2.3k words
         
       </span>
     
@@ -263,7 +266,7 @@
         
         
         
-          15 mins
+          19 mins
         
       </span>
     
@@ -309,12 +312,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">uCore_Chapter2 批处理系统</h1>
+            <h1 style="display: none">xv6_chapter4 traps</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年1月9日 上午
+                    本文最后更新于：2024年3月26日 上午
                   
                 
               </p>
@@ -322,22 +325,65 @@
             
               <div class="markdown-body">
                 
-                <figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs makefile">make -C user clean <span class="hljs-comment"># 在os目录，相当于cd user;make clean;cd ..</span><br>make clean <span class="hljs-comment"># 或者在user目录</span><br>git checkout ch2<br>make user BASE=1 CHAPTER=2<br>make run<br>make test BASE=1 <span class="hljs-comment"># make test 会完成　make user 和 make run 两个步骤（自动设置 CHAPTER）</span><br></code></pre></td></tr></tbody></table></figure>
+                <h1 id="Lecture"><a href="#Lecture" class="headerlink" title="Lecture"></a>Lecture</h1><p>gdb调试shell write函数的syscall过程：</p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell">(gdb) b *0xdec # 在0xde8地址设置断点<br>(gdb) c<br>(gdb) delete 1 # 删除断点<br>(gdb) print $pc<br><span class="hljs-meta prompt_">$</span><span class="language-bash">1 = (void (*)()) 0xdec</span><br>(gdb) info r<br>(gdb) x/3i 0xde8 # 打印0xdfe开始的三条指令<br>0xdfe: li a7,16<br>0xe00: ecall<br>0xe04: ret<br>(gdb) p/x $stvec<br><span class="hljs-meta prompt_">$</span><span class="language-bash">2 = 0x3ffffff000 <span class="hljs-comment"># user space virtual address顶部一个page，trampoline page对应kernel trap handler.</span></span><br>(gdb) stepi<br></code></pre></td></tr></tbody></table></figure>
 
-<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c">main();<br>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"hello wrold!\n"</span>);<br>  trap_init(); <span class="hljs-comment">// 设置中断/异常处理地址</span><br>    w_stvec((uint64)uservec &amp; ~<span class="hljs-number">0x3</span>); <span class="hljs-comment">//把uservec地址传入,uservec在trampoline.S中定义</span><br>      <span class="hljs-keyword">asm</span> <span class="hljs-title function_">volatile</span><span class="hljs-params">(<span class="hljs-string">"csrw stvec, %0"</span> : : <span class="hljs-string">"r"</span>(x))</span>; <span class="hljs-comment">// 设置stvec CSR</span><br>  loader_init();<br>  run_next_app();<br>    load_app();<br>    usertrapret(trapframe, (uint64)boot_stack_top);<br>      w_sepc(trapframe-&gt;epc);<br>      r_sstatus();<br>      w_sstatus();<br>      userret();<br>        sret <span class="hljs-comment">// 返回到sepc中的值，0x80400000第一个app</span><br><br></code></pre></td></tr></tbody></table></figure>
+<p class="这边gdb调试进不去kernel，ecall之后stepi直接到了ret">warning</p>
 
+<h1 id="Book"><a href="#Book" class="headerlink" title="Book"></a>Book</h1><p>Traps：</p>
+<ul>
+<li>system call. 通过ecall进入kernel</li>
+<li>exception. 除0，invalid virtual address.</li>
+<li>interrupt. 进入kernel device driver.</li>
+</ul>
+<p>根据处理代码不同，可分为三种traps：</p>
+<ul>
+<li>traps from user space</li>
+<li>traps from kernel space</li>
+<li>timer interrupts</li>
+</ul>
+<h2 id="4-1-RISC-V-trap-machinery"><a href="#4-1-RISC-V-trap-machinery" class="headerlink" title="4.1 RISC-V trap machinery"></a>4.1 RISC-V trap machinery</h2><p>一些重要的CPU控制寄存器：</p>
+<ul>
+<li><code>stvec</code>: 保存trap handler的地址。</li>
+<li><code>sepc</code>: trap发生时，保存pc指针。接着pc指针被改写成<code>stvec</code>中保存的trap handler地址。<code>sret</code>指令把<code>sepc</code>的值拷贝回pc指针。</li>
+<li><code>scause</code>: 保存发生trap的原因。</li>
+<li><code>sscratch</code>:</li>
+<li><code>sstatus</code>: <code>SIE</code> bit控制设备中断使能。<code>SPP</code>表示trap来自user mode还是supervisor mode。</li>
+</ul>
+<p>RISC-V硬件处理traps流程(除timer中断)：</p>
+<ol>
+<li>如果是设备中断，而且<code>sstatus</code>的<code>SIE</code>bit没有被开启，下面都不会执行。</li>
+<li>禁止掉<code>SIE</code> in <code>sstatus</code>。</li>
+<li>拷贝<code>pc</code>到<code>sepc</code>。</li>
+<li>保存当前mode(user/supervisor)到<code>sstatus</code>的<code>SPP</code>。</li>
+<li>设置<code>scause</code>发生异常的原因。</li>
+<li>进入supervisor mode。</li>
+<li>拷贝<code>stvec</code>到pc。</li>
+<li>开始在新pc执行代码。</li>
+</ol>
+<h2 id="4-2-Trap-from-user-space"><a href="#4-2-Trap-from-user-space" class="headerlink" title="4.2 Trap from user space"></a>4.2 Trap from user space</h2><p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240227224055.png" srcset="/img/loading.gif" lazyload></p>
+<p>user space trap流程：<code>trampoline.S</code><br><code>uservec</code>-&gt;<code>usertrap</code><br>返回的时候：<code>usertrapret</code>-&gt;<code>userret</code></p>
+<p>为什么user space能执行到kernel的trap处理代码呢？user space调用<code>ecall</code>, 会进入<code>stvec</code>设置的trap handler，此时CPU使用的还是user space的page table，还没有切换到kernel space的page table。所以<code>stvec</code>中存储的是user space的virtual address<code>TRAPPOLINE</code>。user space实现了<code>trampoline page</code>。把virtual address的最后一个page<code>TRAPPOLINE</code>映射到了kernel trap handler。</p>
+<p>进入<code>uservec</code>的时候，需要保存user space所有32个寄存器到某个memory地址，这时候没有一个空闲的寄存器，怎么办呢？RISC-V提供了<code>scratch</code>寄存器，在之前保存了某个地址<code>p-&gt;trapframe</code>。但这是kernel的结构体，此时<code>satp</code>还保存着user space的page table，所以user space还映射了一个page<code>TRAPFRAME</code>，在<code>TRAPOLINE</code>下面。</p>
+<p><img src="https://xyc-1316422823.cos.ap-shanghai.myqcloud.com/20240227220131.png" srcset="/img/loading.gif" lazyload></p>
+<p>接着可以将<code>sccrach</code>与a0交换值：</p>
+<p><code>csrrw a0, sscratch, a0</code></p>
+<p>这样我们就可以使用a0了，将其他31个寄存器的值保存到此时a0(p-&gt;trapframe)对应的offset，最后再将<code>sscratch</code>中保存的旧a0值加载进对应的内存地址。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">csrr t0, sscratch<br>sd t0, <span class="hljs-number">112</span>(a0)<br></code></pre></td></tr></tbody></table></figure>
 
-
-<h2 id="应用程序系统调用ecall进入内核异常处理过程"><a href="#应用程序系统调用ecall进入内核异常处理过程" class="headerlink" title="应用程序系统调用ecall进入内核异常处理过程"></a>应用程序系统调用ecall进入内核异常处理过程</h2><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 进入应用程序</span><br><span class="hljs-built_in">exit</span>(MAGIC);<br>  syscall(SYS_exit, code);<br>    __syscall1(n, <span class="hljs-type">long</span>(<span class="hljs-number">1234</span>));<br>      __asm_syscall(<span class="hljs-string">"r"</span>(a7), <span class="hljs-string">"0"</span>(a0));<br>        ecall <span class="hljs-comment">//通过ecall 进入uservec</span><br><br>uservec<br>  <span class="hljs-title function_">usertrap</span><span class="hljs-params">()</span>; <span class="hljs-comment">// ld t0, 16(a0) jr t0</span><br>    r_scause();<br>      csrr %<span class="hljs-number">0</span>, scause <span class="hljs-comment">// 应用层调用了ecall指令，所以scause自动被设置为8</span><br>    syscall();<br>      <span class="hljs-comment">//在uservec中应用层传入eid到寄存器a7,这里读a7来判断是什么system call</span><br>      id = trapframe-&gt;a7;<br>    usertrapret(); <span class="hljs-comment">// 这里回到第九行一样，循环，执行第二个应用程序</span><br></code></pre></td></tr></tbody></table></figure>
-
-<p>分析下<code>uservec</code>,注意：这里只是把stvec设置为uservec地址，并不会执行uservec下的代码，要等U mode的中断/异常到来时才会从uservec开始执行。</p>
-<p class="note note-warning">uservec是U mode异常/中断的入口。</p>
-
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs assembly">.globl uservec<br>uservec:<br>        csrrw a0, sscratch, a0 # 交换a0和sscratch<br><br>        # save the user registers in TRAPFRAME<br>        sd ra, 40(a0)<br>        sd sp, 48(a0)<br>    ...<br>        sd t6, 280(a0)<br><br>  # save the user a0 in p-&gt;trapframe-&gt;a0<br>        csrr t0, sscratch<br>        sd t0, 112(a0)<br><br>        csrr t1, sepc<br>        sd t1, 24(a0) # BASE_ADDRESS 0x80400000<br><br>        ld sp, 8(a0) # kstack + PGSIZE<br>        ld tp, 32(a0)<br>        ld t1, 0(a0)<br>        # csrw satp, t1<br>        # sfence.vma zero, zero<br>        ld t0, 16(a0)<br>        jr t0<br><br></code></pre></td></tr></tbody></table></figure>
-
-<p>这里需要注意sscratch这个CSR寄存器的作用就是一个cache，它只负责存某一个值，这里它保存的就是trapframe结构体的位置。</p>
-<h1 id="实现批处理操作系统的细节"><a href="#实现批处理操作系统的细节" class="headerlink" title="实现批处理操作系统的细节"></a>实现批处理操作系统的细节</h1><p>从Makefile中可以发现，scripts/pack.py，scripts/kernelld.py用来生成os/link_app.S和os/kernel_app.ld。link_app.S将用户程序加入kernel可执行文件中。kernel_app.ld规定了用户程序所在的段(.data.app[x])。在load_app()中将用户程序relocate到0x80400000。</p>
-<p>需要relocate的原因：我们并不能直接跳转到 app_n_start 直接运行，因为用户程序在编译的时候，会假定程序处在虚存的特定位置，而由于我们还没有虚存机制，因此我们在运行之前还需要将用户程序加载到规定的物理内存位置。</p>
+<p>接着将之前就设置好的<br>kernel栈指针<code>p-&gt;trapframe-&gt;kernel_sp</code>加载到<code>sp</code>。<br>cpu id<code>p-&gt;trapframe-&gt;kernel_haltid</code>加载到<code>tp</code>。<br>kernel trap入口<code>p-&gt;trapframe-&gt;kernel_trap</code>加载到<code>t0</code>。<br>kernel page table<code>p-&gt;trapframe-&gt;kernel_satp</code>加载到<code>satp</code>。</p>
+<blockquote>
+<p>这边加载了kernel的page table后还能继续执行代码，因为kernel也将相同的virtual address(trampoline page)映射到了与user space trampoline page相同的物理地址。</p>
+</blockquote>
+<h2 id="4-3-4-4-Code-Calling-system-calls"><a href="#4-3-4-4-Code-Calling-system-calls" class="headerlink" title="4.3-4.4 Code: Calling system calls"></a>4.3-4.4 Code: Calling system calls</h2><p>见xv_chapter2.md。</p>
+<h2 id="4-5-Traps-from-kernel-code"><a href="#4-5-Traps-from-kernel-code" class="headerlink" title="4.5 Traps from kernel code"></a>4.5 Traps from kernel code</h2><p>user space发生trap进入kernel space后，<code>stvec</code>会被设置为<code>kernelvec</code>，接着kernel中发生的设备中断和异常会进入<code>kernelvec</code>。</p>
+<h2 id="4-6-Page-fault-exceptions"><a href="#4-6-Page-fault-exceptions" class="headerlink" title="4.6 Page-fault exceptions"></a>4.6 Page-fault exceptions</h2><p>RISC-V区分三种page faults:</p>
+<ul>
+<li>load page fault: load指令中的虚拟地址不能正确翻译</li>
+<li>store page fault: store指令中的虚拟地址不能正确翻译</li>
+<li>instruction page fault: pc指针的虚拟地址不能正确翻译</li>
+</ul>
+<p><code>scause</code>中展示了page fault的种类，<code>stval</code>保存了不能翻译的地址。</p>
 
                 
               </div>
@@ -371,7 +417,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/uCore/">#uCore</a>
+        <a href="/tags/xv6/">#xv6</a>
       
     </div>
   
@@ -385,9 +431,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/25/Project/rCore_uCore/uCore_Chapter1/" title="uCore_Chapter1 应用程序与基本执行环境">
+                      <a href="/2024/03/21/Book/24-03-21_OSTEP_ch3_11/" title="Operating Systems Three Easy Pieces(OSTEP)">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">uCore_Chapter1 应用程序与基本执行环境</span>
+                        <span class="hidden-mobile">Operating Systems Three Easy Pieces(OSTEP)</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -395,8 +441,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/19/Misc/U-Boot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" title="U-Boot启动流程">
-                        <span class="hidden-mobile">U-Boot启动流程</span>
+                      <a href="/2024/02/25/Project/xv6/xv6_TA/" title="xv6 calling conventions and stack frames RISC-V">
+                        <span class="hidden-mobile">xv6 calling conventions and stack frames RISC-V</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

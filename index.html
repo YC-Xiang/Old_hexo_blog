@@ -321,15 +321,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2024/03/21/Book/24-03-21_OS_ThreeEasyPieces/" target="_self">
+        <a href="/2024/03/21/Book/24-03-21_OSTEP_ch3_11/" target="_self">
           Operating Systems Three Easy Pieces(OSTEP)
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/03/21/Book/24-03-21_OS_ThreeEasyPieces/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/03/21/Book/24-03-21_OSTEP_ch3_11/" target="_self">
         <div>
-          Chapter 4 Process4.2 Process API一般OS会提供以下的进程API来操作进程：  Create: 创建进程。 Destory: 结束进程。 Wait: Wait a process to stop running. 等待进程结束。 Miscellaneous Control: Suspend/Resume… 休眠，唤醒等等。 Status: 查看进程状态。  4.3 P
+          这篇文章是阅读OSTEP Chapter3~11的笔记，主要讲的是Virtualization中Virtualize CPU的部分。 Chapter 4 Process4.2 Process API一般OS会提供以下的进程API来操作进程：  Create: 创建进程。 Destory: 结束进程。 Wait: Wait a process to stop running. 等待进程结束。 Mis
         </div>
       </a>
 
@@ -369,6 +369,67 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/OS/">#OS</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2024/02/26/Project/xv6/xv6_chapter4/" target="_self">
+          xv6_chapter4 traps
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/02/26/Project/xv6/xv6_chapter4/" target="_self">
+        <div>
+          Lecturegdb调试shell write函数的syscall过程： 12345678910111213(gdb) b *0xdec # 在0xde8地址设置断点(gdb) c(gdb) delete 1 # 删除断点(gdb) print $pc$1 = (void (*)()) 0xdec(gdb) info r(gdb) x/3i 0xde8 # 打印0xdfe开始的三条指令0xdfe:
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-02-26 22:39" pubdate>
+              2024-02-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Project/" class="category-chain-item">Project</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/xv6/">#xv6</a>
             
           </div>
         
@@ -766,67 +827,6 @@
             <i class="iconfont icon-date"></i>
             <time datetime="2024-01-30 14:14" pubdate>
               2024-01-30
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Zephyr/">#Zephyr</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2024/01/26/Note/Zephyr/Driver/24-01-26_GPIO/" target="_self">
-          Zephyr -- GPIO Subsystem
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/01/26/Note/Zephyr/Driver/24-01-26_GPIO/" target="_self">
-        <div>
-          Device Treedts/binding/gpio/gpio-controller.yaml描述了设备树中支持的属性。 gpio-controller节点：其中gpio-controller和gpio-cells两个属性是必须的。前者表示gpio controller节点，后者表示其他节点使用gpio specifier需要几个item来描述。 12345678910gpio: gpio@0x
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-01-26 09:30" pubdate>
-              2024-01-26
             </time>
           </div>
         
