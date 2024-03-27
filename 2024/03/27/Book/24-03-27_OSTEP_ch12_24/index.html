@@ -16,24 +16,24 @@
   <meta name="author" content="Yucheng Xiang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="123456struct device {      const char *name;      const void *config;      const void *api;      void * const data;};  config: 放地址映射，中断号等一些物理信息。api: 回调函数。data: 放reference counts, semaphores, scratch b">
+    <meta name="description" content="Chpater 14 Memory API14.2 The malloc() call分配字符串长度的时候要注意：malloc(strlen(s) + 1)，多分配一个byte给\0。strlen函数计算长度不会统计\0。 14.4 Common ErrorsNot Allocating Enough Memory1234char *src &#x3D; &quot;hello&quot;;char *dst &#x3D; (char">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Zephyr -- Device Drvier Model">
-<meta property="og:url" content="https://yc-xiang.github.io/2023/11/30/Note/Zephyr/EnvBuild/23-12-01_DeviceDriverModel/index.html">
+<meta property="og:title" content="Operating Systems Three Easy Pieces(OSTEP) Chapter 12~24">
+<meta property="og:url" content="https://yc-xiang.github.io/2024/03/27/Book/24-03-27_OSTEP_ch12_24/index.html">
 <meta property="og:site_name" content="Yucheng&#39;s Blog">
-<meta property="og:description" content="123456struct device {      const char *name;      const void *config;      const void *api;      void * const data;};  config: 放地址映射，中断号等一些物理信息。api: 回调函数。data: 放reference counts, semaphores, scratch b">
+<meta property="og:description" content="Chpater 14 Memory API14.2 The malloc() call分配字符串长度的时候要注意：malloc(strlen(s) + 1)，多分配一个byte给\0。strlen函数计算长度不会统计\0。 14.4 Common ErrorsNot Allocating Enough Memory1234char *src &#x3D; &quot;hello&quot;;char *dst &#x3D; (char">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-11-30T06:17:28.000Z">
-<meta property="article:modified_time" content="2023-12-15T09:45:52.853Z">
+<meta property="article:published_time" content="2024-03-27T01:30:28.000Z">
+<meta property="article:modified_time" content="2024-03-27T06:47:20.156Z">
 <meta property="article:author" content="Yucheng Xiang">
-<meta property="article:tag" content="Zephyr">
+<meta property="article:tag" content="OSTEP">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Zephyr -- Device Drvier Model - Yucheng&#39;s Blog</title>
+  <title>Operating Systems Three Easy Pieces(OSTEP) Chapter 12~24 - Yucheng&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +229,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Zephyr -- Device Drvier Model</span>
+            <span id="subtitle">Operating Systems Three Easy Pieces(OSTEP) Chapter 12~24</span>
           
         </div>
 
@@ -240,8 +240,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-11-30 14:17" pubdate>
-          2023年11月30日 下午
+        <time datetime="2024-03-27 09:30" pubdate>
+          2024年3月27日 上午
         </time>
       </span>
     
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          303 words
+          635 words
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          3 mins
+          6 mins
         
       </span>
     
@@ -309,12 +309,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Zephyr -- Device Drvier Model</h1>
+            <h1 style="display: none">Operating Systems Three Easy Pieces(OSTEP) Chapter 12~24</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年12月15日 下午
+                    本文最后更新于：2024年3月27日 下午
                   
                 
               </p>
@@ -322,12 +322,14 @@
             
               <div class="markdown-body">
                 
-                <figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">device</span> {</span><br>      <span class="hljs-type">const</span> <span class="hljs-type">char</span> *name;<br>      <span class="hljs-type">const</span> <span class="hljs-type">void</span> *config;<br>      <span class="hljs-type">const</span> <span class="hljs-type">void</span> *api;<br>      <span class="hljs-type">void</span> * <span class="hljs-type">const</span> data;<br>};<br></code></pre></td></tr></tbody></table></figure>
+                <h1 id="Chpater-14-Memory-API"><a href="#Chpater-14-Memory-API" class="headerlink" title="Chpater 14 Memory API"></a>Chpater 14 Memory API</h1><h2 id="14-2-The-malloc-call"><a href="#14-2-The-malloc-call" class="headerlink" title="14.2 The malloc() call"></a>14.2 The malloc() call</h2><p>分配字符串长度的时候要注意：<code>malloc(strlen(s) + 1)</code>，多分配一个byte给<code>\0</code>。strlen函数计算长度不会统计<code>\0</code>。</p>
+<h2 id="14-4-Common-Errors"><a href="#14-4-Common-Errors" class="headerlink" title="14.4 Common Errors"></a>14.4 Common Errors</h2><h3 id="Not-Allocating-Enough-Memory"><a href="#Not-Allocating-Enough-Memory" class="headerlink" title="Not Allocating Enough Memory"></a>Not Allocating Enough Memory</h3><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">char</span> *src = <span class="hljs-string">"hello"</span>;<br><span class="hljs-type">char</span> *dst = (<span class="hljs-type">char</span> *) <span class="hljs-built_in">malloc</span>(<span class="hljs-built_in">strlen</span>(src)); <span class="hljs-comment">// wrong!!!</span><br><span class="hljs-type">char</span> *dst = (<span class="hljs-type">char</span> *) <span class="hljs-built_in">malloc</span>(<span class="hljs-built_in">strlen</span>(src) + <span class="hljs-number">1</span>);<br><span class="hljs-built_in">strcpy</span>(dst, src); <span class="hljs-comment">// work properly</span><br></code></pre></td></tr></tbody></table></figure>
 
-<p><code>config</code>: 放地址映射，中断号等一些物理信息。<br><code>api</code>: 回调函数。<br><code>data</code>: 放reference counts, semaphores, scratch buffers等。</p>
-<h2 id="Device-Specific-API-Extensions"><a href="#Device-Specific-API-Extensions" class="headerlink" title="Device-Specific API Extensions"></a>Device-Specific API Extensions</h2><p>标准driver api没法实现的功能。</p>
-<h2 id="Single-Driver-Multiple-Instances"><a href="#Single-Driver-Multiple-Instances" class="headerlink" title="Single Driver, Multiple Instances"></a>Single Driver, Multiple Instances</h2><p>某个driver对应多个instances的情况，比如uart driver匹配uart0, uart1, 并且中断线不是同一个。</p>
-
+<p>strcpy拷贝的时候会把<code>\0</code>也拷贝过去，所以分配长度的时候要strlen()+1。<br>否则多拷贝的一个byte，会写到heap的其他变量所属的地址，可能会导致fault。</p>
+<h3 id="Forgetting-to-Initialize-Allocated-Memory"><a href="#Forgetting-to-Initialize-Allocated-Memory" class="headerlink" title="Forgetting to Initialize Allocated Memory"></a>Forgetting to Initialize Allocated Memory</h3><p>malloc分配出来的内存，需要初始化，否则可能是随机内存值。</p>
+<h3 id="Forgetting-To-Free-Memory"><a href="#Forgetting-To-Free-Memory" class="headerlink" title="Forgetting To Free Memory"></a>Forgetting To Free Memory</h3><p>malloc分配出来的内存需要free掉。不然长时间运行的进程会导致内存泄漏。</p>
+<p>短时间运行就结束的进程可能不会有这个问题，在进程结束后系统会自动回收内存，但free掉不使用的内存仍然是一个好习惯。</p>
+<h3 id="Freeing-Memory-Before-You-Are-Done-With-It"><a href="#Freeing-Memory-Before-You-Are-Done-With-It" class="headerlink" title="Freeing Memory Before You Are Done With It"></a>Freeing Memory Before You Are Done With It</h3><h3 id="Freeing-Memory-Repeatedly"><a href="#Freeing-Memory-Repeatedly" class="headerlink" title="Freeing Memory Repeatedly"></a>Freeing Memory Repeatedly</h3><h1 id="Chapter-15-Address-Translation"><a href="#Chapter-15-Address-Translation" class="headerlink" title="Chapter 15 Address Translation"></a>Chapter 15 Address Translation</h1>
                 
               </div>
             
@@ -345,7 +347,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
+  <a href="/categories/Book/" class="category-chain-item">Book</a>
   
   
 
@@ -360,7 +362,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Zephyr/">#Zephyr</a>
+        <a href="/tags/OSTEP/">#OSTEP</a>
       
     </div>
   
@@ -374,18 +376,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/11/30/Note/Zephyr/EnvBuild/23-11-30_West/" title="Zephyr -- West">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Zephyr -- West</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/11/30/Note/Zephyr/EnvBuild/23-11-30_DevelopWithZephyr/" title="Zephyr -- Develop with Zephyr">
-                        <span class="hidden-mobile">Zephyr -- Develop with Zephyr</span>
+                      <a href="/2024/03/21/Book/24-03-21_OSTEP_ch3_11/" title="Operating Systems Three Easy Pieces(OSTEP) Chapter 3~11">
+                        <span class="hidden-mobile">Operating Systems Three Easy Pieces(OSTEP) Chapter 3~11</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -258,6 +258,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2024/01/30/Note/Zephyr/Kernel/24-01-30_KernelInit/" target="_self">
+          Zephyr -- Kernel Init
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/01/30/Note/Zephyr/Kernel/24-01-30_KernelInit/" target="_self">
+        <div>
+          Vector_table.S以arm cortex-M系列的启动流程为例，arch/arm/core/cortex_m: vector_table.S: 定义了中断向量表_vector_table。其中arm cortex-M规定0x0地址存放栈的起始地址（栈顶）。0x4开始存放reset handler,…  没看到定义外部中断的地址  上电后跳转至z_arm_reset函数，进入reset.S
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-30 14:14" pubdate>
+              2024-01-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Zephyr-OS/" class="category-chain-item">Zephyr OS</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Zephyr/">#Zephyr</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2024/01/26/Note/Zephyr/Driver/24-01-29_Interrupt/" target="_self">
           Zephyr -- Interrupt Subsystem
         </a>
@@ -801,72 +862,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2024/01/04/Project/xv6/xv6_chapter2/" target="_self">
-          xv6_chapter2 Operating system organization
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/01/04/Project/xv6/xv6_chapter2/" target="_self">
-        <div>
-          2.6 Code: starting xv6, the first process and system call启动代码:entry.S 为每个CPU设置堆栈，然后跳进start.c的start函数。 123456789101112131415161718192021  # qemu -kernel loads the kernel at 0x80000000        # and caus
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-01-04 20:57" pubdate>
-              2024-01-04
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Project/" class="category-chain-item">Project</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/xv6-OS/">#xv6 OS</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/#board">7</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/#board">8</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
